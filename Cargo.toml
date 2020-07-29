@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "catsay"
+]
+
+default-members = ["catsay"]
