@@ -1,4 +1,5 @@
 use structopt::StructOpt;
+use colored::* ;
 
 #[derive(StructOpt)]
 struct Options{
@@ -20,13 +21,15 @@ fn main() {
     if message.to_lowercase() == "woof" {
         eprintln!("A cat shouldn't bark like a dog");
     }else{
-        println!("{}", message);
+//        println!("{}", message);//
+         println!("{}",message.bright_yellow().underline()
+         .on_purple());
     }
 
 
     println!(" \\");
     println!("ꂠ\\");
     println!("ꂠꂠꀀ/\\_/\\");
-    println!("ꂠꂠ( {eye} {eye} )", eye=eye); // [2]
+    println!("ꂠꂠ( {eye} {eye} )", eye=eye.red().bold()); // [2]
     println!("ꂠꂠ=( I )=");
 }

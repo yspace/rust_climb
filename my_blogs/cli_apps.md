@@ -23,3 +23,15 @@ separate files:
 - options
     There are other types of arguments called options, which can take a
     value (e.g., --value myvalue ),
+    
+    
+## 颜色输出：
+
+The colored crate defines a Colorize trait, which is implemented on a
+&str and String. This trait provides various chainable coloring functions:
+-  Coloring the text: red(), green(), blue(), etc.
+-  Coloring the background: on_red() (i.e., text on red
+background), on_green(), on_blue(), etc.
+- Brighter version: bright_red(), on_bright_green(),
+etc.
+- Styling: bold(), underline(), italic(), etc.    
