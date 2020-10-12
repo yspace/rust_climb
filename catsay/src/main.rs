@@ -10,6 +10,10 @@ struct Options{
     #[structopt(short = "d" , long = "dead")]
     /// Make the cat appear dead
     dead: bool,
+
+    #[structopt(short = "f", long = "file", parse(from_os_str))]
+    /// Load the cat picture from the specified file
+    catfile:ꀀOption<std::path::PathBuf>,
 }
 
 fn main() {
