@@ -47,17 +47,48 @@ mod _2{
     }
 }
 
-pub fn print(){
-    let numbers = vec![1,2,3,4,5] ;
 
-    output_sequence(numbers) ;
+mod _3{
+
+    pub fn print(){
+        let numbers = vec![1,2,3,4,5] ;
+
+        output_sequence(numbers) ;
+//    output_sequence(numbers) ; // 非拷贝类型在函数调用时 所有权已经转移到函数去了 后续再次使用就不行了
+    }
+
+    fn output_sequence(numbers: Vec<u8>){
+        // Rust has a few different modes of passing arguments to functions.
+        // • a function temporarily having access to a variable (borrowing) and
+        // • having ownership of a variable.
+        for n in numbers{
+            println!("{}", n) ;
+        }
+    }
 }
 
-fn output_sequence(numbers: Vec<u8>){
-    // Rust has a few different modes of passing arguments to functions.
-    // • a function temporarily having access to a variable (borrowing) and
-    // • having ownership of a variable.
-    for n in numbers{
-        println!("{}", n) ;
-    }
+pub fn print(){
+    let vetor_numbers = vec![1,2,3,4,5] ;
+    output_sequence(&vetor_numbers) ;
+    let array_numbers = [1,2,3,4,5] ;
+    output_sequence(&array_numbers) ;
+
+}
+
+fn output_sequence(numbers: &[u8]){
+    // Idiomatic Rust takes slices as arguments in most cases where one needs only to read
+    // the collection.
+
+   //  The Rust compilation model does not allow functions to directly
+    // take arguments of an unknown size.
+
+   // 标准库中的切片类型 是用来克服数组的一些限制
+    // you can have a slice which references an array or a vector and treat them the same.
+
+    //  Note that slices convert automatically into iterators
+    // just like vectors so we again do not call iter explicitly in the body of our
+    // function.
+  for n in numbers{
+      println!("{}",n) ;
+  }
 }
