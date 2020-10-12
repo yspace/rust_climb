@@ -1,6 +1,10 @@
 [workspace]
 members = [
-    "catsay"
+    "catsay",
+    "my_orbtk",
+    "numbers",
 ]
 
 default-members = ["catsay"]
+
+
