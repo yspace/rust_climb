@@ -24,18 +24,37 @@ mod _1 {
         let numbers = vec![
             1, 2, 3, 4, 5];
 
-        for n in numbers {
-            println!("{}", n);
+        // 向量类型也实现了迭代器trait 但这里是编译器帮我们做了隐式调用
+//        for n in numbers {
+//            println!("{}", n);
+//        }
+
+        for n in numbers.iter(){
+            println!("{}", n) ;
+        }
+    }
+}
+mod _2{
+
+    pub fn print(){
+        let numbers = [1,2,3,4,5] ;
+        output_sequence(numbers) ;
+    }
+    fn output_sequence(numbers: [u8; 5]) {
+        for n in numbers.iter(){
+            println!("{}",n) ;
         }
     }
 }
 
 pub fn print(){
-    let numbers = [1,2,3,4,5] ;
+    let numbers = vec![1,2,3,4,5] ;
+
     output_sequence(numbers) ;
 }
-fn output_sequence(numbers: [u8; 5]) {
-    for n in numbers.iter(){
-        println!("{}",n) ;
+
+fn output_sequence(numbers: Vec<u8>){
+    for n in numbers{
+        println!("{}", n) ;
     }
 }
