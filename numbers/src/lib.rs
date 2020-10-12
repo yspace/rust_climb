@@ -67,28 +67,64 @@ mod _3{
     }
 }
 
-pub fn print(){
-    let vetor_numbers = vec![1,2,3,4,5] ;
-    output_sequence(&vetor_numbers) ;
-    let array_numbers = [1,2,3,4,5] ;
-    output_sequence(&array_numbers) ;
+mod _4{
 
+    pub fn print(){
+        let vetor_numbers = vec![1,2,3,4,5] ;
+        output_sequence(&vetor_numbers) ;
+        let array_numbers = [1,2,3,4,5] ;
+        output_sequence(&array_numbers) ;
+
+    }
+
+    fn output_sequence(numbers: &[u8]){
+        // Idiomatic Rust takes slices as arguments in most cases where one needs only to read
+        // the collection.
+
+        //  The Rust compilation model does not allow functions to directly
+        // take arguments of an unknown size.
+
+        // 标准库中的切片类型 是用来克服数组的一些限制
+        // you can have a slice which references an array or a vector and treat them the same.
+
+        //  Note that slices convert automatically into iterators
+        // just like vectors so we again do not call iter explicitly in the body of our
+        // function.
+        for n in numbers{
+            println!("{}",n) ;
+        }
+    }
 }
 
-fn output_sequence(numbers: &[u8]){
-    // Idiomatic Rust takes slices as arguments in most cases where one needs only to read
-    // the collection.
+pub fn print(limit: u8){
+    let numbers = generate_sequence(limit) ;
+    output_sequence(&numbers) ;
+}
 
-   //  The Rust compilation model does not allow functions to directly
-    // take arguments of an unknown size.
+fn generate_sequence(limit: u8) -> Vec<u8>{
+    //  Mutability is a property
+    //  of the variable or reference not of the object itself.
+    let mut numbers = Vec::new() ;
 
-   // 标准库中的切片类型 是用来克服数组的一些限制
-    // you can have a slice which references an array or a vector and treat them the same.
+    //  Ranges
+    //  can be constructed with using the syntax start..end or start..=end.
+    //  start 和 end 是可选的！
+    for n in 1 ..= limit {
+        numbers.push(n) ;
+    }
 
-    //  Note that slices convert automatically into iterators
-    // just like vectors so we again do not call iter explicitly in the body of our
-    // function.
-  for n in numbers{
-      println!("{}",n) ;
-  }
+    numbers
+}
+
+fn output_sequence(numbers: &[u8]) {
+    for n in numbers{
+        println!("{}",n) ;
+    }
+}
+
+mod example{
+    fn using_ranges(){
+        let numbers = [1,2,3,4,5] ;
+        let subset = &numbers[1..3] ;
+    }
 }
