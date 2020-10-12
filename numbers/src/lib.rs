@@ -54,6 +54,9 @@ pub fn print(){
 }
 
 fn output_sequence(numbers: Vec<u8>){
+    // Rust has a few different modes of passing arguments to functions.
+    // • a function temporarily having access to a variable (borrowing) and
+    // • having ownership of a variable.
     for n in numbers{
         println!("{}", n) ;
     }
