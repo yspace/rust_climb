@@ -16,6 +16,9 @@ cargo run -p favorites 3rd-log
 - [rust 环境配置](https://www.bilibili.com/video/BV1DV41167xs?p=19)
 - [ Exercism practice in Rust trace ](https://github.com/Binlogo/Exercism-Rust-Track) 类似leetcode？
 
+## 项目布局
+- [dtool](https://github.com/guoxbin/dtool)
+- [cargo]()
 
 ## 不错的文章
 - [12 Killer Rust Libraries You Should Try](https://medium.com/@jondot/12-killer-rust-libraries-you-should-know-c60bab07624f)

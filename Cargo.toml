@@ -5,6 +5,7 @@ members = [
     "numbers",
     "favorites",
     "books/srqc",
+    "whale",
 ]
 
 default-members = ["catsay"]

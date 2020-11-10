@@ -13,7 +13,7 @@ struct Options{
 
     #[structopt(short = "f", long = "file", parse(from_os_str))]
     /// Load the cat picture from the specified file
-    catfile:ꀀOption<std::path::PathBuf>,
+    catfile: Option<std::path::PathBuf>,
 }
 
 fn main() {
