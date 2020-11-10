@@ -4,6 +4,7 @@ members = [
     "my_orbtk",
     "numbers",
     "favorites",
+    "books/srqc",
 ]
 
 default-members = ["catsay"]
