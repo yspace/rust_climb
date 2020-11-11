@@ -6,7 +6,8 @@ mod ch2 ;
 
 fn main() {
 //   ch1::hello::main() ;
-    ch2::vars::main() ;
+//    ch2::vars::main() ;
+    ch2::basic_types::main() ;
 }
 // 下面特性是在nightly版本并打开feature gate才可以使用
 //#![feature(const_fn)]
