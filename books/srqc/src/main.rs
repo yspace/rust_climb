@@ -2,11 +2,18 @@ use whale::util::errors::WhaleResult; // todo 后期给他缩短这个 "面包�
 use whale::core::Context;
 
 mod ch1 ;
+mod ch2 ;
 
 fn main() {
-   ch1::hello::main() ;
+//   ch1::hello::main() ;
+    ch2::vars::main() ;
 
-   // 调用套路
+
+}
+
+// ========================================================
+fn cli_cmd_exec_template(){
+    // 调用套路
     let ctx = Context::default() ;
     let opts = SomeUsecaseOptions {
         spec: Vec::new() ,
@@ -14,8 +21,6 @@ fn main() {
     // 上面这两个参数实际调用中需要从配置文件 或者用户cli输入参数中做转储传递
     some_usecase(&ctx , &opts) ;
 }
-
-// ========================================================
 // 注意在cargo项目中 套路如下：
 //. 注意是CliResult  这个是cli相关的跟CargoResult处于不同的位置  CliResult 在六边形架构中是靠外侧UI的东西
 //  CmdXxx::exec(config: &mut Config, args: &ArgMatches<'_>) -> CliResult {
