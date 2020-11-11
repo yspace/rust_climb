@@ -1,5 +1,8 @@
 
 pub  fn main(){
+    learn_bool();
+}
+fn learn_bool(){
 
     let x = true ;
     let y: bool = !x ;
