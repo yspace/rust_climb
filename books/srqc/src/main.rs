@@ -7,9 +7,13 @@ mod ch2 ;
 fn main() {
 //   ch1::hello::main() ;
     ch2::vars::main() ;
-
-
 }
+// 下面特性是在nightly版本并打开feature gate才可以使用
+//#![feature(const_fn)]
+//fn main(){
+//    use std::sync::atomic::AtomicBool;
+//    static FLAG: AtomicBool = AtomicBool::new(true);
+//}
 
 // ========================================================
 fn cli_cmd_exec_template(){

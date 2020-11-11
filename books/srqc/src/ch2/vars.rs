@@ -1,3 +1,5 @@
+static GLOBAL: i32 = 0 ; // 静态变量 必须在声明时马上初始化&&初始化必须是编译器可确定的常量
+// mut 修饰的全局变量在使用的时候必须使用unsafe
 
 pub fn main(){
     // 声明变量
@@ -81,7 +83,41 @@ pub fn main(){
         // 泛型场景
         type Double<T> = (T, Vec<T>) ; // 可以简化代码
     }
+
+    // ## 静态变量
+    {
+        let x ;
+        let y = 1_i32 ;
+        x = 2_i32 ; // 延迟初始化 只要确保使用前初始化了就行
+        println!("{} {}", x, y) ;
+
+        // 全局变量声明时必须初始化 ，因为全局变量可写在函数外面被任意函数使用
+        static G1: i32 = 3 ;
+
+        // 可变全局变量 无论读写都必须使用unsafe
+        static mut G2 : i32 = 4 ;
+        unsafe{
+            G2 = 5 ;
+            println!("G2  is {}", G2) ;
+        }
+
+        // 全局变量的内存不是分配在当前函数栈上的， 函数退出的时候 并不会销毁全局变量占用的内存空间
+        // 程序退出时才会回收
+
+        // 允许
+        static array: [i32; 3] = [1,2,3] ;
+        // 不允许
+//        static vec: Vec[i32] = {let mut v = Vec::new() ; v.push(1); v} ;
+
+        // RUST不允许用户在main前后执行自己的代码 所以比较复杂的static变量的初始化一般使用lazy的方式
+        // 在第一次使用的时候初始化 rust中较复杂的全局变量初始化推荐使用： lazy_static
+
+    }
+
+    // ## 常量
+
 }
+
 
 fn test(condition: bool){
     let x: i32;
