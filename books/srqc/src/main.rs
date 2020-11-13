@@ -1,5 +1,3 @@
-
-
 mod ch1 ;
 mod ch2 ;
 
@@ -7,9 +5,10 @@ fn main() {
 //   ch1::hello::main() ;
 //    ch2::vars::main() ;
 //    ch2::basic_types::main() ;
-//    _seahorse_main();
+    // cargo run -p srqc -- --help
+    _seahorse_main();
 
-    _clap_main() ;
+//    _clap_main() ;
 }
 
 // ==================================================================
@@ -35,7 +34,7 @@ fn _clap_main(){
 }
 
 fn _seahorse_main(){
-    use seahorse::{App,Command,Context};
+    use seahorse::{App,Command,Context,Flag,FlagType};
     use std::env;
 
     let args: Vec<String> = env::args().collect();
@@ -50,6 +49,49 @@ fn _seahorse_main(){
             .alias("h")
             .usage("cli help(h) [...]")
             .action(|c: &Context| println!("{:?}", c.args)))
+        .command(
+            // NOTE 这里如果想同时适配seahorse 跟clap两个不同的cli库 中间需要某种适配层 参考六边形架构中的port/adapter
+            Command::new("ch2")
+                .usage("cargo run -p srqc ch2 --route 2")
+            .description("深入浅出第二章")
+            .action(|c: &Context|{
+                match c.string_flag("route") {
+                    Ok(to) => {
+//                        let sum: i32 = match &*op {
+//                            "add" => c.args.iter().map(|n| n.parse::<i32>().unwrap()).sum(),
+//                            "sub" => c.args.iter().map(|n| n.parse::<i32>().unwrap() * -1).sum(),
+//                            _ => panic!("undefined operator..."),
+//                        };
+//
+//                        println!("{}", sum);
+                         match &*to{
+                           "1" => println!("第一节"),
+                           "2" => println!("第二节"),
+                            _ => println!("默认节"),
+
+                        };
+                    }
+                    Err(e) => {
+                         panic!(format!("error happens : {}", e));
+                    }
+//                    Err(e) => match e {
+//                        FlagError::Undefined => panic!("undefined operator..."),
+//                        FlagError::ArgumentError => panic!("argument error..."),
+//                        FlagError::NotFound => panic!("not found flag..."),
+//                        FlagError::ValueTypeError => panic!("value type mismatch..."),
+//                        FlagError::TypeError => panic!("flag type mismatch..."),
+
+//                    },
+                }
+
+                // ch2::basic_types::main() ;
+            })
+                .flag(
+                    Flag::new("route", FlagType::String)
+                          .description("route flag")
+                          .alias("r")
+                )
+        )
         ;
 
     app.run(args);
