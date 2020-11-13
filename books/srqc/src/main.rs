@@ -1,5 +1,4 @@
-use whale::util::errors::WhaleResult; // todo 后期给他缩短这个 "面包屑"路径
-use whale::core::Context;
+
 
 mod ch1 ;
 mod ch2 ;
@@ -7,47 +6,51 @@ mod ch2 ;
 fn main() {
 //   ch1::hello::main() ;
 //    ch2::vars::main() ;
-    ch2::basic_types::main() ;
-}
-// 下面特性是在nightly版本并打开feature gate才可以使用
-//#![feature(const_fn)]
-//fn main(){
-//    use std::sync::atomic::AtomicBool;
-//    static FLAG: AtomicBool = AtomicBool::new(true);
-//}
+//    ch2::basic_types::main() ;
+//    _seahorse_main();
 
-// ========================================================
-fn cli_cmd_exec_template(){
-    // 调用套路
-    let ctx = Context::default() ;
-    let opts = SomeUsecaseOptions {
-        spec: Vec::new() ,
-    };
-    // 上面这两个参数实际调用中需要从配置文件 或者用户cli输入参数中做转储传递
-    some_usecase(&ctx , &opts) ;
+    _clap_main() ;
 }
-// 注意在cargo项目中 套路如下：
-//. 注意是CliResult  这个是cli相关的跟CargoResult处于不同的位置  CliResult 在六边形架构中是靠外侧UI的东西
-//  CmdXxx::exec(config: &mut Config, args: &ArgMatches<'_>) -> CliResult {
-//     // 用配置来构造工作空间
-//    let ws = args.workspace(config)?;
-//
-//    // 构造操作需要的参数选项
-//    let opts = FetchOptions {
-//        config,
-//        targets: args.targets(),
-//    };
-//    // 执行对应的操作方法
-//    let _ = ops::fetch(&ws, &opts)?;
-//    Ok(())
-// }
-pub struct SomeUsecaseOptions {
-  //  pub config: &'a Config,
-   /// A list of input string.
-   pub spec: Vec<String>,
+
+// ==================================================================
+//      ## copy from https://github.com/guoxbin/dtool/blob/master/src/main.rs
+mod app;
+mod modules;
+fn _clap_main(){
+
+    let (app, module_manager) = app::build_app();
+
+    let mut app_clone = app.clone();
+
+    let matches = app.get_matches();
+
+    let (name, matches) = matches.subcommand();
+
+    if let Some(matches) = matches {
+        module_manager.run(name, matches);
+    } else {
+        app_clone.print_help().unwrap_or(());
+        println!();
+    }
 }
-// 这个是任何框架无关的逻辑
-fn some_usecase(ctx: &Context , opts: &SomeUsecaseOptions ) -> WhaleResult<()>{
-    println!("hi this is some usecase !");
-  Ok(())
+
+fn _seahorse_main(){
+    use seahorse::{App,Command,Context};
+    use std::env;
+
+    let args: Vec<String> = env::args().collect();
+    let app = App::new(env!("CARGO_PKG_NAME"))
+        .description(env!("CARGO_PKG_DESCRIPTION"))
+        .author(env!("CARGO_PKG_AUTHORS"))
+        .version(env!("CARGO_PKG_VERSION"))
+        .usage("cli [args]")
+        .action(|c| println!("Hello, {:?}", c.args))
+        .command( Command::new("help")
+            .description("need help?")
+            .alias("h")
+            .usage("cli help(h) [...]")
+            .action(|c: &Context| println!("{:?}", c.args)))
+        ;
+
+    app.run(args);
 }
