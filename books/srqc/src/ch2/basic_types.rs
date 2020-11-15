@@ -4,6 +4,7 @@ pub  fn main(){
     learn_char();
 
     learn_int() ;
+    learn_float() ;
 }
 fn learn_bool(){
 
@@ -119,4 +120,70 @@ fn learn_int(){
         println!("前缀功能： {}",  32.prefix("hi".to_string()) );
     }
 
+    {
+        // 整数溢出 编译器会帮我们检测的  可以通过编译开关 使用溢出策略
+        // 编译时就过了  但运行期就呵呵 （可以给程序埋雷！！！)\
+        // -C overflow-checks=no
+        fn arithmetic(m: i8, n: i8){
+            println!("{}", m+n) ; // 有溢出风险
+        }
+//
+//        let m : i8 = 120 ;
+//        let n : i8 = 120 ;
+//        arithmetic(m, n);
+
+        // 若想自主控制整数溢出 可以使用标准库提供的函数
+        let i = 100_i8 ;
+        println!("checked {:?}", i.checked_add(i)) ;
+        println!("saturating  {:?}", i.saturating_add(i)) ;
+        println!("wrapping {:?}", i.wrapping_add(i));
+        // 可以看到：checked_*系列函数返回的类型是Option<_>，当出现溢
+        //出的时候，返回值是None；saturating_*系列函数返回类型是整数，如果
+        //溢出，则给出该类型可表示范围的“最大/最小”值；wrapping_*系列函数
+        //则是直接抛弃已经溢出的最高位，将剩下的部分返回。在对安全性要求
+        //非常高的情况下，强烈建议用户尽量使用这几个方法替代默认的算术运
+        //算符来做数学运算，这样表意更清晰。
+
+        {
+            // 截断
+            use std::num::Wrapping;
+
+            let big  = Wrapping(std::u32::MAX);
+            let sum = big + Wrapping(2_u32) ;
+            println!("{}",sum.0);
+        }
+    }
+
+}
+
+fn learn_float(){
+    // 在标准库中，有一个std：：num：：FpCategory枚举，表示了浮点
+    //数可能的状态
+
+    let f1 = 123.0f64 ;
+    let f2 = 0.1f64 ;
+    let f3  = 0.1f32 ;
+    let f4 = 12E+99_f64 ;
+    let f5:f64 = 2. ;
+
+    // TODO :看下 IEEE 754标准对浮点数的定义
+    // ##
+// 变量 small 初始化为一个非常小的浮点数
+        let mut small = std::f32::EPSILON;
+// 不断循环,让 small 越来越趋近于 0,直到最后等于0的状态
+        while small > 0.0 {
+            small = small / 2.0;
+            println!("{} {:?}", small, small.classify());
+        }
+    // 无穷大状态
+    let x = 1.0f32 / 0.0;
+    let y = 0.0f32 / 0.0;
+    println!("{} {}", x, y);
+    // 对Infinity做运算 结果不可预料
+    let inf = std::f32::INFINITY;
+    println!("{} {} {}", inf * 0.0, 1.0 / inf, inf / inf);
+
+    // NAN 非全序
+    let nan = std::f32::NAN;
+    println!("{} {} {}", nan < nan, nan > nan, nan == nan);
 }
