@@ -51,7 +51,7 @@ fn _seahorse_main(){
             .action(|c: &Context| println!("{:?}", c.args)))
         .command(
             // NOTE 这里如果想同时适配seahorse 跟clap两个不同的cli库 中间需要某种适配层 参考六边形架构中的port/adapter
-            Command::new("ch2")
+            Command::new("some-chapter")
                 .usage("cargo run -p srqc ch2 --route 2")
             .description("深入浅出第二章")
             .action(|c: &Context|{
@@ -91,6 +91,15 @@ fn _seahorse_main(){
                           .description("route flag")
                           .alias("r")
                 )
+        ).command(
+            // NOTE 这里如果想同时适配seahorse 跟clap两个不同的cli库 中间需要某种适配层 参考六边形架构中的port/adapter
+            Command::new("ch2")
+                .usage("cargo run -p srqc ch2 --route 2")
+            .description("深入浅出第二章")
+            .action(|c: &Context|{
+                 ch2::basic_types::main() ;
+            })
+
         )
         ;
 
