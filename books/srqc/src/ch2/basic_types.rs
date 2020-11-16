@@ -187,3 +187,19 @@ fn learn_float(){
     let nan = std::f32::NAN;
     println!("{} {} {}", nan < nan, nan > nan, nan == nan);
 }
+
+fn type_as(){
+    // 并非所有类型之间都可互相转换
+    let v1 : i8 = 41 ;
+    let v2 : i16 = v1 as i16 ; // 转换动作需要显式标记出来 不允许地下党
+
+    let i = 42 ;
+    // 先转型为 * const i32 再转 *mut i32 不能一步到位的转换
+    let p = &i as *const i32 as *mut i32 ;
+    println!("{:p}",p);
+
+    // 对于表达式e as U，e是表达式，U是要转换的目标类型，对于允许的转换 具体请参考书本 有个表格
+
+    // 复杂的类型转换需要使用标准库的From Into等trait
+
+}
