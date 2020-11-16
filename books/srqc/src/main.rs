@@ -98,6 +98,7 @@ fn _seahorse_main(){
             .description("深入浅出第二章")
             .action(|c: &Context|{
                  ch2::basic_types::main() ;
+                 ch2::compound_types::main() ;
             })
 
         )
