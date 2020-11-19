@@ -1,6 +1,8 @@
 
 pub fn main(){
     learn_tuple() ;
+
+    learn_struct() ;
 }
 
 fn learn_tuple(){
@@ -36,5 +38,93 @@ let a = (1i32 , false) ;
 }
 
 fn learn_struct(){
+    // 不同元组的是 结构体有名字 成员也都有自己的名字  类json语法
+
+    struct Point{
+        x: i32 ,
+        y: i32,
+    }
+
+    let p = Point{
+        x: 0 ,
+        y: 0,
+    } ;
+    println!("Point is at {} {} ", p.x, p.y);
+
+    // 成员名同名时的简化
+    let x = 10 ;
+    let y = 20 ;
+    let p = Point{x,y} ;
+    println!("Point is at {}, {}", p.x, p.y) ;
+
+    // 语法糖：赋值时使用其他结构的部分成员作为“基”础
+    #[derive(Debug)]
+    struct Point3d{
+        x: i32,
+        y: i32,
+        z: i32,
+    }
+    fn default()-> Point3d{
+        Point3d{
+            x:0,
+            y:0,
+            z:0,
+        }
+    }
+    // ..expr 这样的语法 只能放在初始化表达式中
+    let origin = Point3d{
+        x: 5 ,
+        ..default()
+    };
+let point = Point3d{z: 1, x: 2, ..default()};
+    println!("origin: {:?} \n point: {:?}", origin , point) ;
+
+    // 类似tuple struct成员内部也可以是空的
+    struct Foo1 ;
+    struct Foo2() ;
+    struct Foo3() ;
+
+    {
+    // ### tuple struct 不需要关心成员的名称
+        struct Color(i32, i32, i32) ;
+        struct Point(i32, i32, i32) ;
+    }
+
+    {
+        struct T1{
+            v: i32
+        }
+        struct T2(i32);
+
+        let v1 = T1{
+            v:1
+        };
+        let v2 = T2(1);
+        let v3 = T2{0:1} ;
+
+        println!("{} {} {}", v1.v , v2.0, v3.0) ;
+    }
+    {
+//        惯例： newtype idiom
+        struct Inches(i32) ;
+        fn f1(value: Inches){
+
+        }
+        fn f2(v: i32){
+
+        }
+        let v : i32 = 0;
+//        f1(v) ; // 类型不匹配
+       // 改动
+        fn type_alias(){
+            type I = i32 ;
+            fn f1(v:I){}
+            fn f2(v:i32){}
+
+    let v: i32 = 0 ;
+    f1(v) ;
+    f2(v) ;
+        }
+    }
 
 }
