@@ -15,6 +15,8 @@ cargo run -p favorites 3rd-log
 - [菜鸟教程](https://www.runoob.com/rust/rust-object.html)
 - [rust 环境配置](https://www.bilibili.com/video/BV1DV41167xs?p=19)
 - [ Exercism practice in Rust trace ](https://github.com/Binlogo/Exercism-Rust-Track) 类似leetcode？
+- [  Writing an OS in Rust series](https://github.com/phil-opp/blog_os)
+    用rust 写操作系统 https://os.phil-opp.com/
 
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)
