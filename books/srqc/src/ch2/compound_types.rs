@@ -128,3 +128,10 @@ let point = Point3d{z: 1, x: 2, ..default()};
     }
 
 }
+
+fn learn_type_recursive(){
+    struct Recursive{
+        data: i32 ,
+        rec: Box<Recursive>,
+    }
+}

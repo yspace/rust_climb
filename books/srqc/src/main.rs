@@ -1,5 +1,6 @@
 mod ch1 ;
 mod ch2 ;
+mod ch3 ;
 
 fn main() {
 //   ch1::hello::main() ;
@@ -101,6 +102,14 @@ fn _seahorse_main(){
                  ch2::compound_types::main() ;
             })
 
+        )
+        .command(
+            Command::new("ch3")
+                .usage("cargo run -p srqc ch3")
+            .description("深入浅出第三章")
+            .action(|c: &Context|{
+                ch3::expression::main() ;
+            })
         )
         ;
 
