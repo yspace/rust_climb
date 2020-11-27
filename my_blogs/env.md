@@ -16,3 +16,7 @@ var	从当前进程获取环境变量，通过环境变量的key值获取value�
 var_os	Fetches the environment variable key from the current process, returning None if the variable isn't set.
 vars	Returns an iterator of (variable, value) pairs of strings, for all the environment variables of the current process.
 vars_os	Returns an iterator of (variable, value) pairs of OS strings, for all the environment variables of the current process.
+
+
+因为os参数都是字符串 接下来我们很可能要做的就是转型：
+使用 use std::str::FromStr 引入 from_str 功能函数； 

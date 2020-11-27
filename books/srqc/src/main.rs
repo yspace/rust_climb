@@ -109,9 +109,28 @@ fn _seahorse_main(){
             .description("深入浅出第三章")
             .action(|c: &Context|{
                 ch3::expression::main() ;
+                ch3::if_else::main() ;
             })
         )
         ;
 
     app.run(args);
 }
+
+//use std::collections::HashMap;
+//struct Runner<'a, 'b>{
+//    funcs: HashMap<&'a str, &'b dyn Fn()>
+//}
+//
+//impl Runner{
+//    pub fn init(){
+//
+//    }
+//    pub fn run(){
+//
+//    }
+//
+//    pub fn add_case(&mut self){
+//
+//    }
+//}
