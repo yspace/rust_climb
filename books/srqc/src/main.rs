@@ -1,6 +1,7 @@
 mod ch1 ;
 mod ch2 ;
 mod ch3 ;
+mod ch4 ;
 
 fn main() {
 //   ch1::hello::main() ;
@@ -110,6 +111,16 @@ fn _seahorse_main(){
             .action(|c: &Context|{
                 ch3::expression::main() ;
                 ch3::if_else::main() ;
+                ch3::while_stmt::main() ;
+                ch3::for_loop::main() ;
+            })
+        )
+        .command(
+            Command::new("ch4")
+                .usage("cargo run -p srqc ch4")
+            .description("深入浅出第四章")
+            .action(|c: &Context|{
+                ch4::func::main() ;
             })
         )
         ;
