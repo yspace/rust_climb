@@ -70,6 +70,12 @@ fn main() {
                 .author("yiqing.") // And authors
                 ,
         )
+        .subcommand(
+            App::new("3rd-url") //
+                .about("url parser") //
+                .author("yiqing.") //
+                ,
+        )
         .get_matches();
 
     // You can check if a subcommand was used like normal
@@ -97,6 +103,12 @@ fn main() {
             println!("the third vender log library ");
 
             awesome_lib::log::act_main() ;
+
+        } ,
+        Some("3rd-url") =>{
+            // use awesome_lib ;
+            println!("the third vender url library ");
+
 
         } ,
 
