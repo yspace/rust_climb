@@ -127,4 +127,14 @@ mod example{
         let numbers = [1,2,3,4,5] ;
         let subset = &numbers[1..3] ;
     }
+
+    fn generate_sequence(limit: u8) ->Vec<u8> {
+        (1..=limit).collect()
+    }
+}
+
+#[test]
+fn generate_sequence_should_work(){
+    let result = generate_sequence(3) ;
+    assert_eq!(result, &[1,2,3]) ;
 }
