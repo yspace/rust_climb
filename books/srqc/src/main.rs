@@ -137,6 +137,39 @@ fn _seahorse_main(){
     app.run(args);
 }
 
+
+pub mod cli {
+    use whale::util::runner::* ;
+    use std::env ;
+
+    pub  fn get_route(name: String) -> Option<String> {
+//        let args: Vec<String>  = env::args().collect() ;
+//
+//        let mut idx = 0 ;
+//        for arg in &args {
+//            if name == arg {
+//                return Some(args[idx+1]. clone()) ;
+//            }
+//
+//            idx +=1 ;
+//        }
+
+        None
+    }
+
+    pub trait CliRunner{
+
+        fn run_route(&mut self , r: String);
+    }
+
+    impl CliRunner for Runner{
+        fn run_route(&mut self , r: String) {
+            println!("run route: {}", r) ;
+        }
+    }
+
+}
+
 use std::collections::HashMap;
 #[derive(Default)]
 struct Runner {
@@ -173,6 +206,7 @@ impl Runner{
 }
 
 
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -189,8 +223,5 @@ mod tests {
         assert!(runner.get_case ("one").is_some());
         //  runner.get_case("one").unwrap()() ;
     }
-
-
-
 
 }
