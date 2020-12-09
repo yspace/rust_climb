@@ -1,8 +1,14 @@
+//#[allow(dead_code)]
+//或者你添加一个条箱级别（在你的主箱子里），注意! ：
+#![allow(dead_code)]
+#![allow(unused_variables)]
+
 mod ch1 ;
 mod ch2 ;
 mod ch3 ;
 mod ch4 ;
 mod ch5 ;
+mod ch6 ;
 
 fn main() {
 //   ch1::hello::main() ;
@@ -130,6 +136,15 @@ fn _seahorse_main(){
             .description("深入浅出第五章")
             .action(|c: &Context|{
                 ch5::traits::main() ;
+            })
+        )
+        .command(
+            Command::new("ch6")
+                .usage("cargo run -p srqc ch6")
+            .description("深入浅出第六章")
+            .action(|c: &Context|{
+//                ch6::arrays::main() ;
+                ch6::strings::main() ;
             })
         )
         ;
