@@ -8,6 +8,8 @@ members = [
     "books/fullstack",
     "whale",
     "hardway",
+    "starters/api",
+
 ]
 
 default-members = ["catsay"]
