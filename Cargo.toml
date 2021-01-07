@@ -6,9 +6,11 @@ members = [
     "favorites",
     "books/srqc",
     "books/fullstack",
+    "books/design_patterns",
     "whale",
     "hardway",
     "starters/api",
+    "learnings/intro2rust",
 
 ]
 
