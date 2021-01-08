@@ -18,6 +18,8 @@ cargo run -p favorites 3rd-log
 - [  Writing an OS in Rust series](https://github.com/phil-opp/blog_os)
     用rust 写操作系统 https://os.phil-opp.com/
 
+- [rust-learning](https://github.com/ctjhoa/rust-learning)    
+
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)
 - [cargo]()
