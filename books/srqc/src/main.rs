@@ -9,6 +9,8 @@ mod ch3 ;
 mod ch4 ;
 mod ch5 ;
 mod ch6 ;
+mod ch7 ;
+mod ch8 ;
 
 fn main() {
 //   ch1::hello::main() ;
@@ -145,6 +147,22 @@ fn _seahorse_main(){
             .action(|c: &Context|{
 //                ch6::arrays::main() ;
                 ch6::strings::main() ;
+            })
+        )
+        .command(
+            Command::new("ch7")
+                .usage("cargo run -p srqc ch7")
+            .description("深入浅出第七章")
+            .action(|c: &Context|{
+                ch7::pattern_destructure::main() ;
+            })
+        )
+        .command(
+            Command::new("ch8")
+                .usage("cargo run -p srqc ch8")
+            .description("深入浅出第八章")
+            .action(|c: &Context|{
+                ch8::main() ;
             })
         )
         ;

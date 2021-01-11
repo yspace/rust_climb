@@ -69,6 +69,8 @@ cargo run -p favorites 3rd-log
 - [  Writing an OS in Rust series](https://github.com/phil-opp/blog_os)
     用rust 写操作系统 https://os.phil-opp.com/
 
+- [rust-learning](https://github.com/ctjhoa/rust-learning)    
+
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)
 - [cargo]()
@@ -79,3 +81,15 @@ cargo run -p favorites 3rd-log
 ## todos
 - https://blog.ndepend.com/hexagonal-architecture/ 六边形架构试试呦！
 - 
+
+## 杂项
+- ssl错误：
+今天下载 cargo install starship     时报ssl错误 找到网上的解决方案 管用呀
+  > 解决方案：
+    在~/.cargo/config中加入
+     
+    [http]
+    check-revoke = false
+    
+    或者：
+    调置环境变量CARGO_HTTP_CHECK_REVOKE=false

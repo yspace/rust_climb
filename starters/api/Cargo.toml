@@ -9,7 +9,22 @@ edition = "2018"
 [dependencies]
 diesel = {version = "1.0.0", features = ["postgres"] }
 diesel_codegen = {version = "0.16.1", features = ["postgres"] }
+# 
+diesel_cli_ext = "0.3.6"
+
 dotenv = "0.10.1"
+r2d2 = "0.8.2"
+r2d2-diesel = "1.0.0"
+serde = "1.0.80"
+serde_derive  = "1.0.80"
+serde_json = "1.0.32"
+
+
+# [dependencies.rocket_contrib]
+# version = "0.4.0-dev"
+# default_features = false
+# features = [ "json", "serve"]
+
 
 # 小心编译diesel命令行程序时link 连接器找不到dll库 
 # https://github.com/diesel-rs/diesel/issues/1286
