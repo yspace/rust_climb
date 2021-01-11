@@ -1,0 +1,20 @@
+[package]
+name = "api"
+version = "0.1.0"
+authors = ["yiqing <yiqing_95@qq.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+diesel = {version = "1.0.0", features = ["postgres"] }
+diesel_codegen = {version = "0.16.1", features = ["postgres"] }
+dotenv = "0.10.1"
+
+# 小心编译diesel命令行程序时link 连接器找不到dll库 
+# https://github.com/diesel-rs/diesel/issues/1286
+# 都试试  不行了就重启后在试试 环境变量那里是关键点 
+# 加PATH里： C:\Program Files\PostgreSQL\13\bin|C:\Program Files\PostgreSQL\13\lib 两个都加进去
+# [target.x86_64-pc-windows-msvc.pq]
+# rustc-link-search = ["C:\\Program Files\\PostgreSQL\\13\\lib"]
+# rustc-link-lib = ["libpq"]

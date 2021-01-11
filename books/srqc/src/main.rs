@@ -1,5 +1,14 @@
+//#[allow(dead_code)]
+//或者你添加一个条箱级别（在你的主箱子里），注意! ：
+#![allow(dead_code)]
+#![allow(unused_variables)]
+
 mod ch1 ;
 mod ch2 ;
+mod ch3 ;
+mod ch4 ;
+mod ch5 ;
+mod ch6 ;
 
 fn main() {
 //   ch1::hello::main() ;
@@ -102,7 +111,132 @@ fn _seahorse_main(){
             })
 
         )
+        .command(
+            Command::new("ch3")
+                .usage("cargo run -p srqc ch3")
+            .description("深入浅出第三章")
+            .action(|c: &Context|{
+                ch3::expression::main() ;
+                ch3::if_else::main() ;
+                ch3::while_stmt::main() ;
+                ch3::for_loop::main() ;
+            })
+        )
+        .command(
+            Command::new("ch4")
+                .usage("cargo run -p srqc ch4")
+            .description("深入浅出第四章")
+            .action(|c: &Context|{
+                ch4::func::main() ;
+            })
+        )
+        .command(
+            Command::new("ch5")
+                .usage("cargo run -p srqc ch5")
+            .description("深入浅出第五章")
+            .action(|c: &Context|{
+                ch5::traits::main() ;
+            })
+        )
+        .command(
+            Command::new("ch6")
+                .usage("cargo run -p srqc ch6")
+            .description("深入浅出第六章")
+            .action(|c: &Context|{
+//                ch6::arrays::main() ;
+                ch6::strings::main() ;
+            })
+        )
         ;
 
     app.run(args);
+}
+
+
+pub mod cli {
+    use whale::util::runner::* ;
+    use std::env ;
+
+    pub  fn get_route(name: String) -> Option<String> {
+//        let args: Vec<String>  = env::args().collect() ;
+//
+//        let mut idx = 0 ;
+//        for arg in &args {
+//            if name == arg {
+//                return Some(args[idx+1]. clone()) ;
+//            }
+//
+//            idx +=1 ;
+//        }
+
+        None
+    }
+
+    pub trait CliRunner{
+
+        fn run_route(&mut self , r: String);
+    }
+
+    impl CliRunner for Runner{
+        fn run_route(&mut self , r: String) {
+            println!("run route: {}", r) ;
+        }
+    }
+
+}
+
+use std::collections::HashMap;
+#[derive(Default)]
+struct Runner {
+    // 参考：https://github.com/redox-os/orbtk/.../crates/api/src/widget_base/registry.rs
+    funcs: HashMap<  String ,  Box<dyn Fn()> >
+}
+
+impl Runner{
+    /// Creates a service registry with an empty Registry map.
+    pub fn new() -> Self {
+        Self::default()
+    }
+    pub fn init(){
+
+    }
+    pub fn run(){
+
+    }
+
+    pub fn add_case(&mut self, key: impl Into<String>, func:   Box<dyn Fn()> ){
+        self.funcs.insert(key.into(), func) ;
+    }
+    pub fn get_case(&self, key: &str) -> Option< &Box<dyn Fn() > > {
+        let func = self.funcs
+            .get(&key.to_string()) ;
+//            .unwrap_or_else(|| panic!("Registry.get(): key: {} could not be found.", key))
+
+        match func {
+            Some(f) =>  Some(f),
+            None => None ,
+        }
+
+    }
+}
+
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+
+    #[test]
+    fn runner_get() {
+        let mut runner = Runner::new();
+        fn one(){
+            println!("one called") ;
+        }
+        runner.add_case("one", Box::new(one)) ;
+
+        assert!(runner.get_case ("one").is_some());
+        //  runner.get_case("one").unwrap()() ;
+    }
+
 }

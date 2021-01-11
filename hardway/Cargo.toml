@@ -1,19 +1,10 @@
 [package]
-name = "favorites"
+name = "hardway"
 version = "0.1.0"
 authors = ["yiqing <yiqing_95@qq.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-
 [dependencies]
-clap = "3.0.0-beta.2"
-#seahorse = "1.0.0"
-
-log = "0.4"
-pretty_env_logger = "0.4.0"
-dotenv = "0.15.0"
-
-#
-url = "2.2.0"
+seahorse = "1.1"
