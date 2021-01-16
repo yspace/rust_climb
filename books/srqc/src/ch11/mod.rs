@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 pub mod ownerships ;
 
 pub fn main(){

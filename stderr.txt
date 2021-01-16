@@ -1,0 +1,31 @@
+   Compiling colored v1.9.3
+   Compiling catsay v0.1.0 (F:\workspaces\rust_space\rust_climb\catsay)
+error[E0425]: cannot find value `ꀀmessage` in this scope
+  --> catsay\src\main.rs:25:24
+   |
+25 |          println!("{}",ꀀmessage.bright_yellow().underline()
+   |                        ^^^^^^^^^ help: a local variable with a similar name exists: `message`
+
+error[E0658]: non-ascii idents are not fully supported
+  --> catsay\src\main.rs:25:24
+   |
+25 |          println!("{}",ꀀmessage.bright_yellow().underline()
+   |                        ^^^^^^^^^
+   |
+   = note: see issue #55467 <https://github.com/rust-lang/rust/issues/55467> for more information
+
+warning: identifier contains uncommon Unicode codepoints
+  --> catsay\src\main.rs:25:24
+   |
+25 |          println!("{}",ꀀmessage.bright_yellow().underline()
+   |                        ^^^^^^^^^
+   |
+   = note: `#[warn(uncommon_codepoints)]` on by default
+
+error: aborting due to 2 previous errors
+
+Some errors have detailed explanations: E0425, E0658.
+For more information about an error, try `rustc --explain E0425`.
+error: could not compile `catsay`.
+
+To learn more, run the command again with --verbose.
