@@ -129,9 +129,47 @@ let point = Point3d{z: 1, x: 2, ..default()};
 
 }
 
-fn learn_type_recursive(){
-    struct Recursive{
-        data: i32 ,
-        rec: Box<Recursive>,
+fn learn_enum(){
+    enum Number{
+        Int(i32),
+        Float(f32),
+    }
+
+    fn read_num(num: &Number){
+        match num{
+            &Number::Int(v)=>{
+                println!("Integer {}", v);
+            },
+            &Number::Float(v)=>{
+                println!("Float {}", v) ;
+            }
+        }
+    }
+
+    // main
+    let n: Number = Number::Int(10);
+    read_num(&n);
+
+    // 打印下内存大小
+    println!("Size of Number {}", std::mem::size_of::<Number>());
+
+    {
+        enum Message{
+            Quit,
+            ChangeColor(i32, i32, i32),
+            Move{x: i32, y: i32},
+            Write(String),
+        }
+        let x: Message = Message::Move{ x: 3, y: 4};
+
+        enum BoardGameTurn{
+            Move{squares: i32},
+            Pass,
+        }
+
+        let y: BoardGameTurn = BoardGameTurn::Move{
+            squares: 1,
+        };
+
     }
 }

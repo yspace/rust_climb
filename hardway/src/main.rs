@@ -16,18 +16,18 @@ fn _seahorse_main(){
         .author(env!("CARGO_PKG_AUTHORS"))
         .version(env!("CARGO_PKG_VERSION"))
         .usage("cli [args]")
-        .action(|c| println!("Hello, {:?}", c.args))
+        .action(|_c| println!("Hello, {:?}", c.args))
         .command( Command::new("help")
             .description("need help?")
             .alias("h")
             .usage("cli help(h) [...]")
-            .action(|c: &Context| println!("{:?}", c.args)))
+            .action(|_c: &Context| println!("{:?}", c.args)))
 
         .command(
             Command::new("std-io")
                 .usage("cargo run -p hardway std-io")
                 .description("rust的输入和格式化输出")
-                .action(|c: &Context|{
+                .action(|_c: &Context|{
                     use std::io;
                     println!("请输入姓名:");
                     let mut name = String::new();
@@ -37,7 +37,7 @@ fn _seahorse_main(){
                     println!("你好! {}", name);
                 })
         )
-        ;
+                
 
     app.run(args);
 }

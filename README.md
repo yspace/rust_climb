@@ -1,6 +1,57 @@
 # rust_climb
 learn rust the hard way
 
+## cargo 走代理
+
+https://blog.csdn.net/bu2_int/article/details/79758847
+>  在 C:\Users\用户名\.cargo 下创建 config 文件内容为
+
+    [http]
+    proxy = "127.0.0.1:1080"
+
+    [https]
+    proxy = "127.0.0.1:1080"
+
+    注意走代理是要全局配置的，在单个项目里的 cargo.toml 文件里配代理是没用的
+
+## rustup 走 代理
+
+没试过 网上随便找的^-^
+
+> 不推荐使用 步骤如下：
+1. 打开Powershell（注意不是cmd）
+2. 输入以下文本
+
+$proxy='http://127.0.0.1:1080' 
+
+$ENV:HTTP_PROXY=$proxy 
+$ENV:HTTPS_PROXY=$proxy
+
+.\rustup-init.exe
+proxy为代理地址
+
+
+需要注意下面这个方法不适用于PowerShell， 只适用于默认的CMD命令提示符。
+>
+    Windows 终端使用代理
+    # 使用 http 类型代理
+    set http_proxy=http://127.0.0.1:8484
+    set https_proxy=http://127.0.0.1:8484
+
+    # 使用 socks 类型代理
+    netsh winhttp set proxy proxy-server="socks=127.0.0.1:8484" bypass-list="localhost"
+    netsh winhttp show proxy
+    netsh winhttp reset proxy
+
+    # 使用 socks 类型代理
+    set http_proxy=socks5://127.0.0.1:8484
+    set https_proxy=socks5://127.0.0.1:8484
+
+这个好用(当前会话管用) ：
+
+>   win10 进入cmd输入：
+    set ALL_PROXY=socks5://127.0.0.1:1080
+    然后就可以在代理终端使用代理了。    
 
 ## 运行某个项目
 
