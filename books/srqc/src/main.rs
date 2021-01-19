@@ -13,6 +13,8 @@ mod ch7 ;
 mod ch8 ;
 mod ch9 ;
 mod ch11 ;
+mod ch12 ;
+mod ch13 ;
 
 fn main() {
 //   ch1::hello::main() ;
@@ -181,6 +183,22 @@ fn _seahorse_main(){
             .description("深入浅出第11章：所有权和移动")
             .action(|c: &Context|{
                 ch11::main() ;
+            })
+        )
+        .command(
+            Command::new("ch12")
+                .usage("cargo run -p srqc ch12")
+            .description("深入浅出第12章：所有权和移动")
+            .action(|c: &Context|{
+                ch12::main() ;
+            })
+        )
+        .command(
+            Command::new("ch13")
+                .usage("cargo run -p srqc ch13")
+            .description("深入浅出第12章：借用检查")
+            .action(|c: &Context|{
+                ch13::main() ;
             })
         )
         ;
