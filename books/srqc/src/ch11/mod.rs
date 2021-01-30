@@ -1,4 +1,7 @@
+pub mod ownerships ;
+
 pub fn main(){
+    ownerships::main() ;
     destructor() ;
     mannually_drop() ;
 }

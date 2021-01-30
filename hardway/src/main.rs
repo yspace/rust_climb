@@ -1,4 +1,7 @@
 
+mod threads ;
+mod strings ;
+
 fn main() {
      _seahorse_main();
 
@@ -16,18 +19,18 @@ fn _seahorse_main(){
         .author(env!("CARGO_PKG_AUTHORS"))
         .version(env!("CARGO_PKG_VERSION"))
         .usage("cli [args]")
-        .action(|_c| println!("Hello, {:?}", c.args))
+        .action(|c| println!("Hello, {:?}", c.args))
         .command( Command::new("help")
             .description("need help?")
             .alias("h")
             .usage("cli help(h) [...]")
-            .action(|_c: &Context| println!("{:?}", c.args)))
+            .action(|c: &Context| println!("{:?}", c.args)))
 
         .command(
             Command::new("std-io")
                 .usage("cargo run -p hardway std-io")
                 .description("rust的输入和格式化输出")
-                .action(|_c: &Context|{
+                .action(|c: &Context|{
                     use std::io;
                     println!("请输入姓名:");
                     let mut name = String::new();
@@ -37,7 +40,23 @@ fn _seahorse_main(){
                     println!("你好! {}", name);
                 })
         )
-                
+        .command(
+            Command::new("threads")
+                .usage("cargo run -p hardway threads")
+                .description("rust 中线程的基本使用")
+                .action(|c: &Context|{
+                    threads::main() ;
+                })
+        )
+        .command(
+            Command::new("strings")
+                .usage("cargo run -p hardway strings")
+                .description("rust 中字符串的基本使用")
+                .action(|_c: &Context|{
+                    strings::main() ;
+                })
+        )
+        ;
 
     app.run(args);
 }
