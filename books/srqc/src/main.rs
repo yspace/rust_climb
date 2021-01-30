@@ -10,7 +10,9 @@ mod ch4 ;
 mod ch5 ;
 mod ch6 ;
 mod ch7 ;
-mod ch8 ;
+// mod ch8 ;
+mod ch11 ;
+mod ch12 ;
 mod ch9 ;
 mod ch11 ;
 mod ch12 ;
@@ -163,12 +165,20 @@ fn _seahorse_main(){
                 ch7::pattern_destructure::main() ;
             })
         )
+        // .command(
+        //     Command::new("ch8")
+        //         .usage("cargo run -p srqc ch8")
+        //     .description("深入浅出第八章")
+        //     .action(|c: &Context|{
+        //         ch8::main() ;
+        //     })
+        // )
         .command(
-            Command::new("ch8")
-                .usage("cargo run -p srqc ch8")
-            .description("深入浅出第八章")
+            Command::new("ch11")
+                .usage("cargo run -p srqc ch11")
+            .description("深入浅出11章")
             .action(|c: &Context|{
-                ch8::main() ;
+                ch11::main() ;
             })
         )
         .command(

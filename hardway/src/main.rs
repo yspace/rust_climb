@@ -1,3 +1,4 @@
+mod iterators ;
 
 mod threads ;
 mod strings ;
@@ -24,8 +25,13 @@ fn _seahorse_main(){
             .description("need help?")
             .alias("h")
             .usage("cli help(h) [...]")
-            .action(|c: &Context| println!("{:?}", c.args)))
-
+   .command( Command::new("itr")
+            .description("iterators?")
+            .usage("cargo run -p hardway itr")
+            .action(|_c: &Context|{
+                println!("------------iterators -------------");
+                iterators::main() ;
+            }))
         .command(
             Command::new("std-io")
                 .usage("cargo run -p hardway std-io")
@@ -39,7 +45,7 @@ fn _seahorse_main(){
                     //必须使用占位符
                     println!("你好! {}", name);
                 })
-        )
+        );
         .command(
             Command::new("threads")
                 .usage("cargo run -p hardway threads")
