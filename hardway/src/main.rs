@@ -24,7 +24,7 @@ fn _seahorse_main(){
         .command( Command::new("help")
             .description("need help?")
             .alias("h")
-            .usage("cli help(h) [...]")
+            .usage("cli help(h) [...]"))
    .command( Command::new("itr")
             .description("iterators?")
             .usage("cargo run -p hardway itr")
@@ -45,7 +45,7 @@ fn _seahorse_main(){
                     //必须使用占位符
                     println!("你好! {}", name);
                 })
-        );
+        )
         .command(
             Command::new("threads")
                 .usage("cargo run -p hardway threads")
