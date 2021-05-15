@@ -17,6 +17,7 @@ mod ch12 ;
 mod ch13 ;
 mod ch14 ;
 mod ch15 ;
+mod ch16 ;
 
 fn main() {
 //   ch1::hello::main() ;
@@ -217,6 +218,14 @@ fn _seahorse_main(){
             .description("深入浅出第15章：内部可变性")
             .action(|c: &Context|{
                 ch15::main() ;
+            })
+        )
+        .command(
+            Command::new("ch16")
+                .usage("cargo run -p srqc ch16")
+            .description("深入浅出第16章：解引用")
+            .action(|c: &Context|{
+                ch16::main() ;
             })
         )
         ;

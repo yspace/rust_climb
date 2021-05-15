@@ -70,6 +70,7 @@ cargo run -p favorites 3rd-log
     用rust 写操作系统 https://os.phil-opp.com/
 
 - [rust-learning](https://github.com/ctjhoa/rust-learning)    
+- [The Embedded Rust Book](https://rust-embedded.github.io/book/intro/index.html)
 
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)
@@ -93,3 +94,21 @@ cargo run -p favorites 3rd-log
     
     或者：
     调置环境变量CARGO_HTTP_CHECK_REVOKE=false
+
+### git 冲突
+`Your local changes to the following files would be overwritten by merge` 出现这个错误
+>
+    git pull 代码冲突解决方法：
+
+    1.  git stash ：保存本地代码版本
+
+    2.  git pull ： 更新代码
+
+    3.  git stash pop：合并冲突代码。
+
+    4 . 修改冲突的代码。
+
+方法二、放弃本地修改，直接覆盖
+
+1 git reset --hard
+2 git pull

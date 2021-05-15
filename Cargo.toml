@@ -1,4 +1,4 @@
-[workspace]
+[workspace] 
 members = [
     "catsay",
     "my_orbtk",
@@ -11,6 +11,8 @@ members = [
     "hardway",
     "starters/api",
     "learnings/intro2rust",
+    "learnings/hi_rocket",
+    "learnings/hi_usb",
 
 ]
 
