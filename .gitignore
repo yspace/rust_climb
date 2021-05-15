@@ -7,3 +7,5 @@
 /.idea
 /.vs
 /.vscode
+/Cargo.lock
+

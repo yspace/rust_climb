@@ -1,3 +1,4 @@
+mod iterators ;
 
 mod threads ;
 mod strings ;
@@ -23,9 +24,14 @@ fn _seahorse_main(){
         .command( Command::new("help")
             .description("need help?")
             .alias("h")
-            .usage("cli help(h) [...]")
-            .action(|c: &Context| println!("{:?}", c.args)))
-
+            .usage("cli help(h) [...]"))
+   .command( Command::new("itr")
+            .description("iterators?")
+            .usage("cargo run -p hardway itr")
+            .action(|_c: &Context|{
+                println!("------------iterators -------------");
+                iterators::main() ;
+            }))
         .command(
             Command::new("std-io")
                 .usage("cargo run -p hardway std-io")
@@ -50,7 +56,7 @@ fn _seahorse_main(){
         )
         .command(
             Command::new("strings")
-                .usage("cargo run -p hardway -- strings")
+                .usage("cargo run -p hardway strings")
                 .description("rust 中字符串的基本使用")
                 .action(|_c: &Context|{
                     strings::main() ;

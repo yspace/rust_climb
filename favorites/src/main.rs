@@ -76,6 +76,12 @@ fn main() {
                 .author("yiqing.") //
                 ,
         )
+        .subcommand(
+            App::new("3rd-reqwest") //
+                .about(" HTTP Client for Rust.") //
+                .author("yiqing.") //
+                ,
+        )
         .get_matches();
 
     // You can check if a subcommand was used like normal
@@ -111,8 +117,19 @@ fn main() {
 
 
         } ,
+        Some("3rd-reqwest") =>{
+            // use awesome_lib ;
+            println!("reqwest lib");
+
+
+        } ,
 
         None => println!("No subcommand was used"),
+        _ => println!("Some other subcommand was used"),
+    }
+
+    // Continued program logic goes here...
+}        None => println!("No subcommand was used"),
         _ => println!("Some other subcommand was used"),
     }
 
