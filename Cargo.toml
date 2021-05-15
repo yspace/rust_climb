@@ -14,6 +14,8 @@ members = [
     "learnings/hi_rocket",
     "learnings/hi_usb",
 
+    # 准备自己实现一个验证库 以便后期隔离出去
+    "crates/validation"
 ]
 
 default-members = ["catsay"]

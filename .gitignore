@@ -9,3 +9,5 @@
 /.vscode
 /Cargo.lock
 
+/crates/validation
+/crates/validation/*
