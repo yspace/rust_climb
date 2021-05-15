@@ -56,7 +56,7 @@ fn _seahorse_main(){
         )
         .command(
             Command::new("strings")
-                .usage("cargo run -p hardway strings")
+                .usage("cargo run -p hardway strings") //macos: cargo run -p hardway -- strings
                 .description("rust 中字符串的基本使用")
                 .action(|_c: &Context|{
                     strings::main() ;
