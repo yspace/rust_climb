@@ -1,16 +1,16 @@
 [workspace] 
 members = [
     "catsay",
-    "my_orbtk",
-    "numbers",
-    "favorites",
-    "books/srqc",
-    "books/fullstack",
+    # "my_orbtk",
+    # "numbers",
+    # "favorites",
+    #  "books/srqc",
+    # "books/fullstack",
     # "books/design_patterns",
     "whale",
     "hardway",
-    "starters/api",
-    "learnings/intro2rust",
+    # "starters/api",
+    # "learnings/intro2rust",
     # "learnings/hi_rocket",
     # "learnings/hi_usb",
 

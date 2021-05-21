@@ -128,10 +128,5 @@ fn main() {
         _ => println!("Some other subcommand was used"),
     }
 
-    // Continued program logic goes here...
-}        None => println!("No subcommand was used"),
-        _ => println!("Some other subcommand was used"),
-    }
 
-    // Continued program logic goes here...
 }
