@@ -7,6 +7,7 @@ members = [
     #  "books/srqc",
     # "books/fullstack",
     # "books/design_patterns",
+    "books/rp4b",
     "whale",
     "hardway",
     # "starters/api",
