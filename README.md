@@ -112,3 +112,10 @@ cargo run -p favorites 3rd-log
 
 1 git reset --hard
 2 git pull
+
+### blocking waiting for file lock on package cache lock
+
+- clean the cache dir:
+> rm ~/.cargo/.package-cache
+
+- 使用代理
