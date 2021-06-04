@@ -1,2 +1,1 @@
-
-pub mod types_and_values ;
+pub mod types_and_values;

@@ -1,4 +1,4 @@
-use mini_redis::{client, Result} ;
+use mini_redis::{client, Result};
 
 #[tokio::main]
 pub async fn main() -> Result<()> {
@@ -10,39 +10,37 @@ pub async fn main() -> Result<()> {
 
     // println!("got value from the server; result={:?}",result) ;
 
-
     // ## Using async/await
 
-    using_async_await::main().await ;
+    using_async_await::main().await;
 
     Ok(())
-    
 }
 
-mod using_async_await{
+mod using_async_await {
     /**
-     * Async functions are called like any other Rust function. 
-     * However, calling these functions does not result in the function body executing. 
-     * Instead, calling an async fn returns a value representing the operation. 
-     * This is conceptually analogous to a zero-argument closure. 
-     * To actually run the operation, you should use the .await operator on the return value.
+    * Async functions are called like any other Rust function.
+    * However, calling these functions does not result in the function body executing.
+    * Instead, calling an async fn returns a value representing the operation.
+    * This is conceptually analogous to a zero-argument closure.
+    * To actually run the operation, you should use the .await operator on the return value.
 
 
-     * 
-     */
+    *
+    */
     async fn say_world() {
-        println!("world") ;
+        println!("world");
     }
 
     pub async fn main() {
         //  // Calling `say_world()` does not execute the body of `say_world()`.
-        let op = say_world() ;
+        let op = say_world();
 
         // This println! comes first
-        println!("hello") ;
+        println!("hello");
 
         // Calling `.await` on `op` starts executing `say_world`.
 
-        op.await ;
+        op.await;
     }
 }

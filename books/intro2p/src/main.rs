@@ -1,7 +1,7 @@
-mod chapters ;
+mod chapters;
 
 fn main() {
     println!("Hello, world!");
 
-    chapters::types_and_values::main() ;
+    chapters::types_and_values::main();
 }

@@ -1,3 +1,6 @@
+use crossterm::event::KeyEvent;
+use crossterm::event::KeyCode;
+
 use crossterm::event::DisableMouseCapture;
 use crossterm::event::EnableMouseCapture;
 use std::io::{stdout, Write};
@@ -23,16 +26,35 @@ fn main() -> Result<()> {
     // or using functions
     stdout()
         .execute(SetForegroundColor(Color::Blue))?
-        .execute(SetBackgroundColor(Color::Red))?
-        .execute(Print("Styled text here."))?
-        .execute(ResetColor)?
-        .execute(EnableMouseCapture)?;
+        // .execute(SetBackgroundColor(Color::Red))?
+        // .execute(Print("Styled text here."))?
+        .execute(Print(">"))?
+        .execute(ResetColor)? ;
+        // .execute(EnableMouseCapture)?;
     
         terminal::enable_raw_mode()?; 
        
-        match read()? {
-            Event::Key(event) => {
-                println!("{:?}", event) ;
+        let mut buffer = String::new() ;
+
+        loop {
+            match read()? {
+            Event::Key(KeyEvent{code, modifiers}) => {
+                // println!("{:?} , {:?}", code,modifiers) ;
+                match code {
+                    KeyCode::Char(c) => {
+                        //stdout().write_all(buffer.as_bytes())? ;
+                        let mut char_buffer = [0; 4] ;
+                        let bytes = c.encode_utf8(&mut char_buffer).as_bytes() ;
+                        stdout().write_all(&bytes)? ;
+                        stdout().flush()? ;
+                        
+                        buffer.push(c) ;
+                    }
+                    KeyCode::Enter => {
+                        break ;
+                    }
+                    _ => {}
+                }
             }
             Event::Mouse(event) => {
                 println!("{:?}", event) ;
@@ -41,8 +63,11 @@ fn main() -> Result<()> {
                 println!("width: {}, height:{}", width,height) ;
             }
         }
+ 
+        }
 
-        stdout().execute(DisableMouseCapture)?;
-
+       println!("our buffer: {}", buffer) ;
+        // stdout().execute(DisableMouseCapture)?;
+       terminal::disable_raw_mode()? ;
     Ok(())
 }
