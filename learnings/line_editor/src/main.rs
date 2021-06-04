@@ -1,6 +1,7 @@
 use crossterm::cursor::MoveLeft;
 use crossterm::event::KeyEvent;
 use crossterm::event::KeyCode;
+use crossterm::QueueableCommand;
 
 use crossterm::event::DisableMouseCapture;
 use crossterm::event::EnableMouseCapture;
@@ -23,9 +24,9 @@ fn main() -> Result<()> {
     //     Print("Styled text here."),
     //     ResetColor
     // )?;
-
+    let mut stdout = stdout() ;
     // or using functions
-    stdout()
+    stdout
         .execute(SetForegroundColor(Color::Blue))?
         // .execute(SetBackgroundColor(Color::Red))?
         // .execute(Print("Styled text here."))?
@@ -44,21 +45,30 @@ fn main() -> Result<()> {
                 match code {
                     KeyCode::Char(c) => {
                         //stdout().write_all(buffer.as_bytes())? ;
-                        let mut char_buffer = [0; 4] ;
-                        let bytes = c.encode_utf8(&mut char_buffer).as_bytes() ;
-                        stdout().write_all(&bytes)? ;
-                        stdout().flush()? ;
+                        // let mut char_buffer = [0; 4] ;
+                        // let bytes = c.encode_utf8(&mut char_buffer).as_bytes() ;
+                        // stdout.write_all(&bytes)? ;
+                        stdout.queue(Print(c))?; 
+                        stdout.flush()? ;
                         
                         buffer.push(c) ;
                     }
                     KeyCode::Backspace => {
                         if !buffer.is_empty() {
                             buffer.pop() ;
-                            stdout().execute(MoveLeft(1))? ;
-                            // stdout().write_all(&[b' '] )? ;
-                            stdout().write_all( b" " )? ;
-                            stdout().execute(MoveLeft(1))? ;
-                            stdout().flush()? ;
+                            stdout
+                            .queue(
+                                MoveLeft(1)
+                            )?
+                            .queue(
+                                Print(" ")
+                            )?
+                            .queue(
+                                MoveLeft(1)
+                            )? ;
+                            
+                           
+                            stdout.flush()? ;
                         }
                     }
                     KeyCode::Enter => {
