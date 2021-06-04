@@ -1,3 +1,7 @@
 Line editor
 
 x Get crossterm working
+x Line input
+x Printing a prompt
+x Raw input mode
+* Backspace support 

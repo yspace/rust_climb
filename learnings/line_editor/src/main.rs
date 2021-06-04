@@ -1,3 +1,4 @@
+use crossterm::cursor::MoveLeft;
 use crossterm::event::KeyEvent;
 use crossterm::event::KeyCode;
 
@@ -49,6 +50,16 @@ fn main() -> Result<()> {
                         stdout().flush()? ;
                         
                         buffer.push(c) ;
+                    }
+                    KeyCode::Backspace => {
+                        if !buffer.is_empty() {
+                            buffer.pop() ;
+                            stdout().execute(MoveLeft(1))? ;
+                            // stdout().write_all(&[b' '] )? ;
+                            stdout().write_all( b" " )? ;
+                            stdout().execute(MoveLeft(1))? ;
+                            stdout().flush()? ;
+                        }
                     }
                     KeyCode::Enter => {
                         break ;
