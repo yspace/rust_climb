@@ -5,3 +5,5 @@ x Line input
 x Printing a prompt
 x Raw input mode
 x Backspace support 
+x Exiting 
+* more features ...
