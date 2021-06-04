@@ -8,12 +8,15 @@ members = [
     # "books/fullstack",
     # "books/design_patterns",
     "books/rp4b",
+    "books/intro2p",
     "whale",
     "hardway",
     # "starters/api",
     # "learnings/intro2rust",
     # "learnings/hi_rocket",
     # "learnings/hi_usb",
+    "learnings/my-redis",
+    "learnings/line_editor",
 
     # 准备自己实现一个验证库 以便后期隔离出去
     # "crates/validation"

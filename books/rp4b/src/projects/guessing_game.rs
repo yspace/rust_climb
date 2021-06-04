@@ -1,7 +1,7 @@
 extern crate rand;
-use std::io;
-use rand::Rng ;
+use rand::Rng;
 use std::cmp::Ordering;
+use std::io;
 
 pub fn main() {
     println!("Guess the number!");
@@ -12,30 +12,29 @@ pub fn main() {
     loop {
         println!("please enter your hunch.");
 
-        let mut hunch = String::new() ;
-    
-        io::stdin().read_line(&mut hunch)
-        .ok()
-        .expect("Failed to read line") ;
-    
+        let mut hunch = String::new();
+
+        io::stdin()
+            .read_line(&mut hunch)
+            .ok()
+            .expect("Failed to read line");
+
         let hunch: u32 = match hunch.trim().parse() {
-            Ok(num) => num ,
-            Err(_) => continue ,
-        } ;
+            Ok(num) => num,
+            Err(_) => continue,
+        };
         // .ok()
         // .expect("Please enter a number!") ;
-    
-        println!("Your hunch was: {}", hunch) ;
-    
+
+        println!("Your hunch was: {}", hunch);
+
         match hunch.cmp(&secret_number) {
             Ordering::Less => println!("Very small"),
             Ordering::Greater => println!("Very big!"),
             Ordering::Equal => {
                 println!("You won!");
-                break ;
+                break;
             }
         }
-    
     }
-    
 }

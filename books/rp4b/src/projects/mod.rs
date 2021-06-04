@@ -1,3 +1,2 @@
-
-pub mod guessing_game ;
-pub mod philosophers ;
+pub mod guessing_game;
+pub mod philosophers;

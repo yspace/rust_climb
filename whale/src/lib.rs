@@ -1,7 +1,5 @@
-
 pub mod core;
 pub mod util;
-
 
 #[cfg(test)]
 mod tests {
