@@ -1,3 +1,4 @@
+use std::io::Stdout;
 use crossterm::cursor::MoveToColumn;
 use crossterm::terminal::ScrollUp;
 use crossterm::cursor::MoveToNextLine;
@@ -16,6 +17,19 @@ use crossterm::{
     style::{Color, Print, ResetColor, SetBackgroundColor, SetForegroundColor},
     terminal, ExecutableCommand, Result,
 };
+
+
+fn print_message(stdout: &mut Stdout, msg: &str) -> Result<()> {
+    stdout.queue(ScrollUp(1))?
+    .queue(MoveToColumn(1))?
+    // .queue(Print("Our buffer: "))?
+    .queue(Print(msg))?
+    .queue(ScrollUp(1))?
+    .queue(MoveToColumn(1))? ;
+    stdout.flush()?;
+    
+    Ok(())
+}
 
 fn main() -> Result<()> {
     // using the macro
@@ -73,13 +87,10 @@ fn main() -> Result<()> {
                                 // println!("Our buffer: {}", buffer) ;
                                 
                                 // stdout.queue(MoveToNextLine(1))?
-                                stdout.queue(ScrollUp(1))?
-                                .queue(MoveToColumn(1))?
-                                .queue(Print("Our buffer: "))?
-                                .queue(Print(&buffer))?
-                                .queue(ScrollUp(1))?
-                                .queue(MoveToColumn(1))? ;
-                                stdout.flush()?;
+                                
+                                print_message(& mut stdout,
+                                    &format!("Our buffoer {}",buffer)
+                                )? ;
                                 
                                 buffer.clear() ;
                                 break 'input;
