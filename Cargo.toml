@@ -17,6 +17,7 @@ members = [
     # "learnings/hi_usb",
     "learnings/my-redis",
     "learnings/line_editor",
+    "learnings/numbers",
 
     # 准备自己实现一个验证库 以便后期隔离出去
     # "crates/validation"

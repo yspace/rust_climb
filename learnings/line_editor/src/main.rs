@@ -1,3 +1,4 @@
+use crossterm::cursor::MoveRight;
 use std::io::Stdout;
 use crossterm::cursor::MoveToColumn;
 use crossterm::terminal::ScrollUp;
@@ -96,14 +97,28 @@ fn main() -> Result<()> {
                                 break 'input;
                             }
                         }
+                        KeyCode::Left => {
+                            // print_message(&mut stdout,"Left!")? ;
+                            stdout.queue(
+                                MoveLeft(1)
+                            )?; 
+                            stdout.flush()? ;
+                        }
+                        KeyCode::Right => {
+                            // print_message(&mut stdout,"Right!")? ;
+                            stdout.queue(
+                                MoveRight(1)
+                            )?; 
+                            stdout.flush()? ;
+                        }
                         _ => {}
                     }
                 }
                 Event::Mouse(event) => {
-                    println!("{:?}", event);
+                    print_message(&mut stdout, &format!("{:?}", event))?;
                 }
                 Event::Resize(width, height) => {
-                    println!("width: {}, height:{}", width, height);
+                    print_message(&mut stdout , &format!("width: {}, height:{}", width, height))? ;
                 }
             }
         }
