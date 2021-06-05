@@ -18,6 +18,7 @@ members = [
     "learnings/my-redis",
     "learnings/line_editor",
     "learnings/numbers",
+    "learnings/hi_regex",
 
     # 准备自己实现一个验证库 以便后期隔离出去
     # "crates/validation"

@@ -1,0 +1,44 @@
+#![feature(test)]
+ extern crate test;
+
+ ​use test::Bencher;
+
+ ​#[cfg(test)]
+ use super::*;
+
+ ​fn pcre2_is_match() {
+     let result = pcre2::bytes::Regex::new(r#"he.{0,2}o"#)
+         .unwrap()
+         .is_match(b"hello,world");
+ }
+ ​fn regex_is_match() {
+     let result = regex::Regex::new(r#"he.{0,2}o"#)
+         .unwrap()
+         .is_match("hello,world");
+ }
+ ​fn fancy_regex_is_match() {
+     let result = fancy_regex::Regex::new(r#"he.{0,2}o"#)
+         .unwrap()
+         .is_match("hello,world");
+ }
+ ​fn regex_automata_regex_is_match() {
+     let result = regex_automata::Regex::new(r#"he.{0,2}o"#)
+         .unwrap()
+         .is_match(b"hello,world");
+ }
+ #[bench]
+ fn bench_pcre2_is_match(b: &mut Bencher) {
+     b.iter(|| pcre2_is_match());
+ }
+ ​#[bench]
+ fn bench_regex_is_match(b: &mut Bencher) {
+     b.iter(|| regex_is_match());
+ }
+ ​#[bench]
+ fn bench_fancy_regex_is_match(b: &mut Bencher) {
+     b.iter(|| fancy_regex_is_match());
+ }
+ ​#[bench]
+ fn bench_regex_automata_regex_is_match(b: &mut Bencher) {
+     b.iter(|| regex_automata_regex_is_match());
+ }
