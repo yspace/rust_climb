@@ -10,15 +10,14 @@ mod ch4 ;
 mod ch5 ;
 mod ch6 ;
 mod ch7 ;
-// mod ch8 ;
-mod ch11 ;
-mod ch12 ;
+mod ch8 ;
 mod ch9 ;
 mod ch11 ;
 mod ch12 ;
 mod ch13 ;
 mod ch14 ;
 mod ch15 ;
+mod ch16 ;
 
 fn main() {
 //   ch1::hello::main() ;
@@ -173,14 +172,7 @@ fn _seahorse_main(){
         //         ch8::main() ;
         //     })
         // )
-        .command(
-            Command::new("ch11")
-                .usage("cargo run -p srqc ch11")
-            .description("深入浅出11章")
-            .action(|c: &Context|{
-                ch11::main() ;
-            })
-        )
+       
         .command(
             Command::new("ch9")
                 .usage("cargo run -p srqc ch9")
@@ -227,6 +219,14 @@ fn _seahorse_main(){
             .description("深入浅出第15章：内部可变性")
             .action(|c: &Context|{
                 ch15::main() ;
+            })
+        )
+        .command(
+            Command::new("ch16")
+                .usage("cargo run -p srqc ch16")
+            .description("深入浅出第16章：解引用")
+            .action(|_c: &Context|{
+                ch16::main() ;
             })
         )
         ;

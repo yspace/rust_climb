@@ -10,6 +10,7 @@ members = [
     "whale",
     "hardway",
     "starters/api",
+    "starters/hi_rocket",
     "learnings/intro2rust",
 
 ]
