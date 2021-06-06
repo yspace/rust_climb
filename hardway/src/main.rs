@@ -1,8 +1,8 @@
 mod iterators;
 
+mod sized;
 mod strings;
 mod threads;
-mod sized;
 
 fn main() {
     _seahorse_main();
@@ -71,9 +71,7 @@ fn _seahorse_main() {
                 .action(|_c: &Context| {
                     sized::main();
                 }),
-        )
-        //
-        ;
+        );
 
     app.run(args);
 }

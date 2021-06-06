@@ -1,12 +1,12 @@
-use crossterm::cursor::MoveRight;
-use std::io::Stdout;
-use crossterm::cursor::MoveToColumn;
-use crossterm::terminal::ScrollUp;
-use crossterm::cursor::MoveToNextLine;
 use crossterm::cursor::MoveLeft;
+use crossterm::cursor::MoveRight;
+use crossterm::cursor::MoveToColumn;
+use crossterm::cursor::MoveToNextLine;
 use crossterm::event::KeyCode;
 use crossterm::event::KeyEvent;
+use crossterm::terminal::ScrollUp;
 use crossterm::QueueableCommand;
+use std::io::Stdout;
 
 use crossterm::event::DisableMouseCapture;
 use crossterm::event::EnableMouseCapture;
@@ -19,16 +19,16 @@ use crossterm::{
     terminal, ExecutableCommand, Result,
 };
 
-
 fn print_message(stdout: &mut Stdout, msg: &str) -> Result<()> {
-    stdout.queue(ScrollUp(1))?
-    .queue(MoveToColumn(1))?
-    // .queue(Print("Our buffer: "))?
-    .queue(Print(msg))?
-    .queue(ScrollUp(1))?
-    .queue(MoveToColumn(1))? ;
+    stdout
+        .queue(ScrollUp(1))?
+        .queue(MoveToColumn(1))?
+        // .queue(Print("Our buffer: "))?
+        .queue(Print(msg))?
+        .queue(ScrollUp(1))?
+        .queue(MoveToColumn(1))?;
     stdout.flush()?;
-    
+
     Ok(())
 }
 
@@ -42,20 +42,19 @@ fn main() -> Result<()> {
     //     ResetColor
     // )?;
     let mut stdout = stdout();
-    
 
     terminal::enable_raw_mode()?;
 
     let mut buffer = String::new();
 
-   'repl: loop {
+    'repl: loop {
         // print the prompt
         stdout
-        .execute(SetForegroundColor(Color::Blue))?
-        .execute(Print(">"))?
-        .execute(ResetColor)?;
+            .execute(SetForegroundColor(Color::Blue))?
+            .execute(Print(">"))?
+            .execute(ResetColor)?;
 
-       'input: loop {
+        'input: loop {
             match read()? {
                 Event::Key(KeyEvent { code, modifiers }) => {
                     // println!("{:?} , {:?}", code,modifiers) ;
@@ -83,33 +82,27 @@ fn main() -> Result<()> {
                         }
                         KeyCode::Enter => {
                             if buffer == "exit" {
-                                break 'repl ;
-                            }else{
+                                break 'repl;
+                            } else {
                                 // println!("Our buffer: {}", buffer) ;
-                                
+
                                 // stdout.queue(MoveToNextLine(1))?
-                                
-                                print_message(& mut stdout,
-                                    &format!("Our buffoer {}",buffer)
-                                )? ;
-                                
-                                buffer.clear() ;
+
+                                print_message(&mut stdout, &format!("Our buffoer {}", buffer))?;
+
+                                buffer.clear();
                                 break 'input;
                             }
                         }
                         KeyCode::Left => {
                             // print_message(&mut stdout,"Left!")? ;
-                            stdout.queue(
-                                MoveLeft(1)
-                            )?; 
-                            stdout.flush()? ;
+                            stdout.queue(MoveLeft(1))?;
+                            stdout.flush()?;
                         }
                         KeyCode::Right => {
                             // print_message(&mut stdout,"Right!")? ;
-                            stdout.queue(
-                                MoveRight(1)
-                            )?; 
-                            stdout.flush()? ;
+                            stdout.queue(MoveRight(1))?;
+                            stdout.flush()?;
                         }
                         _ => {}
                     }
@@ -118,7 +111,7 @@ fn main() -> Result<()> {
                     print_message(&mut stdout, &format!("{:?}", event))?;
                 }
                 Event::Resize(width, height) => {
-                    print_message(&mut stdout , &format!("width: {}, height:{}", width, height))? ;
+                    print_message(&mut stdout, &format!("width: {}, height:{}", width, height))?;
                 }
             }
         }
@@ -128,6 +121,6 @@ fn main() -> Result<()> {
     // stdout().execute(DisableMouseCapture)?;
     terminal::disable_raw_mode()?;
 
-    println!() ;
+    println!();
     Ok(())
 }

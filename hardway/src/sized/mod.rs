@@ -5,7 +5,7 @@ pub fn main() {
 
 // T  defaultly implement the  Sized trait by complier
 struct Foo<T>{
-    // Box is a pointer type , the T can be sized and non-sized 
+    // Box is a pointer type , the T can be sized and non-sized ,it doesn't matter !
     a:Box<T>,
     b:Box<T>,
 }
@@ -18,4 +18,14 @@ struct Foo2<T: ?Sized>{
 struct Bar{
     // fs:Foo<Fn(i32)>, // can't complied!
     fs:Foo2<Fn(i32)>, // 
+}
+
+// --------
+struct DstStruct {
+    count: i32,
+    data: [u8],
+   }
+struct GenericDstStruct<T: ?Sized> {
+    count: i32,
+    data: T,
 }

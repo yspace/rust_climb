@@ -2,7 +2,7 @@
 // A type defines a set of valid values and operations on these values.
 pub fn main() {
     atomic_primitive_types();
-    composite_primitive_types() ;
+    composite_primitive_types();
 }
 
 fn atomic_primitive_types() {
@@ -58,37 +58,36 @@ fn atomic_primitive_types() {
         print_mem_bytes(&c2);
 
         // ## str
-        let s1 = "hi china !" ;
-        let s0 = String::from("你好  世界") ;
-        let s2 = &s0 ;
-        println!("{}" , s1) ;
-        println!("{}" , s2) ;
-        fn str_fn(s: &str){
-            println!("str_fn: params is : {}", s) ;
+        let s1 = "hi china !";
+        let s0 = String::from("你好  世界");
+        let s2 = &s0;
+        println!("{}", s1);
+        println!("{}", s2);
+        fn str_fn(s: &str) {
+            println!("str_fn: params is : {}", s);
         }
-        str_fn(&s1) ;
-        str_fn(&s2) ;
+        str_fn(&s1);
+        str_fn(&s2);
     }
 }
 
-
-fn composite_primitive_types(){
+fn composite_primitive_types() {
     // Composite primitive types contain other types.
     {
         // Arrays and slices
         // Array [T; N]: contains N elements of the type T. For example:
 
-        let a1 = [0i32 ; 1] ;
-        println!("{:?}" , a1) ;
-        
-        let a2: [&str; 2] = ["hello" , "world"] ;
-        println!("{:#?}", a2) ;
+        let a1 = [0i32; 1];
+        println!("{:?}", a1);
+
+        let a2: [&str; 2] = ["hello", "world"];
+        println!("{:#?}", a2);
 
         // index operation
         assert_eq!(["Hello", "World"][1], "World");
 
         // Slice &[T]: contains a pointer to a range of elements in an array
-        //  whose elements have the type T. You may create a slice from an array 
+        //  whose elements have the type T. You may create a slice from an array
         // or another slice. For example:
         /*
         // A slice containing the elements (start, start + 1, ..., end - 1) in `array`
@@ -101,15 +100,13 @@ fn composite_primitive_types(){
             &array[..]
             // Same as &array[..]`
         */
-        let a = ["hello", "world"] ;
-        let mut s1 = &a[..] ;
-        println!("{:?}", s1) ;
-        let a2 = ["hello ","rust","world"] ;
-        s1 = &a2[..2] ;
-        println!("{:?}", s1) ;
+        let a = ["hello", "world"];
+        let mut s1 = &a[..];
+        println!("{:?}", s1);
+        let a2 = ["hello ", "rust", "world"];
+        s1 = &a2[..2];
+        println!("{:?}", s1);
         s1 = &a2[1..3];
-        println!("{:?}", s1) ;
-        
+        println!("{:?}", s1);
     }
 }
- 
