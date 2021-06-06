@@ -26,4 +26,18 @@ match arr {
 //     [a, b, c] => { /* this arm will apply */ }
 //     _ => { /* this wildcard is required, since the length is not known statically */ }
 // };
+
+  println!("first world of 'hello world' is {}", first_word(&"hello wrold".to_string())) ;
+
+}
+
+fn first_word(s: &String) -> &str {
+    let bytes = s.as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    &s[..]
 }
