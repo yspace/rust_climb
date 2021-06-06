@@ -3,6 +3,7 @@ mod iterators;
 mod sized;
 mod strings;
 mod threads;
+mod slices;
 
 fn main() {
     _seahorse_main();
@@ -67,11 +68,21 @@ fn _seahorse_main() {
         .command(
             Command::new("sized")
                 .usage("cargo run -p hardway sized") //macos: cargo run -p hardway -- sized
-                .description("rust 中字符串的基本使用")
+                .description("rust sized trait")
                 .action(|_c: &Context| {
                     sized::main();
                 }),
-        );
+        )
+        .command(
+            Command::new("slices")
+                .usage("cargo run -p hardway slices") //macos: cargo run -p hardway -- slices
+                .description("rust 切片")
+                .action(|_c: &Context| {
+                    slices::main();
+                }),
+        )
+        // 
+        ;
 
     app.run(args);
 }

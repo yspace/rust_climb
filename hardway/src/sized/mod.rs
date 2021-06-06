@@ -23,7 +23,7 @@ struct Bar{
 // --------
 struct DstStruct {
     count: i32,
-    data: [u8],
+    data: [u8], // last member is dst struct
    }
 struct GenericDstStruct<T: ?Sized> {
     count: i32,

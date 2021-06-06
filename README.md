@@ -95,6 +95,9 @@ cargo run -p favorites 3rd-log
     或者：
     调置环境变量CARGO_HTTP_CHECK_REVOKE=false
 
+- 查汇编码
+https://rust.godbolt.org/z/8dGbY8Pe1
+
 ### git 冲突
 `Your local changes to the following files would be overwritten by merge` 出现这个错误
 >
