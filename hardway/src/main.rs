@@ -1,9 +1,9 @@
 mod iterators;
 
 mod sized;
+mod slices;
 mod strings;
 mod threads;
-mod slices;
 
 fn main() {
     _seahorse_main();
@@ -80,9 +80,7 @@ fn _seahorse_main() {
                 .action(|_c: &Context| {
                     slices::main();
                 }),
-        )
-        // 
-        ;
+        );
 
     app.run(args);
 }

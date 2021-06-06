@@ -109,4 +109,27 @@ fn composite_primitive_types() {
         s1 = &a2[1..3];
         println!("{:?}", s1);
     }
+
+    {
+        // The tuple type (T1, T2, ..., Tn) contains a sequence of elements where each element may be a different type
+        // Empty tuple
+        let _ = ();
+        // Single-element tuple must end with `,` to distinguish it from a parenthesized expression
+        let _ = (1,);
+        // A tuple of two elements
+        let t = (1, "a");
+
+        println!("( {} , {}   )", t.0, t.1);
+
+        // The empty tuple (), also called the "unit type", is special. It has a single value () and is used to represent "no value". E.g., when an expression or function returns no value, it returns ().
+
+        assert_eq!({}, ());
+
+        /*
+        Properties of composite primitive types
+        Two array types [T1; N1] and [T2; N2] are considered to be identical if T1==T2 and N1==N2. Two tuple types (A1, A2, ..., An) and (B1, B2, ..., Bn) are considered to be identical if A1==B1, ..., An==Bn.
+
+        Composite primitive types automatically implement the Copy trait if all their constituent types implement the Copy trait.
+        */
+    }
 }
