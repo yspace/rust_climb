@@ -2,6 +2,7 @@ mod iterators;
 
 mod strings;
 mod threads;
+mod sized;
 
 fn main() {
     _seahorse_main();
@@ -62,7 +63,17 @@ fn _seahorse_main() {
                 .action(|_c: &Context| {
                     strings::main();
                 }),
-        );
+        )
+        .command(
+            Command::new("sized")
+                .usage("cargo run -p hardway sized") //macos: cargo run -p hardway -- sized
+                .description("rust 中字符串的基本使用")
+                .action(|_c: &Context| {
+                    sized::main();
+                }),
+        )
+        //
+        ;
 
     app.run(args);
 }
