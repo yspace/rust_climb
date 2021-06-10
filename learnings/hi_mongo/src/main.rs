@@ -45,10 +45,15 @@ fn do_it() -> Result<(), mongodb::error::Error> {
         },
     ];
 
+        // List the names of the collections in that database.
+    for collection_name in database.list_collection_names(None)? {
+        println!("collection: {}", collection_name);
+    }
     // Insert some books into the "mydb.books" collection.
     // collection.insert_many(docs.into(), None)?;
 
-    let cursor = collection.find(doc! { "author": "George Orwell" }, None)?;
+    // let cursor = collection.find(doc! { "author": "George Orwell" }, None)?;
+    let cursor = collection.find(doc! {  }, None)?;
     for result in cursor {
         // println!("title: {}", result?.title);
         println!("title: {:?}", result?);
