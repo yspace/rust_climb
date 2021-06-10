@@ -66,3 +66,45 @@ docker exec -it <container-id>|<contianer-name> /bin/bash
 then give us a virtual file tree system .
 
 we can use some restrict(受限的一些命令) cmd to view the content , ls  env  exit ... etc.
+
+
+## playing with mongodb
+
+~~~cmd
+
+docker pull mongo
+docker pull mongo-express
+~~~
+
+list networks 
+> docker network ls
+
+create a network 
+> docker network create mongo-network
+
+running a mongodb container 
+> docker run -p 27017:27017 -d  -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password --name mongodb --net mongo-network  mongo
+
+view the logs
+> docker logs mongodb
+
+### mongo web admin
+ https://hub.docker.com/_/mongo-express
+
+~~~
+    docker run   \
+    -d \
+    -p 8081:8081 \
+    --network mongo-network \
+    --name mongo-express \
+    -e ME_CONFIG_MONGODB_ADMINUSERNAME="admin" \
+    -e ME_CONFIG_MONGODB_ADMINPASSWORD="password" \
+    -e ME_CONFIG_MONGODB_SERVER="mongodb" \
+    mongo-express
+
+~~~
+
+view the logs
+>  docker logs mongo-express
+
+then go to the url [http://localhost:8081/](http://localhost:8081/)
