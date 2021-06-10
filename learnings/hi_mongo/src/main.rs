@@ -23,7 +23,9 @@ fn main() {
 }
 
 fn do_it() -> Result<(), mongodb::error::Error> {
-    let client = Client::with_uri_str("mongodb://localhost:27017")?;
+    // let client = Client::with_uri_str("mongodb://localhost:27017")?;
+    let client = Client::with_uri_str("mongodb://admin:password@localhost:27017")?;
+    
     let database = client.database("mydb");
     let collection = database.collection ("books");
 
