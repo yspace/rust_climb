@@ -139,10 +139,13 @@ services:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
       - ME_CONFIG_MONGODB_SERVER=mongodb
-volumes:
-  mongo-data:
-    driver: local
+ 
 ~~~
 
 there is no network mapping between cmd and composer file
 because the docker compose take care of creating a common Network!
+
+docker-compose cmd is installed with docker .
+
+apply the composer file:
+> docker-composer -f mongo.yaml up
