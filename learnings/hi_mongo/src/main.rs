@@ -27,7 +27,7 @@ fn do_it() -> Result<(), mongodb::error::Error> {
     let client = Client::with_uri_str("mongodb://admin:password@localhost:27017")?;
     
     let database = client.database("mydb");
-    let collection = database.collection ("books");
+    let collection = database.collection::<Book>("books");
 
     let docs = vec![
         // Book {
@@ -50,7 +50,7 @@ fn do_it() -> Result<(), mongodb::error::Error> {
         println!("collection: {}", collection_name);
     }
     // Insert some books into the "mydb.books" collection.
-    // collection.insert_many(docs.into(), None)?;
+    //collection.insert_many(docs, None)?;
 
     // let cursor = collection.find(doc! { "author": "George Orwell" }, None)?;
     let cursor = collection.find(doc! {  }, None)?;
