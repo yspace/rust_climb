@@ -106,5 +106,43 @@ view the logs
 
 view the logs
 >  docker logs mongo-express
+latest logs
+> docker logs mongo-express | tail 
 
 then go to the url [http://localhost:8081/](http://localhost:8081/)
+
+## docker composer
+
+docker-compose.yaml 
+~~~
+
+version: '3'
+services:
+  # my-app:
+  # image: ${docker-registry}/my-app:1.0
+  # ports:
+  # - 3000:3000
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongo-data:/data/db
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8080:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+volumes:
+  mongo-data:
+    driver: local
+~~~
+
+there is no network mapping between cmd and composer file
+because the docker compose take care of creating a common Network!
