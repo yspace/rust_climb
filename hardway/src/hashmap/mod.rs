@@ -1,8 +1,9 @@
 
 use std::collections::HashMap ;
-
+//
 pub fn main() {
 
+    // https://users.rust-lang.org/t/hashmap-of-string-fn/25071/10
     fn foo() {
         println!("foo is called") ;
     }

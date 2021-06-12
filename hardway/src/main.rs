@@ -5,6 +5,7 @@ mod slices;
 mod strings;
 mod threads;
 mod hashmap;
+mod funcs;
 
 fn main() {
     _seahorse_main();
@@ -89,7 +90,16 @@ fn _seahorse_main() {
                 .action(|_c: &Context| {
                     hashmap::main() ;
                 }),
-        );
+        )
+        .command(
+            Command::new("funcs")
+                .usage("cargo run -p hardway -- funcs") //macos: cargo run -p hardway -- slices
+                .description("rust funcs")
+                .action(|_c: &Context| {
+                    funcs::main() ;
+                }),
+        )
+        ;
 
     app.run(args);
 }
