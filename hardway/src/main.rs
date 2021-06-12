@@ -4,6 +4,7 @@ mod sized;
 mod slices;
 mod strings;
 mod threads;
+mod hashmap;
 
 fn main() {
     _seahorse_main();
@@ -79,6 +80,14 @@ fn _seahorse_main() {
                 .description("rust 切片")
                 .action(|_c: &Context| {
                     slices::main();
+                }),
+        )
+        .command(
+            Command::new("hashmap")
+                .usage("cargo run -p hardway hashmap") //macos: cargo run -p hardway -- slices
+                .description("rust hashmap")
+                .action(|_c: &Context| {
+                    hashmap::main() ;
                 }),
         );
 
