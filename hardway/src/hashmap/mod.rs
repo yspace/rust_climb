@@ -22,7 +22,9 @@ pub fn main() {
     // type MainFn = Box<dyn Fn()->()> ;
     // let m2  = HashMap::new() ; // need specify the generic type params ;
     // m2.insert("f1", Box::new(bar)) ;
-    // m2.insert("f1", Box::new(foo)) ;
+    // type inference is using the “per-fn” type as the second type parameter, so on the second insert, it fails to typecheck,
+    // since each function has a different type.
+    // m2.insert("f1", Box::new(foo)) ; 
 
     /// This is a good point to remember that Fn()->() is a trait,
     ///  not a type. They have a type that implements that trait, 
