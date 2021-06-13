@@ -4,6 +4,7 @@ use std::collections::HashMap;
 pub fn main() {
 
     func_params::run() ;
+    return_value::run() ;
 
 }
 
@@ -98,5 +99,81 @@ impl KnowledgeNode {
     pub fn set_description(mut self , desc: Option<String>) -> Self{
         self.description = desc ;
         self 
+    }
+}
+
+
+
+mod return_value{
+    pub fn run() {
+        let mut f : fn() ;
+        f = f1 ;
+        f = f2 ;
+        println!("f1 and f2 are same type!") ;
+
+        println!(" 3+1 = {}", inc(3)) ;
+
+        // return 
+        return_keyword() ;
+        return_multiple_values();
+        divergin_func() ;
+    }
+
+    fn f1(){}
+    fn f2()-> () {}
+
+    fn inc(n: i32) -> i32 {
+        n+1  // expression is return statement !
+    }
+
+    fn return_keyword(){
+
+        fn find(n:i32, a: &[i32]) -> bool {
+            // slice can be treated as ref of array
+            for i in a {
+                // i type is &i32 , use dereference to access the real int value
+                if *i == n {
+                    return true ;
+                }
+            }
+            
+            false
+        }
+
+        let a = [1,3,2,5,9,8] ;
+        println!("there is 7 in the array: {}", find(7,&a)) ;
+        println!("there is 8 in the array: {}", find(8,&a)) ;
+    }
+
+
+    fn return_multiple_values(){
+        // rust的函数不支持多返回值，但是我们可以利用元组来返回多个值，配合rust的模式匹配，使用起来十分灵活
+        fn pow_2_3(n: i32) -> (i32, i32) {
+            (n*n , n*n*n)
+        }
+
+        let (p2, p3) = pow_2_3(789) ;
+        println!(" pow 2 of 789 is {}", p2) ;
+        println!(" pow 3 of 789 is {}", p3) ;
+
+    }
+
+    fn divergin_func() {
+        // 发散函数（diverging function）是rust中的一个特性。发散函数不返回，它使用感叹号!作为返回类型表
+        fn divergin() -> !{
+            panic!("this function will never retrun !") ;
+        }
+
+        println!("hello") ;
+        divergin() ;
+        println!("world") ;
+
+
+        // 
+        fn divergin2()-> ! {
+            loop{
+                
+            }
+        }
     }
 }
