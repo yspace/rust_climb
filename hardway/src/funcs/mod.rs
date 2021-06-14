@@ -177,3 +177,16 @@ mod return_value{
         }
     }
 }
+
+mod stmt_expr{
+    pub fn run() {
+
+    }
+
+    fn declare_stmt(){
+        let a = 8 ;
+        let b: Vec<f64> = Vec::new() ;
+        let (a,c) = ("hi", false) ;
+
+    }
+}
