@@ -5,5 +5,6 @@ fn main() {
 
     // chapters::types_and_values::main();
     // chapters::variables_and_boxes::main();
-    chapters::functions::main();
+    // chapters::functions::main();
+    chapters::control_flow::main();
 }
