@@ -3,8 +3,10 @@ use std::collections::HashMap;
 
 pub fn main() {
 
-    func_params::run() ;
-    return_value::run() ;
+   // func_params::run() ;
+   // return_value::run() ;
+
+    higher_order_func::run() ;
 
 }
 
@@ -190,3 +192,79 @@ mod stmt_expr{
 
     }
 }
+
+mod higher_order_func{
+    pub fn run(){
+        // 关键字fn可以用来定义函数。除此以外，它还用来构造函数类型。与函数定义主要的不同是，构造函数类型不需要函数名、参数名和函数体
+
+        // function declaration
+        fn inc(n: i32) -> i32 {
+            n + 1
+        }
+
+        type IncType = fn(i32) -> i32 ; // func type
+
+        let f : IncType = inc ; // no moving happen here!
+
+        assert_eq!(3 , inc(2)) ;
+        println!("inc 3 is: {}",inc(3));
+        println!("{:?}", f) ;
+
+        //
+        func_as_param();
+        func_as_return_value() ;
+    }
+
+    fn func_as_param() {
+        fn inc( n : i32) -> i32{
+            n + 1
+        }
+        fn dec(n: i32) -> i32 {
+            n -1
+        }
+
+        fn process(n : i32, func: fn(i32)-> i32) -> i32 {
+            func(n)
+        }
+
+        assert_eq!( 3+1, process(3,inc));
+        assert_eq!( 3-1, process(3,dec));
+
+        // 不过，这不是函数作为参数的唯一声明方法，使用泛型函数配合特质（trait）也是可以的，因为rust的函数都会实现一个trait:FnOnce、Fn或FnMut。将上例中的process函数定义换成以下形式是等价的：
+        fn process2<F>(n: i32 , func : F) -> i32 
+        where F: Fn(i32) -> i32{
+            func(n)
+        }
+
+        assert_eq!( 3+1, process2(3,inc));
+        assert_eq!( 3-1, process2(3,dec));
+    }
+
+    fn func_as_return_value() {
+        fn get_func(n: i32) -> fn(i32) -> i32 {
+            fn inc(n: i32) -> i32 {
+                n +1
+            }
+            fn dec(n: i32) -> i32 {
+                n -1
+            }
+
+            // 不过，在函数中定义的函数，不能包含函数中（环境中）的变量，若要包含，应该闭包
+            if n %2  == 0 {
+                inc
+            } else {
+                dec
+            }
+        }
+
+        // call it
+        let a = [1,2,3,4,5,6,7] ;
+        let mut b = Vec::<i32>::new();
+        for i in &a {
+            b.push(get_func(*i)(*i)) ;
+        }
+        println!("{:?}", b) ;
+
+    }
+}
+
