@@ -6,6 +6,7 @@ mod strings;
 mod threads;
 mod hashmap;
 mod funcs;
+mod closures;
 
 fn main() {
     _seahorse_main();
@@ -97,6 +98,14 @@ fn _seahorse_main() {
                 .description("rust funcs")
                 .action(|_c: &Context| {
                     funcs::main() ;
+                }),
+        )
+        .command(
+            Command::new("closures")
+                .usage("cargo run -p hardway -- closures") //macos: cargo run -p hardway -- slices
+                .description("rust closures")
+                .action(|_c: &Context| {
+                    closures::main() ;
                 }),
         )
         ;
