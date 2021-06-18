@@ -77,3 +77,31 @@ mod closure_syntax{
     
 
 }
+
+mod implementation{
+    // Fn获取&self，
+    // FnMut获取&mut self，
+    // 而FnOnce获取self。
+    pub fn run() {
+
+    }
+
+    mod foo {
+        /*
+        pub trait Fn<Args> : FnMut<Args> {
+            extern "rust-call" fn call(&self, args: Args) -> Self::Output;
+        }
+        
+        pub trait FnMut<Args> : FnOnce<Args> {
+            extern "rust-call" fn call_mut(&mut self, args: Args) -> Self::Output;
+        }
+        
+        pub trait FnOnce<Args> {
+            type Output;
+        
+            extern "rust-call" fn call_once(self, args: Args) -> Self::Output;
+        }
+       */
+    }
+    
+}
