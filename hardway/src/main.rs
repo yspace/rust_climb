@@ -7,6 +7,7 @@ mod threads;
 mod hashmap;
 mod funcs;
 mod closures;
+mod collections;
 
 fn main() {
     _seahorse_main();
@@ -106,6 +107,14 @@ fn _seahorse_main() {
                 .description("rust closures")
                 .action(|_c: &Context| {
                     closures::main() ;
+                }),
+        )
+        .command(
+            Command::new("collections")
+                .usage("cargo run -p hardway -- collections") //macos: cargo run -p hardway -- slices
+                .description("rust collections")
+                .action(|_c: &Context| {
+                    collections::main() ;
                 }),
         )
         ;
