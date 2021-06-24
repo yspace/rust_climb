@@ -8,6 +8,7 @@ mod hashmap;
 mod funcs;
 mod closures;
 mod collections;
+mod pattern_matches;
 
 fn main() {
     _seahorse_main();
@@ -115,6 +116,14 @@ fn _seahorse_main() {
                 .description("rust collections")
                 .action(|_c: &Context| {
                     collections::main() ;
+                }),
+        )
+        .command(
+            Command::new("pattern_matches")
+                .usage("cargo run -p hardway -- pattern_matches") //macos: cargo run -p hardway -- slices
+                .description("rust pattern_matches")
+                .action(|_c: &Context| {
+                    pattern_matches::main() ;
                 }),
         )
         ;
