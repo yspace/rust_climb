@@ -1,6 +1,8 @@
+mod hashmaps ;
 
 pub fn main() {
-    vecs::run() ;
+    // vecs::run() ;
+    hashmaps::run() ;
 }
 
 mod vecs{
