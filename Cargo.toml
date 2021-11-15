@@ -6,6 +6,7 @@ members = [
     "favorites",
     "books/srqc",
     "books/fullstack",
+    "books/in_action",
     # "books/design_patterns",
     "whale",
     "hardway",
