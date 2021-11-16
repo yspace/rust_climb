@@ -53,9 +53,9 @@ mod v3 {
     impl Copy for ThreadInfo {}
     impl Clone for ThreadInfo {
         fn clone(&self) -> Self {
-            println!("Cloned : {}", self.number) ;
-            ThreadInfo{
-                number: self.number ,
+            println!("Cloned : {}", self.number);
+            ThreadInfo {
+                number: self.number,
             }
         }
     }

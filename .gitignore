@@ -1,4 +1,5 @@
 /target
+/vendor
 /.idea/*
 /.vs/*
 /.vscode/*
@@ -8,3 +9,6 @@
 /.vs
 /.vscode
 /Cargo.lock
+
+/crates/validation
+/crates/validation/*

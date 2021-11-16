@@ -1,19 +1,29 @@
-[workspace]
+[workspace] 
 members = [
     "catsay",
-    "my_orbtk",
-    "numbers",
-    "favorites",
-    "books/srqc",
-    "books/fullstack",
-    "books/in_action",
+    # "my_orbtk",
+    # "numbers",
+    # "favorites",
+    #  "books/srqc",
+    # "books/fullstack",
     # "books/design_patterns",
+    "books/rp4b",
+    "books/intro2p",
     "whale",
     "hardway",
-    "starters/api",
-    "starters/hi_rocket",
-    "learnings/intro2rust",
+    # "starters/api",
+    # "learnings/intro2rust",
+    # "learnings/hi_rocket",
+    # "learnings/hi_usb",
+    "learnings/my-redis",
+    "learnings/line_editor",
+    "learnings/numbers",
+    "learnings/hi_regex",
+    "learnings/hi_mongo",
+    "learnings/hi_radix",
 
+    # 准备自己实现一个验证库 以便后期隔离出去
+    # "crates/validation"
 ]
 
 default-members = ["catsay"]
