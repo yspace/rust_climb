@@ -26,8 +26,8 @@ fn _seahorse_main(){
    
         .command(
             Command::new("ch1")
-                .usage("cargo run -p hardway strings")
-                .description("rust 中字符串的基本使用")
+                .usage("cargo run -p in_action -- ch1")
+                .description("rust 第一章")
                 .action(|_c: &Context|{
                    chapters::ch1::run() ;
                 })
