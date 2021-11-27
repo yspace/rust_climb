@@ -19,7 +19,18 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT pDriverObject, PUNICODE_STRING pRegistryPath
 }
 
 VOID MyDriverUnload(PDRIVER_OBJECT pDriverObject){
+    KdPrint("driver unloaded!") ;
+}
 
+NTSTATUS CreateDivece(PDRIVER_OBJECT pDriverObject) {
+
+    status = IoCreateDivece(...) ;
+
+    if(! NT_SUCCESS(status)){
+        return status ;
+    }
+    // 设备对象属性设置 ...
+    return status ;
 }
 
 ~~~

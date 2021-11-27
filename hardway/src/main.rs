@@ -1,14 +1,18 @@
 mod iterators;
 
+mod closures;
+mod collections;
+mod funcs;
+mod hashmap;
+mod pattern_matches;
 mod sized;
 mod slices;
 mod strings;
 mod threads;
-mod hashmap;
-mod funcs;
-mod closures;
-mod collections;
-mod pattern_matches;
+mod ecs;
+
+
+
 
 fn main() {
     _seahorse_main();
@@ -91,7 +95,7 @@ fn _seahorse_main() {
                 .usage("cargo run -p hardway hashmap") //macos: cargo run -p hardway -- slices
                 .description("rust hashmap")
                 .action(|_c: &Context| {
-                    hashmap::main() ;
+                    hashmap::main();
                 }),
         )
         .command(
@@ -99,7 +103,7 @@ fn _seahorse_main() {
                 .usage("cargo run -p hardway -- funcs") //macos: cargo run -p hardway -- slices
                 .description("rust funcs")
                 .action(|_c: &Context| {
-                    funcs::main() ;
+                    funcs::main();
                 }),
         )
         .command(
@@ -107,7 +111,7 @@ fn _seahorse_main() {
                 .usage("cargo run -p hardway -- closures") //macos: cargo run -p hardway -- slices
                 .description("rust closures")
                 .action(|_c: &Context| {
-                    closures::main() ;
+                    closures::main();
                 }),
         )
         .command(
@@ -115,7 +119,7 @@ fn _seahorse_main() {
                 .usage("cargo run -p hardway -- collections") //macos: cargo run -p hardway -- slices
                 .description("rust collections")
                 .action(|_c: &Context| {
-                    collections::main() ;
+                    collections::main();
                 }),
         )
         .command(
@@ -123,10 +127,17 @@ fn _seahorse_main() {
                 .usage("cargo run -p hardway -- pattern_matches") //macos: cargo run -p hardway -- slices
                 .description("rust pattern_matches")
                 .action(|_c: &Context| {
-                    pattern_matches::main() ;
+                    pattern_matches::main();
                 }),
         )
-        ;
+        .command(
+            Command::new("ecs")
+                .usage("cargo run -p hardway -- ecs") //macos: cargo run -p hardway -- slices
+                .description("rust ecs leaning")
+                .action(|_c: &Context| {
+                    ecs::main();
+                }),
+        );
 
     app.run(args);
 }
