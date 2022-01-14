@@ -10,6 +10,7 @@ mod slices;
 mod strings;
 mod threads;
 mod ecs;
+mod errors;
 
 
 
@@ -136,6 +137,14 @@ fn _seahorse_main() {
                 .description("rust ecs leaning")
                 .action(|_c: &Context| {
                     ecs::main();
+                }),
+        )
+        .command(
+            Command::new("errors")
+                .usage("cargo run -p hardway -- errors") //macos: cargo run -p hardway -- slices
+                .description("rust error handling")
+                .action(|_c: &Context| {
+                    errors::main();
                 }),
         );
 

@@ -11,6 +11,7 @@ members = [
     # "books/design_patterns",
     "books/rp4b",
     "books/intro2p",
+    "books/rust101",
     "whale",
     "hardway",
     # "starters/api",

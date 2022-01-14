@@ -13,6 +13,9 @@ fn main() {
     module_mains.insert(
         "day2".to_string(),
         Box::new(days::day2::main));
+    module_mains.insert(
+        "day3".to_string(),
+        Box::new(days::day3::main));
     // days::day2::main() ; 
 
     for (key, value) in &module_mains {
