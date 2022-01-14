@@ -18,7 +18,8 @@ mod part01;
 // mod part16;
 
 fn main() {
-    println!("Hello, world!");
+    println!("==== >>> 001 <<< ====");
 
-    part00::main() ;
+    // part00::main() ;
+    part01::main() ;
 }
