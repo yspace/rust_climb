@@ -5,3 +5,4 @@
 
 - https://github.com/python/cpython/blob/3.10/Lib/difflib.py
 - https://github.com/phpspec/php-diff
+- https://github.com/pmezard/go-difflib
