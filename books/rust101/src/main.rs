@@ -2,7 +2,7 @@
 mod part00;
 mod part01;
 mod part02;
-// mod part03;
+mod part03;
 // mod part04;
 // mod part05;
 // mod part06;
@@ -22,5 +22,6 @@ fn main() {
 
     // part00::main() ;
     // part01::main() ;
-    part02::main() ;
+    // part02::main() ;
+    part03::main() ;
 }
