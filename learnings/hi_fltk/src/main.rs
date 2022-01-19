@@ -6,17 +6,32 @@
 
 use fltk::{prelude::*, *};
 
-fn main() {
+mod buttons ;
+
+fn main(){
+    // run() ;
+    buttons::main();
+    println!("application exit!") ;
+}
+
+fn run() {
     // let app = app::App::default();
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
     let mut wind = window::Window::new(100, 100, 400, 300, "My Window");
     wind.end();
     wind.show();
     // 内嵌窗口
-    embeded_windows();
+    // embeded_windows();
 
     let mut but = button::Button::new(160, 200, 80, 40, "Click me!");
     wind.add(&but);
+
+    // builder pattern
+    let  but1 = button::Button::default()
+    .with_pos(10, 10)
+    .with_size(80, 40)
+    .with_label("Button 1");
+    wind.add(&but1);
     
     app.run().expect("Couldn't run app");
 
