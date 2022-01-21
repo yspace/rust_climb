@@ -7,10 +7,12 @@
 use fltk::{prelude::*, *};
 
 mod buttons ;
+mod labels ;
 
 fn main(){
     // run() ;
-    buttons::main();
+    // buttons::main();
+    labels::main();
     println!("application exit!") ;
 }
 

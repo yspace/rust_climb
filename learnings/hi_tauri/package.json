@@ -1,0 +1,17 @@
+{
+  "name": "hi_tauri",
+  "author": "yiqing",
+  "email": "yiqing_95@qq.com",
+  "license": "MIT",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "@tauri-apps/cli": "^0.0.0"
+  },
+  "scripts": {
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^1.0.0-beta.8"
+  }
+}
