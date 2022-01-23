@@ -45,7 +45,7 @@ fn main() {
                 .author("Kevin K.") // And authors
                 .arg(
                     Arg::new("input") // And their own arguments
-                        .about("the file to add")
+                       // .about("the file to add")
                         .index(1)
                         .required(true),
                 ),
@@ -58,7 +58,7 @@ fn main() {
                 .author("yiqing.") // And authors
                 .arg(
                     Arg::new("to") // And their own arguments
-                        .about("to someone")
+                        //.about("to someone")
                         .index(1)
                         .default_value("some-user-name")
                         .required(true),
@@ -78,6 +78,12 @@ fn main() {
         )
         .subcommand(
             App::new("3rd-reqwest") //
+                .about(" HTTP Client for Rust.") //
+                .author("yiqing.") //
+                ,
+        )
+        .subcommand(
+            App::new("3rd-sysinfo") //
                 .about(" HTTP Client for Rust.") //
                 .author("yiqing.") //
                 ,
@@ -120,6 +126,12 @@ fn main() {
         Some("3rd-reqwest") =>{
             // use awesome_lib ;
             println!("reqwest lib");
+
+
+        } ,
+        Some("3rd-sysinfo") =>{
+            // use awesome_lib ;
+            awesome_lib::hello_sysinfo::basic();
 
 
         } ,
