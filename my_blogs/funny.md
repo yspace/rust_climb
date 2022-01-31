@@ -1,0 +1,1 @@
+https://github.com/iamsauravsharma/cargo-trim

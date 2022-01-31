@@ -30,6 +30,7 @@ members = [
     "learnings/hi_gtk4",
     "learnings/hi_sixtyfps",
     "learnings/hi_iced",
+    "learnings/hi_dioxus",
 
     # 准备自己实现一个验证库 以便后期隔离出去
     # "crates/validation"

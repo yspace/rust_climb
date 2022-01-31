@@ -116,6 +116,29 @@ https://rust.godbolt.org/z/8dGbY8Pe1
 1 git reset --hard
 2 git pull
 
+### git 使用代理 
+>   git config --global http.proxy socks5://127.0.0.1:1080
+    git config --global --get http.proxy  
+    git config --global --unset http.proxy
+
+最后一行是重置代理的 第二行是查看是否设置正确了    
+
+### ssh 协议
+$ vim ~/.ssh/config
+
+添加以下内容：
+Host <host>
+
+# 走 ss 代理
+ProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p
+
+# 走 http 代理
+ProxyCommand nc -X connect -x <ip>:<port> %h %p
+
+这里使用了 nc (netcat) 命令，具体的参数解析可以通过 nc -h 查阅。
+
+
+
 ### blocking waiting for file lock on package cache lock
 
 - clean the cache dir:
