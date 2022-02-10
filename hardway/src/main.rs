@@ -150,6 +150,7 @@ fn _seahorse_main() {
                 .usage("cargo run -p hardway -- asyncs") //macos: cargo run -p hardway -- slices
                 .description("rust async ")
                 .action(|_c: &Context| {
+                    // https://course.rs/async/intro.html
                     asyncs::main();
                 }),
         );
