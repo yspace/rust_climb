@@ -11,6 +11,7 @@ mod strings;
 mod threads;
 mod ecs;
 mod errors;
+mod asyncs;
 
 
 
@@ -145,6 +146,14 @@ fn _seahorse_main() {
                 .description("rust error handling")
                 .action(|_c: &Context| {
                     errors::main();
+                }),
+        )
+        .command(
+            Command::new("asyncs")
+                .usage("cargo run -p hardway -- asyncs") //macos: cargo run -p hardway -- slices
+                .description("rust async ")
+                .action(|_c: &Context| {
+                    asyncs::main();
                 }),
         );
 
