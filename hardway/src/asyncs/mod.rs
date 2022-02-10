@@ -7,7 +7,10 @@ pub fn main() {
 
 mod basic{
     pub fn run(){
-        do_something() ;
+        use futures::executor::block_on;
+
+       let f = do_something() ;
+       block_on(f) ;
     }
 
     async fn do_something(){
