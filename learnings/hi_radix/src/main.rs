@@ -8,7 +8,7 @@ fn main() {
     trie.insert("hellcat", 35u32);
     trie.insert("not related", 1u32);
     trie.insert("handle nested", 5u32);
-    
+
     println!("All trie nodes");
     for (k, v) in trie.iter() {
         println!("{}: {}", k, v);

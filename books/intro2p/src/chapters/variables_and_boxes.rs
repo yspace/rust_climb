@@ -57,18 +57,18 @@ pub fn main() {
 
     {
         // ## scope
-        // When a program rebinds a variable, it frees the memory location 
+        // When a program rebinds a variable, it frees the memory location
         // of (and destroys) the current value and then allocates a new memory location for the variable.
-        let x = 1 ;
-        let p_x = &x as *const i32 ;
-        println!("addr: {:?}", p_x) ;
+        let x = 1;
+        let p_x = &x as *const i32;
+        println!("addr: {:?}", p_x);
 
-        assert_eq!(x , 1) ;
+        assert_eq!(x, 1);
 
-        let x = "hello world" ;
-        let p2_x = &x as *const &str ;
-        println!("addr: {:?}", p2_x) ;
-        assert_eq!(x , "hello world");
+        let x = "hello world";
+        let p2_x = &x as *const &str;
+        println!("addr: {:?}", p2_x);
+        assert_eq!(x, "hello world");
 
         // If a program wishes to rebind a variable temporarily without destroying its current value, it can introduce a new scope.
         // Parent scope
@@ -84,11 +84,11 @@ pub fn main() {
     {
         //Boxes
         // To place a value on the heap, the program creates a box.
-        //  This is similar to C's malloc function or C++'s new operator. 
-        // In the following example, the program places the value 1 on the heap, 
+        //  This is similar to C's malloc function or C++'s new operator.
+        // In the following example, the program places the value 1 on the heap,
         // and creates a variable x on the stack to point to the value on the heap.
 
-        let x = Box::new(1) ;
-        println!("{:?}" , x) ;
+        let x = Box::new(1);
+        println!("{:?}", x);
     }
 }

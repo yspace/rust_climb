@@ -1,8 +1,7 @@
-pub fn main(){
-    use csv ;
+pub fn main() {
+    use csv;
 
-    println!("day3!================================") ;
-
+    println!("day3!================================");
 
     // let dollar_films = vec![
     //     ("A Fistful of Dollars", "Rojo", 1964),

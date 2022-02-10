@@ -1,20 +1,20 @@
 use gtk::prelude::*;
 // use gtk::{Application, ApplicationWindow};
-use gtk::{Application, ApplicationWindow,Button};
+use gtk::{Application, ApplicationWindow, Button};
 
-mod memory_management ;
+mod memory_management;
 fn main() {
-   // Create a new application
-   let app = Application::builder()
-   .application_id("org.gtk-rs.example")
-   .build();
+    // Create a new application
+    let app = Application::builder()
+        .application_id("org.gtk-rs.example")
+        .build();
 
-// Connect to "activate" signal of `app`
-// app.connect_activate(build_ui);
-app.connect_activate(memory_management::build_ui);
+    // Connect to "activate" signal of `app`
+    // app.connect_activate(build_ui);
+    app.connect_activate(memory_management::build_ui);
 
-// Run the application
-app.run();
+    // Run the application
+    app.run();
 }
 
 fn build_ui(app: &Application) {
@@ -43,5 +43,4 @@ fn build_ui(app: &Application) {
     // Present window
 
     window.present();
-
 }

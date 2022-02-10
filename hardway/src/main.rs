@@ -1,7 +1,10 @@
 mod iterators;
 
+mod asyncs;
 mod closures;
 mod collections;
+mod ecs;
+mod errors;
 mod funcs;
 mod hashmap;
 mod pattern_matches;
@@ -9,12 +12,6 @@ mod sized;
 mod slices;
 mod strings;
 mod threads;
-mod ecs;
-mod errors;
-mod asyncs;
-
-
-
 
 fn main() {
     _seahorse_main();

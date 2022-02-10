@@ -6,8 +6,7 @@ use gtk::{self, Application, ApplicationWindow, Button, Orientation};
 
 use gtk::glib;
 
-pub 
-fn build_ui(application: &Application) {
+pub fn build_ui(application: &Application) {
     // Create a window
     let window = ApplicationWindow::new(application);
 
@@ -34,15 +33,15 @@ fn build_ui(application: &Application) {
     // // When a button is clicked, `number` should be changed
     // button_increase.connect_clicked(|_| number += 1);
     // button_decrease.connect_clicked(|_| number -= 1);
-     // Reference-counted object with inner-mutability
-     let number = Rc::new(Cell::new(0));
+    // Reference-counted object with inner-mutability
+    let number = Rc::new(Cell::new(0));
 
     //  // Connect callbacks, when a button is clicked `number` will be changed
     //  let number_copy = number.clone();
     //  button_increase.connect_clicked(move |_| number_copy.set(number_copy.get() + 1));
     //  button_decrease.connect_clicked(move |_| number.set(number.get() - 1));
- 
-  // Connect callbacks
+
+    // Connect callbacks
     // When a button is clicked, `number` and label of the other button will be changed
     // button_increase.connect_clicked(clone!(@weak number, @strong button_decrease =>
     //     move |_| {

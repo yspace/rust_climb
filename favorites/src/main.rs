@@ -1,6 +1,7 @@
 use clap::{App, Arg};
 
-#[macro_use] extern crate log;
+#[macro_use]
+extern crate log;
 extern crate dotenv;
 extern crate pretty_env_logger;
 
@@ -8,11 +9,10 @@ use dotenv::dotenv;
 use std::env;
 
 // mod 声明
-mod awesome_lib ;
+mod awesome_lib;
 
 // cmd: cargo run -p favorites foo yiqing
 fn main() {
-
     dotenv().ok();
     for (key, value) in env::vars() {
         println!("{}: {}", key, value);
@@ -45,7 +45,7 @@ fn main() {
                 .author("Kevin K.") // And authors
                 .arg(
                     Arg::new("input") // And their own arguments
-                       // .about("the file to add")
+                        // .about("the file to add")
                         .index(1)
                         .required(true),
                 ),
@@ -67,26 +67,22 @@ fn main() {
         .subcommand(
             App::new("3rd-log") // The name we call argument with
                 .about("facade log lib") // The message displayed in "myapp -h"
-                .author("yiqing.") // And authors
-                ,
+                .author("yiqing."), // And authors
         )
         .subcommand(
             App::new("3rd-url") //
                 .about("url parser") //
-                .author("yiqing.") //
-                ,
+                .author("yiqing."), //
         )
         .subcommand(
             App::new("3rd-reqwest") //
                 .about(" HTTP Client for Rust.") //
-                .author("yiqing.") //
-                ,
+                .author("yiqing."), //
         )
         .subcommand(
             App::new("3rd-sysinfo") //
                 .about(" HTTP Client for Rust.") //
-                .author("yiqing.") //
-                ,
+                .author("yiqing."), //
         )
         .get_matches();
 
@@ -101,7 +97,7 @@ fn main() {
         println!("Adding file: {}", matches.value_of("input").unwrap());
     }
 
-     // 处理foo子命令
+    // 处理foo子命令
     if let Some(ref matches) = matches.subcommand_matches("foo") {
         // Safe to use unwrap() because of the required() option
         println!("hello to: {}", matches.value_of("to").unwrap());
@@ -110,35 +106,26 @@ fn main() {
     // You can also match on a subcommand's name
     match matches.subcommand_name() {
         Some("add") => println!("'myapp add' was used"),
-        Some("3rd-log") =>{
+        Some("3rd-log") => {
             // use awesome_lib ;
             println!("the third vender log library ");
 
-            awesome_lib::log::act_main() ;
-
-        } ,
-        Some("3rd-url") =>{
+            awesome_lib::log::act_main();
+        }
+        Some("3rd-url") => {
             // use awesome_lib ;
             println!("the third vender url library ");
-
-
-        } ,
-        Some("3rd-reqwest") =>{
+        }
+        Some("3rd-reqwest") => {
             // use awesome_lib ;
             println!("reqwest lib");
-
-
-        } ,
-        Some("3rd-sysinfo") =>{
+        }
+        Some("3rd-sysinfo") => {
             // use awesome_lib ;
             awesome_lib::hello_sysinfo::basic();
-
-
-        } ,
+        }
 
         None => println!("No subcommand was used"),
         _ => println!("Some other subcommand was used"),
     }
-
-
 }

@@ -1,8 +1,8 @@
+use crossterm::cursor;
 use crossterm::cursor::MoveLeft;
 use crossterm::cursor::MoveRight;
 use crossterm::cursor::MoveToColumn;
 use crossterm::cursor::MoveToNextLine;
-use crossterm::cursor ;
 
 use crossterm::event::KeyCode;
 use crossterm::event::KeyEvent;
@@ -48,7 +48,7 @@ fn main() -> Result<()> {
     terminal::enable_raw_mode()?;
 
     let mut buffer = String::new();
-    let mut caret_pos: u16 ;
+    let mut caret_pos: u16;
 
     'repl: loop {
         // print the prompt
@@ -56,10 +56,10 @@ fn main() -> Result<()> {
             .execute(SetForegroundColor(Color::Blue))?
             .execute(Print(">"))?
             .execute(ResetColor)?;
-        // set where the input begins . 
+        // set where the input begins .
         // let (input_start_col, input_start_row) = cursor::position()? ;
-        let (input_start_col, _) = cursor::position()? ;
-        caret_pos = input_start_col ;
+        let (input_start_col, _) = cursor::position()?;
+        caret_pos = input_start_col;
 
         'input: loop {
             match read()? {
@@ -75,7 +75,7 @@ fn main() -> Result<()> {
                             stdout.flush()?;
 
                             buffer.push(c);
-                            caret_pos +=1 ;
+                            caret_pos += 1;
                         }
                         KeyCode::Backspace => {
                             if !buffer.is_empty() {
@@ -87,7 +87,7 @@ fn main() -> Result<()> {
 
                                 stdout.flush()?;
 
-                                caret_pos -= 1 ;
+                                caret_pos -= 1;
                             }
                         }
                         KeyCode::Enter => {
@@ -110,17 +110,16 @@ fn main() -> Result<()> {
                                 stdout.queue(MoveLeft(1))?;
                                 stdout.flush()?;
 
-                                caret_pos -= 1 ;
+                                caret_pos -= 1;
                             }
-                            
                         }
                         KeyCode::Right => {
                             // print_message(&mut stdout,"Right!")? ;
                             if (caret_pos as usize) < ((input_start_col as usize) + buffer.len()) {
                                 stdout.queue(MoveRight(1))?;
                                 stdout.flush()?;
-                                
-                                caret_pos += 1 ;
+
+                                caret_pos += 1;
                             }
                         }
                         _ => {}

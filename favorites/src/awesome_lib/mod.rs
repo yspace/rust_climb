@@ -1,3 +1,2 @@
-
-pub mod log ;
-pub mod hello_sysinfo ;
+pub mod hello_sysinfo;
+pub mod log;
