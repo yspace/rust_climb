@@ -26,3 +26,11 @@ npm config set registry http://registry.cnpmjs.org/
 > npm install -g cnpm --registry=https://registry.npm.taobao.org 
 
 或者使用代理试试
+
+## 其他可配合 svelte的 ui框架
+- [svelte 和bootstrap 结合 ](https://sveltestrap.js.org/ )
+- [ibm carbon ui](https://carbon-components-svelte.onrender.com/)
+
+
+## 还有什么ui
+- Bulma
