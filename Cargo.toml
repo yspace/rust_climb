@@ -32,6 +32,7 @@ members = [
     "learnings/hi_iced",
     "learnings/hi_dioxus",
     "learnings/hi_tokio",
+    "learnings/hi_axum",
 
     # 准备自己实现一个验证库 以便后期隔离出去
     # "crates/validation"
