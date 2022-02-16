@@ -6,8 +6,18 @@
   <link href="../dist/output.css" rel="stylesheet">
 </head>
 <body class="">
-    <div class="bg-gray-500">
-        text
+    <div class="bg-gray-500 mb-3">
+        <ul>
+            <li class="leading-loose">
+                <a href="./borders.html">borders</a>
+            </li>
+            <li class="leading-loose">
+                <a href="./buttons.html">buttons</a>
+            </li>
+            <li class="leading-loose">
+                <a href="./display_modes.html">buttons</a>
+            </li>
+        </ul>
     </div>
  
     <div class="bg-white">
@@ -78,6 +88,83 @@
         <p class="text-base text-right"> some random text here</p>
         <p class="text-base text-center"> some random text here</p>
         <p class="text-base text-left"> some random text here</p>
+        <p class="text-base text-justify"> justify: some random text here</p>
+    </div>
+    <div class="px-6">
+        text color:
+        {text}-{color}-{shade}
+
+        <p class="text-base text-center text-blue-500"> some random text here</p>
+        <p class="text-base text-left bg-gray-50 text-gray-500"> some random text here</p>
+        <p class="text-base text-left bg-gray-900 text-gray-500"> some random text here</p>
+        <p class="m-3 p-4 text-base text-left bg-gray-900 text-gray-500"> 
+            some random text here
+        </p>
+    </div>
+    <div class="px-6 bg-gray-900 text-gray-500">
+        style text:
+        italic|not-italic
+
+        <p class="text-base text-center italic "> some random text <span not-italic>not italic text</span> here</p>
+      
+        <p class="text-base text-center not-italic "> some random text here</p>
+      
+    </div>
+    <div class="px-6 bg-gray-50 text-gray-500">
+        font weight: 
+        font-{size}  
+
+        100-900
+        <p class="font-hairline"> some random text here</p>
+        <p class="font-thin"> some random text here</p>
+        <p class="font-light"> some random text here <span class="font-black">some black text</span></p>
+        <p class="font-normal"> some random text here</p>
+        <p class="font-medium"> some random text here</p>
+        <p class="font-semibold"> some random text here</p>
+        <p class="font-bold"> some random text here</p>
+        <p class="font-extrabold"> some random text here</p>
+        <p class="font-black"> some random text here</p>
+      
+      
+        <p>
+            <span class="font-100">font 100</span>
+            <span class="font-200">font 200</span>
+            <span class="font-300">font 300</span>
+            <span class="font-900">font 900</span>
+        </p>
+    </div>
+    <div class="px-6 bg-gray-50 text-gray-500">
+        style text: 
+        tracking-{spacing}  
+        tracking is em unit  相对于parrent的单位 而不是文档单位
+        <p class="tracking-wider"> some random text here</p>
+        <p class="-tracking-tighter"> some random text here</p>
+        <p class="-tracking-tight"> some random text here</p>
+    </div>
+    <div class="px-6 bg-gray-50 text-gray-500">
+        style text - line-height: 
+        leading-{spacing}  
+        <p class="tracking-wider leading-relaxed"> some random text here</p>
+        <p class="  leading-loose"> some random text here</p>     
+    </div>
+    <div class="px-6 bg-gray-50 text-gray-500">
+        style text - text-decoration: 
+        underline|no-underline|line-through|
+        <p class="  leading-loose"> 
+           <span class="underline">some random text here</span> 
+           <span class="line-through">some random text here</span> 
+           <div class="underline">
+               some random <span class="no-underline">no underline</span> text here
+           </div>
+        </p>     
+    </div>
+    <div class="px-6 bg-gray-50 text-gray-500">
+        style text -  text transform: 
+        uppercase|lowercase|capitalize|normal-case  
+        <h3 class="uppercase">some title text here</h3>
+        <p class="leading-loose uppercase"> some random text here</p>     
+        <p class="leading-loose capitalize"> some random text here</p>     
+        <p class="leading-loose normal-case"> some random text here</p>     
     </div>
 
     <div class="bg-blue-500">
