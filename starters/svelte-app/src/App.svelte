@@ -1,5 +1,6 @@
 <script>
 	import Router from 'svelte-spa-router';
+// import Renderrer from './components/Renderrer.svelte';
 	import routes from './routes';
 </script>
 
@@ -7,6 +8,9 @@
 	<ul>
 		<li>
 			<a href="/">index</a>
+		</li>
+		<li>
+			<a href="/#/md">md</a>
 		</li>
 		<li>
 			<a href="/#/lorem/4">lorem</a>
@@ -19,6 +23,12 @@
 <div class="bg-blue-600">
 hi can you see me
 </div>
+
+<!-- <div>
+	temporary contentWindow
+	<Renderrer title="Hello" content="world" />
+</div> -->
+
 <main>
 	 
 	<Router {routes} />
