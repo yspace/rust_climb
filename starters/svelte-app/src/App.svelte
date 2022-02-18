@@ -16,6 +16,9 @@
 		</li>
 	</ul>
 </nav>
+<div class="bg-blue-600">
+hi can you see me
+</div>
 <main>
 	 
 	<Router {routes} />

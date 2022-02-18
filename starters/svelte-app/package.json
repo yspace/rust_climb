@@ -17,6 +17,9 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "idtoken-verifier": "^2.2.2",
+    "markdown-it": "^12.3.2",
+    "svelte-calendar": "^1.5.0",
     "svelte-spa-router": "^3.0.4"
   }
 }
