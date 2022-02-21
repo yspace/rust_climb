@@ -13,31 +13,32 @@
             </li>
         </ul>
     </div>
-   <div >
+   <div class="main">
     <section>
         <h2 class="uppercase"> 
-            Hover modifier
+            focus modifier
         </h2>
+        <p>
+            very useful for forms
+        </p>
         <ul>
-            <li>.hover:{classes}</li>
+            <li>.focus:{classes}</li>
             <li>
-               classes: bg-* | text- | font- | border-  
+               classes: bg-* | text-{color}-{shade} | font- | border-{color}-{shade}
             </li>
             
         </ul>
-    </section>   
+    </section>  
+    <div class="h-screen bg-gray-300 rounded-lg p-6 flex justify-center items-center">
 
-    <div class="h-screen flex justify-center items-center">
-        <button type="submit"
-         class="hover:bg-blue-600 bg-blue-500 text-white hover:text-blue-500 py-2 px-4 font-bold rounded">submit</button>
-    </div>
-
-    <div class="flex  flex-col sm:flex-row">
-        <div class="w-32 h-32 bg-gray-50 border">A</div>
-        <div class="w-32 h-32 bg-gray-200 border">B</div>
-    </div>
+        <input 
+        class="bg-white border border-gray-300 rounded-lg py-2 px-4 block w-full focus:bg-blue-300"
+        type="email" placeholder="some-name@some-com.com">
+    </div> 
+  
 
    </div>
+
     <div class="bg-blue-500">
         footer
     </div>
