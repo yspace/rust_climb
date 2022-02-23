@@ -1,10 +1,23 @@
 use std::collections::HashMap;
 
+mod fn_types ;
 pub fn main() {
     // func_params::run() ;
     // return_value::run() ;
 
-    higher_order_func::run();
+    // higher_order_func::run();
+
+
+    fn_types::call_it(||{println!("it works !")});
+    
+    {
+        let mut some_var = 2 ;
+        fn_types::call_it2(Box::new(move||{
+            println!("it works !");
+            println!("val: {}",some_var);
+        }));  
+    }
+   
 }
 
 mod func_params {

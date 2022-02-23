@@ -25,6 +25,10 @@ fn _seahorse_main() {
     use std::env;
 
     let args: Vec<String> = env::args().collect();
+
+   // let some_integer = 0 ;
+    
+
     let app = App::new(env!("CARGO_PKG_NAME"))
         .description(env!("CARGO_PKG_DESCRIPTION"))
         .author(env!("CARGO_PKG_AUTHORS"))
@@ -39,14 +43,18 @@ fn _seahorse_main() {
             .description("show the usage information for the command")
         )
         .action(
-            |c| {
+           |c| {
                 println!("Hello, {:?} this is the default action .", c.args);
+
+               // callbacks.call(&"strings");
 
                 match c.string_flag("act") {
                     Ok(act) => {
                         
-            
+                        
                         println!("resolved action is {}", act);
+                       // callbacks.call(&act) ;
+                       routers::run(&act) ;
                     }
                     _ => println!("some error happened"),
                 }
@@ -65,6 +73,7 @@ fn _seahorse_main() {
                 .action(|_c: &Context| {
                     println!("------------iterators -------------");
                     iterators::main();
+                    // println!("capture some external variables {}", some_integer) ;
                 }),
         )
         .command(
@@ -182,6 +191,18 @@ fn _seahorse_main() {
     app.run(args);
 }
 
+mod routers{
+    use super::* ;
+
+    pub fn run(act: &str) {
+        let mut callbacks = CallbacksMut::new() ;
+        // cargo run -p hardway -- --act=strings
+        callbacks.register("strings".to_string(), ||{strings::main()}) ;
+
+        callbacks.call(act) ;
+    }
+
+}
 
 struct Callbacks{
     callbacks: HashMap<String,Box< dyn Fn()>>
@@ -222,6 +243,10 @@ impl CallbacksMut{
         }
     }
 
+    pub fn register0<F: FnMut()+'static>(&mut self, k: String ,callback: F) {
+        let cell = Rc::new(RefCell::new(callback));
+        self.callbacks.insert(k, cell);
+    }
     pub fn register<F: FnMut()+'static>(&mut self, k: String ,callback: F) {
         let cell = Rc::new(RefCell::new(callback));
         self.callbacks.insert(k, cell);
@@ -264,6 +289,7 @@ mod tests {
                 println!("Callback 2:  ({}. time)",  count);
             } );
         }
+        c.call(&"foo"); c.clone().call(&"bar");
         c.call(&"foo"); c.clone().call(&"bar");
     }
 }
