@@ -14,6 +14,7 @@ mod strings;
 mod threads;
 
 fn main() {
+    // cmd: cargo run -p hardway --  --act=<some_action>
     _seahorse_main();
 }
 
@@ -27,7 +28,24 @@ fn _seahorse_main() {
         .author(env!("CARGO_PKG_AUTHORS"))
         .version(env!("CARGO_PKG_VERSION"))
         .usage("cli [args]")
-        .action(|c| println!("Hello, {:?}", c.args))
+        .flag(
+            Flag::new("act", FlagType::String)
+            .description("which action to be executedß")
+        )
+        .action(
+            |c| {
+                println!("Hello, {:?} this is the default action .", c.args);
+
+                match c.string_flag("act") {
+                    Ok(act) => {
+                        
+            
+                        println!("resolved action is {}", act);
+                    }
+                    _ => println!("some error happened"),
+                }
+            }
+        )
         .command(
             Command::new("help")
                 .description("need help?")

@@ -139,6 +139,7 @@ impl Future for TimerFuture{
        }
     }
 
+    /*
     impl TimerFuture {
         /// 创建一个新的`TimerFuture`，在指定的时间结束后，该`Future`可以完成
         pub fn new(duration: Duration) -> Self {
@@ -166,5 +167,8 @@ impl Future for TimerFuture{
 
     // 上例中的XxxFuture 自己实现的话 其思想主要就是 什么时候可以还钱了
     // 对于计时器Future 就是超时状态到了 poll方法就是催债来了 你只要不决定还钱
-    // 那么这个催债动作还是会一直在后面的时间里进行下去的
+    // 
+    
+    
+     */
 }
