@@ -1,3 +1,5 @@
+use std::{collections::HashMap, rc::Rc, cell::RefCell};
+
 mod iterators;
 
 mod asyncs;
@@ -31,6 +33,10 @@ fn _seahorse_main() {
         .flag(
             Flag::new("act", FlagType::String)
             .description("which action to be executedß")
+        )
+        .flag(
+            Flag::new("help", FlagType::String)
+            .description("show the usage information for the command")
         )
         .action(
             |c| {
@@ -174,4 +180,90 @@ fn _seahorse_main() {
         );
 
     app.run(args);
+}
+
+
+struct Callbacks{
+    callbacks: HashMap<String,Box< dyn Fn()>>
+}
+
+impl Callbacks {
+
+
+    pub fn new() -> Self {
+        Callbacks { callbacks: HashMap::new() }
+    }
+
+
+
+    pub fn register(&mut self, k: &str , callback: Box<dyn Fn()>) {
+        self.callbacks.insert(k.to_string(), callback) ;
+    }
+
+    pub fn call(&mut self, k: &str){
+        let cb = self.callbacks.get(k);
+        match cb{
+            Some(cb) => cb() , 
+            None => println!("can't find the callback:<{}> in the callback list",k),
+        }
+    }
+}
+#[derive(Clone)]
+struct CallbacksMut{
+    callbacks: HashMap<String,  Rc<RefCell<dyn FnMut()>>>,
+    // callbacks: HashMap<String,  Rc<RefCell<FnMut()>>>,
+}
+
+impl CallbacksMut{  
+
+    pub fn new() -> Self{
+        Self{
+            callbacks: HashMap::new(),
+        }
+    }
+
+    pub fn register<F: FnMut()+'static>(&mut self, k: String ,callback: F) {
+        let cell = Rc::new(RefCell::new(callback));
+        self.callbacks.insert(k, cell);
+    }
+
+    pub fn call(&mut self, k: &str){
+        let cb = self.callbacks.get(k);
+        match cb{
+            Some(cb) => {
+              let mut mut_closure =  cb.borrow_mut() ;
+              (&mut *mut_closure)();
+                
+            }, 
+            None => println!("can't find the callback:<{}> in the callback list",k),
+        }
+    }
+}
+
+// 测试下Fn FnMut
+
+
+#[cfg(test)]
+mod tests {
+    use super::*; 
+    #[test]
+    fn test_fn_types() {
+        assert_eq!(2 + 2, 4);
+    }
+
+    #[test]
+    fn test_callbacks_mut(){
+        let mut c = CallbacksMut::new() ;
+        c.register("foo".to_string() , || println!("Callback 1: foo"));
+        c.call(&"foo");
+    
+        {
+            let mut count: usize = 0;
+            c.register("bar".to_string(), move || {
+                count = count+1;
+                println!("Callback 2:  ({}. time)",  count);
+            } );
+        }
+        c.call(&"foo"); c.clone().call(&"bar");
+    }
 }

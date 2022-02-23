@@ -62,6 +62,12 @@ proxy为代理地址
 cargo run -p favorites 3rd-log
 ~~~
 
+## rust cesh
+- 测试过程中输出代码中的printXxx 
+> cargo test  -- --nocapture
+或者
+> cargo test -- --show-output
+
 ## 参考
 - [菜鸟教程](https://www.runoob.com/rust/rust-object.html)
 - [rust 环境配置](https://www.bilibili.com/video/BV1DV41167xs?p=19)

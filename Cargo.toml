@@ -38,6 +38,6 @@ members = [
     # "crates/validation"
 ]
 
-default-members = ["catsay"]
+default-members = ["hardway"]
 
 

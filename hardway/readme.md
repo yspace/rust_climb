@@ -1,0 +1,1 @@
+> cargo run -p hardway --  --act=<some_action>
