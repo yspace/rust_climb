@@ -17,6 +17,9 @@ pub fn main() {
             println!("val: {}",some_var);
         }));  
     }
+    let f_foo = || { println!("foo closure is called"); } ;
+    fn_types::is_Action(f_foo) ;
+    fn_types::call_it(f_foo) ;
    
 }
 
