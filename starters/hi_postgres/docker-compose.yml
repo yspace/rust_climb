@@ -1,0 +1,39 @@
+version: '3.5'
+
+services:
+  postgres:
+    container_name: pg14
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_USER: yiqing
+      POSTGRES_PASSWORD: yiqing
+      PGDATA: /data/postgres
+    volumes:
+       - postgres13:/Users/qing/postgresql/pg14
+    ports:
+      - "5432:5432"
+    networks:
+      - pg14
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin12
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: yiqing95@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: yiqing95@gmail.com
+    volumes:
+       - pgadmin12:/Users/qing/postgresql/.pgadmin12
+    ports:
+      - "27777:80"
+    networks:
+      - pg14
+    restart: unless-stopped
+
+networks:
+  pg14:
+    driver: bridge
+
+volumes:
+    postgres13:
+    pgadmin12:
