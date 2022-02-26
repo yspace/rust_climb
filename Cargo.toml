@@ -8,7 +8,7 @@ members = [
      "books/in_action",
      "books/daysofrust",
     # "books/fullstack",
-    # "books/design_patterns",
+    "books/design_patterns",
     "books/rp4b",
     "books/intro2p",
     "books/rust101",
