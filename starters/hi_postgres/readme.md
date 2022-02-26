@@ -78,3 +78,29 @@ To login to the container and login to postgres, use this:
 > docker-compose exec postgres /bin/bash
 > psql -U qing -d hello_pg;
 > select version();
+
+
+## 客户端
+macos 本机 安装 psql 加入到path环境变量
+
+> brew install libpq
+> echo 'export PATH="/usr/local/opt/libpq/bin:$PATH"' >> ~/.zshrc; 
+
+## 创建表
+
+列类型： https://www.postgresql.org/docs/9.5/datatype.html
+列类型： https://www.postgresql.org/docs/current/datatype.html
+
+~~~psql
+
+create table person(
+id bigserial not null primary key,
+name varchar(255) not null ,
+gender varchar(7) not null,
+birthday date not null ,
+email varchar(255)
+);
+~~~
+
+测试数据灌入：
+https://mockaroo.com/
