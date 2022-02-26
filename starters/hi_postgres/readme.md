@@ -104,3 +104,6 @@ email varchar(255)
 
 测试数据灌入：
 https://mockaroo.com/
+
+下载生成的数据 
+在psql 下 \i 导入sql文件
