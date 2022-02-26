@@ -62,7 +62,7 @@ proxy为代理地址
 cargo run -p favorites 3rd-log
 ~~~
 
-## rust cesh
+## rust 测试
 - 测试过程中输出代码中的printXxx 
 > cargo test  -- --nocapture
 或者
