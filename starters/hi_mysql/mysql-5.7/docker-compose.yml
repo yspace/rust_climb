@@ -1,0 +1,17 @@
+version: '3'
+services:
+    mysql:
+        network_mode: "bridge"
+        environment:
+            MYSQL_ROOT_PASSWORD: "yiqing"
+            MYSQL_USER: 'yiqing'
+            MYSQL_PASS: 'yiqing'
+        image: "mysql:5.7"
+        restart: always
+        volumes:
+            # 不做映射 容器关闭数据就丢失啦
+            # - "./db:/var/lib/mysql"
+            - "./conf/my.cnf:/etc/my.cnf"
+            # - "./init:/docker-entrypoint-initdb.d/"
+        ports:
+            - "3306:3306"
