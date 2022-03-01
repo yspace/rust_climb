@@ -5,6 +5,7 @@ mod  concat_format;
 mod  constructor;
 mod  default_trait;
 mod  deref_trait;
+mod  destructor_finally;
 
 pub fn build_chapter(parent: &mut ChapterNode){
    
@@ -24,6 +25,7 @@ pub fn build_chapter(parent: &mut ChapterNode){
     concat_format::build_chapter(&mut chapter_node) ;
     constructor::build_chapter(&mut chapter_node) ;
     default_trait::build_chapter(&mut chapter_node) ;
+    destructor_finally::build_chapter(&mut chapter_node) ;
 
 
     parent.add_chapter(chapter_node );

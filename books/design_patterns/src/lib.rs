@@ -83,6 +83,21 @@ impl ChapterNode{
        let end_chapter_text =  format!("\n / end ch:{} === \n", self.chapter_number) ;
        println!("{}", end_chapter_text.purple());
     }
+
+    pub fn run_latest_chapter(&mut self){
+        if !self.children.is_empty() {
+            self.children.last_mut().unwrap().run_latest_chapter();
+
+        }else{
+            if !self.page_contents.is_empty() {
+         
+             for  content_section in self.page_contents.iter_mut() {
+                 content_section.run() ;
+             }
+   
+         } 
+        }
+    }
 }
 #[derive( Clone)]
 pub struct ContentSection{
