@@ -1,5 +1,8 @@
 use std::{cell::RefCell, rc::Rc};
 
+// optional colored the text
+use colored::*;
+
 // https://self-publishingschool.com/parts-of-a-book/
 pub struct ChapterNode{
     chapter_number: String ,
@@ -20,19 +23,48 @@ impl ChapterNode{
         }
     }
 
+    pub fn add_chapter(&mut self, chapter_node: Self){
+        self.children.push(chapter_node) ;
+    }
+
     pub fn add_content_section(&mut self, content_section: ContentSection){
         self.page_contents.push(content_section) ;
     }
 
     pub fn run_all(&mut self){
 
-        println!("\n === run ch:{} =》 {} ===", self.chapter_number, self.chapter_title) ;
-        println!("run page_contents \r\n \r\n ");
+        let begin_chapter_text = 
+        format!("\n === run ch:{} =》 {} ===", self.chapter_number, self.chapter_title) ;
 
-        for mut content_section in self.page_contents.clone() {
-            content_section.run() ;
+        println!("{}", begin_chapter_text.purple());
+
+        if !self.page_contents.is_empty() {
+                println!("{}","run page_contents \r\n \r\n ".green());
+
+            // for mut content_section in self.page_contents.clone() {
+            //     content_section.run() ;
+            // }
+        
+            for  content_section in self.page_contents.iter_mut() {
+                content_section.run() ;
+            }
+  
         }
-        println!("\n === end ch:{} === \n", self.chapter_number) ;
+     
+        if !self.children.is_empty() {
+            println!("{} {} !", "it".green(), "works".blue().bold());
+            println!("run chidren chapter: \r\n \r\n ");
+
+            for  child in self.children.iter_mut() {
+                child.run_all();
+            }
+
+        }
+       
+
+
+       let end_chapter_text =  format!("\n === end ch:{} === \n", self.chapter_number) ;
+       println!("{}", end_chapter_text.purple());
     }
 }
 #[derive( Clone)]
