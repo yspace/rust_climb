@@ -14,5 +14,6 @@ fn main() {
     idioms::build_chapter(&mut chapter_node) ;
 
    
+    chapter_node.tree(0) ;
     chapter_node.run_all() ;
 }

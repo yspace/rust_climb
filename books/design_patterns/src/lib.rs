@@ -33,15 +33,30 @@ impl ChapterNode{
         self.page_contents.push(content_section) ;
     }
 
+    pub fn tree(& self,indent:usize) {
+        // let indent_str = "--".repeat(indent) ;
+        let indent_str = " ".repeat(indent) ;
+        // let mut title_fmt_layout ;
+        if !self.children.is_empty() {
+            println!("|{} >> {} {}", indent_str,self.chapter_number.bright_magenta(),self.chapter_title.bold());
+        }else{
+            println!("|{} > {} {}",indent_str,self.chapter_number.bright_magenta(),self.chapter_title.bold());
+        }
+        println!();
+        for node in self.children.iter(){
+            node.tree(indent + 4) ;
+        }
+    }
+
     pub fn run_all(&mut self){
 
         let begin_chapter_text = 
-        format!("\n === run ch:{} =》 {} ===", self.chapter_number, self.chapter_title) ;
+        format!("\n > run ch:{} =》\r\n {} ", self.chapter_number, self.chapter_title.on_truecolor(224,214,156).bold()) ;
 
         println!("{}", begin_chapter_text.purple());
 
         if !self.page_contents.is_empty() {
-                println!("{}","run page_contents \r\n \r\n ".green());
+               // println!("{}","run page_contents \r\n \r\n ".green());
 
             // for mut content_section in self.page_contents.clone() {
             //     content_section.run() ;
@@ -65,7 +80,7 @@ impl ChapterNode{
        
 
 
-       let end_chapter_text =  format!("\n === end ch:{} === \n", self.chapter_number) ;
+       let end_chapter_text =  format!("\n / end ch:{} === \n", self.chapter_number) ;
        println!("{}", end_chapter_text.purple());
     }
 }
