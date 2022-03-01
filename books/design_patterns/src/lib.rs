@@ -1,6 +1,8 @@
 use std::{cell::RefCell, rc::Rc};
 
-// optional colored the text
+// optional colored the text, can also consider following crates:
+// - https://github.com/crossterm-rs/crossterm
+// - https://gitlab.redox-os.org/redox-os/termion
 use colored::*;
 
 // https://self-publishingschool.com/parts-of-a-book/
@@ -70,6 +72,7 @@ impl ChapterNode{
 #[derive( Clone)]
 pub struct ContentSection{
     title: String ,
+    description: Option<String> ,
     example_runners: CallbacksMut,
     // example_runners: Vec<CallbacksMut>,
     // sections: Vec<ContentSection>,
@@ -79,9 +82,14 @@ impl ContentSection{
     pub fn new(title: String) -> Self {
         Self{
             title,
+            description:None ,
             // example_runners: Vec::new(),
             example_runners: CallbacksMut::new(),
         }
+    }
+
+    pub fn set_description(&mut self, description: Option<String>) {
+        self.description = description ;
     }
 
     pub fn add_example_runner<F: FnMut()+'static>(&mut self, callback: F){
