@@ -6,6 +6,10 @@ mod  constructor;
 mod  default_trait;
 mod  deref_trait;
 mod  destructor_finally;
+mod  mem_replace ;
+mod  on_stack_dyn_dispatch ;
+// 
+mod ffi ;
 
 pub fn build_chapter(parent: &mut ChapterNode){
    
@@ -26,7 +30,10 @@ pub fn build_chapter(parent: &mut ChapterNode){
     constructor::build_chapter(&mut chapter_node) ;
     default_trait::build_chapter(&mut chapter_node) ;
     destructor_finally::build_chapter(&mut chapter_node) ;
+    mem_replace::build_chapter(&mut chapter_node) ;
+    on_stack_dyn_dispatch::build_chapter(&mut chapter_node) ;
 
+    ffi::build_chapter(&mut chapter_node) ;
 
     parent.add_chapter(chapter_node );
 }
