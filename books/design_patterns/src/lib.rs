@@ -14,6 +14,12 @@ pub struct ChapterNode {
     children: Vec<ChapterNode>,
 }
 
+impl std::fmt::Display for ChapterNode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{} - {}", self.chapter_number, self.chapter_title)
+    }
+}
+
 impl ChapterNode {
     pub fn new(chapter_number: String, chapter_title: String) -> Self {
         Self {
@@ -113,6 +119,45 @@ impl ChapterNode {
             let end_chapter_text = format!("\n / end ch:{} === \n", self.chapter_number);
             println!("{}", end_chapter_text.purple());
         }
+
+    }
+
+    fn run(&mut self) {
+        let begin_chapter_text = format!(
+            " > run ch:{} =》\r\n {} ",
+            self.chapter_number,
+            self.chapter_title.on_truecolor(224, 214, 156).bold()
+        );
+        println!("{} \r\n ", begin_chapter_text.purple());
+
+        if !self.page_contents.is_empty() {
+            for content_section in self.page_contents.iter_mut() {
+                content_section.run();
+            }
+        }
+
+        let end_chapter_text = format!("\n / end ch:{} === \n", self.chapter_number);
+        println!("{}", end_chapter_text.purple());
+    }
+
+    pub fn run_chapter(&mut self , chapter: &str)-> Result<(),()> {
+        if self.chapter_number == String::from(chapter)  {
+            // 
+            // println!("ok {}", self.chapter_number) ;
+            self.run() ;
+            return Ok(()) ;
+        }else{
+            if ! self.children.is_empty() {
+                for child in self.children.iter_mut() {
+                   let rslt = child.run_chapter(chapter);
+                   match rslt {
+                       Ok(_) => return Ok(()),
+                       Err(_) => {}
+                   }
+                }
+            }
+        }
+       return Err(()) ;
 
     }
 }
