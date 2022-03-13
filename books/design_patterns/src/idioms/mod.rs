@@ -10,6 +10,7 @@ mod  mem_replace ;
 mod  on_stack_dyn_dispatch ;
 // 
 mod ffi ;
+mod pass_var2closure ;
 
 pub fn build_chapter(parent: &mut ChapterNode){
    
@@ -34,6 +35,7 @@ pub fn build_chapter(parent: &mut ChapterNode){
     on_stack_dyn_dispatch::build_chapter(&mut chapter_node) ;
 
     ffi::build_chapter(&mut chapter_node) ;
+    pass_var2closure::build_chapter(&mut chapter_node) ;
 
     parent.add_chapter(chapter_node );
 }
