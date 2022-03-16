@@ -65,7 +65,9 @@ mod providing_context {
         fn main() -> Result<()> {
             let path = "test.txt";
             let content = std::fs::read_to_string(path)
-                .with_context(|| format!("could not read file `{}`", path))?;
+            // Context trait can be used to add a description. Additionally, it also keeps the original error, so we get a “chain” of error messages pointing out the root cause.    
+            .with_context(|| format!("could not read file `{}`", path))?;
+            
             println!("file content: {}", content);
             Ok(())
         }
