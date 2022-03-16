@@ -17,8 +17,9 @@ fn main() {
 
     // println!("args: {:?}", args);
     // println!("args: {args:?}" );
-    let content = std::fs::read_to_string(&args.path).expect("could not read file");
-     ;
+    let content =
+     std::fs::read_to_string(&args.path).expect("could not read file");
+     ; //optimize: use a BufReader instead of read_to_string()
 
      for line in content.lines() {
         if line.contains(&args.pattern) {
