@@ -12,6 +12,7 @@ members = [
     "books/rp4b",
     "books/intro2p",
     "books/rust101",
+    "books/rust_cli",
     "whale",
     "hardway",
     # "starters/api",
