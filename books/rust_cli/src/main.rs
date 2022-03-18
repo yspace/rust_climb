@@ -1,7 +1,5 @@
 use clap::Parser;
 
-
-
 /// Search for a pattern in a file and display the lines that contain it.
 #[derive(Parser, Debug)]
 struct Cli {
@@ -15,7 +13,6 @@ struct Cli {
 // cargo run -- main src/main.rs
 //  cargo run -p rust_cli -- learnings cargo.toml
 fn main() {
-
     let args = Cli::parse();
 
     // println!("args: {:?}", args);
@@ -28,8 +25,9 @@ fn main() {
         }
     }
 
-    showing_progress::main() ;
-
+    // showing_progress::main();
+    logging::main();
+    // using_dotenv::main();
 }
 
 mod example {
@@ -90,17 +88,45 @@ mod printing_performances {
     }
 }
 
-mod showing_progress{
+mod showing_progress {
 
-   pub  fn main() {
+    pub fn main() {
         let pb = indicatif::ProgressBar::new(100);
         for i in 0..100 {
-            std::thread::sleep(std::time::Duration::from_millis(100)) ;
+            std::thread::sleep(std::time::Duration::from_millis(100));
             // do_hard_work();
             pb.println(format!("[+] finished #{}", i));
             pb.inc(1);
         }
         pb.finish_with_message("done");
     }
-    
+}
+mod logging {
+    use dotenv::dotenv;
+    use std::env;
+
+    use log::{info, warn};
+
+    pub fn main() {
+        dotenv().ok();
+        env_logger::init();
+        
+        info!("starting up");
+        warn!("oops, nothing implemented!");
+    }
+}
+
+mod using_dotenv {
+    extern crate dotenv;
+
+    use dotenv::dotenv;
+    use std::env;
+
+    pub fn main() {
+        dotenv().ok();
+
+        for (key, value) in env::vars() {
+            println!("{}: {}", key, value);
+        }
+    }
 }
