@@ -110,7 +110,7 @@ mod logging {
     pub fn main() {
         dotenv().ok();
         env_logger::init();
-        
+
         info!("starting up");
         warn!("oops, nothing implemented!");
     }
@@ -129,4 +129,13 @@ mod using_dotenv {
             println!("{}: {}", key, value);
         }
     }
+}
+
+// cargo test  -p rust_cli 
+#[test]
+fn check_answer_validity() {
+    fn answer()->usize {
+        42
+    }
+    assert_eq!(answer(), 42);
 }
