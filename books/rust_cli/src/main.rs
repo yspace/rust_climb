@@ -1,3 +1,4 @@
+use anyhow::Ok;
 use clap::Parser;
 
 /// Search for a pattern in a file and display the lines that contain it.
@@ -29,6 +30,15 @@ fn main() {
     logging::main();
     // using_dotenv::main();
 }
+
+fn find_matches(content: &str, pattern: &str, mut writer: impl std::io::Write) {
+    for line in content.lines() {
+        if line.contains(pattern) {
+            writeln!(writer, "{}", line);
+        }
+    }
+}
+
 
 mod example {
     fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -138,4 +148,36 @@ fn check_answer_validity() {
         42
     }
     assert_eq!(answer(), 42);
+}
+
+struct MyStruct<'a>{
+    field1: &'a mut str ,
+}
+impl<'a> MyStruct<'a> {
+    fn mut1(&mut self) -> (){
+
+    }
+     
+    fn mut2(&mut self) -> (){
+
+    }
+     
+    fn mut_fn(&mut self) -> Option<&mut str > {
+        Some(self.field1)
+    }
+}
+#[test]
+fn test_my_struct(){
+    let mut s = String::new();
+    let mut ms =  MyStruct{
+        field1: &mut s,
+    } ;
+    let ms_mut = &mut ms ;
+    match ms_mut.mut_fn() {
+        Some(_) =>{},
+        None => {
+            ms_mut.mut1() ;
+            ms_mut.mut2() ;
+        },
+    } 
 }
