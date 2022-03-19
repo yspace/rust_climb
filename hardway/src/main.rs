@@ -14,6 +14,7 @@ mod sized;
 mod slices;
 mod strings;
 mod threads;
+mod generics;
 
 fn main() {
     // cmd: cargo run -p hardway --  --act=<some_action>
@@ -185,6 +186,15 @@ fn _seahorse_main() {
                 .action(|_c: &Context| {
                     // https://course.rs/async/intro.html
                     asyncs::main();
+                }),
+        )
+        .command(
+            Command::new("generics")
+                .usage("cargo run -p hardway -- generics") //macos: cargo run -p hardway -- slices
+                .description("rust generics ")
+                .action(|_c: &Context| {
+                    // https://course.rs/async/intro.html
+                    generics::main();
                 }),
         );
 
