@@ -30,11 +30,15 @@ mod args_returns {
     struct MyStruct() ;
     impl Trait for MyStruct{}
 
-    // 允许调用者决定返回类型
+ 
     fn foo<T: Trait>(arg: T) {}
 
     fn foo2(arg: impl Trait) {}
 
+   // 允许调用者决定返回类型
+    fn foo_return<T: Trait>() -> T {
+        todo!()
+    }
     // 不允许调用者决定返回类型 ，而是由函数选择返回类型 但仅承诺该类型实现Trait
     fn foo3() -> impl Trait {
         MyStruct()
