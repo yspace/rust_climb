@@ -1,6 +1,8 @@
 use anyhow::Ok;
 use clap::Parser;
 
+mod indepth_topics ;
+
 /// Search for a pattern in a file and display the lines that contain it.
 #[derive(Parser, Debug)]
 struct Cli {
@@ -27,8 +29,10 @@ fn main() {
     }
 
     // showing_progress::main();
-    logging::main();
+    // logging::main();
     // using_dotenv::main();
+
+    indepth_topics::run() ;
 }
 
 mod v2{
@@ -153,6 +157,8 @@ mod using_dotenv {
         }
     }
 }
+
+
 
 // cargo test  -p rust_cli 
 #[test]

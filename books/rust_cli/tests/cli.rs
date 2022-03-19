@@ -41,3 +41,20 @@ fn find_content_in_file() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+
+#[test]
+fn find_content_in_file2() -> Result<(), Box<dyn std::error::Error>> {
+    let file = assert_fs::NamedTempFile::new("sample.txt")?;
+    file.write_str("A test\nActual content\nMore content\nAnother test")?;
+
+    let mut cmd = Command::cargo_bin("rust_cli")?;
+    cmd.arg(" ").arg(file.path());
+    cmd.assert()
+        .success()
+        // 查看包含空格的行字符串 应该是四行都包括！
+        .stdout( predicate::str::contains("A test\nActual content"));
+       
+
+    Ok(())
+}
