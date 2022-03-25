@@ -15,6 +15,8 @@ mod slices;
 mod strings;
 mod threads;
 mod generics;
+mod macros;
+mod copy_move;
 
 fn main() {
     // cmd: cargo run -p hardway --  --act=<some_action>
@@ -195,6 +197,23 @@ fn _seahorse_main() {
                 .action(|_c: &Context| {
                     // https://course.rs/async/intro.html
                     generics::main();
+                }),
+        )
+        .command(
+            Command::new("copy")
+                .usage("cargo run -p hardway -- copy") //macos: cargo run -p hardway -- slices
+                .description("rust copy move ")
+                .action(|_c: &Context| {
+                    copy_move::main();
+                }),
+        )
+        .command(
+            Command::new("macros")
+                .usage("cargo run -p hardway -- macros") //macos: cargo run -p hardway -- slices
+                .description("rust macros ")
+                .action(|_c: &Context| {
+                    // https://course.rs/async/intro.html
+                    macros::main();
                 }),
         );
 
