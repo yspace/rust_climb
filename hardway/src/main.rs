@@ -17,6 +17,7 @@ mod threads;
 mod generics;
 mod macros;
 mod copy_move;
+mod drops;
 
 fn main() {
     // cmd: cargo run -p hardway --  --act=<some_action>
