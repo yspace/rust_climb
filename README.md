@@ -104,6 +104,10 @@ cargo run -p favorites 3rd-log
 - 查汇编码
 https://rust.godbolt.org/z/8dGbY8Pe1
 
+### 不错的cargo 工具
+[cargo-edit](https://github.com/killercup/cargo-edit)
+> $ cargo install cargo-edit
+
 ### git 冲突
 `Your local changes to the following files would be overwritten by merge` 出现这个错误
 >
