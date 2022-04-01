@@ -62,6 +62,12 @@ proxy为代理地址
 cargo run -p favorites 3rd-log
 ~~~
 
+## 运行某个crate下的example
+例如： 运行my_macro 下的examples 目录下的例子
+~~~cmd
+ cargo run -p my_macro  --example sql
+~~~
+
 ## rust 测试
 - 测试过程中输出代码中的printXxx 
 > cargo test  -- --nocapture
