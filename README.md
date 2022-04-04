@@ -74,6 +74,9 @@ cargo run -p favorites 3rd-log
 或者
 > cargo test -- --show-output
 
+跑某个包下的测试
+❯ cargo test -p hardway 
+
 ## 参考
 - [菜鸟教程](https://www.runoob.com/rust/rust-object.html)
 - [rust 环境配置](https://www.bilibili.com/video/BV1DV41167xs?p=19)
