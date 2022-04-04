@@ -19,6 +19,10 @@ mod macros;
 mod copy_move;
 mod drops;
 
+fn  init() {
+    println!("init fn of crate hardway") ;
+}
+
 fn main() {
     // cmd: cargo run -p hardway --  --act=<some_action>
     _seahorse_main();
@@ -217,6 +221,19 @@ fn _seahorse_main() {
                     macros::main();
                     // macros::pub_macros::my_macros!() ;
                     crate::my_macros!() ; // 子模块中的宏定义被导入到了根crate下了
+
+                    fn init(){
+                        println!("my init function") ;
+
+                    }
+                    // 仔细区别下面两种宏
+                    crate::do_func_init!() ;
+                    crate::do_crate_func_init!() ;
+
+                    // 内用规则
+                    crate::m_action!() ;
+                    crate::m_action2!() ;
+
                 }),
         );
 
