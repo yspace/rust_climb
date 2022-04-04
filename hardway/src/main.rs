@@ -215,6 +215,8 @@ fn _seahorse_main() {
                 .action(|_c: &Context| {
                     // https://course.rs/async/intro.html
                     macros::main();
+                    // macros::pub_macros::my_macros!() ;
+                    crate::my_macros!() ; // 子模块中的宏定义被导入到了根crate下了
                 }),
         );
 

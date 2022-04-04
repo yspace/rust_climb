@@ -1,6 +1,11 @@
 mod repetitions ;
 mod hygienes ;
 
+mod pub_macros ;
+
+ 
+
+
 use repetitions::*;
 
 pub fn main() {
@@ -10,6 +15,10 @@ pub fn main() {
 
     //
     // sum!(1,2) ;
+
+    // pub_macros::my_macros2!() ;
+    // path_macros::my_macros!() ;
+    //  my_macros2!() ;
 }
 
 macro_rules! my_expr{
