@@ -77,6 +77,13 @@ cargo run -p favorites 3rd-log
 跑某个包下的测试
 ❯ cargo test -p hardway 
 
+
+## docmentation
+生成文档：
+>  cargo doc -p mylib  --no-deps --open
+为package mylib 生成文档 且不需要为其所依赖的crates生doc 然后在默认浏览器中打开所生文档
+
+
 ## 参考
 - [菜鸟教程](https://www.runoob.com/rust/rust-object.html)
 - [rust 环境配置](https://www.bilibili.com/video/BV1DV41167xs?p=19)
