@@ -1,6 +1,6 @@
 [workspace] 
 members = [
-    "catsay",
+    "learnings/catsay",
     "learnings/my_orbtk",
     # "numbers",
      "favorites",
