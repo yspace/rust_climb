@@ -89,6 +89,11 @@ fn main() {
                 .about(" displaying desktop notifications.") //
                 .author("yiqing."), //
         )
+        .subcommand(
+            Command::new("liquid") //
+                .about(" Liquid templating for Rust ") //
+                .author("yiqing."), //
+        )
         .get_matches();
 
     // // You can check if a subcommand was used like normal
@@ -132,6 +137,10 @@ fn main() {
         Some("notify") => {
             // use awesome_lib ;
             awesome_lib::notify::run();
+        }
+        Some("liquid") => {
+            // use awesome_lib ;
+            awesome_lib::liquid::run();
         }
          
 
