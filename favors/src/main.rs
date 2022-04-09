@@ -14,9 +14,9 @@ mod awesome_lib;
 // cmd: cargo run -p favorites foo yiqing
 fn main() {
     dotenv().ok();
-    for (key, value) in env::vars() {
-        println!("{}: {}", key, value);
-    }
+    // for (key, value) in env::vars() {
+    //     println!("{}: {}", key, value);
+    // }
 
     // s function exactly like sub-Commands, because that's exactly what they are. Each
     // instance of a can have its own version, author(s), Args, and even its own
@@ -94,6 +94,11 @@ fn main() {
                 .about(" Liquid templating for Rust ") //
                 .author("yiqing."), //
         )
+        .subcommand(
+            Command::new("tempfile") //
+                .about("  temporary file library for Rust ") //
+                .author("yiqing."), //
+        )
         .get_matches();
 
     // // You can check if a subcommand was used like normal
@@ -141,6 +146,11 @@ fn main() {
         Some("liquid") => {
             // use awesome_lib ;
             awesome_lib::liquid::run();
+        }
+         
+        Some("tempfile") => {
+            // use awesome_lib ;
+            awesome_lib::tempfile::run();
         }
          
 
