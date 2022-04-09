@@ -1,4 +1,4 @@
-use clap::{App, Arg};
+use clap::{Command, Arg};
 
 #[macro_use]
 extern crate log;
@@ -18,29 +18,29 @@ fn main() {
         println!("{}: {}", key, value);
     }
 
-    // s function exactly like sub-Apps, because that's exactly what they are. Each
+    // s function exactly like sub-Commands, because that's exactly what they are. Each
     // instance of a can have its own version, author(s), Args, and even its own
     // subcommands.
     //
     // # Help and Version
-    // Just like Apps, each subcommand will get its own "help" and "version" flags automatically
-    // generated. Also, like Apps, you can override "-V" or "-h" safely and still get "--help" and
+    // Just like Commands, each subcommand will get its own "help" and "version" flags automatically
+    // generated. Also, like Commands, you can override "-V" or "-h" safely and still get "--help" and
     // "--version" auto generated.
     //
-    // NOTE: If you specify a subcommand for your App, clap will also autogenerate a "help"
-    // subcommand along with "-h" and "--help" (applies to sub-subcommands as well).
+    // NOTE: If you specify a subcommand for your Command, clap will also autogenerate a "help"
+    // subcommand along with "-h" and "--help" (commandlies to sub-subcommands as well).
     //
     // Just like arg() and args(), subcommands can be specified one at a time via subcommand() or
     // multiple ones at once with a Vec<> provided to subcommands().
-    let matches = App::new("MyApp")
-        // Normal App and Arg configuration goes here...
-        // In the following example assume we wanted an application which
+    let matches = Command::new("MyCommand")
+        // Normal Command and Arg configuration goes here...
+        // In the following example assume we wanted an commandlication which
         // supported an "add" subcommand, this "add" subcommand also took
         // one positional argument of a file to add:
         .subcommand(
-            App::new("add") // The name we call argument with
-                .about("Adds files to myapp") // The message displayed in "myapp -h"
-                // or "myapp help"
+            Command::new("add") // The name we call argument with
+                .about("Adds files to mycommand") // The message displayed in "mycommand -h"
+                // or "mycommand help"
                 .version("0.1") // Subcommands can have independent version
                 .author("Kevin K.") // And authors
                 .arg(
@@ -51,9 +51,9 @@ fn main() {
                 ),
         )
         .subcommand(
-            App::new("foo") // The name we call argument with
-                .about("sub foo cmd") // The message displayed in "myapp -h"
-                // or "myapp help"
+            Command::new("foo") // The name we call argument with
+                .about("sub foo cmd") // The message displayed in "mycommand -h"
+                // or "mycommand help"
                 .version("0.1") // Subcommands can have independent version
                 .author("yiqing.") // And authors
                 .arg(
@@ -65,47 +65,52 @@ fn main() {
                 ),
         )
         .subcommand(
-            App::new("3rd-log") // The name we call argument with
-                .about("facade log lib") // The message displayed in "myapp -h"
+            Command::new("3rd-log") // The name we call argument with
+                .about("facade log lib") // The message displayed in "mycommand -h"
                 .author("yiqing."), // And authors
         )
         .subcommand(
-            App::new("3rd-url") //
+            Command::new("3rd-url") //
                 .about("url parser") //
                 .author("yiqing."), //
         )
         .subcommand(
-            App::new("3rd-reqwest") //
+            Command::new("3rd-reqwest") //
                 .about(" HTTP Client for Rust.") //
                 .author("yiqing."), //
         )
         .subcommand(
-            App::new("3rd-sysinfo") //
+            Command::new("3rd-sysinfo") //
                 .about(" HTTP Client for Rust.") //
+                .author("yiqing."), //
+        )
+        .subcommand(
+            Command::new("notify") //
+                .about(" displaying desktop notifications.") //
                 .author("yiqing."), //
         )
         .get_matches();
 
-    // You can check if a subcommand was used like normal
-    if matches.is_present("add") {
-        println!("'myapp add' was run.");
-    }
+    // // You can check if a subcommand was used like normal
+    // if matches.is_present("add") {
+    //     println!("'mycommand add' was run.");
+    // }
 
-    // You can get the independent subcommand matches (which function exactly like App matches)
-    if let Some(ref matches) = matches.subcommand_matches("add") {
-        // Safe to use unwrap() because of the required() option
-        println!("Adding file: {}", matches.value_of("input").unwrap());
-    }
+    // // You can get the independent subcommand matches (which function exactly like Command matches)
+    // if let Some(ref matches) = matches.subcommand_matches("add") {
+    //     // Safe to use unwrap() because of the required() option
+    //     println!("Adding file: {}", matches.value_of("input").unwrap());
+    // }
 
-    // 处理foo子命令
-    if let Some(ref matches) = matches.subcommand_matches("foo") {
-        // Safe to use unwrap() because of the required() option
-        println!("hello to: {}", matches.value_of("to").unwrap());
-    }
+    // // 处理foo子命令
+    // if let Some(ref matches) = matches.subcommand_matches("foo") {
+    //     // Safe to use unwrap() because of the required() option
+    //     println!("hello to: {}", matches.value_of("to").unwrap());
+    // }
 
     // You can also match on a subcommand's name
     match matches.subcommand_name() {
-        Some("add") => println!("'myapp add' was used"),
+        Some("add") => println!("'mycommand add' was used"),
         Some("3rd-log") => {
             // use awesome_lib ;
             println!("the third vender log library ");
@@ -124,6 +129,11 @@ fn main() {
             // use awesome_lib ;
             awesome_lib::hello_sysinfo::basic();
         }
+        Some("notify") => {
+            // use awesome_lib ;
+            awesome_lib::notify::run();
+        }
+         
 
         None => println!("No subcommand was used"),
         _ => println!("Some other subcommand was used"),

@@ -94,6 +94,8 @@ cargo run -p favorites 3rd-log
 - [rust-learning](https://github.com/ctjhoa/rust-learning)    
 - [The Embedded Rust Book](https://rust-embedded.github.io/book/intro/index.html)
 
+- [Rust Language Cheat Sheet](https://cheats.rs/)
+
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)
 - [cargo]()
