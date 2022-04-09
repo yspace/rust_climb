@@ -3,7 +3,7 @@ members = [
     "learnings/catsay",
     "learnings/my_orbtk",
     # "numbers",
-     "favorites",
+     "favors",
     #  "books/srqc",
      "books/in_action",
      "books/daysofrust",

@@ -1,5 +1,5 @@
 [package]
-name = "favorites"
+name = "favors"
 version = "0.1.0"
 authors = ["yiqing <yiqing_95@qq.com>"]
 edition = "2018"
