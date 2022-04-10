@@ -99,6 +99,11 @@ fn main() {
                 .about("  temporary file library for Rust ") //
                 .author("yiqing."), //
         )
+        .subcommand(
+            Command::new("schemars") //
+                .about("  Generate JSON Schema documents from Rust code ") //
+                .author("yiqing."), //
+        )
         .get_matches();
 
     // // You can check if a subcommand was used like normal
@@ -151,6 +156,11 @@ fn main() {
         Some("tempfile") => {
             // use awesome_lib ;
             awesome_lib::tempfile::run();
+        }
+         
+        Some("schemars") => {
+            // use awesome_lib ;
+            awesome_lib::schemars::run();
         }
          
 

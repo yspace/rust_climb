@@ -3,3 +3,4 @@ pub mod log;
 pub mod notify;
 pub mod liquid;
 pub mod tempfile;
+pub mod schemars;
