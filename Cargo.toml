@@ -36,6 +36,7 @@ members = [
     "learnings/hi_axum",
     "learnings/algo_ds",
     "learnings/my_macro",
+    "learnings/hi_refinery",
 
     # 准备自己实现一个验证库 以便后期隔离出去
     # "crates/validation"
