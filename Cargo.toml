@@ -13,6 +13,7 @@ members = [
     "books/intro2p",
     "books/rust101",
     "books/rust_cli",
+    "books/zero2prod",
     "whale",
     "hardway",
     # "starters/api",
