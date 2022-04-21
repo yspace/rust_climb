@@ -18,6 +18,8 @@ mod generics;
 mod macros;
 mod copy_move;
 mod drops;
+mod fmts;
+mod impl_traits;
 
 fn  init() {
     println!("init fn of crate hardway") ;
@@ -235,11 +237,20 @@ fn _seahorse_main() {
                     crate::m_action2!() ;
 
                 }),
-        );
+        )
+        .command(
+            Command::new("fmt")
+                .usage("cargo run -p hardway -- fmt") //macos: cargo run -p hardway -- slices
+                .description("rust fmt ")
+                .action(|_c: &Context| {
+                    fmts::main();
+                }),
+        )
+        ;
 
     app.run(args);
 }
-
+// =================================================================
 mod routers{
     use super::* ;
 
