@@ -20,3 +20,7 @@ actix-session = "0.6.2"
 async-stream = "0.3"
 env_logger = "0.9"
 log = "0.4"
+
+[dev-dependencies]
+actix-rt = "2.7.0"
+reqwest = "0.11.10"
