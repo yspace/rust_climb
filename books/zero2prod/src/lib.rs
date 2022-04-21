@@ -7,6 +7,8 @@ use actix_web::{
     dev::Server,
 };
 
+use std::net::TcpListener ;
+
 // async fn greet(req: HttpRequest) -> impl Responder {
 //     // You can only use impl Trait if your function returns a single type;
 //     //  if you want to return multiple, you need dynamic dispatch
@@ -19,13 +21,14 @@ async fn health_check(req: HttpRequest) -> impl Responder {
 }
 
 
-pub   fn run() ->  Result<Server ,std::io::Error> {
+pub   fn run(address: &str) ->  Result<Server ,std::io::Error> {
    
    let server =  HttpServer::new(|| {
         App::new()
         .route("/health_check", web::get().to(health_check))
     })
-    .bind("127.0.0.1:8000")?
+    // .bind("127.0.0.1:8000")?
+    .bind(address)?
     .run();
 
     Ok(server)
