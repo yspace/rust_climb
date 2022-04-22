@@ -38,6 +38,7 @@ members = [
     "learnings/algo_ds",
     "learnings/my_macro",
     "learnings/hi_refinery",
+    "learnings/hi_cursive",
 
     # 准备自己实现一个验证库 以便后期隔离出去
     # "crates/validation"
