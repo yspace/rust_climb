@@ -16,7 +16,8 @@ pretty_env_logger = "0.4.0"
 dotenv = "0.15.0"
 
 #
-url = "2.2.0"
+url = "2.2.2"
+serde_urlencoded = "0.7.1"
 
 sysinfo = "0.23.0"
 
@@ -31,3 +32,6 @@ notify-rust = "4"
 liquid = "0.26.0"
 tempfile = "3"
 schemars = { version = "0.8.8", features = ["chrono"] }
+
+[dev-dependencies]
+serde_derive = "1"
