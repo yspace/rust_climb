@@ -61,6 +61,7 @@ async fn subscribe_returns_a_200_for_valid_form_data() {
 #[actix_rt::test]
 async fn subscribe_returns_a_400_when_data_is_missing() {
     // 表格驱动测试
+    // table-driven test also known as parametrised test.
 
     // Arrange
     let app_address = spawn_app();

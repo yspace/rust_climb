@@ -17,9 +17,22 @@ actix-web = "4"
 actix-files = "0.6"
 actix-session = "0.6.2"
 
+serde = { version = "1", features = ["derive"]}
+
 async-stream = "0.3"
 env_logger = "0.9"
 log = "0.4"
+
+# Using table-like toml syntax to avoid a super-long line! 
+[dependencies.sqlx]
+version = "0.5.13"
+default-features = false
+features = [ "runtime-actix-rustls", "macros",
+    "postgres",
+    "uuid",
+    "chrono",
+    "migrate"
+]
 
 [dev-dependencies]
 actix-rt = "2.7.0"

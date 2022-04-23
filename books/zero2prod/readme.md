@@ -19,3 +19,7 @@ So that <motives>
 
 换位思考：
 作为一个xx（actor 角色） 我想...（perform actions 干啥） 以便于...(达到什么目的)
+
+## 3.8.4
+
+> SKIP_DOCKER=true ./scripts/init_db.sh
