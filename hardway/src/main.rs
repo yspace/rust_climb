@@ -20,6 +20,8 @@ mod copy_move;
 mod drops;
 mod fmts;
 mod impl_traits;
+mod files ;
+
 
 fn  init() {
     println!("init fn of crate hardway") ;
