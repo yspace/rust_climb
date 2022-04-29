@@ -76,7 +76,8 @@ cargo run -p favorites 3rd-log
 
 跑某个包下的测试
 ❯ cargo test -p hardway 
-
+带标准输入捕获
+❯ cargo test -p web_dev  --  --nocapture  
 
 ## docmentation
 生成文档：
