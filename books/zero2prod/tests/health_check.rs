@@ -35,10 +35,9 @@ async fn health_check_works() {
 fn spawn_app() -> String {
     let listener = TcpListener::bind("127.0.0.1:0").expect("Failed to bind random port");
 
-
     // We retrieve the port assigned to us by the OS
     let port = listener.local_addr().unwrap().port();
-     
+
     let server = zero2prod::startup::run(listener).expect("Failed to bind address");
     let _ = tokio::spawn(server);
     // We return the application address to the caller!
@@ -68,14 +67,14 @@ async fn subscribe_returns_a_200_for_valid_form_data() {
     // Assert
     assert_eq!(200, response.status().as_u16());
 
-    // let saved = sqlx::query!("SELECT email, name FROM subscriptions ")
-    //     .fetch_one(&mut connection)
-    //     .await
-    //     .expect("Failed to fetch saved subscription.");
+    let saved = sqlx::query!("SELECT email, name FROM subscriptions ")
+        .fetch_one(&mut connection)
+        .await
+        .expect("Failed to fetch saved subscription.");
 
-    // assert_eq!(saved.email, "ursula_le_guin@gmail.com");
-    // assert_eq!(saved.name, "le guin");
-    // println!("{:#?}", connection_string);
+    assert_eq!(saved.email, "ursula_le_guin@gmail.com");
+    assert_eq!(saved.name, "le guin");
+    println!("{:#?}", connection_string);
 }
 
 #[actix_rt::test]
