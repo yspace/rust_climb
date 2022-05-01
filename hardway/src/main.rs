@@ -21,6 +21,8 @@ mod drops;
 mod fmts;
 mod impl_traits;
 mod files ;
+mod anys ;
+mod envs ;
 
 
 fn  init() {
@@ -28,6 +30,10 @@ fn  init() {
 }
 
 fn main() {
+
+    std::env::set_var("ENV_TEMP_VAR", "env_value");
+
+
     // cmd: cargo run -p hardway --  --act=<some_action>
     _seahorse_main();
 }
@@ -246,6 +252,14 @@ fn _seahorse_main() {
                 .description("rust fmt ")
                 .action(|_c: &Context| {
                     fmts::main();
+                }),
+        )
+        .command(
+            Command::new("env")
+                .usage("cargo run -p hardway -- env") //macos: cargo run -p hardway -- slices
+                .description("rust env ")
+                .action(|_c: &Context| {
+                    envs::run();
                 }),
         )
         ;

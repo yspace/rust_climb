@@ -10,3 +10,12 @@ edition = "2018"
 seahorse = "2.0.0"
 anyhow = "1.0"
 futures = "0.3"
+
+
+[env]
+# Set ENV_VAR_NAME=value for any process run by Cargo
+ENV_VAR_NAME = "value"
+# Set even if already present in environment
+ENV_VAR_NAME_2 = { value = "value", force = true }
+# Value is relative to .cargo directory containing `config.toml`, make absolute
+ENV_VAR_NAME_3 = { value = "relative/path", relative = true }
