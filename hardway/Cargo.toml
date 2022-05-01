@@ -13,6 +13,7 @@ futures = "0.3"
 
 
 [env]
+# 好像要在cargo 根配置文件中才管用！
 # Set ENV_VAR_NAME=value for any process run by Cargo
 ENV_VAR_NAME = "value"
 # Set even if already present in environment
