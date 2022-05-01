@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 #[derive(Debug)]
 pub struct Question {
     id: QuestionId,
@@ -7,6 +9,13 @@ pub struct Question {
 }
 #[derive(Debug)]
 pub struct QuestionId(String);
+
+impl Display for QuestionId {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
 impl Question {
     pub fn new(id: QuestionId, title: String, content: String, tags: Option<Vec<String>>) -> Self {
         Question {
@@ -20,11 +29,22 @@ impl Question {
     // fn update_title(&self)
 }
 
-impl std::fmt::Display for Question{
+// “Display is similar to Debug, but Display is for user-facing output, and so cannot be derived.”
+impl std::fmt::Display for Question {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "Question {{ id: {}, title: {}, content: {} }}", self.id.0, self.title, self.content)
+        write!(
+            f,
+            "Question {{ id: {}, title: {}, content: {} }}",
+            self.id.0, self.title, self.content
+        )
     }
 }
+
+// impl std::fmt::Debug for Question {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
+//         write!(f, "{:?}", self.tags)
+//     }
+// }
 
 #[test]
 fn test_question() {
@@ -34,5 +54,6 @@ fn test_question() {
         "Content of question".to_string(),
         Some(vec!["faq".to_string()]),
     );
-   println!("{}", question);
+    println!("{}", question);
+    println!("{:?}", question);
 }
