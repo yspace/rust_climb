@@ -22,4 +22,6 @@ So that <motives>
 
 ## 3.8.4
 
+先要运行脚本 初始化下db
+如果docker 已经运行了 则可以使用跳过docker的方法：
 > SKIP_DOCKER=true ./scripts/init_db.sh

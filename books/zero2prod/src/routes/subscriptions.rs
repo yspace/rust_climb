@@ -2,6 +2,9 @@ use actix_web::{web, App, HttpRequest, HttpResponse, HttpServer, Responder};
 
 use sqlx::PgConnection ;
 
+use uuid::Uuid;
+use chrono::Utc;
+
 #[derive(serde::Deserialize)]
 pub struct FormData {
     email: String,
