@@ -1,4 +1,6 @@
 use std::fmt::Display;
+use std::io::{Error, ErrorKind};
+use std::str::FromStr;
 
 #[derive(Debug)]
 pub struct Question {
@@ -13,6 +15,16 @@ pub struct QuestionId(String);
 impl Display for QuestionId {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(f, "{}", self.0)
+    }
+}
+
+impl std::str::FromStr for QuestionId {
+    type Err = std::io::Error;
+    fn from_str(id: &str) -> Result<Self, Self::Err> {
+        match id.is_empty() {
+            false => Ok(QuestionId(id.to_string())),
+            true => Err( Error::new(ErrorKind::InvalidInput,"no id provided")),
+        }
     }
 }
 
