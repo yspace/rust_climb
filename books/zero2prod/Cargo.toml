@@ -44,12 +44,3 @@ features = [ "runtime-actix-rustls", "macros",
 actix-rt = "2.7.0"
 reqwest = "0.11.10"
 tokio = "1.17.0"
-
-
-[env]
-# Set ENV_VAR_NAME=value for any process run by Cargo
-ENV_VAR_NAME = "value"
-# Set even if already present in environment
-ENV_VAR_NAME_2 = { value = "value", force = true }
-# Value is relative to .cargo directory containing `config.toml`, make absolute
-ENV_VAR_NAME_3 = { value = "relative/path", relative = true }

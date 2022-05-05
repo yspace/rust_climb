@@ -6,13 +6,13 @@ use serde::Serialize;
 
 #[derive(Debug,Serialize,Clone)]
 pub struct Question {
-    id: QuestionId,
-    title: String,
-    content: String,
-    tags: Option<Vec<String>>,
+   pub id: QuestionId,
+   pub title: String,
+   pub content: String,
+   pub tags: Option<Vec<String>>,
 }
 #[derive(Debug, Serialize,  Clone)]
-pub struct QuestionId(String);
+pub struct QuestionId(pub String);
 
 impl Display for QuestionId {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
