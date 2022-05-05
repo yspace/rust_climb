@@ -12,11 +12,3 @@ anyhow = "1.0"
 futures = "0.3"
 
 
-[env]
-# 好像要在cargo 根配置文件中才管用！
-# Set ENV_VAR_NAME=value for any process run by Cargo
-ENV_VAR_NAME = "value"
-# Set even if already present in environment
-ENV_VAR_NAME_2 = { value = "value", force = true }
-# Value is relative to .cargo directory containing `config.toml`, make absolute
-ENV_VAR_NAME_3 = { value = "relative/path", relative = true }
