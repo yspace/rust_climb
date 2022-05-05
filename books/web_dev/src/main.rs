@@ -1,10 +1,13 @@
 mod listings ;
+mod models ;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
   
    // basic_async_request().await?;
-   minimal_warp_server().await?;
+   // minimal_warp_server().await?;
+   // listings::listing_3_1::run().await;
+   listings::listing_3_4::main().await;
    Ok(())
 }
 
