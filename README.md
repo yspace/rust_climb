@@ -79,6 +79,11 @@ cargo run -p favorites 3rd-log
 带标准输入捕获
 ❯ cargo test -p web_dev  --  --nocapture  
 
+测试某个包下某个模块下的测试:
+比如测试 `hardway` crate下的 模块名路径含有`anys`的测试 并打印标准输出的内容
+> cargo test -p hardway  anys  -- --nocapture
+
+
 ## docmentation
 生成文档：
 >  cargo doc -p mylib  --no-deps --open
