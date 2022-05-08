@@ -2,16 +2,16 @@ use std::fmt::Display;
 use std::io::{Error, ErrorKind};
 use std::str::FromStr;
 
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug,Serialize,Clone)]
+#[derive(Debug,Serialize,Deserialize, Clone)]
 pub struct Question {
    pub id: QuestionId,
    pub title: String,
    pub content: String,
    pub tags: Option<Vec<String>>,
 }
-#[derive(Debug, Serialize,  Clone,Eq, PartialEq,Hash)]
+#[derive(Debug, Serialize, Deserialize,  Clone,Eq, PartialEq,Hash)]
 pub struct QuestionId(pub String);
 
 impl Display for QuestionId {

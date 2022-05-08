@@ -14,8 +14,15 @@ pub struct Store {
 impl Store {
     pub fn new() -> Self {
         Self {
-            questions: HashMap::new(),
+            questions: Self::init(),
+            // questions: HashMap::new(),
         }
+    }
+
+    pub fn init() -> HashMap<QuestionId,Question> {
+        let file = include_str!("../../questions.json");
+        serde_json::from_str(file).expect("can't read questions.json")
+         
     }
 
     // pub fn add_question(&mut self, question: Question) {
