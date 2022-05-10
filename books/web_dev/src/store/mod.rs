@@ -6,6 +6,7 @@ use crate::models::{
     Question,
 };
 
+#[derive(Debug, Clone)]
 pub struct Store {
     pub questions: HashMap<QuestionId, Question>,
 
@@ -20,7 +21,8 @@ impl Store {
     }
 
     pub fn init() -> HashMap<QuestionId,Question> {
-        let file = include_str!("../../questions.json");
+        // let file = include_str!("../../questions.json");
+        let file = include_str!("./questions.json");
         serde_json::from_str(file).expect("can't read questions.json")
          
     }
