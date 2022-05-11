@@ -22,6 +22,7 @@ impl Store {
 
     pub fn init() -> HashMap<QuestionId,Question> {
         // let file = include_str!("../../questions.json");
+        // static SETTINGS_STR: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/my_config/settings.toml"));
         let file = include_str!("./questions.json");
         serde_json::from_str(file).expect("can't read questions.json")
          

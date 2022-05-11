@@ -1,5 +1,9 @@
 {
     "QI0001" : {
     "id": "QI0001",
-    "title": "First question ever asked", "content": "How does this work?", "tags": ["general"] }
+    "title": "First question ever asked", "content": "How does this work?", "tags": ["general"] 
+    },
+    "QI0002" : {
+    "id": "QI0002",
+    "title": "sencond question ever asked", "content": "How does this work?", "tags": ["general"] }
 }
