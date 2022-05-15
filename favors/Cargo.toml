@@ -19,7 +19,7 @@ dotenv = "0.15.0"
 url = "2.2.2"
 serde_urlencoded = "0.7.1"
 
-sysinfo = "0.23.0"
+sysinfo = "0.23.12"
 
 # jwt
 jsonwebtoken = "8"
@@ -32,6 +32,11 @@ notify-rust = "4"
 liquid = "0.26.0"
 tempfile = "3"
 schemars = { version = "0.8.8", features = ["chrono"] }
+
+# time related
+chrono = "0.4.19"
+# cron = { git = "https://github.com/mehcode/cron", branch = "error-chain" }
+cron = { git = "https://github.com/zslayton/cron"  }
 
 [dev-dependencies]
 serde_derive = "1"
