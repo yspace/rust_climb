@@ -1,4 +1,4 @@
-use clap::{Command, Arg};
+use clap::{Arg, Command};
 
 #[macro_use]
 extern crate log;
@@ -6,7 +6,7 @@ extern crate dotenv;
 extern crate pretty_env_logger;
 
 use dotenv::dotenv;
-use std::env;
+use std::{env, future::Future, pin::Pin};
 
 // mod 声明
 mod awesome_lib;
@@ -104,6 +104,11 @@ fn main() {
                 .about("  Generate JSON Schema documents from Rust code ") //
                 .author("yiqing."), //
         )
+        .subcommand(
+            Command::new("async") //
+                .about("  run async rust code ") //
+                .author("yiqing."), //
+        )
         .get_matches();
 
     // // You can check if a subcommand was used like normal
@@ -152,19 +157,53 @@ fn main() {
             // use awesome_lib ;
             awesome_lib::liquid::run();
         }
-         
+
         Some("tempfile") => {
             // use awesome_lib ;
             awesome_lib::tempfile::run();
         }
-         
+
         Some("schemars") => {
             // use awesome_lib ;
             awesome_lib::schemars::run();
         }
-         
+
+        Some("async") => {
+            // use awesome_lib ;
+            async_run(|| Box::pin( async {
+                println!("I run async  ");
+            }));
+        }
 
         None => println!("No subcommand was used"),
         _ => println!("Some other subcommand was used"),
     }
+}
+
+pub type JobToRunAsync = FnMut() -> Pin<Box<dyn Future<Output = ()> + Send>> + Send + Sync;
+
+
+fn async_run<T>(mut job: T)
+where
+    T: 'static,
+    // T: JobToRunAsync,
+    T: FnMut() -> Pin<Box<dyn Future<Output = ()> + Send>> + Send + Sync,
+{
+    tokio::runtime::Builder::new_multi_thread()
+        .enable_all()
+        .build()
+        .unwrap()
+        .block_on(async {
+            println!("Hello, world! from tokio runtime");
+            job().await;
+        })
+}
+fn async_basic_example() {
+    tokio::runtime::Builder::new_multi_thread()
+        .enable_all()
+        .build()
+        .unwrap()
+        .block_on(async {
+            println!("Hello, world! from tokio runtime");
+        })
 }
