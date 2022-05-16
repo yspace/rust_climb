@@ -23,6 +23,7 @@ mod impl_traits;
 mod files ;
 mod anys ;
 mod envs ;
+mod structs ;
 
 
 fn  init() {
@@ -260,6 +261,14 @@ fn _seahorse_main() {
                 .description("rust env ")
                 .action(|_c: &Context| {
                     envs::run();
+                }),
+        )
+        .command(
+            Command::new("structs")
+                .usage("cargo run -p hardway -- structs") //macos: cargo run -p hardway -- slices
+                .description("structs ")
+                .action(|_c: &Context| {
+                    structs::run();
                 }),
         )
         ;
