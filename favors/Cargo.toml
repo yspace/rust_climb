@@ -37,9 +37,11 @@ schemars = { version = "0.8.8", features = ["chrono"] }
 chrono = "0.4.19"
 # cron = { git = "https://github.com/mehcode/cron", branch = "error-chain" }
 cron = { git = "https://github.com/zslayton/cron"  }
+tokio-cron-scheduler = "*"
 
 # async
 tokio = { version = "1.18.2", features = ["full"] }
+
 
 [dev-dependencies]
 serde_derive = "1"

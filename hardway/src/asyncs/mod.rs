@@ -1,4 +1,6 @@
 mod future_internal ;
+mod using_tokio ;
+mod tokio_actors ;
 
 pub fn main() {
     println!("in mod ayncs");
@@ -6,8 +8,10 @@ pub fn main() {
     //
     // basic::run();
     // using_await::run();
-    sing_and_song::main();
-    sing_song_v2::run() ;
+    // sing_and_song::main();
+    // sing_song_v2::run() ;
+
+    using_tokio::run();
 }
 
 mod basic {

@@ -9,6 +9,8 @@ edition = "2018"
 [dependencies]
 seahorse = "2.0.0"
 anyhow = "1.0"
+
+# for learn async 
 futures = "0.3"
-
-
+tokio = { version = "1.18.2", features = ["full"] }
+rayon = "1.5.3"
