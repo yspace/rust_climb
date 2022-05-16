@@ -24,6 +24,7 @@ mod files ;
 mod anys ;
 mod envs ;
 mod structs ;
+mod arrays ;
 
 
 fn  init() {
@@ -269,6 +270,14 @@ fn _seahorse_main() {
                 .description("structs ")
                 .action(|_c: &Context| {
                     structs::run();
+                }),
+        )
+        .command(
+            Command::new("arrays")
+                .usage("cargo run -p hardway -- arrays") //macos: cargo run -p hardway -- slices
+                .description("arrays in rust ")
+                .action(|_c: &Context| {
+                    arrays::run();
                 }),
         )
         ;
