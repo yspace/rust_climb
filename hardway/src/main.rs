@@ -25,6 +25,7 @@ mod anys ;
 mod envs ;
 mod structs ;
 mod arrays ;
+mod impls ;
 
 
 fn  init() {
@@ -278,6 +279,14 @@ fn _seahorse_main() {
                 .description("arrays in rust ")
                 .action(|_c: &Context| {
                     arrays::run();
+                }),
+        )
+        .command(
+            Command::new("impls")
+                .usage("cargo run -p hardway -- impls") //macos: cargo run -p hardway -- slices
+                .description("impl keyword in rust ")
+                .action(|_c: &Context| {
+                    impls::run();
                 }),
         )
         ;
