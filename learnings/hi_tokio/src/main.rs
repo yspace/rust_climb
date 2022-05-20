@@ -1,43 +1,28 @@
-// use tokio::sync::mpsc;
-
-async fn  say_to_world() -> String {
-  String::from("world")
-}
+use tokio::net::{TcpListener, TcpStream};
+use mini_redis::{Connection, Frame};
 
 #[tokio::main]
 async fn main() {
-    // 此处的函数调用是惰性的，并不会执行 `say_to_world()` 函数体中的代码
-    let op = say_to_world();
+    // Bind the listener to the address
+    let listener = TcpListener::bind("127.0.0.1:6379").await.unwrap();
 
-    // 首先打印出 "hello"
-    println!("hello");
-
-    // 使用 `.await` 让 `say_to_world` 开始运行起来
-    println!("{}", op.await);
-
-    //
-    my_channel().await ;
+    loop {
+        // The second item contains the IP and port of the new connection.
+        let (socket, _) = listener.accept().await.unwrap();
+        process(socket).await;
+    }
 }
 
+async fn process(socket: TcpStream) {
+    // The `Connection` lets us read/write redis **frames** instead of
+    // byte streams. The `Connection` type is defined by mini-redis.
+    let mut connection = Connection::new(socket);
 
-async fn my_channel(){
-  use futures::{channel::mpsc,SinkExt,StreamExt};
-  const BUFFER_SIZE: usize = 2 ;
-  let (mut tx, mut rx) = mpsc::channel::<i32>(BUFFER_SIZE);
+    if let Some(frame) = connection.read_frame().await.unwrap() {
+        println!("GOT: {:?}", frame);
 
-  let mut tx2 = tx.clone(); 
-
-  tx.send(1).await.unwrap();
-  // 关闭tx
-  drop(tx);
-
-  tx2.send(2).await.unwrap();
-  drop(tx2) ;
-
-  println!("{:?}", rx.next().await);
-  println!("{:?}", rx.next().await);
-  println!("{:?}", rx.next().await);
-  println!("{:?}", rx.next().await);
-  println!("{:?}", rx.next().await);
+        // Respond with an error
+        let response = Frame::Error("unimplemented".to_string());
+        connection.write_frame(&response).await.unwrap();
+    }
 }
-  
