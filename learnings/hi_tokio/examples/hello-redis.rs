@@ -6,7 +6,8 @@ async fn say_to_world() -> String {
 
 #[tokio::main]
 async fn main() {
-  client::main().await;
+  client::main().await.expect("client::main() failed");
+  println!("> exit main!");
 }
 
 async fn run() {
