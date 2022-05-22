@@ -1,6 +1,11 @@
 use std::fs::read_to_string;
 
+mod basics ;
+
 pub fn main() {
+    basics::main();
+    return;
+
     println!("learn string");
 
     // let contents = std::fs::read("runtimes/faust.txt").unwrap() ;
