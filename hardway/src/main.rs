@@ -1,41 +1,39 @@
-use std::{collections::HashMap, rc::Rc, cell::RefCell};
+use std::{cell::RefCell, collections::HashMap, rc::Rc};
 
 mod iterators;
 
+mod anys;
+mod arrays;
 mod asyncs;
 mod closures;
 mod collections;
+mod copy_move;
+mod drops;
 mod ecs;
+mod envs;
 mod errors;
+mod files;
+mod fmts;
 mod funcs;
+mod generics;
 mod hashmap;
+mod impl_traits;
+mod impls;
+mod macros;
 mod pattern_matches;
 mod sized;
 mod slices;
 mod strings;
+mod structs;
 mod threads;
-mod generics;
-mod macros;
-mod copy_move;
-mod drops;
-mod fmts;
-mod impl_traits;
-mod files ;
-mod anys ;
-mod envs ;
-mod structs ;
-mod arrays ;
-mod impls ;
+mod vectors;
 
-
-fn  init() {
-    println!("init fn of crate hardway") ;
+fn init() {
+    println!("init fn of crate hardway");
 }
 
 fn main() {
-
     std::env::set_var("ENV_TEMP_VAR", "env_value");
-
 
     // cmd: cargo run -p hardway --  --act=<some_action>
     _seahorse_main();
@@ -47,40 +45,49 @@ fn _seahorse_main() {
 
     let args: Vec<String> = env::args().collect();
 
-   // let some_integer = 0 ;
-    
+    // let some_integer = 0 ;
 
     let app = App::new(env!("CARGO_PKG_NAME"))
         .description(env!("CARGO_PKG_DESCRIPTION"))
         .author(env!("CARGO_PKG_AUTHORS"))
         .version(env!("CARGO_PKG_VERSION"))
         .usage("cli [args]")
-        .flag(
-            Flag::new("act", FlagType::String)
-            .description("which action to be executedß")
-        )
+        .flag(Flag::new("act", FlagType::String).description("which action to be executedß"))
         .flag(
             Flag::new("help", FlagType::String)
-            .description("show the usage information for the command")
+                .description("show the usage information for the command"),
         )
-        .action(
-           |c| {
-                println!("Hello, {:?} this is the default action .", c.args);
+        .action(|c| {
+            println!("Hello, {:?} this is the default action .", c.args);
 
-               // callbacks.call(&"strings");
+            match c.string_flag("act") {
+                Ok(act) => {
+                    println!("resolved action is {}", act);
+                    // callbacks.call(&act) ;
+                    routers::run(&act);
+                }
+                _ => {
+                    // callbacks.call(&"strings");
+                    if c.args.len() > 0 {
+                      
+                        let mut module_entries = CallbacksMut::new();
+                        module_entries.register("vectors".to_string(), vectors::main);
+                       
+                       
+                        let act_key = c.args[0].as_str();
+                        if module_entries.is_key_exists(act_key) {
+                            module_entries.call(act_key);
+                        }
+                    }else {
 
-                match c.string_flag("act") {
-                    Ok(act) => {
-                        
-                        
-                        println!("resolved action is {}", act);
-                       // callbacks.call(&act) ;
-                       routers::run(&act) ;
+                        println!("some error happened");
                     }
-                    _ => println!("some error happened"),
                 }
             }
-        )
+
+            println!("> / end defalt action, args: {:?}", c.args);
+
+        })
         .command(
             Command::new("help")
                 .description("need help?")
@@ -233,20 +240,18 @@ fn _seahorse_main() {
                     // https://course.rs/async/intro.html
                     macros::main();
                     // macros::pub_macros::my_macros!() ;
-                    crate::my_macros!() ; // 子模块中的宏定义被导入到了根crate下了
+                    crate::my_macros!(); // 子模块中的宏定义被导入到了根crate下了
 
-                    fn init(){
-                        println!("my init function") ;
-
+                    fn init() {
+                        println!("my init function");
                     }
                     // 仔细区别下面两种宏
-                    crate::do_func_init!() ;
-                    crate::do_crate_func_init!() ;
+                    crate::do_func_init!();
+                    crate::do_crate_func_init!();
 
                     // 内用规则
-                    crate::m_action!() ;
-                    crate::m_action2!() ;
-
+                    crate::m_action!();
+                    crate::m_action2!();
                 }),
         )
         .command(
@@ -288,111 +293,116 @@ fn _seahorse_main() {
                 .action(|_c: &Context| {
                     impls::run();
                 }),
-        )
-        ;
+        );
 
     app.run(args);
 }
 // =================================================================
-mod routers{
-    use super::* ;
+mod routers {
+    use super::*;
 
     pub fn run(act: &str) {
-        let mut callbacks = CallbacksMut::new() ;
+        let mut callbacks = CallbacksMut::new();
         // cargo run -p hardway -- --act=strings
-        callbacks.register("strings".to_string(), ||{strings::main()}) ;
+        callbacks.register("strings".to_string(), || strings::main());
 
-        callbacks.call(act) ;
+        callbacks.call(act);
     }
-
 }
 
-struct Callbacks{
-    callbacks: HashMap<String,Box< dyn Fn()>>
+struct Callbacks {
+    callbacks: HashMap<String, Box<dyn Fn()>>,
 }
 
 impl Callbacks {
-
-
     pub fn new() -> Self {
-        Callbacks { callbacks: HashMap::new() }
-    }
-
-
-
-    pub fn register(&mut self, k: &str , callback: Box<dyn Fn()>) {
-        self.callbacks.insert(k.to_string(), callback) ;
-    }
-
-    pub fn call(&mut self, k: &str){
-        let cb = self.callbacks.get(k);
-        match cb{
-            Some(cb) => cb() , 
-            None => println!("can't find the callback:<{}> in the callback list",k),
-        }
-    }
-}
-#[derive(Clone)]
-struct CallbacksMut{
-    callbacks: HashMap<String,  Rc<RefCell<dyn FnMut()>>>,
-    // callbacks: HashMap<String,  Rc<RefCell<FnMut()>>>,
-}
-
-impl CallbacksMut{  
-
-    pub fn new() -> Self{
-        Self{
+        Callbacks {
             callbacks: HashMap::new(),
         }
     }
 
-    pub fn register0<F: FnMut()+'static>(&mut self, k: String ,callback: F) {
+    pub fn register(&mut self, k: &str, callback: Box<dyn Fn()>) {
+        self.callbacks.insert(k.to_string(), callback);
+    }
+
+    pub fn call(&mut self, k: &str) {
+        let cb = self.callbacks.get(k);
+        match cb {
+            Some(cb) => cb(),
+            None => println!("can't find the callback:<{}> in the callback list", k),
+        }
+    }
+}
+#[derive(Clone)]
+struct CallbacksMut {
+    callbacks: HashMap<String, Rc<RefCell<dyn FnMut()>>>,
+    // callbacks: HashMap<String,  Rc<RefCell<FnMut()>>>,
+}
+
+impl CallbacksMut {
+    pub fn new() -> Self {
+        Self {
+            callbacks: HashMap::new(),
+        }
+    }
+
+    pub fn register0<F: FnMut() + 'static>(&mut self, k: String, callback: F) {
         let cell = Rc::new(RefCell::new(callback));
         self.callbacks.insert(k, cell);
     }
-    pub fn register<F: FnMut()+'static>(&mut self, k: String ,callback: F) {
+    pub fn register<F: FnMut() + 'static>(&mut self, k: String, callback: F) {
         let cell = Rc::new(RefCell::new(callback));
         self.callbacks.insert(k, cell);
     }
 
-    pub fn call(&mut self, k: &str){
+    pub fn is_key_exists(&mut self, k: &str) -> bool {
+        self.callbacks.contains_key(k)
+    }
+
+    pub fn call(&mut self, k: &str) {
         let cb = self.callbacks.get(k);
-        match cb{
+        match cb {
             Some(cb) => {
-              let mut mut_closure =  cb.borrow_mut() ;
-              (&mut *mut_closure)();
-                
-            }, 
-            None => println!("can't find the callback:<{}> in the callback list",k),
+                let mut mut_closure = cb.borrow_mut();
+                (&mut *mut_closure)();
+            }
+            None => println!("can't find the callback:<{}> in the callback list", k),
         }
     }
 }
 
 // 测试下Fn FnMut
 
-
 #[cfg(test)]
 mod tests {
-    use super::*; 
+    use super::*;
     #[test]
     fn test_fn_types() {
         assert_eq!(2 + 2, 4);
     }
 
     #[test]
-    fn test_callbacks_mut(){
-        let mut c = CallbacksMut::new() ;
-        c.register("foo".to_string() , || println!("Callback 1: foo"));
+    fn test_callbacks_mut() {
+        let mut c = CallbacksMut::new();
+        c.register("foo".to_string(), || println!("Callback 1: foo"));
         c.call(&"foo");
-    
+
         {
             let mut count: usize = 0;
             c.register("bar".to_string(), move || {
-                count = count+1;
-                println!("Callback 2:  ({}. time)",  count);
-            } );
+                count = count + 1;
+                println!("Callback 2:  ({}. time)", count);
+            });
         }
-        c.call(&"foo"); c.clone().call(&"bar");
-        c.call(&"foo"); c.clone().call(&"bar");
+        c.call(&"foo");
+        c.clone().call(&"bar");
+        c.call(&"foo");
+        c.clone().call(&"bar");
+    }
+    #[test]
+    fn test_is_key_exists() {
+        let mut c = CallbacksMut::new();
+        c.register("foo".to_string(), || println!("Callback 1: foo"));
+        assert_eq!(c.is_key_exists(&"foo"), true);
     }
 }

@@ -1,4 +1,6 @@
 use std::collections::HashMap;
+
+mod tutorials ;
 //
 pub fn main() {
     // https://users.rust-lang.org/t/hashmap-of-string-fn/25071/10
