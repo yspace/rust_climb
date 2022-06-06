@@ -5,8 +5,13 @@ mod tutorial ;
 mod send_bound;
 mod static_bound;
 
+mod topics ;
+
 #[tokio::main]
 async fn main() {
+
+    topics::tracings::main().await ;
+
     // Bind the listener to the address
     let listener = TcpListener::bind("127.0.0.1:6379").await.unwrap();
 
