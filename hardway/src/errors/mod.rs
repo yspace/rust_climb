@@ -13,11 +13,11 @@ mod anyhow_demo {
 
     pub type Result<T> = std::result::Result<T, MyError>;
 
-    pub fn fetch_id() -> Result<u64> {
-        let content = std::fs::read_to_string("/tmp/tmp_id")?;
-        let id = content.parse::<u64>()?;
-        Ok(id)
-    }
+    // pub fn fetch_id() -> Result<u64> {
+    //     let content = std::fs::read_to_string("/tmp/tmp_id")?;
+    //     let id = content.parse::<u64>()?;
+    //     Ok(id)
+    // }
 }
 
 mod thiserror_demo {}

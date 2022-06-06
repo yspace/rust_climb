@@ -2,9 +2,11 @@ use std::collections::HashMap;
 
 mod fn_types ;
 mod pass_by_ref ;
+mod as_params ;
 
 
 pub fn main() {
+    return as_params::main();
     // func_params::run() ;
     // return_value::run() ;
 
