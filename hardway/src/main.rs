@@ -27,6 +27,9 @@ mod strings;
 mod structs;
 mod threads;
 mod vectors;
+// 常量
+mod consts ;
+mod statics ;
 
 fn init() {
     println!("init fn of crate hardway");
@@ -72,6 +75,8 @@ fn _seahorse_main() {
                       
                         let mut module_entries = CallbacksMut::new();
                         module_entries.register("vectors".to_string(), vectors::main);
+                        module_entries.register("consts".to_string(), consts::main);
+                        module_entries.register("statics".to_string(), statics::main);
                        
                        
                         let act_key = c.args[0].as_str();
