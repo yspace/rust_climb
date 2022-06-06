@@ -8,6 +8,8 @@ edition = "2018"
 
 [dependencies]
 seahorse = "2.0.0"
+
+thiserror = "1.0.31"
 anyhow = "1.0"
 
 # for learn async 

@@ -58,7 +58,7 @@ fn _seahorse_main() {
                 .description("show the usage information for the command"),
         )
         .action(|c| {
-            println!("Hello, {:?} this is the default action .", c.args);
+            println!(" > Hello, {:?} this is the default action . \n\n", c.args);
 
             match c.string_flag("act") {
                 Ok(act) => {
@@ -85,7 +85,7 @@ fn _seahorse_main() {
                 }
             }
 
-            println!("> / end defalt action, args: {:?}", c.args);
+            println!("\n\n > / end defalt action, args: {:?}", c.args);
 
         })
         .command(
