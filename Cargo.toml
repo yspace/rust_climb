@@ -15,6 +15,7 @@ members = [
     "books/rust_cli",
     "books/zero2prod",
     "books/web_dev",
+    "books/geektime/scrape_url",
 
     "whale",
     "hardway",
