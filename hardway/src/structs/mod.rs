@@ -1,6 +1,10 @@
 mod tuple_structs;
+mod chat ;
 
 pub fn run() {
+     // 最近学习的模块入口
+     return chat::main() ;
+
     {
         let bg = Color {
             red: 255,
