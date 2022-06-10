@@ -43,3 +43,19 @@ fn first_word(s: &String) -> &str {
 
     &s[..]
 }
+
+
+fn analyzi_slice<T>(slice: &[T]) {
+    println!("Slice size : {}", std::mem::size_of_val(&slice));
+}
+fn slice_size<T>(slice: &[T]) -> usize {
+    std::mem::size_of_val(&slice)
+}
+
+#[test]
+fn test_analyzi_slice(){
+    let arr = ['a','呀','b'];
+    let slice = &arr[..];
+
+    assert_eq!(slice_size(slice), 2 * std::mem::size_of::<usize>());
+}
