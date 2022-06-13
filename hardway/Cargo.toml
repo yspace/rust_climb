@@ -23,6 +23,9 @@ clokwerk = "0.3.5"
 # hashmap 
 maplit = "1.0"
 
+# tree 
+radix_trie = "0.2.1"
+
 
 # utilities
 uuid = { version = "1.1.1", features = ["std","v4","serde"] }

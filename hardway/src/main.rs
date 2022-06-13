@@ -1,5 +1,7 @@
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 
+mod router;
+
 mod iterators;
 
 mod anys;
@@ -28,11 +30,28 @@ mod structs;
 mod threads;
 mod vectors;
 // 常量
-mod consts ;
-mod statics ;
+mod consts;
+mod statics;
+// 流程控制
+mod control_flows;
+
+// 日期 时间
+mod date_times;
+
+// 树
+mod trees;
 
 fn init() {
     println!("init fn of crate hardway");
+}
+
+mod routes {
+    use crate::router::Router;
+    pub fn configure(router: &mut Router) {
+        router.insert("/", || {
+            println!("fn: /");
+        });
+    }
 }
 
 fn main() {
@@ -72,26 +91,24 @@ fn _seahorse_main() {
                 _ => {
                     // callbacks.call(&"strings");
                     if c.args.len() > 0 {
-                      
                         let mut module_entries = CallbacksMut::new();
                         module_entries.register("vectors".to_string(), vectors::main);
                         module_entries.register("consts".to_string(), consts::main);
                         module_entries.register("statics".to_string(), statics::main);
-                       
-                       
+                        module_entries.register("control_flows".to_string(), control_flows::main);
+                        module_entries.register("trees".to_string(), trees::main);
+
                         let act_key = c.args[0].as_str();
                         if module_entries.is_key_exists(act_key) {
                             module_entries.call(act_key);
                         }
-                    }else {
-
+                    } else {
                         println!("some error happened");
                     }
                 }
             }
 
             println!("\n\n > / end defalt action, args: {:?}", c.args);
-
         })
         .command(
             Command::new("help")
