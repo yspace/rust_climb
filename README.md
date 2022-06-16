@@ -1,6 +1,11 @@
 # rust_climb
 learn rust the hard way
 
+## rust 
+
+升级
+> rustup update
+
 ## cargo 走代理
 
 https://blog.csdn.net/bu2_int/article/details/79758847
@@ -101,6 +106,8 @@ cargo run -p favorites 3rd-log
 - [The Embedded Rust Book](https://rust-embedded.github.io/book/intro/index.html)
 
 - [Rust Language Cheat Sheet](https://cheats.rs/)
+
+- [rust by example](https://rustwiki.org/zh-CN/rust-by-example/mod/visibility.html)
 
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)
