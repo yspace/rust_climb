@@ -116,9 +116,13 @@ mod listing_1_7 {
     use std::rc::Rc;
     use std::sync::{Arc, Mutex};
     pub fn run() {
+        // 位于栈上
         let a = 10;
+        // 堆上
         let b = Box::new(20);
+        // Rc裹装的 堆化整数
         let c = Rc::new(Box::new(30));
+        // Integer wrapped in an atomic reference counter and protected by a mutual exclusion lock
         let d = Arc::new(Mutex::new(40));
 
         println!("a: {:?} , b: {:?}, c: {:?}, d: {:?}", a, b, c, d);

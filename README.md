@@ -139,6 +139,9 @@ https://rust.godbolt.org/z/8dGbY8Pe1
 [cargo-edit](https://github.com/killercup/cargo-edit)
 > $ cargo install cargo-edit
 
+添加依赖的crate
+> cargo add num
+
 ### git 冲突
 `Your local changes to the following files would be overwritten by merge` 出现这个错误
 >

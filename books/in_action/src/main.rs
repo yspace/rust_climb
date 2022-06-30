@@ -1,3 +1,7 @@
+use whale::route::router::Router;
+
+mod routes;
+
 mod chapters;
 
 fn main() {
@@ -14,7 +18,23 @@ fn _seahorse_main() {
         .author(env!("CARGO_PKG_AUTHORS"))
         .version(env!("CARGO_PKG_VERSION"))
         .usage("cli [args]")
-        .action(|c| println!("Hello, {:?}", c.args))
+        .action(|c| {
+            let mut router = Router::new();
+            routes::configure(&mut router);
+
+            if c.args.len() > 0 {
+                let act_key = c.args[0].as_str();
+                router.handle(&act_key);
+
+                return;
+            }
+
+            println!("Hello, {:?}", c.args);
+            router.handle("/");
+            
+            // println!("{:#?}", router);
+            println!("{:#?}", router.descendents(""));
+        })
         .command(
             Command::new("help")
                 .description("need help?")
