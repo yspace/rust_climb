@@ -17,7 +17,13 @@
          // println!("{:?}",router.descendents("ch2"));
         //  crate::chapters::ch2::comparisons::main() ;
         //  crate::chapters::ch2::add_floats::main() ;
-         crate::chapters::ch2::complex::main() ;
+        //  crate::chapters::ch2::complex::main() ;
+        //  crate::chapters::ch2::flow_control::main() ;
+        //  crate::chapters::ch2::functions::main() ;
+        //  crate::chapters::ch2::functions::main() ;
+        //  crate::chapters::ch2::explicit_lifetime_annotations::main() ;
+        //  crate::chapters::ch2::generic_functions::main() ;
+        crate::chapters::ch2::main() ;
      });
      router.insert("ch2/first_steps", || {
          println!("chapters/ch2");
@@ -30,5 +36,9 @@
      router.insert("ch2/non-base2", || {
          println!("chapters/ch2");
          crate::chapters::ch2::non_base2::main();
+     });
+     router.insert("ch3", || {
+         //println!("chapters/ch3");
+         crate::chapters::ch3::main();
      });
  }

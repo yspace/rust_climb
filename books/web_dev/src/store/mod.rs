@@ -1,6 +1,9 @@
 
 use std::collections::HashMap;
 
+use std::sync::Arc ;
+use parking_lot::RwLock ;
+
 use crate::models::{
     QuestionId,
     Question,
@@ -8,8 +11,8 @@ use crate::models::{
 
 #[derive(Debug, Clone)]
 pub struct Store {
-    pub questions: HashMap<QuestionId, Question>,
-
+    // pub questions: HashMap<QuestionId, Question>,
+    pub questions: Arc<RwLock<HashMap<QuestionId, Question>>>,
 }
 
 impl Store {

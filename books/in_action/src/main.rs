@@ -19,6 +19,10 @@ fn _seahorse_main() {
         .version(env!("CARGO_PKG_VERSION"))
         .usage("cli [args]")
         .action(|c| {
+            
+            // chapters::ch2::grep_lite::main() ;
+            // return ;
+
             let mut router = Router::new();
             routes::configure(&mut router);
 

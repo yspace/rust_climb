@@ -21,6 +21,11 @@ https://blog.csdn.net/bu2_int/article/details/79758847
 
 ## rustup 走 代理
 
+rustup 管理rust的安装 关心的是rust工具链 可以使我们在不同的编译器版本间移动
+它也能简单的访问rust的文档 可以打开rust标准库的本地拷贝
+
+> rustup doc
+
 没试过 网上随便找的^-^
 
 > 不推荐使用 步骤如下：

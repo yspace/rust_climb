@@ -97,6 +97,7 @@ fn _seahorse_main() {
                         module_entries.register("statics".to_string(), statics::main);
                         module_entries.register("control_flows".to_string(), control_flows::main);
                         module_entries.register("trees".to_string(), trees::main);
+                        module_entries.register("date_times".to_string(), date_times::run );
 
                         let act_key = c.args[0].as_str();
                         if module_entries.is_key_exists(act_key) {

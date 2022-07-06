@@ -12,3 +12,6 @@ seahorse = "2.1.0"
 whale = { path = "../../whale" }
 
 num = "0.4"
+regex = "1"
+clap = "3.2.8"
+rand = "0.8.5"
