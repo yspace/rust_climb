@@ -42,5 +42,7 @@ tokio-cron-scheduler = "*"
 # async
 tokio = { version = "1.18.2", features = ["full"] }
 
+itertools = "0.10.3"
+
 [dev-dependencies]
 serde_derive = "1"
