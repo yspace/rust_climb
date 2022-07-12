@@ -1,0 +1,1 @@
+shell 可以试试   starship

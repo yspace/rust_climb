@@ -16,6 +16,7 @@ members = [
     "books/zero2prod",
     "books/web_dev",
     "books/geektime/scrape_url",
+    "books/pngme",
 
     "whale",
     "hardway",
