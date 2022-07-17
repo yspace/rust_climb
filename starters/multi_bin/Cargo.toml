@@ -1,0 +1,20 @@
+[package]
+name = "multi_bin"
+version = "0.1.0"
+edition = "2021"
+default-run = "multi_app"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+[[bin]]
+name = "multi_app"
+path = "bin/main.rs"
+[[bin]]
+name = "multi_app2"
+path = "bin/main2.rs"
+
+# [lib]
+# name = "multi_lib"
+# path = "src/lib.rs"
