@@ -50,6 +50,7 @@ members = [
     # "libs/mylib" 
 
     "starters/console_app1",
+    "starters/multi_bin",
 ]
 
 default-members = ["hardway"]
