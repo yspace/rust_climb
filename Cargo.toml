@@ -51,6 +51,9 @@ members = [
 
     "starters/console_app1",
     "starters/multi_bin",
+
+    # 
+    "projects/*",
 ]
 
 default-members = ["hardway"]

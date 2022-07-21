@@ -8,6 +8,7 @@ use std::alloc::{GlobalAlloc, System, Layout};
 
 use std::time::Instant;
 
+// 这东西要小心 会全局替换的
 #[global_allocator]
 static ALLOCATOR: ReportingAllocator = ReportingAllocator ;
 

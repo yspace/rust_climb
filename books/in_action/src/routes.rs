@@ -50,4 +50,7 @@
      router.insert("ch6", || {
          crate::chapters::ch6::main();
      });
+     router.insert("ch7", || {
+         crate::chapters::ch7::main();
+     });
  }
