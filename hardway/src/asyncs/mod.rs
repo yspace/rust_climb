@@ -1,6 +1,7 @@
 mod future_internal ;
 mod using_tokio ;
 mod tokio_actors ;
+mod async_futures ;
 
 pub fn main() {
     println!("in mod ayncs");
