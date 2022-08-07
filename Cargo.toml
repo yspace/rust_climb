@@ -4,6 +4,7 @@ members = [
     "learnings/my_orbtk",
     # "numbers",
      "favors",
+    
     #  "books/srqc",
      "books/in_action",
      "books/daysofrust",
@@ -17,6 +18,8 @@ members = [
     "books/web_dev",
     "books/geektime/scrape_url",
     "books/pngme",
+    "books/easy_rust",
+   
 
     "whale",
     "hardway",
@@ -50,6 +53,7 @@ members = [
     # "libs/mylib" 
 
     "starters/console_app1",
+    "starters/cli_app1",
     "starters/multi_bin",
 
     # 

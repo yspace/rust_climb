@@ -53,4 +53,7 @@
      router.insert("ch7", || {
          crate::chapters::ch7::main();
      });
+     router.insert("ch8", || {
+         crate::chapters::ch8::main();
+     });
  }
