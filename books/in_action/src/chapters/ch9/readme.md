@@ -1,0 +1,1 @@
+NOTE A struct with no fields is known as a zero-sized type or ZST. It does not occupy any memory in the resulting application and is purely a compile-time construct.

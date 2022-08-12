@@ -5,7 +5,8 @@ mod routes;
 mod chapters;
 
 fn main() {
-    _seahorse_main();
+    // _seahorse_main();
+    chapters::ch9::main();
 }
 
 fn _seahorse_main() {
