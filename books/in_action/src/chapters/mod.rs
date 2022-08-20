@@ -7,6 +7,7 @@ pub mod ch6;
 pub mod ch7;
 pub mod ch8;
 pub mod ch9;
+pub mod ch10;
 
 pub fn main() {
     // ch3::main() ;

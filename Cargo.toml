@@ -7,6 +7,7 @@ members = [
     
     #  "books/srqc",
      "books/in_action",
+     "books/with_rocket",
      "books/daysofrust",
     # "books/fullstack",
     "books/design_patterns",

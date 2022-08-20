@@ -109,6 +109,8 @@ cargo run -p favorites 3rd-log
 
 - [rust-learning](https://github.com/ctjhoa/rust-learning)    
 - [The Embedded Rust Book](https://rust-embedded.github.io/book/intro/index.html)
+- [Too many lists](https://rust-unofficial.github.io/too-many-lists/index.html)
+- [Educational blog posts for Rust beginners ](https://github.com/pretzelhammer/rust-blog)
 
 - [Rust Language Cheat Sheet](https://cheats.rs/)
 
