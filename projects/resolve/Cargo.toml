@@ -1,0 +1,12 @@
+[package]
+name = "resolve"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = "3.2.14"
+rand = "0.8.5"
+#NOTE 后期版本好像不可以这样用了 变成bin项目了 没有再暴露库api出来了
+trust-dns = { version = "0.16", default-features = false }
