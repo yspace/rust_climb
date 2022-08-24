@@ -1,0 +1,1 @@
+Constants use the const keyword instead of let, cannot change, live in the global scope, and you can use literals to initialize them. For example const MAX_BEARABLE_AMOUNT: u32 = 1_000_000_u32;
