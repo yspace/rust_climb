@@ -1,0 +1,1 @@
+[mathworld](https://mathworld.wolfram.com/BooleanAlgebra.html)

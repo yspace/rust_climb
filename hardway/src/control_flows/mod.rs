@@ -1,9 +1,14 @@
+mod if_else ;
+mod repetitions ;
+mod while_loops ;
 pub fn main() {
     println!("hello control_flows");
     let n = 10 ;
     fib_loop(n);
     fib_while(n) ;
     fib_for(n) ;
+
+    all();
 }
 
 fn fib_loop(n: u8) {
@@ -63,3 +68,39 @@ struct MyStruct ;
 //         }
 //     }
 // }
+
+fn all(){
+    let num = 10 ;
+    let parity: String = if num %2 == 0 { "even".to_string()}
+    else{"odd".to_string()} ;
+    println!("{} is {}", num, parity);
+
+
+    for i in 0..10 {
+        println!("{}", num+i) ;
+    }
+
+    let mut i = 0 ;
+    'myloop: loop {
+        if i + num > 100 {
+            break 'myloop;
+        }else if i + num < 50 {
+            i += 10 ;
+        }else {
+            i += 1 ;
+            continue 'myloop; 
+        }
+        println!("+10") ;
+    }
+    
+    i = 0 ;
+    while i + num <=100 {
+        if i + num < 50 {
+            i += 10 ;
+        }else {
+            i +=1 ;
+            continue ;
+        }
+        println!("+10") ;
+    }
+}
