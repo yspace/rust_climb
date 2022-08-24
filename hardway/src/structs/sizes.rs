@@ -3,6 +3,9 @@ struct Door {
     width: u32,
     height: u32,
     is_open: bool,
+
+    // 大小对齐
+    name: String,
 }
 
 struct DoorDoor{
