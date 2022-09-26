@@ -20,6 +20,8 @@ members = [
     "books/geektime/scrape_url",
     "books/pngme",
     "books/easy_rust",
+    "books/rustcc",
+    "books/cookbook",
    
 
     "whale",
@@ -56,9 +58,13 @@ members = [
     "starters/console_app1",
     "starters/cli_app1",
     "starters/multi_bin",
+    "starters/web_scraper",
+    "starters/web_scraper2",
 
     # 
     "projects/*",
+    # 
+    "recipes/*",
 ]
 
 default-members = ["hardway"]

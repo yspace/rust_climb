@@ -4,12 +4,16 @@ mod router;
 
 mod iterators;
 
+mod data_types ;
+
 mod anys;
 mod arrays;
 mod asyncs;
 mod closures;
 mod collections;
 mod copy_move;
+// Continuation-passing style 
+mod cps ;
 mod drops;
 mod ecs;
 mod envs;
@@ -98,6 +102,7 @@ fn _seahorse_main() {
                         module_entries.register("control_flows".to_string(), control_flows::main);
                         module_entries.register("trees".to_string(), trees::main);
                         module_entries.register("date_times".to_string(), date_times::run );
+                        module_entries.register("cps".to_string(), cps::main );
 
                         let act_key = c.args[0].as_str();
                         if module_entries.is_key_exists(act_key) {

@@ -1,6 +1,7 @@
 mod if_else ;
 mod repetitions ;
 mod while_loops ;
+mod loops ;
 pub fn main() {
     println!("hello control_flows");
     let n = 10 ;

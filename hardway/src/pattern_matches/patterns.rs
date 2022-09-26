@@ -90,6 +90,20 @@ fn range_multiple_match() {
     }
 }
 
+fn range_match2(){
+    let x = 1 ;
+    let b = false ;
+
+    match x {
+        0 | 10 => println!("0 or 10"),
+        1 ..=9 => println!(" [1, 9]") ,
+        id @ 11..=20 => println!(" {} in [11, 20]", id),
+        // y if !b => println!("根据第二个if条件输出 y是任意绑定"),
+        _ if !b => println!("忽略x值 只跟条件b 有关") ,
+        _ => println!("nothing number"),
+    }
+}
+
 fn ref_ref_mut() {
     //
     let mut x = 5;
