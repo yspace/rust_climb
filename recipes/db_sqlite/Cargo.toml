@@ -8,6 +8,15 @@ edition = "2021"
 [dependencies]
 rusqlite = "0.28.0"
 
+## sql query builder 支持
+chrono = { version = "^0.4", default-features = false, features = ["clock"] }
+time = { version = "^0.3", features = ["parsing", "macros"] }
+serde_json = { version = "^1" }
+# rusqlite only supports uuid 0
+uuid = { version = "^1", features = ["serde", "v4"] }
+sea-query = { version = "^0"}
+# sea-query-rusqlite = { version = "^0", features = [ "with-chrono","with-json","with-uuid","with-time"] }
+
 # orm
 # sea-orm = { version = "0.9.2",features = [ "sqlx-sqlite", "runtime-async-std-rustls","macros" ] }
 

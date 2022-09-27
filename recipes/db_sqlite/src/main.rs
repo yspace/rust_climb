@@ -3,6 +3,7 @@ use rusqlite::{params,Connection, Result} ;
 
 mod from_cookbook;
 mod orms ;
+mod queries ;
 
 #[derive(Debug)]
 struct Person {
@@ -68,7 +69,13 @@ fn get_data(conn: &Connection) -> Result<Vec<Person>> {
 }
 
 fn main() -> Result<()>{
+
+
     println!("Hello, world!");
+    queries::run(); return Ok(()) ;
+
+    //=== 
+    
     async_examples::run() ; return Ok(()) ;
     // ==================
     from_cookbook::run();
