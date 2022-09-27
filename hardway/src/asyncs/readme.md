@@ -37,3 +37,5 @@ let result = quote! {
 ~~~
 
 书籍： https://book.async.rs/concepts/tasks.html
+
+> 线程用于并行，异步用于等待并行！

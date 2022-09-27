@@ -21,3 +21,6 @@ https://sqlitebrowser.org/dl/
 
 ## 运行例子
 >  export DATABASE_URL='sqlite://my.db?mode=rwc' && cargo run -p db_diesel --bin show_posts
+
+发布
+> cargo run -p db_diesel --bin publish_post 1

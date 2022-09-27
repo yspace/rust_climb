@@ -1,14 +1,16 @@
 use thirtyfour::{error::WebDriverError, prelude::*};
 use tokio;
 
-#[tokio::main]
-async fn main() -> Result<(), WebDriverError> {
-    // return examples::foo1().await;
-    // return examples::scrape_wikipedia().await ;
-    return examples::scrape2().await ;
-}
+pub mod save2sqlite; 
 
-mod examples {
+// #[tokio::main]
+// async fn main() -> Result<(), WebDriverError> {
+//     // return examples::foo1().await;
+//     // return examples::scrape_wikipedia().await ;
+//     return examples::scrape2().await ;
+// }
+
+pub mod examples {
     use super::*;
 
     pub async fn foo1() -> Result<(), WebDriverError> {
