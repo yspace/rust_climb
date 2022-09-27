@@ -10,5 +10,14 @@
 > diesel  --database-url "sqlite://my.db?mode=rwc" setup
 
 
+运行migration
+> diesel --database-url "sqlite://my.db"  migration run
+重新回滚并运行 重做
+> diesel --database-url "sqlite://my.db"  migration redo
+
 一个不错的sqlite 工具
 https://sqlitebrowser.org/dl/
+
+
+## 运行例子
+>  export DATABASE_URL='sqlite://my.db?mode=rwc' && cargo run -p db_diesel --bin show_posts
