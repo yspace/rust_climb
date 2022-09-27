@@ -1,0 +1,17 @@
+[package]
+name = "db_orm"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+entity = { path = "entity" }
+migration = { path = "migration" }
+
+tokio = { version = "1.20", features = ["macros", "rt-multi-thread"] }
+[dependencies.sea-orm]
+version = "0.9"
+features = [ "sqlx-sqlite", "runtime-tokio-rustls", "macros" ]
+default-features = false
+

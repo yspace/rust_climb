@@ -8,7 +8,7 @@ To give a sense of scale of how much time is too much, a good rule of thumb is n
 [Async Rust: What is a runtime? Here is how tokio works under the hood](https://kerkour.com/rust-async-await-what-is-a-runtime)
 [Using Rustlang’s Async Tokio Runtime for CPU-Bound Tasks](https://thenewstack.io/using-rustlangs-async-tokio-runtime-for-cpu-bound-tasks/)
 
-### 揭开
+### 揭秘
 
 ~~~rust
 #[async_std::main]
@@ -35,3 +35,5 @@ let result = quote! {
 
     result.into()
 ~~~
+
+书籍： https://book.async.rs/concepts/tasks.html

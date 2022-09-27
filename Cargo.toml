@@ -65,8 +65,15 @@ members = [
     "projects/*",
     # 
     "recipes/*",
+    "recipes/db_orm/migration",
+    "recipes/db_orm/entity",
 ]
+#  多个sqlite 库会干扰 运行时候排除下 
+# @see https://doc.rust-lang.org/cargo/reference/workspaces.html
+exclude = ["recipes/db_sqlite", ]
+
 
 default-members = ["hardway"]
+
 
 

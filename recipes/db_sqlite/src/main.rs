@@ -69,8 +69,11 @@ fn get_data(conn: &Connection) -> Result<Vec<Person>> {
 
 fn main() -> Result<()>{
     println!("Hello, world!");
+    async_examples::run() ; return Ok(()) ;
+    // ==================
     from_cookbook::run();
     return Ok(()) ; 
+    // =======================
 
     let conn = create_db()? ;
     insert_data(&conn)?;
@@ -81,4 +84,22 @@ fn main() -> Result<()>{
     }
 
       Ok(())
+}
+
+mod async_examples {
+
+    pub fn run() {
+        // 下面这段代码就是async_std::main 的内容
+        async_std::task::block_on(async {
+            main1().await.unwrap() ;
+        })
+    }
+
+    async fn main1( ) -> Result<(), Box<dyn std::error::Error>>{
+
+        println!("hi this is a async function") ;
+       Ok(() )
+    }
+
+   
 }
