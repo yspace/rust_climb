@@ -1,6 +1,9 @@
 ## 参考
 https://github.com/gregstoll/rust-scraping
 
+https://www.gkbrk.com/wiki/rust_web_scraping/
+
+
 - [ crawl and scrape web pages in rust ](https://github.com/mattsse/voyager)
 这是个全站爬虫！
 
@@ -14,6 +17,8 @@ https://github.com/gregstoll/rust-scraping
 [Building a crawler in Rust: Scraping and Parsing HTML](https://kerkour.com/rust-crawler-scraping-and-parsing-html)
 Black Hat Rust! 
 源码样本在这里 [black-hat-crawler](https://github.com/skerkour/black-hat-rust/tree/main/ch_05/crawler)
+
+[一次简单的 rust 爬虫开发技术调研](https://zhuanlan.zhihu.com/p/516033159)
 
 ### 依赖
 - 下载库 reqwest
@@ -61,3 +66,32 @@ const UA: &str = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/53
         .for_each(|(item, number)| println!("{}. {}", number, item));
 
   ~~~
+
+- 库 crabquery
+
+JQuery like HTML query library 
+
+-  库： https://github.com/utkarshkukreti/select.rs 
+没试过 感觉有jquery风格 
+
+其他库：
+https://github.com/y21/tl
+
+
+### json 解析
+
+针对api请求一般都返回json数据 同样也需要提取特定部分感兴趣的信息
+
+json  转 map后使用 jsonpath 筛选
+
+## 更高级的数据抓取 
+
+主要针对反扒网站 需要集成webdriver 例子看 web_scraper2 和 web_scraper3
+
+可以使用thirtyfour 和 fantoccini 这俩都基于tokio
+
+对于后续信息提取 可以使用驱动的选择器提取 也可以转换为html文本 发给rust端再提取
+
+~~~rust
+.inner_html().await?.as_str());
+~~~

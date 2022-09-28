@@ -44,6 +44,7 @@ members = [
     "learnings/hi_iced",
     "learnings/hi_dioxus",
     "learnings/hi_tokio",
+    "learnings/asyncstd_book",
     "learnings/hi_axum",
     "learnings/algo_ds",
     "learnings/my_macro",
