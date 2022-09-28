@@ -39,3 +39,6 @@ let result = quote! {
 书籍： https://book.async.rs/concepts/tasks.html
 
 > 线程用于并行，异步用于等待并行！
+
+### 一些启发
+https://github.com/stevepryde/thirtyfour/blob/main/thirtyfour/examples/tokio_basic.rs

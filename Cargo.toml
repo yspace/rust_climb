@@ -60,6 +60,7 @@ members = [
     "starters/multi_bin",
     "starters/web_scraper",
     "starters/web_scraper2",
+    "starters/web_scraper3",
 
     # 
     "projects/*",

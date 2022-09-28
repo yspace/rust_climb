@@ -8,7 +8,10 @@ mod data_types ;
 
 mod anys;
 mod arrays;
+// 异步
 mod asyncs;
+mod tokios ;
+
 mod closures;
 mod collections;
 mod copy_move;
@@ -103,6 +106,7 @@ fn _seahorse_main() {
                         module_entries.register("trees".to_string(), trees::main);
                         module_entries.register("date_times".to_string(), date_times::run );
                         module_entries.register("cps".to_string(), cps::main );
+                        module_entries.register("tokios".to_string(), tokios::main );
 
                         let act_key = c.args[0].as_str();
                         if module_entries.is_key_exists(act_key) {

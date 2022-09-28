@@ -23,3 +23,7 @@ mod anyhow_demo {
 mod thiserror_demo {}
 
 mod error_chain_demo {}
+
+mod color_eyre_demo{
+    
+}

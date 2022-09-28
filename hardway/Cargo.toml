@@ -9,8 +9,10 @@ edition = "2018"
 [dependencies]
 seahorse = "2.0.0"
 
+# error handling
 thiserror = "1.0.31"
 anyhow = "1.0"
+color-eyre = "0.6.2"
 
 # for learn async 
 futures = "0.3"
