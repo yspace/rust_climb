@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rusqlite = "0.28.0"
+rusqlite = { version = "0.28.0", features = ["chrono"] }
 
 ## sql query builder 支持
 chrono = { version = "^0.4", default-features = false, features = ["clock"] }
@@ -17,7 +17,7 @@ uuid = { version = "^1", features = ["serde", "v4"] }
 sea-query = { version = "^0"}
 # sea-query-rusqlite = { version = "^0", features = [ "with-chrono","with-json","with-uuid","with-time"] }
 
-# orm
+# orm 这个跟rusqlite库好像是互斥的 
 # sea-orm = { version = "0.9.2",features = [ "sqlx-sqlite", "runtime-async-std-rustls","macros" ] }
 
 [dependencies.async-std]

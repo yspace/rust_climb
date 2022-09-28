@@ -4,6 +4,7 @@ use rusqlite::{params,Connection, Result} ;
 mod from_cookbook;
 mod orms ;
 mod queries ;
+mod datetimes ;
 
 #[derive(Debug)]
 struct Person {
@@ -69,7 +70,9 @@ fn get_data(conn: &Connection) -> Result<Vec<Person>> {
 }
 
 fn main() -> Result<()>{
-
+    println!("datetimes");
+    datetimes::run() ; return Ok(()) ;
+    // ===
 
     println!("Hello, world!");
     queries::run(); return Ok(()) ;

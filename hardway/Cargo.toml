@@ -29,6 +29,9 @@ maplit = "1.0"
 # tree 
 radix_trie = "0.2.1"
 
+# configure
+config = "0.13.2"
+
 
 # utilities
 uuid = { version = "1.1.1", features = ["std","v4","serde"] }
