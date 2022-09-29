@@ -13,3 +13,7 @@ visdom = "0.5.5"
 
 rusqlite = { version = "0.28.0", features = ["bundled"] }
 tokio-rusqlite = "0.3.0"
+
+# 下载
+reqwest = { version = "0.11.12", features = ["stream"] }
+futures-util = "0.3.24"
