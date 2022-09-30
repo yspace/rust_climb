@@ -88,6 +88,9 @@ https://zelikk.blogspot.com/2022/04/woiden-ipv6-vps-v2ray-vless-websocket-tls.ht
 
 [小白入门课-免费vps hax搭建八合一v2ray/xray/trojan节点](https://www.youtube.com/watch?v=rN1fwWblxyg&ab_channel=%E4%BA%91%E7%99%BD%E7%A7%91%E6%8A%80)
 
+## ssh
+https://github.com/electerm/electerm/releases
+
 ## DNS
 he.net DNS 域名解析　https://boke123.net/184.html
 https://www.dynu.com/en-US/ControlPanel/DDNS 添加域名成功后通知在email里面看域名服务器的地址：
