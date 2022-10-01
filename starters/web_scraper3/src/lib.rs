@@ -5,8 +5,8 @@ use tokio::time::sleep;
 use visdom::types::BoxDynError;
 use visdom::Vis;
 
-mod download;
-mod save2sqlite;
+pub mod download;
+pub mod save2sqlite;
 
 // [tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {

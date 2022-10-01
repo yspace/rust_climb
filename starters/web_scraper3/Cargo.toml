@@ -17,3 +17,6 @@ tokio-rusqlite = "0.3.0"
 # 下载
 reqwest = { version = "0.11.12", features = ["stream"] }
 futures-util = "0.3.24"
+
+# 加密名字用
+base64 = "0.13.0"

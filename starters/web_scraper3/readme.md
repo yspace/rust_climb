@@ -33,3 +33,52 @@ https://github.com/jonhoo/fantoccini/tree/main/examples
 
 这里使用最简单的sqlite 不过想方便的使用它可不那么简单 因为需要考虑异步运行时 sqlx稍显笨重
 这里使用了一个最近才开始的库 发现挺轻便好用：[tokio-rusqlite](https://github.com/programatik29/tokio-rusqlite/tree/master/examples) 配合 rusqlite 库一起使用 如果还想支持更人性化的查询构造 还可以考虑sea-query
+
+
+## 下载文件
+
+~~~python
+
+options = webdriver.ChromeOptions()
+options.add_experimental_option("prefs", {
+  "download.default_directory": r"C:\Users\xxx\downloads\Test",
+  "download.prompt_for_download": False,
+  "download.directory_upgrade": True,
+  "safebrowsing.enabled": True
+})
+driver = webdriver.Chrome(chrome_options=options)
+~~~
+
+~~~java
+
+public class DownloadChromeFile {
+       public static void main(String[] args) {
+       System.setProperty("webdriver.chrome.driver","./chromedriver.exe");
+       String downloadFilepath = "c:\\download";
+
+       HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+       chromePrefs.put("profile.default_content_settings.popups", 0);
+       chromePrefs.put("download.default_directory", downloadFilepath);
+       ChromeOptions options = new ChromeOptions();
+       HashMap<String, Object> chromeOptionsMap = new HashMap<String, Object>();
+       options.setExperimentalOption("prefs", chromePrefs);
+       options.addArguments("--test-type");
+       options.addArguments("--disable-extensions"); //to disable browser extension popup
+
+       DesiredCapabilities cap = DesiredCapabilities.chrome();
+       cap.setCapability(ChromeOptions.CAPABILITY, chromeOptionsMap);
+       cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true); // Bydefault it will accepts all popups.
+       cap.setCapability(ChromeOptions.CAPABILITY, options);
+       driver = new ChromeDriver(cap);  
+                driver.get("Your Application Url");
+                driver.findElement(By.xpath("Export Button xpath")).click();
+        }
+} 
+~~~
+
+## 运行
+~~~shell
+
+cargo run -p web_scraper3 --bin download_files
+
+~~~

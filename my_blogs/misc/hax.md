@@ -107,3 +107,20 @@ NS5.DYNU.COM
 NS6.DYNU.COM
 
 ～～～
+
+##
+
+- [【甬哥YouTube教程】纯IPV6免费VPS系列二：Hax IPV6 free/Woiden NAT VPS连接SSH多样设置跳板EUserv，Hax相关设置说明，warp电脑客户端中转，Hax密码设置TUN永久开启脚本](https://ygkkk.blogspot.com/2022/04/youtubeipv6vpshax-ipv6-freewoiden-nat.html)
+
+使自己机器具有双ip栈
+
+神奇的warp cloudflare出品
+浏览器下载地址: 1.1.1.1      这地址真厉害 跟110似的 一般人没资格用^-^
+
+安上这个 然后点击大按钮🔘开启私密internet功能 浏览器就能用ipv6 地址访问vps啦： [ipv6]:<port>   如：http://[2001:41d0:203:698:1234:1294:ad9:1]:54320/     这样就可以访问x-ui后台啦 端口是x-ui安装后 给你的
+
+然后 ssh客户端 electerm 也可以通过 ipv6 + 22端口 访问到vps啦 不开warp 是无法访问的！！！
+
+hax机器申请下来后 安装os系统
+vps-info 里面 有个 Nat VPS 这个就是开ipv4端口的   点击这个开通后 就给你个ipv4 访问地址 然后用ssh客户端就可以访问啦 不用使用那个难用的
+`Web Base Terminal` 不想用ipv6 或者没装warp时 就可以用这个开启端口转发功能

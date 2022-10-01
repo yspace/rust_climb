@@ -4,12 +4,15 @@ use std::fs::File;
 use std::io::Write;
 use std::path::Path;
 
-pub async fn download_img(
+// @see https://github.com/lovasoa/dezoomify-rs
+
+pub async fn download_file(
     url: &str,
     write_path: &str,
-    file_name: &str,
-    id: &str
+    file_name: &str
+     
 ) -> Result<String, String> {
+    println!("<< enter download  url{url}") ;
     let file_path = Path::new(write_path).join(file_name.replace(
         |item: char| ['\\', '/', ':', '?', '*', '"', '<', '>', '|'].contains(&item),
         "_",
@@ -17,6 +20,7 @@ pub async fn download_img(
     let res = reqwest::Client::new()
         .get(url)
         .header("user-agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36")
+       // .header("referer","https://theme.npm.edu.tw/opendata")
         .send()
         .await
         .map_err(|_| "网络错误")?;
@@ -37,7 +41,10 @@ pub async fn download_img(
         downloaded_len += chunk.len() as u64;
 
        // 这里通知进度
+       println!("推进啦...");
     }
 
+
+    println!("exit download >>");
     Ok(file_path.to_str().unwrap().into())
 }

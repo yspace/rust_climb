@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use rusqlite::{params, Result};
+use rusqlite::{params, Result , NO_PARAMS};
 use tokio::task::JoinHandle;
 use tokio_rusqlite::Connection;
 
@@ -163,4 +163,65 @@ pub fn add_project_task(conn: Connection, item: Project) -> JoinHandle<()> {
         .await
         .unwrap();
     })
+}
+
+
+pub async  fn get_latest_project(conn: Connection)-> Result<(i32,Project)>{
+    let rslt = conn
+    .call(|conn| {
+         
+ 
+        // sql: select  * from work_position order by id DESC LIMIT 1
+        let mut stmt = conn.prepare("SELECT title,detail,download_url, status ,id from projects 
+        where status = 0
+        order by id ASC LIMIT 1")?;
+        let item:(Project, i32) = stmt
+            .query_row(params![], |row| {
+                Ok((Project {
+                    title: row.get(0)?,
+                    detail: row.get(1)?,
+                    download_url: row.get(2)? ,
+                    status: row.get(3)?,
+                },row.get(4)?))
+            })?;
+            
+
+        // Ok::<_, rusqlite::Error>(people)
+        Ok::<_, rusqlite::Error>(item)
+
+    })
+    .await?;
+
+    // ^-^ 颠倒下 比较懒 倒来倒入会晕的！
+     Ok((rslt.1, rslt.0))
+}
+
+pub async fn  project_mark_as_downloaded(conn: Connection, id : i32, project: Project)
+-> Result<()>{
+    // 当一个下载任务完成后 在任务表里需要更新这个刚完成的项目的状态
+    // 此外针对重复链接 也需要一并标记了
+    // 更新条件： id=self.id OR id>self.id and download_url = self.download_url
+    // 就是更新 id和传参对象相同的 或者那些id大于参数 并且下载链接相同的记录
+
+    let rslt = conn
+    .call(move |conn| {
+  
+        
+        let mut stmt = conn.prepare("UPDATE projects 
+        SET status = ? 
+        WHERE 
+        id = ?
+        OR download_url = ?
+        ")?;
+        stmt.execute(params![1,id, project.download_url])?;
+
+        
+        Ok::<_, rusqlite::Error>(())
+
+    })
+    .await?;
+
+
+    Ok(())
+
 }
