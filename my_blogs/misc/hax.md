@@ -113,6 +113,7 @@ NS6.DYNU.COM
 - [【甬哥YouTube教程】纯IPV6免费VPS系列二：Hax IPV6 free/Woiden NAT VPS连接SSH多样设置跳板EUserv，Hax相关设置说明，warp电脑客户端中转，Hax密码设置TUN永久开启脚本](https://ygkkk.blogspot.com/2022/04/youtubeipv6vpshax-ipv6-freewoiden-nat.html)
 
 使自己机器具有双ip栈
+有人说 [zerotier](https://www.zerotier.com/download/) 也可以访问ipv6 vps 不过没试过！
 
 神奇的warp cloudflare出品
 浏览器下载地址: 1.1.1.1      这地址真厉害 跟110似的 一般人没资格用^-^

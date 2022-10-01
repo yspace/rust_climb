@@ -1,5 +1,12 @@
 use std::path::PathBuf;
 
+mod path;
+
+pub fn run(){
+
+    path::run() ;
+}
+
 #[test]
 fn test_something() {
     // omitted...
