@@ -187,6 +187,7 @@ pub async  fn get_latest_project(conn: Connection)-> Result<(i32,Project)>{
             
 
         // Ok::<_, rusqlite::Error>(people)
+        // Err(QueryReturnedNoRows)
         Ok::<_, rusqlite::Error>(item)
 
     })
@@ -214,6 +215,33 @@ pub async fn  project_mark_as_downloaded(conn: Connection, id : i32, project: Pr
         OR download_url = ?
         ")?;
         stmt.execute(params![1,id, project.download_url])?;
+
+        
+        Ok::<_, rusqlite::Error>(())
+
+    })
+    .await?;
+
+
+    Ok(())
+
+}
+
+ pub async fn  project_update_status(conn: Connection, id : i32,  status: i32)
+-> Result<()>{
+   
+    
+    let rslt = conn
+    .call(move |conn| {
+  
+        
+        let mut stmt = conn.prepare("UPDATE projects 
+        SET status = ? 
+        WHERE 
+        id = ?
+      
+        ")?;
+        stmt.execute(params![status,id])?;
 
         
         Ok::<_, rusqlite::Error>(())
