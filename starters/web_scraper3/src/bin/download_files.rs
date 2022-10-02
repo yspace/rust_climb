@@ -17,15 +17,26 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
             // 下载
             let save_to_folder = "downloads" ;
-            let save_to_name = base64::encode(
-                format!("{}_{}",id, project.title)
-            );
+            let save_to_name =
+            //  = base64::encode(
+            //     format!("dwonloads/{}_{}.zip",id, project.title)
+            // );
+                format!("{}_{}.zip",id, project.title);
+
+            let mut save_to_path = std::path::Path::new("downloads").join(save_to_name);
+
+            
             let download_url = format!("https://theme.npm.edu.tw/opendata/{}",&project.download_url);
-            let download_rslt = download::download_file(download_url.as_str(),save_to_folder,save_to_name.as_str()).await;
-            match download_rslt{
-                Ok(path) => { 
-                    println!("save to {}",path);
-                }
+            // let download_rslt = download::download_file(download_url.as_str(),save_to_folder,save_to_name.as_str()).await;
+            // match download_rslt{
+            //     Ok(path) => { 
+            //         println!("save to {}",path);
+            //     }
+            //     Err(err) => println!("{}",err) ,
+            // }
+            let rslt = download::fetch_url(download_url,   save_to_path.to_str().unwrap().to_string()).await ;
+            match rslt {
+                Ok(rslt) => println!("download ok!" ),
                 Err(err) => println!("{}",err) ,
             }
 

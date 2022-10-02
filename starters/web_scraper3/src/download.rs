@@ -11,7 +11,8 @@ pub async fn download_file(
     write_path: &str,
     file_name: &str
      
-) -> Result<String, String> {
+// ) -> Result<String, String> {
+) -> Result<String> {
     println!("<< enter download  url{url}") ;
     let file_path = Path::new(write_path).join(file_name.replace(
         |item: char| ['\\', '/', ':', '?', '*', '"', '<', '>', '|'].contains(&item),
@@ -47,4 +48,17 @@ pub async fn download_file(
 
     println!("exit download >>");
     Ok(file_path.to_str().unwrap().into())
+}
+
+
+use std::io::Cursor;
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
+ 
+pub async fn fetch_url(url: String, file_name: String) -> Result<()> {
+    let response = reqwest::get(url).await?;
+    println!("filepath: {file_name}");
+    let mut file = std::fs::File::create(file_name)?;
+    let mut content =  Cursor::new(response.bytes().await?);
+    std::io::copy(&mut content, &mut file)?;
+    Ok(())
 }
