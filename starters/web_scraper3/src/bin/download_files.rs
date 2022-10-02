@@ -1,5 +1,6 @@
 use std::fs ;
 use tokio::time::sleep;
+use std::time::Duration;
 
 
 use web_scraper3::*;
@@ -86,6 +87,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     // ### 更新任务进度
                    let _r = save2sqlite::project_mark_as_downloaded(conn.clone(), id, project).await?;
         
+                   sleep(Duration::from_millis(300)).await;
                    // 继续下个轮回
                 },
         

@@ -34,6 +34,11 @@ https://github.com/jonhoo/fantoccini/tree/main/examples
 这里使用最简单的sqlite 不过想方便的使用它可不那么简单 因为需要考虑异步运行时 sqlx稍显笨重
 这里使用了一个最近才开始的库 发现挺轻便好用：[tokio-rusqlite](https://github.com/programatik29/tokio-rusqlite/tree/master/examples) 配合 rusqlite 库一起使用 如果还想支持更人性化的查询构造 还可以考虑sea-query
 
+### 锁db
+~~~shell
+mv my—data.db temp.db
+cp temp.db my-data.db
+~~~
 
 ## 下载文件
 
