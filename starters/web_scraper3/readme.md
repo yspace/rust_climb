@@ -41,6 +41,7 @@ cp temp.db my-data.db
 ~~~
 
 ## 下载文件
+https://stackoverflow.com/questions/46937319/how-to-use-chrome-webdriver-in-selenium-to-download-files-in-python
 
 ~~~python
 
