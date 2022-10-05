@@ -5,12 +5,14 @@ use std::any::{type_name, Any, TypeId};
 // @see https://users.rust-lang.org/t/a-key-value-data-structure-keyed-by-trait/9579/2
 // @see https://users.rust-lang.org/t/ask-for-dynamic-dispatch-in-rust-way/9137/18
 // you could check: [typemap crate](https://github.com/reem/rust-typemap)
+// 原来的typemap库没人维护了 新的： https://crates.io/crates/typemap_rev
 
 // Every Component also implements Any trait
 pub trait Component: Any {}
 
 #[derive(Default)]
 pub struct Registry {
+    // 多线程环境试试 HashMap<TypeId, Box<(dyn Any + Send + Sync)>>
     resources: FxHashMap<TypeId, Box<dyn Any>>,
 }
 
