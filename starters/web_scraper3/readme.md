@@ -88,3 +88,49 @@ public class DownloadChromeFile {
 cargo run -p web_scraper3 --bin download_files
 
 ~~~
+
+## 后记：
+
+- 加快下载速度
+  网络上满足条件后 就是分任务 任务表可以切分下
+  [Split a very large SQL table to multiple smaller tables](https://dba.stackexchange.com/questions/66552/split-a-very-large-sql-table-to-multiple-smaller-tables)
+
+~~~sql
+-- If you already have a column by which you can "partition" the table, then you can do something like this:
+
+SELECT * 
+ INTO dbo.newtable_0001_to_2000 
+ FROM dbo.existingtable 
+ WHERE column >= 1 AND column <= 2000;
+
+SELECT * 
+ INTO dbo.newtable_2001_to_4000 
+ FROM dbo.existingtable 
+ WHERE column >= 2001 AND column <= 4000;
+
+...
+
+-- Just note that this will give you a predictable number of rows, but won't control the size of the rows, so depending on the data in each "partition" these tables will not likely be of equal sizes.
+~~~
+
+临时表？
+~~~sql
+CREATE TEMPORARY TABLE some_backup(field1 TEXT, field2 REAL)
+INSERT INTO some_backup SELECT field1, field2 FROM orig_table
+~~~
+
+sqlite 不支持 select into语法 可以这样搞
+
+~~~sql
+create table project2 as select * from projects where id>999 and id < 2000
+~~~
+
+这种任务分割后 查询和更新需要针对不同的表进行 比较麻烦
+
+还有一种 就是还是针对同一张表
+一个任务取奇数 另一个取偶数   这种思想推广开也可以是取模那种 每个任务只取自己相同间隔的数 1+n*3 （比如首任务编号1 第二个就是 1+1*3 = 4 第三次取就是 1+2*3=7 ）等差数列形式进行
+这样可以开3 个任务进程 首任务号 分别是1 2 3     然后通用的下次任务id就是 n*3+ first_number
+
+对于表id非连续情形   或许这样有点不均匀 不过也可以搞没有自己的号就跳过本次跳到下个号去直到找到就行 任务分配可能不均匀 有的多点有的少点
+
+也可以两头干 你增序取 我倒序取 回合一处就完了 修桥那样 你那头我这头汇合一处整个桥就成了

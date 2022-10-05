@@ -22,6 +22,7 @@ members = [
     "books/easy_rust",
     "books/rustcc",
     "books/cookbook",
+    "books/learn_rust_ab",
    
 
     "whale",

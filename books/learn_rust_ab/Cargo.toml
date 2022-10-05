@@ -1,0 +1,20 @@
+[package]
+name = "learn_rust_ab"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+wena = "0.2.0"
+colored = "2.0.0"
+
+whale = { path = "../../whale" }
+
+fxhash = "0.2.1"
+
+[dependencies.dces]
+#version = "0.3.1"
+git = "https://gitlab.redox-os.org/redox-os/dces-rust.git"
+branch =  "master"
+#branch = "develop"
