@@ -1,5 +1,7 @@
 use radix_trie::{Trie, TrieCommon};
 
+use std::error::Error;
+
 // see [Async I/O in Depth: Thread Pools, Radix Trees, Channels and More - High Performance HTTP Web Servers](https://www.youtube.com/watch?v=fdxhcDne2Ww&ab_channel=ThomasHolloway%F0%9F%8F%95)
 
 pub type HandlerFn = fn();
@@ -7,6 +9,7 @@ pub type HandlerFn = fn();
 
 #[derive(Debug)]
 pub struct Router {
+    // 有机会找个替代品 poem里面有个
     routes: Trie<String, fn()>,
 }
 
@@ -40,10 +43,16 @@ impl Router {
         children
     }
 
-    pub fn handle(&self, path: &str) {
+    pub fn handle(&self, path: &str) ->Result<(),String> {
         println!("<-- handle :{} \r\n" ,path);
-        self.routes.get(path).unwrap()();
+        let handler = self.routes.get(path);
+        if handler.is_some() {
+           handler .unwrap()() ;
+        }else{
+            return Err("no path".to_string());
+        }
         println!("\r\n -- {} />" ,path);
+        Ok(())
     }
     // pub fn handle(&self, path: &str , req: Request) -> Result<Response> {
     //     self.routes.get(path).unwrap()(req)

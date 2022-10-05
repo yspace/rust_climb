@@ -18,7 +18,11 @@ pub fn to(/* some_dep: SomeType */) -> Command {
 
             if value.is_some() {
                 let act_key = value.unwrap();
-                router.handle(&act_key);
+                let rslt = router.handle(&act_key);
+                match rslt {
+                    Ok(()) => {},
+                    Err(err) => println!("{}",err) ,
+                }
 
                
             }
