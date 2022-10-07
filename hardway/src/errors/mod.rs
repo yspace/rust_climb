@@ -25,5 +25,12 @@ mod thiserror_demo {}
 mod error_chain_demo {}
 
 mod color_eyre_demo{
+    fn run() -> color_eyre::Result<()> {
+ // The use of color_eyre gives much nicer error reports, including making
+    // it much easier to locate where the error occurred.
+    color_eyre::install()?;
+
     
+    Ok(())
+    }
 }

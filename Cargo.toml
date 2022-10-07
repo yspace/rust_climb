@@ -63,6 +63,7 @@ members = [
     "starters/web_scraper",
     "starters/web_scraper2",
     "starters/web_scraper3",
+    "starters/console_app2",
 
     # 
     "projects/*",
