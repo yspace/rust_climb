@@ -197,6 +197,37 @@ pub async  fn get_latest_project(conn: Connection)-> Result<(i32,Project)>{
      Ok((rslt.1, rslt.0))
 }
 
+pub async  fn get_project_by_id(conn: Connection,id: i32)-> Result<(i32,Project)>{
+    let rslt = conn
+    .call(move|conn| {
+         
+ 
+        // sql: select  * from work_position order by id DESC LIMIT 1
+        let mut stmt = conn.prepare("SELECT title,detail,download_url, status ,id from projects 
+        where id = ?
+        LIMIT 1")?;
+        let item:(Project, i32) = stmt
+            .query_row(params![id], |row| {
+                Ok((Project {
+                    title: row.get(0)?,
+                    detail: row.get(1)?,
+                    download_url: row.get(2)? ,
+                    status: row.get(3)?,
+                },row.get(4)?))
+            })?;
+            
+
+        // Ok::<_, rusqlite::Error>(people)
+        // Err(QueryReturnedNoRows)
+        Ok::<_, rusqlite::Error>(item)
+
+    })
+    .await?;
+
+    // ^-^ 颠倒下 比较懒 倒来倒入会晕的！
+     Ok((rslt.1, rslt.0))
+}
+
 // reverse order
 pub async  fn get_latest_project_rev(conn: Connection)-> Result<(i32,Project)>{
     let rslt = conn
