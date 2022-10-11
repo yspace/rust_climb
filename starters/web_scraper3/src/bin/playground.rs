@@ -2,7 +2,14 @@ use std::path::{Path, PathBuf};
 use std::{env, fs};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    _args::main() ; return Ok(());
+   _image::main() ; return Ok(());
+   
+    // ==
+    _infer::main();
+    return Ok(());
+    // ==
+    _args::main();
+    return Ok(());
     // ==
     _soland::main().unwrap();
     return Ok(());
@@ -106,7 +113,7 @@ fn zip_file_info(path: &Path) {
 }
 
 mod audio {
-    // https://github.com/Kingtous/RustPlayer  这个程序是一个国人写的播放器例子 
+    // https://github.com/Kingtous/RustPlayer  这个程序是一个国人写的播放器例子
     use std::io::BufReader;
 
     pub fn main() {
@@ -225,29 +232,60 @@ mod _soland {
     }
 }
 
-mod _args{
+mod _args {
     pub fn main() {
         let strings: Vec<String> = std::env::args().collect();
 
-        println!("args {:?}", strings) ;
+        println!("args {:?}", strings);
         println!("len: {:?}", strings.len());
-       // std::env::args().  这个args() 返回支持很多方法 迭代器?
+        // std::env::args().  这个args() 返回支持很多方法 是一个迭代器
 
-       if strings.len() == 1 {
-        println!("this first argument is {}", strings[0]);
-       } else if strings.len() ==2{
-         let arg  = &strings[1];
-         println!("this second argument is {}",arg) ;
-       } else if strings.len() == 3{
-         println!("decision by len of the arguments") ;
-         // 
-         let low = strings[1].parse::<i32>().unwrap();
-         let high = strings[2].parse::<i32>().unwrap();
+        if strings.len() == 1 {
+            println!("this first argument is {}", strings[0]);
+        } else if strings.len() == 2 {
+            let arg = &strings[1];
+            println!("this second argument is {}", arg);
+        } else if strings.len() == 3 {
+            println!("decision by len of the arguments");
+            //
+            let low = strings[1].parse::<i32>().unwrap();
+            let high = strings[2].parse::<i32>().unwrap();
 
-         println!("{low} - {high}");
+            println!("{low} - {high}");
+        } else {
+            println!("最多支持两个额外参数！");
+        }
+    }
+}
 
-       }else{
-         println!("最多支持两个额外参数！");
-       }
+mod _infer {
+    use infer;
+    pub fn main() {
+        let kind = infer::get_from_path("assets/music.mp3")
+            .expect("file read successfully")
+            .expect("file type is known");
+
+        println!("mime: {}", kind.mime_type());
+        println!("extension: {}", kind.extension());
+    }
+}
+
+mod _image {
+    // @see https://lib.rs/crates/image
+    use image::GenericImageView;
+
+    pub fn main() {
+        // Use the open function to load an image from a Path.
+        // `open` returns a `DynamicImage` on success.
+        let img = image::open("assets/my_image.tif").unwrap();
+
+        // The dimensions method returns the images width and height.
+        println!("dimensions {:?}", img.dimensions());
+
+        // The color method returns the image's `ColorType`.
+        println!("{:?}", img.color());
+
+        // Write the contents of this image to the Writer in PNG format.
+        img.save("assets/test.png").unwrap();
     }
 }

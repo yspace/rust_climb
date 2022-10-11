@@ -136,6 +136,11 @@ create table project2 as select * from projects where id>999 and id < 2000
 也可以两头干 你增序取 我倒序取 回合一处就完了 修桥那样 你那头我这头汇合一处整个桥就成了
 
 
+## 杂
+- [infer](https://github.com/bojand/infer)
+此库可以快速检测出文件类型 通过魔术字节 头部的一些特征编码 判断文件类型 
+
+
 ## 程序结构
 app
 config

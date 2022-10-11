@@ -1,6 +1,10 @@
 pub fn main() {
     println!("learn the slice");
 
+    string_slice();
+    slicing_int_array();
+    mutable_slices();
+
     // https://zhuanlan.zhihu.com/p/131015459
     //    如下都是合法的slice
     //  let a = [1,2,3];
@@ -44,7 +48,6 @@ fn first_word(s: &String) -> &str {
     &s[..]
 }
 
-
 fn analyzi_slice<T>(slice: &[T]) {
     println!("Slice size : {}", std::mem::size_of_val(&slice));
 }
@@ -52,9 +55,42 @@ fn slice_size<T>(slice: &[T]) -> usize {
     std::mem::size_of_val(&slice)
 }
 
+fn string_slice() {
+    let n1 = "Tutorials".to_string();
+    println!("length of string is {}", n1.len());
+    let c1 = &n1[4..9];
+
+    // fetches characters at 4,5,6,7, and 8 indexes
+    println!("{}", c1);
+}
+fn slicing_int_array() {
+    fn use_slice(slice: &[i32]) {
+        // is taking a slice or borrowing a part of an array of i32s
+        println!("length of slice is {:?}", slice.len());
+        println!("{:?}", slice);
+    }
+
+    let data = [10, 20, 30, 40, 50];
+    use_slice(&data[1..4]);
+     //this is effectively borrowing elements for a while
+}
+
+fn mutable_slices(){
+    let mut data = [10,20,30,40, 50] ;
+    use_slice(&mut data[1..4]);
+    println!("{:?}", data);
+
+
+    fn use_slice(slice: &mut [i32]) {
+        println!("length of slice is {:?}",slice.len());
+        println!("{:?}",slice);
+        slice[0] = 1010; // replaces 20 with 1010
+    }
+}
+
 #[test]
-fn test_analyzi_slice(){
-    let arr = ['a','呀','b'];
+fn test_analyzi_slice() {
+    let arr = ['a', '呀', 'b'];
     let slice = &arr[..];
 
     assert_eq!(slice_size(slice), 2 * std::mem::size_of::<usize>());
