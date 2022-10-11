@@ -2,6 +2,9 @@
 hax申请vps 搭建v2ray 
 ===
 
+## 参考
+- [纯ipv6搭建v2ray，hax、euserv v2ray BBR教程]( https://iweec.com/94.html)
+
 ## 申请vps
 
 先要能访问外网^-^  还要有个telegram的号(没有就申请吧 老外很多用这个 好像等价国内微信的意思？要用手机号激活 中国区的好像锁你号码)

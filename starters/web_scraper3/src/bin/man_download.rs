@@ -16,10 +16,30 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     //println!("{}",&args[0]); //程序路径，总是存在
     //println!("{}",&args[1]); //第一个参数
     //println!("{}",&args[2]); //第二个参数
-    let id  = args[1].parse::<i32>().unwrap();
+    // 直接取第n个参数： ::std::env::args().nth(1) 然后if｜match 分别处理之
 
-    println!("the specified id is: {}",id);
-    download_project(id).await.unwrap() ;
+    if args.len() == 2  {
+        let id  = args[1].parse::<i32>().unwrap();
+
+        println!("the specified id is: {}",id);
+        download_project(id).await.unwrap() ;
+
+    } else if args.len() == 3{
+        // 两个参数时 按照区间对待
+        let first = args[1].parse::<i32>().unwrap();
+        let second = args[2].parse::<i32>().unwrap();
+
+        for id in first ..=second {
+            println!("current the task id {}",id) ;
+
+            download_project(id).await.unwrap() ;
+
+            println!("download {} success! \r\n ",id) ;
+        }
+    }else{
+        println!("wrong number of arguments !");
+    }
+   
     
     println!("all done!");
 

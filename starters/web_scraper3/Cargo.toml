@@ -26,4 +26,21 @@ base64 = "0.13.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.85"
 
+# 压缩文件处理
+zip = "0.6.2"
+
 # 错误处理
+anyhow = "1.0.65"
+
+# 系统信息
+sysinfo = "0.26.4"
+
+# 音乐
+rodio = { version = "0.16.0", features = ["mp3", "wav", "flac"] }
+mp3-duration = "0.1.10"
+
+soloud = "1.0.2"  
+#{ git = "https://github.com/moalyousef/soloud-rs" }
+
+# notify 监控文件｜文件夹 变化
+notify = "5.0.0"
