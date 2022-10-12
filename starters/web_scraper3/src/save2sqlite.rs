@@ -19,7 +19,8 @@ pub struct WorkPosition {
 }
 
 pub async fn establish_connection() -> Result<Connection> {
-    let conn = Connection::open("my_data.db").await?;
+    // let conn = Connection::open("my_data.db").await?;
+    let conn = Connection::open("my_data2.db").await?;
 
     Ok(conn)
 }

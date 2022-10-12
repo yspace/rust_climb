@@ -7,9 +7,11 @@ use visdom::Vis;
 
 pub mod download;
 pub mod save2sqlite;
+pub mod utils;
 
 // [tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+// async fn main() -> Result<(), Box<dyn std::error::Error>> {
+pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
     //=========== 测试
     //  get_download_item_info().await;
     //  return Ok(());
@@ -23,34 +25,40 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let conn = save2sqlite::establish_connection().await?;
     save2sqlite::init_db(conn.clone()).await?;
 
-
     // NOTE: key换一个就可以下载不同类别下的东西了
     let mut url = format!(
         "https://theme.npm.edu.tw/opendata/DigitImageSets.aspx?Key=^^11&pageNo={}",
         1
     );
+    let mut url = format!(
+        "https://theme.npm.edu.tw/opendata/DigitImageSets.aspx?Key=^^12&pageNo={}",
+        // "https://theme.npm.edu.tw/opendata/DigitImageSets.aspx?Key=^^11&pageNo={}",
+        1
+    );
 
-    let mut latest_work_position :Option<save2sqlite::WorkPosition> = None ;
-    let mut last_run_index = 0 ;
+    let mut latest_work_position: Option<save2sqlite::WorkPosition> = None;
+    let mut last_run_index = 0;
     // 获取上次的进度位置 如果有的话
 
     let work_position = save2sqlite::get_latest_work_position(conn.clone()).await;
     match work_position {
         Ok(work_position) => {
             // 上次曾经运行过！
-            println!("continue from the latest work position: {:?}", work_position);
-            let page_url = &work_position.page_url ;
-            url = page_url.as_str().to_string() ;
-            last_run_index = work_position.item_index ;
+            println!(
+                "continue from the latest work position: {:?}",
+                work_position
+            );
+            let page_url = &work_position.page_url;
+            url = page_url.as_str().to_string();
+            last_run_index = work_position.item_index;
 
-            latest_work_position = Some(work_position); 
+            latest_work_position = Some(work_position);
             println!("current url: {:?}", url);
-            
-        },
-        Err(err) => { 
+        }
+        Err(err) => {
             // 没查到上次最后一条进度记录 那么啥都不干
-            println!("this is your first time to run the program") ;
-        },
+            println!("this is your first time to run the program");
+        }
     }
     // return Ok(());
 
@@ -84,7 +92,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         // TODO: 这里判断是否是最后一页的条件有问题！当下一页链接跟当前页链接一样时也是满足最后一页的
         if lis.length() > 0 {
             let mut index = 0;
-            
+
             for li in lis {
                 index = index + 1;
                 // 如果存在上次运行的索引位置 那么跳过小于它的
@@ -131,49 +139,55 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 save2sqlite::add_work_position_task(conn.clone(), work_position)
                     .await
                     .unwrap();
-// ----------< download-page ---
-                let ele_download_content = client
-                    .wait()
-                    .for_element(Locator::Css("section"))
-                    .await?;
+                // ----------< download-page ---
+                let ele_download_content =
+                    client.wait().for_element(Locator::Css("section")).await?;
 
-                let  html = ele_download_content.html(false).await?;
+                let html = ele_download_content.html(false).await?;
 
                 // 在rust端处理元素 析取数据
                 // 文档： https://github.com/fefit/visdom/wiki/%E4%B8%AD%E6%96%87API%E6%96%87%E6%A1%A3
                 // load html
                 let root = Vis::load(html).unwrap();
                 let links = root.find("a.download-btn");
-                let href = links.attr("href").unwrap().to_string() ;
+                let href = links.attr("href").unwrap().to_string();
 
                 let dom_detail = root.find("div.project-detail");
-                let ele_title = dom_detail.find("h3") ;
-                let title = ele_title.text() ;
+                let ele_title = dom_detail.find("h3");
+                let title = ele_title.text();
                 let detail = dom_detail.html();
 
                 // println!("href:{} title:{} detail:{}", href, title,detail);
-               
-                save2sqlite::add_project_task(conn.clone(), save2sqlite::Project{
-                    title: title.to_string(),
-                    detail: detail,
-                    download_url: href,
-                    status: 0
-                })
+
+                save2sqlite::add_project_task(
+                    conn.clone(),
+                    save2sqlite::Project {
+                        title: title.to_string(),
+                        detail: detail,
+                        download_url: href,
+                        status: 0,
+                    },
+                )
                 .await
                 .unwrap();
 
-// ---------- download-page />
+                // ---------- download-page />
 
                 // 看看 跳没
                 client.back().await?;
-               
             }
             println!("当前页处理完成！");
+            // 最后一页的链接是 javascript:;
+            if nex_page_url.starts_with("javascript") {
+                // 最后一页了
+                println!("last page! done!");
+                break;
+            }
             // url = nex_page_url ;
             // NOTE: 可能会出现一直点击下一页 但总在原地循环现象！
             println!(" 模拟用户点击链接! ");
             el_next_page.click().await?; // 跳转到下一页
-            // FIXME: 最后一页时有bug 哦 最好还是直接获取url那种判断页面是否有内容的好 这个网站最后一页href 是：javascript:;
+                                         // FIXME: 最后一页时有bug 哦 最好还是直接获取url那种判断页面是否有内容的好 这个网站最后一页href 是：javascript:;
         } else {
             // 最后一页了
             println!("last page! done!");

@@ -1,7 +1,12 @@
 use std::path::{Path, PathBuf};
 use std::{env, fs};
 
+use web_scraper3::*;
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+   utils::play_audio() ; return Ok(());
+   
+    // ==
    _image::main() ; return Ok(());
    
     // ==
