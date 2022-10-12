@@ -127,6 +127,12 @@ cargo run -p favorites 3rd-log
 - https://blog.ndepend.com/hexagonal-architecture/ 六边形架构试试呦！
 - 
 
+## IDE 
+vscode 下可以安装IDEA Jetbrains快捷键
+
+- 撤销 Ctrl+Z 取消撤销是 Ctr+shift+Z
+MacOS 的 Command + Z 取消操作是 Command + Shift + Z。
+
 ## 杂项
 - ssl错误：
 今天下载 cargo install starship     时报ssl错误 找到网上的解决方案 管用呀
@@ -172,7 +178,9 @@ https://rust.godbolt.org/z/8dGbY8Pe1
     git config --global --get http.proxy  
     git config --global --unset http.proxy
 
-最后一行是重置代理的 第二行是查看是否设置正确了    
+最后一行是重置代理的 第二行是查看是否设置正确了   
+
+
 
 ### ssh 协议
 $ vim ~/.ssh/config
