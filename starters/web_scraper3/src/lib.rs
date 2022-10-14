@@ -31,7 +31,11 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
         1
     );
     let mut url = format!(
-        "https://theme.npm.edu.tw/opendata/DigitImageSets.aspx?Key=^^12&pageNo={}",
+        "https://theme.npm.edu.tw/opendata/DigitImageSets.aspx?Key=^^99&pageNo={}",
+        // "https://theme.npm.edu.tw/opendata/DigitImageSets.aspx?Key=^^15&pageNo={}",
+        // "https://theme.npm.edu.tw/opendata/DigitImageSets.aspx?Key=^^14&pageNo={}",
+        // "https://theme.npm.edu.tw/opendata/DigitImageSets.aspx?Key=^^13&pageNo={}",
+        // "https://theme.npm.edu.tw/opendata/DigitImageSets.aspx?Key=^^12&pageNo={}",
         // "https://theme.npm.edu.tw/opendata/DigitImageSets.aspx?Key=^^11&pageNo={}",
         1
     );
