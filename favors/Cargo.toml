@@ -36,7 +36,7 @@ schemars = { version = "0.8.8", features = ["chrono"] }
 # time related
 chrono = "0.4.19"
 # cron = { git = "https://github.com/mehcode/cron", branch = "error-chain" }
-cron = { git = "https://github.com/zslayton/cron"  }
+# cron = { git = "https://github.com/zslayton/cron"  }
 tokio-cron-scheduler = "*"
 
 # async

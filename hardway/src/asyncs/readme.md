@@ -38,6 +38,22 @@ let result = quote! {
 
 书籍： https://book.async.rs/concepts/tasks.html
 
+### Futures
+Futures 是在计算上的抽象
+> Futures abstract over computation. They describe the "what", independent of the "where" and the "when". For that, they aim to break code into small, composable actions that can then be executed by a part of our system. 
+
+`Send` abstracts over passing data in a computation to another concurrent computation (let's call it the receiver), losing access to it on the sender side.
+
+`Sync` is about sharing data between two concurrent parts of a program.
+
+### An easy view of `computation`
+
+While computation is a subject to write a whole book about, a very simplified view suffices for us: A sequence of composable operations which can branch based on a decision, run to succession and yield a result or yield an error
+
+Deferring computation
+
+As mentioned above, Send and Sync are about data. But programs are not only about data, they also talk about computing the data. And that's what Futures do.
+
 > 线程用于并行，异步用于等待并行！
 
 ### 一些启发
