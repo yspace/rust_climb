@@ -5,8 +5,11 @@ mod async_futures ;
 
 mod async_raw_sample;
 
+mod async_std_book;
+
 pub fn main() {
     println!("in mod ayncs");
+    async_std_book::main();
 
     async_raw_sample::main();
     //
