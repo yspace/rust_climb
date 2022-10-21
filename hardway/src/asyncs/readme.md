@@ -50,7 +50,7 @@ Futures 是在计算上的抽象
 
 While computation is a subject to write a whole book about, a very simplified view suffices for us: A sequence of composable operations which can branch based on a decision, run to succession and yield a result or yield an error
 
-Deferring computation
+**Deferring computation**
 
 As mentioned above, Send and Sync are about data. But programs are not only about data, they also talk about computing the data. And that's what Futures do.
 

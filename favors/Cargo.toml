@@ -15,11 +15,13 @@ log = "0.4"
 pretty_env_logger = "0.4.0"
 dotenv = "0.15.0"
 
+
+
 #
 url = "2.2.2"
 serde_urlencoded = "0.7.1"
 
-sysinfo = "0.23.12"
+sysinfo = "0.26.4"
 
 # jwt
 jsonwebtoken = "8"

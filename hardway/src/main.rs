@@ -50,6 +50,8 @@ mod trees;
 
 mod serdes ;
 
+mod combinators;
+
 fn init() {
     println!("init fn of crate hardway");
 }

@@ -41,6 +41,21 @@ cp temp.db my-data.db
 ~~~
 
 ## 下载文件
+
+### rust下载
+参考
+https://patshaughnessy.net/2020/1/20/downloading-100000-files-using-async-rust
+https://crates.io/crates/downloader
+https://github.com/hunger/downloader
+
+https://github.com/mattgathu/duma
+https://github.com/smoqadam/rust-youtube-downloader
+https://github.com/lecepin/douyin-downloader
+https://github.com/lecepin/douyin-downloader/blob/master/src-tauri/src/command.rs
+https://github.com/lzdyes/douyin-downloader/blob/main/src-tauri/src/command.rs
+
+
+### webdriver 下载
 https://stackoverflow.com/questions/46937319/how-to-use-chrome-webdriver-in-selenium-to-download-files-in-python
 
 ~~~python
@@ -81,6 +96,7 @@ public class DownloadChromeFile {
         }
 } 
 ~~~
+[How to handle custom download location in selenium — Chrome](https://medium.com/geekculture/how-to-handle-custom-download-location-in-selenium-chrome-78daaacd79ab)
 
 ## 运行
 ~~~shell
