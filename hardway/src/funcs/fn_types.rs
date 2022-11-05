@@ -22,3 +22,28 @@ fn is_FnOnce <A, R, F: FnOnce(A) -> R> (_x: &F) {}
 
 
 pub fn is_Action(_f: Action) {}
+
+
+pub mod fnmut_examples {
+    fn call_FnMut<F: FnMut()>(mut f: F){
+        f();
+    }
+    fn call_FnMut2<F>(mut f: F)
+    where F: FnMut()
+    {
+        f();
+    }
+    pub fn main(){
+        let mut str: String = String::from("hi ");
+        // let mut f = || { 
+        //     str.push_str("yiqing");
+        // };
+        let mut f2 = || { 
+            let s2 = &mut str ;
+            s2.push_str("yiqing");
+        };
+        // f();
+        call_FnMut2(f2);
+        println!("{str}");
+    }
+}

@@ -6,7 +6,8 @@ mod as_params ;
 
 
 pub fn main() {
-    return as_params::main();
+    return fn_types::fnmut_examples::main() ;
+    // return as_params::main();
     // func_params::run() ;
     // return_value::run() ;
 
