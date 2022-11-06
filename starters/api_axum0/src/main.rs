@@ -17,6 +17,7 @@ async fn main() {
     // 同时绑定了GET及POST方法的路由
     .route("/index", get(root).post(post_foo))
     .route("/db",get(db))
+    .route("/create_table",get(db::create))
     .layer(db::init_db().unwrap());
 
     // run it with hyper on localhost:3000
@@ -44,3 +45,4 @@ async fn db(Extension(database): Extension<db::Database>) -> Html<&'static str> 
     let connection = database.connection().unwrap(); // Do stuff with connection
     Html("Hello, sqlite!")
 }
+

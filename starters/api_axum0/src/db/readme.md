@@ -24,3 +24,6 @@ PRAGMA temp_store = MEMORY;
 
 [参数意义见文档](https://www.sqlite.org/pragma.html)
 
+
+## 参考
+https://docs.rs/r2d2_sqlite/latest/r2d2_sqlite/
