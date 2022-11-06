@@ -24,7 +24,7 @@ impl Database {
     }
 }
 
-pub fn init_db(){
+pub fn init_db()->  Result<Extension<Database>, Error>{
     let path = ":memory:" ;
-    Database::new(path).unwrap();
+    return Database::new(path)
 }
