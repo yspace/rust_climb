@@ -13,6 +13,13 @@ pub fn call_it2(mut act: Action2) ->() {
     act();
 }
 
+fn call(f: impl Fn()->()){
+
+}
+fn call0(f: &dyn Fn()->()){
+    
+}
+
 // https://medium.com/swlh/understanding-closures-in-rust-21f286ed1759
 // 可以做编译期类型检测
 fn is_fn <A, R>(_x: fn(A) -> R) {}

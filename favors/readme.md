@@ -23,6 +23,9 @@ thiserror
 
 - ##directories##
 
+## 数据
+comfy_table
+
 ## 其他
 
 + [delegate](https://crates.io/crates/delegate)
