@@ -51,6 +51,8 @@ members = [
     "learnings/my_macro",
     "learnings/hi_refinery",
     "learnings/hi_cursive",
+    "learnings/api_sqlite",
+    "learnings/exploring_rust",
 
     # 准备自己实现一个验证库 以便后期隔离出去
     # "crates/validation"

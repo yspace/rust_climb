@@ -1,4 +1,7 @@
-fn main() {
+mod bool ;
+
+pub fn main() {
+    println!("basic data types");
     let text: String = "Hello, World!".to_string(); 
     let my_u32: u32 = 1234;
     let a_char = 'c';

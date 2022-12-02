@@ -5,6 +5,7 @@ mod router;
 mod iterators;
 
 mod data_types ;
+mod basic_data_types ;
 
 mod anys;
 mod arrays;
@@ -51,6 +52,12 @@ mod trees;
 mod serdes ;
 
 mod combinators;
+
+// 配置
+mod configs ;
+
+//
+mod boxes ;
 
 fn init() {
     println!("init fn of crate hardway");
@@ -112,6 +119,8 @@ fn _seahorse_main() {
                         module_entries.register("cps".to_string(), cps::main );
                         module_entries.register("tokios".to_string(), tokios::main );
                         module_entries.register("files".to_string(), files::run );
+                        module_entries.register("boxes".to_string(), boxes::main  );
+                        module_entries.register("basic_data_types".to_string(), basic_data_types::main    );
 
                         let act_key = c.args[0].as_str();
                         if module_entries.is_key_exists(act_key) {
