@@ -4,3 +4,5 @@
 菜鸟入门；
 
 https://www.runoob.com/sqlite/sqlite-syntax.html
+
+https://github.com/avinassh/fast-sqlite3-inserts/blob/master/src/bin/threaded_batched.rs
