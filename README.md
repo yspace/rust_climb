@@ -116,6 +116,8 @@ cargo run -p favorites 3rd-log
 
 - [rust by example](https://rustwiki.org/zh-CN/rust-by-example/mod/visibility.html)
 
+- [Learning Rust the wrong way](https://www.youtube.com/watch?v=DL9LANLg5EA&ab_channel=NDCConferences) 这里介绍了学习新事物的几种方法对比 很有意思 
+
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)
 - [cargo]()
