@@ -10,6 +10,10 @@ edition = "2018"
 [dependencies]
 seahorse = "2.0.0"
 
+# Strum is a set of macros and traits for working with enums and strings easier in Rust.
+strum = "0.24"
+strum_macros = "0.24"
+
 # error handling
 thiserror = "1.0.31"
 anyhow = "1.0"

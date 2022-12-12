@@ -1,3 +1,6 @@
+use std::time::Duration;
+use std::io::Write;
+
 // ## display formats
 // {} | {:?} | {value} | {:05} 五对齐 不够补零 ｜{:4} 四个空格 ｜{:#?} pretty print
 // {somevalue:some-format} 冒号前面的是对要现实对象的引用 没有就按照位置递增 
@@ -50,6 +53,17 @@ pub fn run() {
 
     // 指针
     println!("{:p}", &100);
+
+    // 等待实现
+    let loading_chars = ['/','-','\\','|'];
+    let mut i = 0 ;
+    loop{
+        i = (i + 1) % 4 ;
+        print!("{}\r",loading_chars[i]) ;
+        // std::io::stdout().flush().unwrap();
+        std::io::stdout().flush().unwrap(); ;
+        std::thread::sleep(Duration::from_millis(250)) ;
+    }
 
 }
 

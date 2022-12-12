@@ -1,5 +1,6 @@
 [workspace] 
 members = [
+    # ".",
     "learnings/catsay",
     "learnings/my_orbtk",
     # "numbers",

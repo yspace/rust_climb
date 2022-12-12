@@ -136,6 +136,9 @@ vscode 下可以安装IDEA Jetbrains快捷键
 MacOS 的 Command + Z 取消操作是 Command + Shift + Z。
 
 ## 杂项
+- rustc version 查看当前rustc版本
+> rustup show 
+
 - ssl错误：
 今天下载 cargo install starship     时报ssl错误 找到网上的解决方案 管用呀
   > 解决方案：

@@ -29,3 +29,8 @@ comfy_table
 ## 其他
 
 + [delegate](https://crates.io/crates/delegate)
+
++ [strum](https://crates.io/crates/strum)
+Strum is a set of macros and traits for working with enums and strings easier in Rust.
+
+一般需要同时引入相关的宏 strum_macros
