@@ -121,10 +121,15 @@ fn _seahorse_main() {
                         module_entries.register("files".to_string(), files::run );
                         module_entries.register("boxes".to_string(), boxes::main  );
                         module_entries.register("basic_data_types".to_string(), basic_data_types::main    );
+                        module_entries.register("anys".to_string(), anys::main    );
 
                         let act_key = c.args[0].as_str();
                         if module_entries.is_key_exists(act_key) {
+                            println!("\r\n==== call {} < ====\r\n",act_key);
                             module_entries.call(act_key);
+                            println!("\r\n==== end the {} > ====",act_key);
+                        }else{
+                            println!(">> *** not found: {} \r\n",act_key);
                         }
                     } else {
                         println!("some error happened");

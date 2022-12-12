@@ -93,3 +93,48 @@ mod scenario_retruning_iterator {
         found_type(foo());
     }
 }
+
+// 可以使用汇编查看代码生成情况 ，
+trait HiTrait{
+    fn say_hi(&self) ;
+}
+
+struct Dog ;
+struct Cat ;
+
+impl HiTrait for Dog {
+    fn say_hi(&self){
+        println!("wong wong!") ;
+    }
+}
+
+impl HiTrait for Cat
+{
+    fn say_hi(&self){
+        println!("meow meow!") ;
+    }
+}
+// 这里是静态派发 编译器根据是否调用某方法来生成代码
+fn func_impl(arg: impl HiTrait){
+    arg.say_hi();
+}
+// 动态分发 代码只生成一次
+fn func_dyn(arg: &dyn HiTrait) {
+    arg.say_hi();
+}
+// 以上两种情形是 参数位置是trait的 对于返回值位置是trait的同样适用
+
+fn get_hi() -> impl HiTrait {
+    // 只能是静态决策类型 条件式动态决定返回类型的就不行了
+  return Dog{}
+} 
+
+fn get_hi2()-> Box<dyn HiTrait>{
+    let p = 10 ;
+
+    if p > 10 {
+        Box::new(Dog{})
+    }else{
+        Box::new(Cat{})
+    }
+}
