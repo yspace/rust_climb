@@ -14,6 +14,7 @@ pub trait ComponentAny: Component + Any {
     fn as_any_mut(&mut self) -> &mut Any;
 }
 
+// 这个技法叫 blanket implementations
 impl<T> ComponentAny for T
     where T: Component + Any
 {
@@ -29,6 +30,7 @@ impl<T> ComponentAny for T
 
 #[derive(Debug,Default)]
 struct Components{
+    // value 位置可以是 Box<dyn Any>|
     components: HashMap<String, Rc<RefCell<dyn Component>>> 
 }
 impl Components{
@@ -39,6 +41,8 @@ impl Components{
     pub fn add(&mut self,component :Rc<RefCell<dyn Component>>,name:impl ToString) {
         self.components.insert(name.to_string() ,component);
     }
+    // 可以同时提供 get get_mut 版本
+    // [live stream: Preparing for a ECS Rust tutorial part 4]()
     pub fn get(&self,name:impl ToString)->Option<Rc<RefCell<dyn Component>>> {
         if let Some(comp) = self.components.get(&name.to_string()) {
             Some(comp.clone())
@@ -62,7 +66,7 @@ pub struct AppContext{
             (dyn Any + Send + Sync + 'static)
     */
     // 类型可以是Components 
-    components: HashMap<String, Rc<RefCell<dyn Component>>>
+    components: HashMap<String, Rc<RefCell<dyn ComponentAny>>>
 }
 
 impl AppContext {
@@ -74,7 +78,7 @@ impl AppContext {
     pub fn add_component1(&mut self,component :Rc<RefCell<dyn Component>>,name:&'static str) {
 
     }
-    pub fn add_component(&mut self,component :Rc<RefCell<dyn Component>>,name:impl ToString) {
+    pub fn add_component(&mut self,component :Rc<RefCell<dyn ComponentAny>>,name:impl ToString) {
         self.components.insert(name.to_string() ,component);
     }
     pub fn add_component0(&mut self,component :Box<dyn Component>) {
@@ -82,7 +86,8 @@ impl AppContext {
     }
 
     // name: impl Into<String> // 这个类型也可以！
-    pub fn get_component(&self,name :impl ToString) ->Option<Rc<RefCell<dyn Component>>> {
+    // 此处的返回类型可以有很多选择 Option<Ref<dyn ComponentAny>>
+    pub fn get_component(&self,name :impl ToString) ->Option<Rc<RefCell<dyn ComponentAny>>> {
         if let Some(comp) = self.components.get(&name.to_string()) {
             Some(comp.clone())
         }else {
@@ -116,9 +121,13 @@ impl MainState {
 
     pub fn do_something(&self){
         let db_comp = self.ctx.get_component(ComponentName::DB).expect("cann't found component db"); ;
-        // let bowrrowed_db = db_comp.borrow() ;
+        // 因为内部可变性 此处可以根据情况调用 borrow|borrow_mut
+        let bowrrowed_db = db_comp.borrow() ;
         // let bowrrowed_db = *bowrrowed_db as dyn Any ;
-        // let db = bowrrowed_db.downcast_ref().unwrap();
+        // 向下转型 通过unsafe块 将trait object引用的第一个指针（data指针 第二个是vtable 虚表指针）转为指向具体类型的引用
+        let db: &MyDb = bowrrowed_db.as_any().downcast_ref().unwrap();
+
+        // rust 中向上转型 upcast是比较繁琐｜难的一个话题
     
     }
 }

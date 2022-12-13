@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 mod tutorials ;
 mod maplits ;
+mod entities ;
 //
 pub fn main() {
     // https://users.rust-lang.org/t/hashmap-of-string-fn/25071/10
