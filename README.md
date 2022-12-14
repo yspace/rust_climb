@@ -118,6 +118,8 @@ cargo run -p favorites 3rd-log
 
 - [Learning Rust the wrong way](https://www.youtube.com/watch?v=DL9LANLg5EA&ab_channel=NDCConferences) 这里介绍了学习新事物的几种方法对比 很有意思 
 
+- [rust-tutorial](https://www.tutorialspoint.com/rust/index.htm)
+
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)
 - [cargo]()
