@@ -1,3 +1,4 @@
+
 use std::{any::{Any, TypeId}, collections::HashMap};
 
 
@@ -63,13 +64,13 @@ pub struct Entities{
 
     struct Size(f32) ;
     #[test]
-    fn test_adding_entity() -> Result<()> {
+    fn test_adding_entity()   {
 
 
         let mut entities = Entities::new();
         entities.register_entity::<Size>()
-        .with_component(Size(10.0))?;
+        .with_component(Size(10.0));
 
-        Ok(())
+        // Ok(())
     }
  }

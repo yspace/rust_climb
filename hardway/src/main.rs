@@ -9,6 +9,9 @@ mod basic_data_types ;
 
 mod anys;
 mod arrays;
+
+// 二进制
+mod bits ;
 // 异步
 mod asyncs;
 mod tokios ;
