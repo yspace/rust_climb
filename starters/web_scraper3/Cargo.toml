@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 webdriver = "0.46.0"
 fantoccini = "0.19.3"
+# hirtyfour 也可以用来抓网页哦
 tokio = { version = "1", features = ["full"] }
 
 visdom = "0.5.5"

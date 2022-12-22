@@ -152,9 +152,136 @@ create table project2 as select * from projects where id>999 and id < 2000
 也可以两头干 你增序取 我倒序取 回合一处就完了 修桥那样 你那头我这头汇合一处整个桥就成了
 
 
+## xpath
+
+xpath 感觉其定位查找功能比jquery 应该更丰富 
+
+### 通过父子兄弟 爷爷关系来查找 
+
+
+//span[@class="bg"]/../div
+
+    先通过/..找到 span 的父节点，再通过父节点找到 div。
+
+
+### 使用谓语定位
+
+谓语是 Xpath 中用于描述元素位置。主要有数字下标、最后一个子元素last()、元素下标函数position()。
+
+~~~xpath
+# 查找最后一个子元素，选取 form 下的最后一个 span
+
+//form[@id="form"]/span[last()] 
+
+//form[@id="form"]/span[last()-1]  倒数第一个
+
+//form[@id="form"]/span[position()=2] 第二个span
+
+//form[@id="form"]/span[position()>2] 下标大于 2 的 span
+
+~~~
+### 使用逻辑运算符
+
+~~~xpath
+//*[@name='wd' and @class='s_ipt'] 查找 name 属性为 wd 并且 class 属性为 s_ipt 的任意元素
+
+//*[@name='wd' or @class='s_ipt'] 
+
+# 使用|，同时查找多个路径，取或
+//form[@id="form"]//span | //form[@id="form"]//input 
+~~~
+
+### 使用文本定位
+
+text()   string()
+
+text()：当前元素节点包含的文本内容；
+
+表达式//div[text()="文本"]，能找到：
+
+<div>文本</div> 不能找到：
+
+<div><span>文本</span></div>
+
+表达式//div[string()="文本"]上述两种情况都能找到。
+
+### 使用部分匹配函数
+1. contains
+2. starts-with
+3. ends-with
+  //div[ends-with(@id, 'require')] 选取 id 属性以 require 结尾的 div 元素
+//div[ends-with(string(), '支付')] 选取内部文本以“支付”结尾的 div 元素
+
+作者：猫与测试
+链接：https://www.jianshu.com/p/6a0dbb4e246a
+来源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+### 节点轴选择
+~~~python
+from lxml import etree
+
+text = '''
+<div>
+    <ul>
+         <li class="item-0"><a href="link1.html"><span>first item</span></a></li>
+         <li class="item-1"><a href="link2.html">second item</a></li>
+         <li class="item-inactive"><a href="link3.html">third item</a></li>
+         <li class="item-1"><a href="link4.html">fourth item</a></li>
+         <li class="item-0"><a href="link5.html">fifth item</a>
+     </ul>
+ </div>
+'''
+html = etree.HTML(text)
+result = html.xpath('//li[1]/ancestor::*')
+print(result)
+result = html.xpath('//li[1]/ancestor::div')
+print(result)
+result = html.xpath('//li[1]/attribute::*')
+print(result)
+result = html.xpath('//li[1]/child::a[@href="link1.html"]')
+print(result)
+result = html.xpath('//li[1]/descendant::span')
+print(result)
+result = html.xpath('//li[1]/following::*[2]')
+print(result)
+result = html.xpath('//li[1]/following-sibling::*')
+print(result)
+
+~~~
+第一次选择我们调用了 ancestor 轴，可以获取所有祖先节点，其后需要跟两个冒号，然后是节点的选择器，这里我们直接使用了 *，表示匹配所有节点，因此返回结果是第一个 li 节点的所有祖先节点，包括 html，body，div，ul。
+
+第二次选择我们又加了限定条件，这次在冒号后面加了 div，这样得到的结果就只有 div 这个祖先节点了。
+
+第三次选择我们调用了 attribute 轴，可以获取所有属性值，其后跟的选择器还是 *，这代表获取节点的所有属性，返回值就是 li 节点的所有属性值。
+
+第四次选择我们调用了 child 轴，可以获取所有直接子节点，在这里我们又加了限定条件选取 href 属性为 link1.html 的 a 节点。
+
+第五次选择我们调用了 descendant 轴，可以获取所有子孙节点，这里我们又加了限定条件获取 span 节点，所以返回的就是只包含 span 节点而没有 a 节点。
+
+第六次选择我们调用了 following 轴，可以获取当前节点之后的所有节点，这里我们虽然使用的是 * 匹配，但又加了索引选择，所以只获取了第二个后续节点。
+
+第七次选择我们调用了 following-sibling 轴，可以获取当前节点之后的所有同级节点，这里我们使用的是 * 匹配，所以获取了所有后续同级节点
+
+作者：IT派森
+链接：https://www.jianshu.com/p/15f39d8b395a
+来源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
 ## 杂
 - [infer](https://github.com/bojand/infer)
 此库可以快速检测出文件类型 通过魔术字节 头部的一些特征编码 判断文件类型 
+
+- [Xpath 详解](https://www.jianshu.com/p/6a0dbb4e246a)
+- [xpath详解](https://blog.csdn.net/baidu_32542573/article/details/79675420)
+有以上两篇 基本可以覆盖xpath常用场景了！
+
+- [xpath_syntax](http://www.w3school.com.cn/xpath/xpath_syntax.asp)
+https://www.w3school.com.cn/xpath/xpath_functions.asp
+
+- [Python爬虫教程（从入门到精通）](http://c.biancheng.net/python_spider/)
+- [【Python】Python3网络爬虫实战-28、解析库的使用：XPath](https://www.jianshu.com/p/15f39d8b395a)
 
 
 ## 程序结构
