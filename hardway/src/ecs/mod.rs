@@ -1,3 +1,6 @@
+use std::any::TypeId;
+use std::fmt::Debug;
+
 pub fn main() {
     println!("ecs-in-rust");
 
@@ -138,5 +141,22 @@ mod v1 {
         fn push_none(&mut self) {
             self.push(None)
         }
+    }
+}
+
+
+#[derive(Debug,Default)]
+pub struct QueryBuilder{
+    pub type_ids: Vec<TypeId>,
+}
+
+impl QueryBuilder {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    pub fn with_component<T: 'static+Sized+Debug>(mut self)->Self {
+        self.type_ids.push(TypeId::of::<T>());
+        self
     }
 }
