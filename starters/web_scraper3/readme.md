@@ -218,6 +218,32 @@ text()：当前元素节点包含的文本内容；
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 ### 节点轴选择
+
+轴可定义相对于当前节点的节点集。
+语法：轴名称::节点[谓语]
+
+常用的轴：
+
+    ancestor：选取当前节点的所有先辈节点（父、祖父等）。
+    ancestor-or-self：选取当前节点的所有先辈节点（父、祖父等）以及当前节点本身。
+    attribute：选取当前节点的所有属性。
+    self：选取当前节点。
+    child：选取当前节点的所有子节点。
+    parent：选取当前节点的父节点。
+    descendant：选取当前节点的所有后代节点（子、孙等）。
+    descendant-or-self：选取当前节点的所有后代节点（子、孙等）以及当前节点本身。
+
+示例：
+
+    //li[@data="one"]/ancestor::div：选取属性data="one"的li节点的所有div祖先节点。
+    //li[@data="one"]/ancestor::*：选取属性data="one"的li标签的所有祖先节点。
+    //div[@id="testid"]/attribute::*：选取id="testid"的div节点的所有属性值。
+    //div[@id]/self::div[@data-h]/attribute::*：选取含id属性和data-h属性的div标签的所有属性值
+    //div[@id="testid"]/child::*：选取id="testid"的div节点的所有子节点。
+    //li[@data="one"]/parent::ol/li[last()]/text()：选取属性data="one"的li节点的父节点ol，其最后一个li子节点的文本值。
+    注意：由于每个元素节点只有唯一的一个父节点，所以“parent::父节点”等价于“parent::*” 。
+
+
 ~~~python
 from lxml import etree
 
