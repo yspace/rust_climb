@@ -22,4 +22,12 @@ pub fn main() {
 
         println!("{}", NUM);
     } 
+
+    /*
+    const 和 static 都要求赋予它们一个值。它们必须只能被赋予一个常量表达式的值。
+    换句话说，你不能用一个函数调用的返回值或任何相似的复合值或在运行时赋值。
+
+如果想赋予一个非常量表达式，可以参考用第三方库lazy_static（A macro for declaring lazily evaluated statics in Rust.）解决。
+
+    */
 }
