@@ -7,6 +7,8 @@ mod iterators;
 mod data_types ;
 mod basic_data_types ;
 
+mod lifetimes ;
+
 mod anys;
 mod arrays;
 
@@ -125,6 +127,7 @@ fn _seahorse_main() {
                         module_entries.register("boxes".to_string(), boxes::main  );
                         module_entries.register("basic_data_types".to_string(), basic_data_types::main    );
                         module_entries.register("anys".to_string(), anys::main    );
+                        module_entries.register("lifetimes".to_string(), lifetimes::main    );
 
                         let act_key = c.args[0].as_str();
                         if module_entries.is_key_exists(act_key) {

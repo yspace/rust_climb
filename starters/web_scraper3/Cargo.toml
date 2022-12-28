@@ -8,6 +8,8 @@ edition = "2021"
 [dependencies]
 webdriver = "0.46.0"
 fantoccini = "0.19.3"
+
+url = "2.3.1"
 # hirtyfour 也可以用来抓网页哦
 tokio = { version = "1", features = ["full"] }
 
@@ -29,6 +31,9 @@ serde_json = "1.0.85"
 
 # 压缩文件处理
 zip = "0.6.2"
+# https://github.com/richox/orz 　这个也是一个压缩解压库 有空了看看哦
+# 文件夹
+walkdir = "2.3.2"
 
 # 错误处理
 anyhow = "1.0.65"

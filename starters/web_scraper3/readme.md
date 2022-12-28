@@ -14,6 +14,8 @@
 
 chrome 的好像有更多扩展插件
 
+chromdriver 版本的选择需要跟本机所装的chrome浏览器版本对应 先查看本机浏览器版本再选择对应的driver下载 运行
+
 `测试 用chromedriver速度更快` 很奇怪的现象 而且手动关闭后不需要重启driver 二用geckodriver 就需要手动重启 不然session建立就会有问题 就是重用性不如chromedriver好
 > chromedriver --port=4444
 
