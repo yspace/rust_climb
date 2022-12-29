@@ -1,3 +1,5 @@
+use urlencoding::decode;
+
 pub fn play_audio(){
      use std::io::BufReader;
 
@@ -8,4 +10,14 @@ pub fn play_audio(){
          sink.append(rodio::Decoder::new(BufReader::new(file)).unwrap());
  
          sink.sleep_until_end();
+}
+
+// todo: 待定...
+ fn url_decode(data :&str){
+    let d = decode(data);
+    if d.is_ok(){
+
+    }else{
+
+    }
 }

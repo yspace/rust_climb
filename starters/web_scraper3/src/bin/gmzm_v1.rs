@@ -1,17 +1,12 @@
-use std::{path::PathBuf, borrow::Borrow};
-
 use fantoccini::{ClientBuilder, Locator};
 use url::{Host, ParseError, Url};
 
 use lazy_static::lazy_static;
 use regex::Regex;
 
-use web_scraper3::*;
-
 lazy_static! {
     static ref PAGE_REGEX: Regex = Regex::new(r"page=(?P<n>\d+)").unwrap();
 }
-const DL_DIR: &'static str = "__downloads";
 
 // let's set up the sequence of steps we want the browser to take
 #[tokio::main]
@@ -25,87 +20,64 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
 
     c.goto(target_url).await?;
 
-    let mut pre_url = None;
+    let mut pre_url = None ;
 
     loop {
+
         let url = c.current_url().await?;
 
         if pre_url.is_some() {
-            if url == pre_url.unwrap() {
+            if url == pre_url.unwrap(){
                 println!("last page reached");
-                break;
+                break; 
             }
         }
-
-        // xpath 选择表达式 ;
-        let selector = "//center//a[last()]"; //  双斜杠，表示不管层级关系
-                                              // xpath 有大量内置函数 可以协助提取信息如 text()
-        let button = c.wait().for_element(Locator::XPath(selector)).await?;
-
-        // let source_html = c.source().await? ;
-        // println!("{}", source_html);
-
+    
+        // 最后一页 可以有多种途径查到这个元素不过这里主要是想试试xpath表达式
+        let last_page_ele = c
+            .wait()
+            .for_element(Locator::XPath("//center//a[string()=\">>\"]"))
+            .await?;
+        let last_page_ele_href = last_page_ele.attr("href").await;
+    
+        println!("last page url: {:?}", last_page_ele_href);
+        println!(
+            "last page number: {:?}",
+            get_page_num(last_page_ele_href.unwrap().unwrap().as_str())
+        );
+        println!(
+            " current page number: {:?}",
+            get_page_num(url.as_str())
+        );
+    
+    
         // TODO 是不是直接用source 获取html文件后解析比较快 不需要等待元素加载？
+    
         let el_img = c
             .wait()
             .for_element(Locator::XPath("//center//td//span/img"))
             .await?;
-
-        let img_src = el_img.attr("src").await?;
-        let img_save_to_name = img_src.unwrap().clone();
-
-        let url2 = url.clone(); 
-        let url_segments = url2.path_segments().map(|c| c.collect::<Vec<_>>()).unwrap();
-        let folder_name = url_segments.get(url_segments.len()-2).unwrap();
-        let folder_name = urlencoding::decode(folder_name).unwrap();
-        let folder_name:&str = folder_name.borrow();
-
-        let img_url = url.join(img_save_to_name.as_str())?;
-
-
-        // 下载
-        let mut download_dir = PathBuf::from(DL_DIR);
-        download_dir.push(folder_name);
-        let save_to_folder = download_dir.as_path() ;
-        
-        if !std::path::Path::new(save_to_folder).is_dir(){
-            std::fs::create_dir_all(save_to_folder).expect("can't create download folder!");
-        }
-      
-        let mut save_to_path = std::path::Path::new(save_to_folder)
-        // .join(folder_name)
-        .join(img_save_to_name);
-        println!("save to path: {}", save_to_path.display());
-        
-        let mut download_flag = false;
-
-        if save_to_path.exists(){
-            let matedata = std::fs::metadata(save_to_path.clone())?;
-            if matedata.is_file() {
-                if   matedata.len() == 0 {
-                    // 文件存在且是空文件
-                    download_flag = true;
     
-                }else{
-                    // 已经下载过了
-                    println!("文件已下载! 不需要重复下载");
-                }
-            }
-        }else{
-            // 不存在
-            download_flag = true;
-        }
-       
-       if download_flag {
-
-           let rslt = download::fetch_url(
-               img_url.to_string(),
-               save_to_path.to_str().unwrap().to_string(),
-           )
-           .await;
-           println!("download ok!") ;
-       }
-
+        // let this_document = Url::parse()?;
+        // let css_url = this_document.join("../main.css")?;
+    
+        let scheme = url.scheme();
+        let host = url.host();
+    
+        println!("Scheme: {}", scheme);
+        println!("Host: {:?}", host);
+    
+        let img_src = el_img.attr("src").await?;
+        println!("{:#?}", img_src);
+        println!(
+            "full img url: {:?}",
+            url.join(img_src.unwrap().as_str())?.as_str()
+        );
+    
+        // xpath 选择表达式 ;
+        let selector = "//center//a[last()]"; //  双斜杠，表示不管层级关系
+                                              // xpath 有大量内置函数 可以协助提取信息如 text()
+        let button = c.wait().for_element(Locator::XPath(selector)).await?;
         button.click().await?;
         pre_url = Some(url);
     }
