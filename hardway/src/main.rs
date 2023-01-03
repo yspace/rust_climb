@@ -64,6 +64,8 @@ mod configs ;
 //
 mod boxes ;
 
+mod enums;
+
 fn init() {
     println!("init fn of crate hardway");
 }
@@ -77,6 +79,8 @@ mod routes {
     }
 }
 
+// dead_code 死代码 即未被使用到的孤立代码元素
+#[allow(dead_code,unused_variables)]
 fn main() {
     std::env::set_var("ENV_TEMP_VAR", "env_value");
 

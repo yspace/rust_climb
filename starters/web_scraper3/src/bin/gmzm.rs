@@ -22,6 +22,15 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
         .expect("failed to connect to WebDriver");
 
     let target_url = "http://gmzm.org/SUCAI/%E5%9B%BD%E7%94%BB%E7%B4%A0%E6%9D%90-%E5%B1%B1%E6%B0%B4%E7%94%BB/index.asp?page=2";
+    let target_url = "http://gmzm.org/gudaizihua/jieziyuan/04/index.asp?page=544";
+    let target_url = "http://b.gmzm.org/2018/%E5%8F%A4%E4%BB%A3%E5%AD%97%E7%94%BB/%E6%9D%8E%E5%94%90%E9%A3%8E%E6%A0%BC%E7%9A%84%E5%B1%B1%E6%B0%B4%E7%94%BB/index.asp?page=1";
+    let target_url = "http://gmzm.org/gudaizihua/mingren/index.asp?page=18";
+    let target_url = "http://gmzm.org/gudaizihua/CHANGJUAN/%E4%B8%AD%E7%A7%8B%E5%B8%96/";
+    let target_url = "http://gmzm.org/sucai/%E4%BC%A0%E4%B8%96%E5%90%8D%E7%94%BB%E8%8A%B1%E9%B8%9F/index.asp?page=1";
+    let target_url = "http://gmzm.org/gudaizihua/CHANGJUAN/%E4%BA%94%E8%89%B2%E9%B9%A6%E9%B9%89%E5%9B%BE/index.asp?page=1";
+    let target_url = "http://gmzm.org/GUDAIZIHUA/changjuan/%E8%99%8E%E4%B8%98%E5%9B%BE%E5%8D%B7/index.asp?page=1";
+    let target_url = "http://gmzm.org/gudaizihua/CHANGJUAN/index.asp?page=3"; // 这个老超时
+    let target_url = "http://b.gmzm.org/2018/%E5%8F%A4%E4%BB%A3%E5%AD%97%E7%94%BB/%E7%A7%8B%E5%A4%A9%E6%B2%B3%E7%9A%84%E6%B8%94%E5%A4%AB/";
 
     c.goto(target_url).await?;
 
@@ -103,7 +112,12 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
                save_to_path.to_str().unwrap().to_string(),
            )
            .await;
-           println!("download ok!") ;
+           if rslt.is_err() {
+                println!("some error happened :{:?}", rslt.err());
+           }else{
+
+               println!("download ok!") ;
+           }
        }
 
         button.click().await?;
