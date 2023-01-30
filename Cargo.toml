@@ -69,6 +69,7 @@ members = [
     "starters/console_app2",
     "starters/console_simple",
     "starters/api_axum0",
+    "starters/repl1",
 
     # 
     "projects/*",
