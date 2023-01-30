@@ -28,6 +28,6 @@ pub fn run(){
 fn process_payment(payment: Payment){
     match payment{
         Payment::CreditCard=> println!("paying with credit card"),
-        _=>{ println("not handled! ")}
+        _=>{ println!("not handled! ")}
     }
 }

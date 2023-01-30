@@ -156,6 +156,14 @@ MacOS 的 Command + Z 取消操作是 Command + Shift + Z。
 - 查汇编码
 https://rust.godbolt.org/z/8dGbY8Pe1
 
+- 奇怪的错误：
+https://stackoverflow.com/questions/74045131/error-linking-with-cc-failed-exit-status-1-when-building-rust-program-on-ma
+
+>   = note:   error: could not compile `syn` due to previous error error: linking with `cc` failed: signal: 11 (SIGSEGV)
+
+macos 独有现象 
+做： （`xcode-select reset` Reset your Xcode Install on macOS)[https://gist.github.com/Justintime50/2349ff5e62555aa097acbf519bbc27af] 后正常
+
 ### 不错的cargo 工具
 [cargo-edit](https://github.com/killercup/cargo-edit)
 > $ cargo install cargo-edit

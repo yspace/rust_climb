@@ -4,7 +4,7 @@ use fantoccini::{ClientBuilder, Locator};
 use url::{Host, ParseError, Url};
 
 use lazy_static::lazy_static;
-use regex::Regex;
+use regex::{Regex, Captures};
 
 use web_scraper3::*;
 
@@ -31,20 +31,56 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
     let target_url = "http://gmzm.org/GUDAIZIHUA/changjuan/%E8%99%8E%E4%B8%98%E5%9B%BE%E5%8D%B7/index.asp?page=1";
     let target_url = "http://gmzm.org/gudaizihua/CHANGJUAN/index.asp?page=3"; // 这个老超时
     let target_url = "http://b.gmzm.org/2018/%E5%8F%A4%E4%BB%A3%E5%AD%97%E7%94%BB/%E7%A7%8B%E5%A4%A9%E6%B2%B3%E7%9A%84%E6%B8%94%E5%A4%AB/";
+    let target_url = "http://gmzm.org/gudaizihua/yuanmingyuan/index.asp?page=39";
+
+    let target_url = "http://gmzm.org/gudaizihua/CHANGJUAN/%E4%B9%9D%E9%BE%99%E5%9B%BE/index.asp?page=19";
+    let target_url = "http://gmzm.org/gudaizihua/changjuan/%E6%99%8B%E6%96%87%E5%85%AC%E5%A4%8D%E5%9B%BD%E5%9B%BE/index.asp?page=16";
+    let target_url = "http://gmzm.org/gudaizihua/%E5%8D%97%E4%BA%AC%E5%8D%9A%E7%89%A9%E9%99%A2%E8%97%8F/index.asp?page=126";
+    let target_url = "http://gmzm.org/gudaizihua/%E8%B5%A4%E5%A3%81%E6%80%80%E5%8F%A4/index.asp?page=1";
+    let target_url = "http://gmzm.org/gudaizihua/changjuan/index.asp?page=1";
+    let target_url = "http://gmzm.org/gudaizihua/%E5%AE%8B%E5%90%8D%E6%B5%81%E9%9B%86%E8%97%BB%E5%86%8C/index.asp?page=2";
+    let target_url = "http://gmzm.org/gudaizihua/erwang/index.asp?page=1";
+    let target_url = "http://gmzm.org/gudaizihua/%E9%81%93%E5%BE%B3%E7%B5%8C%E6%99%8B%E5%8F%B3%E8%BB%8D%E7%8E%8B%E7%BE%B2%E4%B9%8B%E6%9B%B8/index.asp?page=1";
+    let target_url = "http://gmzm.org/gudaizihua/qianchashan/index.asp?page=1";
+    let target_url = "http://gmzm.org/gudaizihua/ziyan/index.asp?page=1";
+    let target_url = "http://gmzm.org/gudaizihua/jieziyuan/03/index.asp?page=24";
+    let target_url = "http://gmzm.org/gudaizihua/CHANGJUAN/%E4%B8%AD%E7%A7%8B%E5%B8%96/index.asp?page=2";
+    let target_url = "http://gmzm.org/gudaizihua/%E9%81%93%E5%BE%B3%E7%B5%8C%E6%99%8B%E5%8F%B3%E8%BB%8D%E7%8E%8B%E7%BE%B2%E4%B9%8B%E6%9B%B8/index.asp?page=1";
+    let target_url = "http://gmzm.org/gudaizihua/shuihurenwu/index.asp?page=1";
+    let target_url = "http://gmzm.org/gudaizihua/yuanqutu/index.asp?page=1";
 
     c.goto(target_url).await?;
 
-    let mut pre_url = None;
+    let last_page_link = c.wait().for_element(Locator::XPath("//center/a[last()-1]")).await?;
+    let last_page_link = c.wait().for_element(Locator::XPath("//center/a[last()-1]")).await?;
+    let last_page_href = last_page_link.attr("href").await ? ;
+    // println!("last_page_href:{}", last_page_href.unwrap()) ;
+    let last_page_num = get_page_num(last_page_href.unwrap().as_str()) ;
+
+    let mut pre_url:Option<Url> = None;
 
     loop {
         let url = c.current_url().await?;
 
+        let current_page_num = get_page_num(url.as_str());
+        
+        if current_page_num > last_page_num {
+            println!("last page reached");
+                break;
+        }
+        /* 
         if pre_url.is_some() {
-            if url == pre_url.unwrap() {
+            //  let pre_url2 = pre_url.unwrap() ;
+           
+             if url == pre_url.unwrap() {
                 println!("last page reached");
                 break;
             }
-        }
+           
+            // println!("{}: {}", pre_url2.as_str(), url.as_str());
+        }*/
+
+
 
         // xpath 选择表达式 ;
         let selector = "//center//a[last()]"; //  双斜杠，表示不管层级关系
@@ -119,8 +155,16 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
                println!("download ok!") ;
            }
        }
+       // NOTE: 双斜杠 取到img哪里去了 所以一直有问题！
 
-        button.click().await?;
+       let button = c.wait().for_element(Locator::XPath("//center/a[last()]")).await?;
+        // button.click().await?;
+        let next_page_href = button.attr("href").await?.unwrap() ;
+        println!("next href: {}", next_page_href.as_str());
+        let next_page_num = get_page_num(next_page_href.as_str()) ;
+        let next_page_url = get_page_url( url.as_str(),next_page_num); 
+        c.goto(next_page_url.as_str()).await ;
+       // c.goto(next_page_href.as_str()).await?;
         pre_url = Some(url);
     }
 
@@ -173,4 +217,22 @@ fn get_page_num(item: &str) -> usize {
         return page as usize;
     }
     0
+}
+fn get_page_url(item: &str , page: usize) -> String {
+    if PAGE_REGEX.is_match(item) {
+        println!("OK:{:#?}", item);
+        let k = PAGE_REGEX.replace(item, |caps: &Captures| {
+            format!("page={}", page) });
+        return k.as_ref().to_string();
+    }else{
+        return "".to_owned() ;
+    }
+     
+}
+
+#[test]
+fn test_get_page_url() {
+    let url = "index.asp?page=10";
+    let url2 = get_page_url(url,12);
+    assert_eq!(url2,"index.asp?page=12")
 }

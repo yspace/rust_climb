@@ -1,5 +1,6 @@
 
 mod basics ;
+mod for_arrays;
 
 trait SomeTrait {}
 
