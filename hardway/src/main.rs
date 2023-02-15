@@ -67,6 +67,15 @@ mod boxes ;
 mod enums;
 mod arcs;
 
+// borrow
+mod refs;
+
+// 表达式
+mod expressions;
+
+// traits
+mod traits;
+
 fn init() {
     println!("init fn of crate hardway");
 }
@@ -134,6 +143,9 @@ fn _seahorse_main() {
                         module_entries.register("anys".to_string(), anys::main    );
                         module_entries.register("lifetimes".to_string(), lifetimes::main    );
                         module_entries.register("arcs".to_string(), arcs::run    );
+                        module_entries.register("refs".to_string(), refs::run    );
+                        module_entries.register("expressions".to_string(), expressions::run    );
+                        module_entries.register("traits".to_string(), traits::run    );
 
                         let act_key = c.args[0].as_str();
                         if module_entries.is_key_exists(act_key) {

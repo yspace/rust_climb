@@ -121,12 +121,19 @@ cargo run -p favorites 3rd-log
 - [rust-tutorial](https://www.tutorialspoint.com/rust/index.htm)
 - [Rust Lifetimes](https://www.youtube.com/watch?v=1QoT9fmPYr8&ab_channel=DougMilford) 据说是生命周期解说最好的视频
 
+- [rust-cookbook](https://rust-lang-nursery.github.io/rust-cookbook/intro.html)
+
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)
 - [cargo]()
 
 ## 不错的文章
 - [12 Killer Rust Libraries You Should Try](https://medium.com/@jondot/12-killer-rust-libraries-you-should-know-c60bab07624f)
+
+- [Railway Oriented Programming](https://fsharpforfunandprofit.com/rop/)
+深刻理解Result
+- [Against Railway-Oriented Programming](https://fsharpforfunandprofit.com/posts/against-railway-oriented-programming/)
+跟这个或许有关： Rust组合器 [Combinators](https://learning-rust.github.io/docs/combinators/)
 
 ## todos
 - https://blog.ndepend.com/hexagonal-architecture/ 六边形架构试试呦！

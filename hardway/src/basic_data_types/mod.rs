@@ -1,6 +1,9 @@
 mod bool ;
+mod bits ;
 
 pub fn main() {
+    bits::run();
+
     println!("basic data types");
     let text: String = "Hello, World!".to_string(); 
     let my_u32: u32 = 1234;

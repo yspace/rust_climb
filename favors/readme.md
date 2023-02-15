@@ -15,6 +15,11 @@ once_cell lazy_static
 https://crates.io/crates/clokwerk
 
 
+## 并行-并发
+- rayon 
+    async 适用于io密集应用
+    rayon 适用于cpu密集应用
+
 ## 错误处理 
 
 thiserror
@@ -26,7 +31,12 @@ thiserror
 ## 数据
 comfy_table
 
+## 测试
+- criterion
+benchmark
+
 ## 其他
++ Polars 对标pandas
 
 + [delegate](https://crates.io/crates/delegate)
 
