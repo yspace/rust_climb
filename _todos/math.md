@@ -7,3 +7,5 @@ Problem Solving Through Problems by Loren C Larson
 anything by Titu Andreesu
 
 https://en.wikipedia.org/wiki/Foundations_of_mathematics
+
+- [dwz 团队大佬的笔记？](https://gitee.com/dwzteam/edu_college/tree/master/docs/math)

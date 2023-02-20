@@ -38,6 +38,9 @@ let result = quote! {
 
 书籍： https://book.async.rs/concepts/tasks.html
 
+## 深入理解async
+https://github.com/nyxtom/async-in-depth-rust-series
+
 ### Futures
 Futures 是在计算上的抽象
 > Futures abstract over computation. They describe the "what", independent of the "where" and the "when". For that, they aim to break code into small, composable actions that can then be executed by a part of our system. 

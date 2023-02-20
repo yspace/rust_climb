@@ -54,6 +54,8 @@ members = [
     "learnings/hi_cursive",
     "learnings/api_sqlite",
     "learnings/exploring_rust",
+    # Railway oriented programming
+    "learnings/hi_rop",
 
     # 准备自己实现一个验证库 以便后期隔离出去
     # "crates/validation"
@@ -70,6 +72,8 @@ members = [
     "starters/console_simple",
     "starters/api_axum0",
     "starters/repl1",
+    "starters/hi_es",
+    "starters/hi_search",
 
     # 
     "projects/*",
