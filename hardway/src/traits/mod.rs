@@ -1,3 +1,7 @@
+mod compositions;
+mod derives;
+mod traits_objects;
+
 pub fn run(){
     let str_thing = StringThing{};
     do_run(&str_thing);
@@ -34,4 +38,35 @@ impl Runner for IntThing{
 // 定义generic方法
 fn do_run(r: &Runner) {
     r.run();
+}
+
+mod default_impls{
+    pub trait Hello{
+        fn hello(&self) -> String{
+            String::from("world")
+        }
+    }
+    struct MyThing{}
+    impl Hello for MyThing{}
+
+    struct MyThing2{}
+    impl Hello for MyThing2{
+        fn hello(&self) -> String{
+            String::from("MyTing2")
+        }
+    }
+
+    #[test]
+    fn test_hello() {
+        let h1 = MyThing{};
+        let h2 = MyThing2{}; 
+
+        let mut hellos:Vec<Box<dyn Hello>> = Vec::new();
+        hellos.push(Box::new(h1));
+        hellos.push(Box::new(h2)) ;
+
+        for h in hellos {
+           println!("{}",  h.hello());
+        }
+    }
 }

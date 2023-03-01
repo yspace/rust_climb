@@ -1,6 +1,9 @@
 # rust_climb
 learn rust the hard way
 
+路虽远行则将至
+事虽难做则必成
+
 ## rust 
 
 升级
@@ -146,6 +149,9 @@ vscode 下可以安装IDEA Jetbrains快捷键
 MacOS 的 Command + Z 取消操作是 Command + Shift + Z。
 
 ## 杂项
+- [rust-lang/rfcs](https://github.com/rust-lang/rfcs/tree/master/text)
+学某个知识点 如果有时间可以先在这里找找最初的动机与实现想法！``这是个被忽略的学习路径!``
+
 - rustc version 查看当前rustc版本
 > rustup show 
 

@@ -1,0 +1,1 @@
+From a programmer’s perspective, async / await provides the same things as threads (concurrency, better hardware utilization, improved speed), but with far better performance and lower resource usage for I/O bound workloads.

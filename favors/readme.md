@@ -5,6 +5,9 @@ crossbeam_channel
 
 once_cell lazy_static
 
+[libc](https://github.com/rust-lang/libc)
+代码可以看看（大致浏览下）哦！
+
 
 ### 连接池
 - [deadpool](https://crates.io/crates/deadpool)

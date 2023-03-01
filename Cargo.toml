@@ -24,6 +24,7 @@ members = [
     "books/rustcc",
     "books/cookbook",
     "books/learn_rust_ab",
+    "books/black_hat_rust",
    
 
     "whale",
@@ -36,7 +37,7 @@ members = [
     "learnings/line_editor",
     "learnings/numbers",
     "learnings/hi_regex",
-    "learnings/hi_mongo",
+    # "learnings/hi_mongo", # 下面有个同名的 可以换着看看
     "learnings/hi_radix",
     "learnings/hi_fltk",
     "learnings/hi_tauri",
@@ -74,6 +75,7 @@ members = [
     "starters/repl1",
     "starters/hi_es",
     "starters/hi_search",
+    "starters/hi_mongo",
 
     # 
     "projects/*",

@@ -311,6 +311,7 @@ https://www.w3school.com.cn/xpath/xpath_functions.asp
 - [Python爬虫教程（从入门到精通）](http://c.biancheng.net/python_spider/)
 - [【Python】Python3网络爬虫实战-28、解析库的使用：XPath](https://www.jianshu.com/p/15f39d8b395a)
 
+- [幽灵蛛](https://github.com/andeya/pholcus)
 
 ## 程序结构
 app

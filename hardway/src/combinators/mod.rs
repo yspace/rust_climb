@@ -1,4 +1,8 @@
 
+mod for_iters;
+mod for_options;
+mod for_result;
+
 #[test]
 fn test_or_and(){
     let s1 = Some("some1");
