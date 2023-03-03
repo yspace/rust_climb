@@ -125,6 +125,7 @@ cargo run -p favorites 3rd-log
 - [Rust Lifetimes](https://www.youtube.com/watch?v=1QoT9fmPYr8&ab_channel=DougMilford) 据说是生命周期解说最好的视频
 
 - [rust-cookbook](https://rust-lang-nursery.github.io/rust-cookbook/intro.html)
+- [Rust RFCs - RFC Book - Active RFC List](https://rust-lang.github.io/rfcs/introduction.html)
 
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)

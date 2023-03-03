@@ -76,6 +76,7 @@ members = [
     "starters/hi_es",
     "starters/hi_search",
     "starters/hi_mongo",
+    "starters/hi_redis",
 
     # 
     "projects/*",
