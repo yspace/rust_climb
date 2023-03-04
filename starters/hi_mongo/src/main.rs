@@ -4,6 +4,8 @@ use mongodb::{options::ClientOptions, Client};
 use futures::stream::TryStreamExt;
 use mongodb::{bson::doc, options::FindOptions};
 
+mod advance_mongo;
+
 #[tokio::main]
 async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     println!("Hello, world!");
@@ -18,6 +20,11 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     // Client uses std::sync::Arc internally 所以可以通过clone方法 安全的在多线程和async 任务上被共享
 
     let db = client.database("my_db1");
+
+    // ######  
+    advance_mongo::run(db.clone()).await?;
+    return Ok(());
+
 
     // _inserting_documents_into_a_collection(db.clone()).await?;
     _updating_documents_into_a_collection(db.clone()).await?;
@@ -74,7 +81,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
 use mongodb::Cursor;
 
 #[cfg(all(not(feature = "sync"), not(feature = "tokio-sync")))]
-async fn _printing_documents(mut cursor:  Cursor<Document>) -> Result<()> {
+pub async fn _printing_documents(mut cursor:  Cursor<Document>) -> Result<()> {
     // use mongodb::bson::{doc, Document};
     // Iterate over the results of the cursor.
 

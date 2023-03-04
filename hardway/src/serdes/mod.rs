@@ -1,5 +1,7 @@
 use serde::{Serialize, Deserialize};
 
+mod jsons;
+
 #[derive(Serialize, Deserialize, Debug)]
 struct Point {
     x: i32,

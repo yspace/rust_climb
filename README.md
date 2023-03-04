@@ -82,6 +82,9 @@ cargo run -p favorites 3rd-log
 ~~~
 
 ## rust 测试
+- [a snapshot testing library for Rust](https://github.com/mitsuhiko/insta)
+
+
 - 测试过程中输出代码中的printXxx 
 > cargo test  -- --nocapture
 或者

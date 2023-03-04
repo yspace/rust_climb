@@ -5,7 +5,8 @@ cargo.toml
 
 [dependencies]
 serde = { version = "1", features = ["derive"] }
-# 跟serde相关的库是按需引入的 除了json 还有yaml 之类
+# 跟serde相关的库是按需引入的 除了json 还有yaml 之类  CSV, JSON, TOML, YAML, and RON 
+
 serde_json = "1"
 
 ~~~
