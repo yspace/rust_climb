@@ -5,6 +5,7 @@ use futures::stream::TryStreamExt;
 use mongodb::{bson::doc, options::FindOptions};
 
 mod advance_mongo;
+mod advance_mongo_agg;
 
 #[tokio::main]
 async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
@@ -22,7 +23,8 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let db = client.database("my_db1");
 
     // ######  
-    advance_mongo::run(db.clone()).await?;
+    // advance_mongo::run(db.clone()).await?;
+    advance_mongo_agg::run(db.clone()).await?;
     return Ok(());
 
 

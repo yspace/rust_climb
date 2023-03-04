@@ -10,6 +10,7 @@ pub async  fn run(db: mongodb::Database) -> Result<()> {
 
     Ok(())
 }
+
 async fn init_collection(db: mongodb::Database) -> Result<()> {
     let collection = db.collection::<Document>("adv_person");
 
@@ -86,6 +87,7 @@ async fn sub_document_query(db: mongodb::Database) -> Result<()> {
 
     Ok(())
 }
+
 async fn aggregate_ops(db: mongodb::Database) -> Result<()> {
     println!("enter aggregate_ops") ;
     let collection = db.collection::<Document>("adv_person");
