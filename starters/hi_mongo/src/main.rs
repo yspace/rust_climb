@@ -136,12 +136,15 @@ async fn _updating_documents_into_a_collection(db: mongodb::Database) -> Result<
     Ok(())
 }
 
-// ========== 下面是一个错误处理的典型实现 ===========
-#[derive(Debug)]
-struct Err {}
+// ========== 下面是一个错误处理的典型实现 ,也可以使用Enum哦 表示不同种类的错误===========
+// #[derive(Clone, Debug, Error)] // use thiserror::Error;
+#[derive(Clone, Debug)]
+struct Err {
+    db_error: mongodb::error::Error
+}
 impl From<mongodb::error::Error> for Err {
-    fn from(_error: mongodb::error::Error) -> Self {
-        Err {}
+    fn from(error: mongodb::error::Error) -> Self {
+        Err {db_error:error}
     }
 }
 
@@ -149,7 +152,7 @@ impl std::error::Error for Err {}
 impl std::fmt::Display for Err {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         // write!(f, "({}, {})", self.x, self.y)
-        write!(f, "some error happens!")
+        write!(f, "some error happens! {}",self.db_error)
     }
 }
 
