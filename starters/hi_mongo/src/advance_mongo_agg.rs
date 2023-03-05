@@ -149,8 +149,8 @@ async fn join_ops(db: mongodb::Database) -> Result<()> {
         }},
         // 第二步 展开数组
         doc!{"$unwind": "$user_info"},
-        // 第三步 提取特定字段
-        doc!{"$project2":{
+        // 第三步 提取特定字段 
+        doc!{"$project":{
             "content":1,
             "post_time":1,
             // "name":"$user_info.name",
@@ -159,6 +159,7 @@ async fn join_ops(db: mongodb::Database) -> Result<()> {
       ];
     let options = None;
     // 注意主集合 顺序不要搞反了 有点类似关系型数据库中的连表查询 left join 所以以谁做基表比较重要
+    // TODO ：也可以以用户集合为主 查询用户发送的微博列表 然后展开 再提取特定字段｜或者重命名 ；如果想查询特定用户的微博列表 可以添加`$match`阶段
     let result = collection_posts.aggregate(pipeline, options).await?;
     super::_printing_documents(result).await?;
 

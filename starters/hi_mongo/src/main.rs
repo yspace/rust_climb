@@ -6,6 +6,7 @@ use mongodb::{bson::doc, options::FindOptions};
 
 mod advance_mongo;
 mod advance_mongo_agg;
+mod advance_mongo_index;
 
 #[tokio::main]
 async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
@@ -24,7 +25,8 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
 
     // ######  
     // advance_mongo::run(db.clone()).await?;
-    advance_mongo_agg::run(db.clone()).await?;
+    // advance_mongo_agg::run(db.clone()).await?;
+    advance_mongo_index::run(db.clone()).await?;
     return Ok(());
 
 
