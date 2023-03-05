@@ -1,20 +1,26 @@
 use std::{num::NonZeroUsize, usize};
 
 mod chat;
+mod advance_ds;
 fn main() {
     println!("Hello, world!");
 
-    let result = do_something();
+    let client = redis::Client::open("redis://127.0.0.1/").unwrap();
+    let mut con = client.get_connection().unwrap();
+
+    // ## 
+    advance_ds::run(&mut con).unwrap() ; return ();
+
+    let result = do_something(&mut con);
     match result {
         Ok(_) => println!("ok!"),
         Err(err) => println!("error: {:?}", err),
     }
 }
 
-fn do_something() -> redis::RedisResult<()> {
+fn do_something(mut con: &mut redis::Connection) -> redis::RedisResult<()> {
     use redis::Commands;
-    let client = redis::Client::open("redis://127.0.0.1/")?;
-    let mut con = client.get_connection()?;
+   
 
     let _: () = con.set("key", "hello")?;
     let _: () = con.set("my_key", 42)?;
