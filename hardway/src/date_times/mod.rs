@@ -1,7 +1,9 @@
+mod times;
+
 pub fn run() {
     println!("clokwerk...");
     // Scheduler, and trait for .seconds(), .minutes(), etc.
-    use clokwerk::{Scheduler, TimeUnits};
+    use clokwerk::{Scheduler, TimeUnits, Job};
     // Import week days and WeekDay
     use clokwerk::Interval::*;
     use std::thread;
