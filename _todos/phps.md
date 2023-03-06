@@ -7,6 +7,7 @@
 [PHP代码审计入门](https://www.freebuf.com/articles/web/252333.html)
 
 https://www.hacking8.com/MiscSecNotes/php/security-coding.html
+https://www.hacking8.com/MiscSecNotes/php/audio.html
 
 ## 思考题：
 - nginx与php之间的交互方式 

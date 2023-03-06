@@ -1,16 +1,39 @@
 use std::{num::NonZeroUsize, usize};
 
-mod chat;
 mod advance_ds;
+mod chat;
 mod pub_subs;
+
+
+use r2d2::Pool;
+use r2d2_redis::{
+    r2d2,
+    // redis::{self, Commands},
+    RedisConnectionManager,
+};
+pub struct AppContext{
+    redis_pool: Pool<RedisConnectionManager>,
+}
+
 fn main() {
     println!("Hello, world!");
+
+    let mut pool = redis_manager::get_pool();
+    //   let pool = pool.clone();
+
+    // ##
+    let mut app_context = AppContext{
+        redis_pool: pool,
+    };
+    pub_subs::run(&mut app_context);
+    return ;
 
     let client = redis::Client::open("redis://127.0.0.1/").unwrap();
     let mut con = client.get_connection().unwrap();
 
-    // ## 
-    advance_ds::run(&mut con).unwrap() ; return ();
+  
+    advance_ds::run(&mut con).unwrap();
+    return ();
 
     let result = do_something(&mut con);
     match result {
@@ -19,9 +42,29 @@ fn main() {
     }
 }
 
+mod redis_manager {
+    extern crate r2d2_redis;
+
+
+    use r2d2::Pool;
+    use r2d2_redis::{
+        r2d2,
+        redis::{self, Commands},
+        RedisConnectionManager,
+    };
+
+    // use redis::Commands;
+
+    pub(crate) fn get_pool() -> Pool<RedisConnectionManager> {
+        let manager = RedisConnectionManager::new("redis://localhost").unwrap();
+        let pool = r2d2::Pool::builder().build(manager).unwrap();
+
+        return pool;
+    }
+}
+
 fn do_something(mut con: &mut redis::Connection) -> redis::RedisResult<()> {
     use redis::Commands;
-   
 
     let _: () = con.set("key", "hello")?;
     let _: () = con.set("my_key", 42)?;
@@ -155,28 +198,28 @@ fn usecase_list_chat(con: &mut redis::Connection) -> redis::RedisResult<()> {
     let len_of_list: usize = con.llen(key)?;
     println!(" len of list: {:?}", len_of_list);
 
-    let user_id = 2 ;
+    let user_id = 2;
 
-    let msg = format!("{}","this could be a json string");
+    let msg = format!("{}", "this could be a json string");
 
-      // TODO 短期内不可以重复发送相同消息 `uid+msg_md5` 作为key 然后添加超时删除时间
-    // 如果标准的md5算法太慢 可以选择更快的哈希实现 
+    // TODO 短期内不可以重复发送相同消息 `uid+msg_md5` 作为key 然后添加超时删除时间
+    // 如果标准的md5算法太慢 可以选择更快的哈希实现
     let mut hasher = Md5::new();
-   
-    let text =  format!("{}_{}", user_id, &msg );
+
+    let text = format!("{}_{}", user_id, &msg);
     hasher.input_str(&text);
-    let dup_check_key = hasher.result_str() ;
+    let dup_check_key = hasher.result_str();
     // 检查是否有此消息了
-    // let ttl_result:Result<usize, redis::RedisError> = con.ttl(&dup_check_key);  
-    let ttl_result: usize  = con.ttl(dup_check_key.clone())?; 
+    // let ttl_result:Result<usize, redis::RedisError> = con.ttl(&dup_check_key);
+    let ttl_result: usize = con.ttl(dup_check_key.clone())?;
     println!("ttl result :{:?}", ttl_result);
     println!("max usize :{:?}", usize::MAX);
 
     // 添加一条聊天记录后 紧跟着就可以缩减列表了
     let _ = con.rpush(key, &msg)?;
-  
+
     // println!("{} => {}",text,hasher.result_str());
-    let _ = con.set_ex(dup_check_key, 1, 30)? ;
+    let _ = con.set_ex(dup_check_key, 1, 30)?;
 
     // ltrim 可以用来缩紧列表 不至于太长 适合消减聊天列表 ；服务器资源够的话 可以不必如此 或者用一个其他任务来转储部分旧的数据
     let _ = con.ltrim(key, -10, -1)?;
