@@ -14,6 +14,11 @@ bson = "2.5.0"
 
 futures = "0.3"
 
+# 另外还有几个库： https://github.com/benashford/redis-async-rs
+redis = { version = "0.22.3", features = ["tokio-comp"] }
+
+thiserror = "1.0.39"
+
 [dependencies.mongodb]
 version = "2.3.0"
 features = ["tokio-runtime"]

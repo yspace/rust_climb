@@ -50,9 +50,11 @@ fn usecase_hash(con: &mut redis::Connection) -> redis::RedisResult<()> {
 fn usecase_hash2(con: &mut redis::Connection) -> redis::RedisResult<()> {
     use redis::Commands; // 命令的高级方式（以方法名出现的那些命令）在此traits中实现
 
+    // 有的人做key设计把变量包含在了key中 如：profile:user001
     let key = "user_info";
     let field = "user_001";
 
+    // 注意value 还可以用：BTreeMap<String, String> 如果不想单独定义一个结构体的话
     let user_info = UserInfo {
         age: 17,
         address: "xi'an".to_string(),

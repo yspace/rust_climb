@@ -7,6 +7,7 @@ use mongodb::{bson::doc, options::FindOptions};
 mod advance_mongo;
 mod advance_mongo_agg;
 mod advance_mongo_index;
+mod rank_data;
 
 #[tokio::main]
 async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
@@ -26,7 +27,8 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     // ######  
     // advance_mongo::run(db.clone()).await?;
     // advance_mongo_agg::run(db.clone()).await?;
-    advance_mongo_index::run(db.clone()).await?;
+    // advance_mongo_index::run(db.clone()).await?;
+    rank_data::run(db.clone()).await?;
     return Ok(());
 
 
@@ -142,11 +144,23 @@ async fn _updating_documents_into_a_collection(db: mongodb::Database) -> Result<
 // #[derive(Clone, Debug, Error)] // use thiserror::Error;
 #[derive(Clone, Debug)]
 struct Err {
-    db_error: mongodb::error::Error
+    db_error: mongodb::error::Error,
+    // db_error: DbError,
+    // redis_error: Option<redis::RedisError>,
+
 }
+// #[derive(Clone, Debug)]
+enum DbError {
+   Mongo(mongodb::error::Error) ,
+   Redis(redis::RedisError) ,
+}
+
 impl From<mongodb::error::Error> for Err {
     fn from(error: mongodb::error::Error) -> Self {
-        Err {db_error:error}
+        Err {
+            db_error:error,
+            // redis_error: None,
+        }
     }
 }
 
@@ -159,4 +173,8 @@ impl std::fmt::Display for Err {
 }
 
 #[allow(dead_code)]
-type Result<T> = std::result::Result<T, Err>;
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
+// type Result<T> = std::result::Result<T, Err>; // 原先用的这个 但是如果有新错误 还需要支持转换From<SomeErr>
+
+// type Result<T> = std::result::Result<T, thiserror::Error>;
+// type Result<T> = thiserror::Result<T>;
