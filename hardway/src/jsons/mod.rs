@@ -55,9 +55,11 @@ pub fn run() {
 
 fn json_macro() {
     use serde_json::json;
+
+    let age = 25 ;
     let john = json!({
         "name": "John Doe",
-        "age": 43,
+        "age": age,
         "phones": [
             "+44 1234567",
             "+44 2345678"
@@ -68,6 +70,10 @@ fn json_macro() {
 
     // Convert to a string of JSON and print it out
     println!("{}", john.to_string());
+}
+#[test]
+fn test_json_macro() {
+    json_macro();
 }
 
 fn pretty_json() {}
