@@ -3,6 +3,7 @@ use std::{num::NonZeroUsize, usize};
 mod advance_ds;
 mod chat;
 mod pub_subs;
+mod pub_subs2;
 
 
 use r2d2::Pool;
@@ -25,7 +26,8 @@ fn main() {
     let mut app_context = AppContext{
         redis_pool: pool,
     };
-    pub_subs::run(&mut app_context);
+    pub_subs2::run(&mut app_context);
+    // pub_subs::run(&mut app_context);
     return ;
 
     let client = redis::Client::open("redis://127.0.0.1/").unwrap();

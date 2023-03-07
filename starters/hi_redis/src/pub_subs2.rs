@@ -28,7 +28,7 @@ pub fn run(context: &mut AppContext) -> redis::RedisResult<()> {
      });
      // 需不需要join呢！😄
 
-    loop {
+     loop {
         let mut s = String::new();
         io::stdin()
             .read_line(&mut s) // 输入一行字符串
@@ -47,7 +47,7 @@ pub fn run(context: &mut AppContext) -> redis::RedisResult<()> {
         // println!("{:?}", msg);
         let json: String = serde_json::to_string(&msg).unwrap();
         println!("{}", json);
-        let _: () = conn.set("message", json).unwrap();
+        let _: () = conn.publish("pub_info", json).unwrap();
     }
 
    
@@ -73,46 +73,30 @@ mod sender {
 mod receiver {
     use std::time::Duration;
 
+    use r2d2_redis::redis::{PubSubCommands, ControlFlow};
+
     use super::*;
 
     pub fn run(pool: Pool<RedisConnectionManager>) -> redis::RedisResult<()> {
         let mut conn = pool.get().unwrap();
 
-        println!("begin receive msg");
-        // let last_msg_time :Option<String> = None;
-        let mut last_msg_time  = "".to_string();
-        loop {
-            let key = "message";
-            let json_str: Option<String> = conn.get(key).unwrap();
-            if json_str.is_some() {
-
-                let msg: Message = serde_json::from_str(&json_str.unwrap()).unwrap();
-    
-                if last_msg_time == msg.time {
-                    thread::sleep(Duration::from_secs(1));
-                    continue; 
-                }else{
-
-                    println!("{:#?}", msg);
-                    last_msg_time = msg.time;
+        // let lisetner = conn.psubscribe(_, _)
+        let lisetner = conn.subscribe(&["pub_info"], |msg| {
+            let ch = msg.get_channel_name();
+            let payload: String = msg.get_payload().unwrap();
+            
+            match payload.as_ref() {
+                "1000000001" => ControlFlow::Break(()),
+                a => {
+                    println!("Channel '{}' received '{}'.", ch, a);
+                    ControlFlow::Continue
                 }
-            }else{
-                thread::sleep(Duration::from_secs(1));
-                continue; // 这行在这里 基本可以去掉
             }
-        }
+        });
+       
 
         Ok(())
     }
-    pub fn run_with_Context(context: &mut AppContext) -> redis::RedisResult<()> {
-        let pool = context.redis_pool.clone();
-        let mut conn = pool.get().unwrap();
-
-        let key = "message";
-        let json_str: String = conn.get(key).unwrap();
-        let msg: Message = serde_json::from_str(&json_str).unwrap();
-        println!("{:#?}", msg);
-
-        Ok(())
-    }
+    
+    
 }
