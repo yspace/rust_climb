@@ -83,6 +83,9 @@ mod jsons;
 // 
 mod results;
 
+// 同步相关
+mod syncs;
+
 
 fn init() {
     println!("init fn of crate hardway");
