@@ -6,6 +6,8 @@ use serde_json::Result;
 
 use std::collections::HashMap;
 
+mod untyped_json;
+
 #[derive(Serialize, Deserialize)]
 struct Theme {
     colors: HashMap<String, String>,

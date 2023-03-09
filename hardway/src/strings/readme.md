@@ -22,3 +22,12 @@ fn main() {
 You can also use Deref coercion with other types, such as a Vector. After all, a String is just a vector of 8-byte chars
 
 A String type can be magically turned into a &str type using the Deref trait and type coercion
+
+
+String 内部本质上是一个u8类型的向量
+Vec<u8>   可以方便修改
+我们对String是拥有所有权的
+
+对于&str 我们只能读取它
+
+结构体成员经常用String 函数参数经常用&str

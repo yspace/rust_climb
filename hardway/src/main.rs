@@ -86,6 +86,9 @@ mod results;
 // 同步相关
 mod syncs;
 
+// 所有权
+mod ownerships;
+
 
 fn init() {
     println!("init fn of crate hardway");

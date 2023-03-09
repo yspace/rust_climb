@@ -55,3 +55,13 @@ fn de_construct() {
         }
     }
 }
+
+
+#[test]
+fn test_match_boolean() {
+    let var = Some(1);
+    match var.is_some() {
+        true => println!("ok: {}",var.unwrap()),
+        false => println!("err: var is not provided!"),
+    }
+}

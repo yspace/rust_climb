@@ -1,3 +1,4 @@
+mod basics;
 mod matches;
 mod patterns;
 mod advanced_matching;
