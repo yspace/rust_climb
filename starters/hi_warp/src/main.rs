@@ -5,6 +5,10 @@ mod aqs;
 
 #[tokio::main]
 async fn main() {
+
+    // let _ = aqs::async_http_request::main().await;
+    // return ;
+
     let hello = 
     warp::get()
     .map(|| format!("Hello, World!"));
