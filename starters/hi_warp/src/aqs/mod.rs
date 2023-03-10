@@ -1,8 +1,11 @@
 // pub mod  async_http_request;
+use serde::{Serialize, Deserialize};
 
 pub mod handlers;
+pub mod stores;
 
 // #[derive(Debug)]
+#[derive(Deserialize, Serialize, Debug)]
 struct Question {
     id: QuestionId,
     title: String,
@@ -10,7 +13,7 @@ struct Question {
     // 复杂类型 只能用Debug trait了！
     tags: Option<Vec<String>>,
 }
-#[derive(Debug)]
+#[derive(Serialize, Deserialize,Debug, Clone, PartialEq,Eq, Hash)]
 // new type 设计模式
 struct QuestionId(String);
 
@@ -48,11 +51,11 @@ impl std::fmt::Display for QuestionId {
     }
 }
 
-impl std::fmt::Debug for Question {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
-        write!(f, "{:?}", self.tags)
-    }
-}
+// impl std::fmt::Debug for Question {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
+//         write!(f, "{:?}", self.tags)
+//     }
+// }
 
 use std::io::{Error, ErrorKind};
 use std::str::FromStr;
