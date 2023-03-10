@@ -1,5 +1,7 @@
 // pub mod  async_http_request;
 
+pub mod handlers;
+
 // #[derive(Debug)]
 struct Question {
     id: QuestionId,
