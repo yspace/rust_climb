@@ -1,14 +1,54 @@
+use std::collections::HashMap;
+
 use warp::{
     filters::cors::CorsForbidden, http::StatusCode, reject::Reject, Filter, Rejection, Reply,
 };
 
-use super::*;
+use super::{stores::Store, *};
 
 #[derive(Debug)]
 struct InvalidId;
 impl Reject for InvalidId {}
 
-pub async fn get_questions() -> Result<impl warp::Reply, warp::Rejection> {
+#[derive(Debug)]
+enum Error {
+    ParseError(std::num::ParseIntError),
+    MissingParameters,
+}
+impl std::fmt::Display for Error {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match *self {
+            Error::ParseError(ref err) => {
+                write!(f, "Cannot parse parameter: {}", err)
+            }
+            Error::MissingParameters => write!(f, "Missing parameter"),
+        }
+    }
+}
+impl Reject for Error {}
+
+pub async fn get_questions(
+    params: HashMap<String, String>,
+    store: Store,
+) -> Result<impl warp::Reply, warp::Rejection> {
+    println!("{:?}", params);
+
+    match params.get("start") {
+        Some(start) => println!("{}", start),
+        None => println!("No start value"),
+    }
+    let mut start = 0;
+    // 短版本用法
+    if let Some(n) = params.get("start") {
+        // println!("{}", n);
+        // println!("{:?}", n.parse::<usize>());
+        start = n.parse::<usize>().expect("Could not parse start");
+    }
+
+    let res: Vec<Question> = store.questions.values().cloned().collect();
+    Ok(warp::reply::json(&res))
+}
+pub async fn get_questions0() -> Result<impl warp::Reply, warp::Rejection> {
     let question = Question::new(
         QuestionId::from_str("1").expect("No id provided"),
         "First Question".to_string(),
@@ -39,4 +79,28 @@ pub async fn return_error(r: Rejection) -> Result<impl Reply, Rejection> {
             StatusCode::NOT_FOUND,
         ))
     }
+}
+
+#[derive(Debug)]
+struct Pagination {
+    start: usize,
+    end: usize,
+}
+
+fn extract_pagination(params: HashMap<String, String>) -> Result<Pagination, Error> {
+    if params.contains_key("start") && params.contains_key("end") {
+        return Ok(Pagination {
+            start: params
+                .get("start")
+                .unwrap()
+                .parse::<usize>()
+                .map_err(Error::ParseError)?,
+            end: params
+                .get("end")
+                .unwrap()
+                .parse::<usize>()
+                .map_err(Error::ParseError)?,
+        });
+    }
+    Err(Error::MissingParameters)
 }

@@ -5,8 +5,8 @@ pub mod handlers;
 pub mod stores;
 
 // #[derive(Debug)]
-#[derive(Deserialize, Serialize, Debug)]
-struct Question {
+#[derive(Deserialize, Serialize, Debug,Clone)]
+pub struct Question {
     id: QuestionId,
     title: String,
     content: String,
@@ -15,7 +15,7 @@ struct Question {
 }
 #[derive(Serialize, Deserialize,Debug, Clone, PartialEq,Eq, Hash)]
 // new type 设计模式
-struct QuestionId(String);
+pub struct QuestionId(String);
 
 impl Question {
     pub fn new(id: QuestionId, title: String, content: String, tags: Option<Vec<String>>) -> Self {

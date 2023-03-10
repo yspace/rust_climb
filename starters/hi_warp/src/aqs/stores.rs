@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone)]
 pub struct Store {
-    questions: HashMap<QuestionId, Question>,
+   pub   questions: HashMap<QuestionId, Question>,
 }
 
 

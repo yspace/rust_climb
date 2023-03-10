@@ -21,12 +21,13 @@ async fn main() {
         .allow_any_origin() // 允许哪区域
         .allow_header("content-type") // 允许携带啥
         .allow_header("not-in-the-request")
-        // 允许什么叫痛工具呀 飞机 还是轮船 还是火车
+        // 允许什么交通工具呀 飞机 还是轮船 还是火车
         .allow_methods(&[Method::PUT, Method::DELETE, Method::GET, Method::POST]);
 
     let get_items = warp::get()
         .and(warp::path("questions"))
         .and(warp::path::end())
+        .and(warp::query())
         .and(store_filter)
         .and_then(aqs::handlers::get_questions)
         .recover(aqs::handlers::return_error)
