@@ -3149,7 +3149,7 @@ help: use `let _ = ...` to ignore the resulting value
    |         +++++++
 
 warning: `hardway` (bin "hardway") generated 455 warnings (run `cargo fix --bin "hardway"` to apply 124 suggestions)
-    Finished dev [unoptimized + debuginfo] target(s) in 3.98s
+    Finished dev [unoptimized + debuginfo] target(s) in 4.75s
      Running `/Volumes/macintosh hd - 数据/workspace/rust_space/rust_climb/target/debug/hardway logs`
 log4rs: error deserializing appender stdout: Unknown field file. Expected one of target, encoder, tty_only
 log4rs: Reference to nonexistent appender: `stdout`
