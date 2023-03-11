@@ -1,0 +1,3156 @@
+warning: resolver for the non root package will be ignored, specify resolver at the workspace root:
+package:   /Volumes/macintosh hd - 数据/workspace/rust_space/rust_climb/learnings/hi_sixtyfps/Cargo.toml
+workspace: /Volumes/macintosh hd - 数据/workspace/rust_space/rust_climb/Cargo.toml
+   Compiling hardway v0.1.0 (/Volumes/macintosh hd - 数据/workspace/rust_space/rust_climb/hardway)
+warning: unused imports: `thread`, `time::Duration`
+   --> hardway/src/asyncs/future_internal.rs:105:5
+    |
+105 |     thread,
+    |     ^^^^^^
+106 |     time::Duration,
+    |     ^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(unused_imports)]` on by default
+
+warning: unnecessary parentheses around `if` condition
+  --> hardway/src/cps/mod.rs:59:12
+   |
+59 |         if (n==0 ) {
+   |            ^    ^^
+   |
+   = note: `#[warn(unused_parens)]` on by default
+help: remove these parentheses
+   |
+59 -         if (n==0 ) {
+59 +         if n==0 {
+   |
+
+warning: type `ret_fn` should have an upper camel case name
+  --> hardway/src/cps/mod.rs:67:14
+   |
+67 |         type ret_fn = Box<dyn Fn(i32)-> i32>;
+   |              ^^^^^^ help: convert the identifier to upper camel case: `RetFn`
+   |
+   = note: `#[warn(non_camel_case_types)]` on by default
+
+warning: unused import: `std::path::PathBuf`
+ --> hardway/src/files/mod.rs:1:5
+  |
+1 | use std::path::PathBuf;
+  |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `ffi::OsStr`, `path::Path`
+  --> hardway/src/files/mod.rs:27:11
+   |
+27 | use std::{ffi::OsStr, fs, path::Path};
+   |           ^^^^^^^^^^      ^^^^^^^^^^
+
+warning: unused import: `maplit::*`
+ --> hardway/src/hashmap/maplits.rs:3:5
+  |
+3 | use maplit::* ;
+  |     ^^^^^^^^^
+
+warning: unused macro definition: `sum`
+ --> hardway/src/macros/repetitions.rs:3:14
+  |
+3 | macro_rules! sum {
+  |              ^^^
+  |
+  = note: `#[warn(unused_macros)]` on by default
+
+warning: unused macro definition: `inc_var`
+ --> hardway/src/macros/hygienes.rs:2:14
+  |
+2 | macro_rules! inc_var {
+  |              ^^^^^^^
+
+warning: unused macro definition: `min`
+ --> hardway/src/macros/ttm.rs:4:14
+  |
+4 | macro_rules! min {
+  |              ^^^
+
+warning: unused macro definition: `my_tuple`
+ --> hardway/src/macros/tail_sep.rs:3:14
+  |
+3 | macro_rules! my_tuple{
+  |              ^^^^^^^^
+
+warning: unused import: `repetitions::*`
+  --> hardway/src/macros/mod.rs:13:5
+   |
+13 | use repetitions::*;
+   |     ^^^^^^^^^^^^^^
+
+warning: unused macro definition: `m_struct`
+  --> hardway/src/macros/mod.rs:40:14
+   |
+40 | macro_rules! m_struct{
+   |              ^^^^^^^^
+
+warning: `...` range patterns are deprecated
+  --> hardway/src/pattern_matches/patterns.rs:72:10
+   |
+72 |         1...10 => println!("1 - 10"),
+   |          ^^^ help: use `..=` for an inclusive range
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+   = note: `#[warn(ellipsis_inclusive_range_patterns)]` on by default
+
+warning: `...` range patterns are deprecated
+  --> hardway/src/pattern_matches/patterns.rs:78:12
+   |
+78 |         'a'...'z' => println!("lower  "),
+   |            ^^^ help: use `..=` for an inclusive range
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+
+warning: `...` range patterns are deprecated
+  --> hardway/src/pattern_matches/patterns.rs:79:12
+   |
+79 |         'A'...'Z' => println!("upper"),
+   |            ^^^ help: use `..=` for an inclusive range
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+
+warning: unused import: `std::fs::read_to_string`
+ --> hardway/src/strings/mod.rs:1:5
+  |
+1 | use std::fs::read_to_string;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused doc comment
+  --> hardway/src/strings/mod.rs:60:9
+   |
+60 | /         /**
+61 | |          * 是否应该让结构体依赖引用的注意事项
+62 | |          * - 需要变量的所有权么？
+63 | |          * - 是否需要在结构体外使用变量
+64 | |          * - 类型是不是很大  借用不会导致大批量的数据被拷贝
+65 | |          */
+   | |___________^
+66 |
+67 |           let person = Person { name: "Herman" };
+   |           --------------------------------------- rustdoc does not generate documentation for statements
+   |
+   = help: use `/* */` for a plain comment
+   = note: `#[warn(unused_doc_comments)]` on by default
+
+warning: unused import: `sync::Arc`
+  --> hardway/src/threads/copy_types.rs:25:15
+   |
+25 |     use std::{sync::Arc, thread::spawn};
+   |               ^^^^^^^^^
+
+warning: unused import: `sync::Arc`
+  --> hardway/src/threads/copy_types.rs:46:15
+   |
+46 |     use std::{sync::Arc, thread::spawn};
+   |               ^^^^^^^^^
+
+warning: unused import: `sync::Arc`
+  --> hardway/src/threads/mod.rs:73:35
+   |
+73 |     use std::{iter::FromIterator, sync::Arc, thread};
+   |                                   ^^^^^^^^^
+
+warning: unused doc comment
+  --> hardway/src/threads/mod.rs:80:9
+   |
+80 | /         /**
+81 | |          * The .join() method will wait until the thread has finished executing, and returns a thread::Result.
+82 | |          * If the thread did not successfully finish its function because it panicked, this will contain the panic message.
+83 | |          */
+   | |___________^
+84 |           t1.join().expect("Could not join thread");
+   |           ----------------------------------------- rustdoc does not generate documentation for expressions
+   |
+   = help: use `/* */` for a plain comment
+
+warning: the item `Arc` is imported redundantly
+   --> hardway/src/threads/mod.rs:180:13
+    |
+73  |     use std::{iter::FromIterator, sync::Arc, thread};
+    |                                   --------- the item `Arc` is already imported here
+...
+180 |         use std::sync::Arc;
+    |             ^^^^^^^^^^^^^^
+
+warning: unused import: `std::thread`
+   --> hardway/src/threads/mod.rs:198:9
+    |
+198 |     use std::thread;
+    |         ^^^^^^^^^^^
+
+warning: `...` range patterns are deprecated
+  --> hardway/src/control_flows/loops/mod.rs:35:10
+   |
+35 |         1...3 => println!("All"),
+   |          ^^^ help: use `..=` for an inclusive range
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+
+warning: unused import: `time::*`
+ --> hardway/src/date_times/times.rs:2:5
+  |
+2 | use time::*;
+  |     ^^^^^^^
+
+warning: the item `OffsetDateTime` is imported redundantly
+ --> hardway/src/date_times/times.rs:5:9
+  |
+2 | use time::*;
+  |     ------- the item `OffsetDateTime` is already imported here
+...
+5 |     use time::OffsetDateTime;
+  |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: the item `Weekday` is imported redundantly
+  --> hardway/src/date_times/times.rs:31:9
+   |
+2  | use time::*;
+   |     ------- the item `Weekday` is already imported here
+...
+31 |     use time::Weekday;
+   |         ^^^^^^^^^^^^^
+
+warning: the item `Month` is imported redundantly
+  --> hardway/src/date_times/times.rs:35:9
+   |
+2  | use time::*;
+   |     ------- the item `Month` is already imported here
+...
+35 |     use time::Month;
+   |         ^^^^^^^^^^^
+
+warning: unused import: `std::str::FromStr`
+  --> hardway/src/date_times/times.rs:50:9
+   |
+50 |     use std::str::FromStr;
+   |         ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `chrono::Datelike`
+  --> hardway/src/date_times/times.rs:52:9
+   |
+52 |     use chrono::Datelike;
+   |         ^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Duration`, `FixedOffset`, `Local`, `NaiveDateTime`, `NaiveDate`
+  --> hardway/src/date_times/times.rs:53:28
+   |
+53 |     use chrono::{DateTime, Duration, FixedOffset, Local, NaiveDate, NaiveDateTime, Utc};
+   |                            ^^^^^^^^  ^^^^^^^^^^^  ^^^^^  ^^^^^^^^^  ^^^^^^^^^^^^^
+
+warning: unused import: `time::*`
+   --> hardway/src/date_times/times.rs:129:9
+    |
+129 |     use time::*;
+    |         ^^^^^^^
+
+warning: unnecessary parentheses around `for` iterator expression
+   --> hardway/src/date_times/times.rs:136:30
+    |
+136 |                     for _ in (0..5_000_000) {
+    |                              ^            ^
+    |
+help: remove these parentheses
+    |
+136 -                     for _ in (0..5_000_000) {
+136 +                     for _ in 0..5_000_000 {
+    |
+
+warning: unused import: `once_cell::sync::Lazy`
+ --> hardway/src/configs/mod.rs:1:5
+  |
+1 | use once_cell::sync::Lazy;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `serde_json::Result`
+ --> hardway/src/jsons/mod.rs:5:5
+  |
+5 | use serde_json::Result;
+  |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Number`, `json`
+ --> hardway/src/jsons/untyped_json.rs:1:18
+  |
+1 | use serde_json::{Number, json};
+  |                  ^^^^^^  ^^^^
+
+warning: crate-level attribute should be in the root module
+ --> hardway/src/macros/ttm.rs:1:1
+  |
+1 | #![recursion_limit = "256"]
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_attributes)]` on by default
+
+warning: crate-level attribute should be in the root module
+   --> hardway/src/threads/mod.rs:197:5
+    |
+197 |     #![feature(scoped_threads)]
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/sized/mod.rs:19:14
+   |
+19 |     fs: Foo2<Fn(i32)>, //
+   |              ^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+   = note: `#[warn(bare_trait_objects)]` on by default
+help: use `dyn`
+   |
+19 |     fs: Foo2<dyn Fn(i32)>, //
+   |              +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/anys/mod.rs:69:30
+   |
+69 |         fn as_any(&self) -> &Any;
+   |                              ^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+69 |         fn as_any(&self) -> &dyn Any;
+   |                              +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/anys/mod.rs:70:42
+   |
+70 |         fn as_any_mut(&mut self) -> &mut Any;
+   |                                          ^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+70 |         fn as_any_mut(&mut self) -> &mut dyn Any;
+   |                                          +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/anys/mod.rs:76:30
+   |
+76 |         fn as_any(&self) -> &Any {
+   |                              ^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+76 |         fn as_any(&self) -> &dyn Any {
+   |                              +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/anys/mod.rs:80:42
+   |
+80 |         fn as_any_mut(&mut self) -> &mut Any {
+   |                                          ^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+80 |         fn as_any_mut(&mut self) -> &mut dyn Any {
+   |                                          +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/anys/mod.rs:36:34
+   |
+36 |             fn as_any(&self) -> &Any {
+   |                                  ^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+36 |             fn as_any(&self) -> &dyn Any {
+   |                                  +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/anys/mod.rs:40:46
+   |
+40 |             fn as_any_mut(&mut self) -> &mut Any {
+   |                                              ^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+40 |             fn as_any_mut(&mut self) -> &mut dyn Any {
+   |                                              +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/anys/mod.rs:50:34
+   |
+50 |             fn as_any(&self) -> &Any
+   |                                  ^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+50 |             fn as_any(&self) -> &dyn Any
+   |                                  +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/anys/mod.rs:56:46
+   |
+56 |             fn as_any_mut(&mut self) -> &mut Any
+   |                                              ^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+56 |             fn as_any_mut(&mut self) -> &mut dyn Any
+   |                                              +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> hardway/src/closures/mod.rs:118:42
+    |
+118 |         fn call_with_one2(some_closure: &Fn(i32) -> i32) -> i32 {
+    |                                          ^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+118 |         fn call_with_one2(some_closure: &dyn Fn(i32) -> i32) -> i32 {
+    |                                          +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> hardway/src/closures/mod.rs:142:29
+    |
+142 |         fn factory() -> Box<Fn(i32) -> i32> {
+    |                             ^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+142 |         fn factory() -> Box<dyn Fn(i32) -> i32> {
+    |                             +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+ --> hardway/src/funcs/fn_types.rs:4:25
+  |
+4 | pub type Action2 = Box< FnMut()> ;
+  |                         ^^^^^^^
+  |
+  = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+  = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+  |
+4 | pub type Action2 = Box< dyn FnMut()> ;
+  |                         +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+ --> hardway/src/funcs/returns.rs:6:33
+  |
+6 | ...                   Box<Fn(i32) -> i32 + 'a > {
+  |                           ^^^^^^^^^^^^^^^^^^^
+  |
+  = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+  = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+  |
+6 |                             Box<dyn Fn(i32) -> i32 + 'a > {
+  |                                 +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/hashmap/mod.rs:38:26
+   |
+38 |     type VoidFnPtr = Box<Fn() -> ()>;
+   |                          ^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+38 |     type VoidFnPtr = Box<dyn Fn() -> ()>;
+   |                          +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/impl_traits/mod.rs:15:18
+   |
+15 | fn foo2() -> Box<SomeTrait> {
+   |                  ^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+15 | fn foo2() -> Box<dyn SomeTrait> {
+   |                  +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/impl_traits/mod.rs:37:21
+   |
+37 |     fn foo() -> Box<Trait> {
+   |                     ^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+37 |     fn foo() -> Box<dyn Trait> {
+   |                     +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/impl_traits/mod.rs:64:22
+   |
+64 |     fn foo0() -> Box<Fn(i32) -> i32> {
+   |                      ^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+64 |     fn foo0() -> Box<dyn Fn(i32) -> i32> {
+   |                      +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/traits/mod.rs:39:15
+   |
+39 | fn do_run(r: &Runner) {
+   |               ^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+39 | fn do_run(r: &dyn Runner) {
+   |               +++
+
+warning: unreachable statement
+  --> hardway/src/funcs/mod.rs:18:5
+   |
+11 |     return as_params::main();
+   |     ------------------------ any code following this expression is unreachable
+...
+18 |     fn_types::call_it(||{println!("it works !")});
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ unreachable statement
+   |
+   = note: `#[warn(unreachable_code)]` on by default
+
+warning: unreachable statement
+   --> hardway/src/funcs/mod.rs:187:9
+    |
+186 |         divergin();
+    |         ---------- any code following this expression is unreachable
+187 |         println!("world");
+    |         ^^^^^^^^^^^^^^^^^ unreachable statement
+    |
+    = note: this warning originates in the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> hardway/src/impl_traits/mod.rs:39:28
+   |
+39 |         Box::new(5) as Box<Trait>
+   |                            ^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+39 |         Box::new(5) as Box<dyn Trait>
+   |                            +++
+
+warning: unreachable statement
+ --> hardway/src/strings/mod.rs:9:5
+  |
+7 |     return;
+  |     ------ any code following this expression is unreachable
+8 |
+9 |     println!("learn string");
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^ unreachable statement
+  |
+  = note: this warning originates in the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unreachable statement
+  --> hardway/src/structs/mod.rs:11:5
+   |
+10 |     return sizes::main();
+   |     -------------------- any code following this expression is unreachable
+11 |     return chat::main();
+   |     ^^^^^^^^^^^^^^^^^^^^ unreachable statement
+
+warning: unreachable statement
+  --> hardway/src/threads/mod.rs:18:5
+   |
+15 |     return;
+   |     ------ any code following this expression is unreachable
+...
+18 |     basic();
+   |     ^^^^^^^^ unreachable statement
+
+warning: unreachable statement
+  --> hardway/src/control_flows/repetitions.rs:24:9
+   |
+23 |         continue;
+   |         -------- any code following this expression is unreachable
+24 |         println!("this is never printed");
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ unreachable statement
+   |
+   = note: this warning originates in the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unused import: `TrieCommon`
+ --> hardway/src/router.rs:1:24
+  |
+1 | use radix_trie::{Trie, TrieCommon};
+  |                        ^^^^^^^^^^
+
+warning: unreachable pattern
+  --> hardway/src/enums/mod.rs:24:9
+   |
+24 |         _=>{},
+   |         ^
+   |
+   = note: `#[warn(unreachable_patterns)]` on by default
+
+warning: unused variable: `text`
+ --> hardway/src/basic_data_types/mod.rs:8:9
+  |
+8 |     let text: String = "Hello, World!".to_string(); 
+  |         ^^^^ help: if this is intentional, prefix it with an underscore: `_text`
+  |
+  = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `my_u32`
+ --> hardway/src/basic_data_types/mod.rs:9:9
+  |
+9 |     let my_u32: u32 = 1234;
+  |         ^^^^^^ help: if this is intentional, prefix it with an underscore: `_my_u32`
+
+warning: unused variable: `a_char`
+  --> hardway/src/basic_data_types/mod.rs:10:9
+   |
+10 |     let a_char = 'c';
+   |         ^^^^^^ help: if this is intentional, prefix it with an underscore: `_a_char`
+
+warning: unused variable: `byte_buffer`
+  --> hardway/src/basic_data_types/mod.rs:11:9
+   |
+11 |     let byte_buffer = b"raw-byte-buffer";
+   |         ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_byte_buffer`
+
+warning: unused variable: `one`
+  --> hardway/src/basic_data_types/mod.rs:12:10
+   |
+12 |     let (one, two): (u8, u8) = (1, 2);
+   |          ^^^ help: if this is intentional, prefix it with an underscore: `_one`
+
+warning: unused variable: `two`
+  --> hardway/src/basic_data_types/mod.rs:12:15
+   |
+12 |     let (one, two): (u8, u8) = (1, 2);
+   |               ^^^ help: if this is intentional, prefix it with an underscore: `_two`
+
+warning: unused variable: `my_array`
+  --> hardway/src/basic_data_types/mod.rs:13:9
+   |
+13 |     let my_array: [u8; 3] = [1, 2, 3];
+   |         ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_my_array`
+
+warning: unused variable: `r`
+ --> hardway/src/lifetimes/mod.rs:8:9
+  |
+8 |     let r = get_int_ref(&SOME_INT);
+  |         ^ help: if this is intentional, prefix it with an underscore: `_r`
+
+warning: unused variable: `p2`
+  --> hardway/src/lifetimes/mod.rs:33:33
+   |
+33 | fn get_max0<'a,'b>(p1: &'a i32, p2: &'b i32) ->&'a i32{
+   |                                 ^^ help: if this is intentional, prefix it with an underscore: `_p2`
+
+warning: unused variable: `zeros`
+  --> hardway/src/arrays/mod.rs:42:13
+   |
+42 |         let zeros = [0,5];
+   |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_zeros`
+
+warning: unused variable: `n1`
+  --> hardway/src/arrays/mod.rs:48:14
+   |
+48 |         let [n1, n2] = names ;
+   |              ^^ help: if this is intentional, prefix it with an underscore: `_n1`
+
+warning: unused variable: `n2`
+  --> hardway/src/arrays/mod.rs:48:18
+   |
+48 |         let [n1, n2] = names ;
+   |                  ^^ help: if this is intentional, prefix it with an underscore: `_n2`
+
+warning: unused variable: `locations3`
+  --> hardway/src/arrays/mod.rs:53:13
+   |
+53 |         let locations3 = [Location::default(), Location::default()];
+   |             ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_locations3`
+
+warning: unused variable: `loc2`
+  --> hardway/src/arrays/mod.rs:54:20
+   |
+54 |         let [loc1, loc2] = locations ;
+   |                    ^^^^ help: if this is intentional, prefix it with an underscore: `_loc2`
+
+warning: unused variable: `l1`
+  --> hardway/src/arrays/mod.rs:58:14
+   |
+58 |         let [l1,..] = locations2 ;
+   |              ^^ help: if this is intentional, prefix it with an underscore: `_l1`
+
+warning: unused variable: `last_loc`
+  --> hardway/src/arrays/mod.rs:59:20
+   |
+59 |         let [ .. , last_loc] = locations2 ;
+   |                    ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_last_loc`
+
+warning: unused variable: `more_locations`
+  --> hardway/src/arrays/mod.rs:62:13
+   |
+62 |         let more_locations = <[Location;3]>::default();
+   |             ^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_more_locations`
+
+warning: unused variable: `song`
+  --> hardway/src/asyncs/mod.rs:63:24
+   |
+63 |     async fn sing_song(song: Song) { /* ... */
+   |                        ^^^^ help: if this is intentional, prefix it with an underscore: `_song`
+
+warning: unused variable: `song`
+  --> hardway/src/asyncs/mod.rs:86:24
+   |
+86 |     async fn sing_song(song: Song) {  /* ... */ }
+   |                        ^^^^ help: if this is intentional, prefix it with an underscore: `_song`
+
+warning: unused variable: `plus_num`
+  --> hardway/src/closures/mod.rs:38:17
+   |
+38 |             let plus_num = |x: i32| x + num;
+   |                 ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_plus_num`
+
+warning: unused variable: `y`
+  --> hardway/src/closures/mod.rs:40:13
+   |
+40 |         let y = &mut num;
+   |             ^ help: if this is intentional, prefix it with an underscore: `_y`
+
+warning: unused variable: `owns_num`
+  --> hardway/src/closures/mod.rs:46:13
+   |
+46 |         let owns_num = move |x: i32| x + num;
+   |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_owns_num`
+
+warning: unused variable: `num`
+  --> hardway/src/closures/mod.rs:65:49
+   |
+65 |                 let mut add_num = move |x: i32| num += x;
+   |                                                 ^^^
+   |
+   = help: did you mean to capture by reference instead?
+
+warning: unused variable: `v`
+  --> hardway/src/collections/mod.rs:30:13
+   |
+30 |         let v: Vec<i32> = vec![];
+   |             ^ help: if this is intentional, prefix it with an underscore: `_v`
+
+warning: unused variable: `b`
+  --> hardway/src/copy_move/mod.rs:11:9
+   |
+11 |     let b = a; // copy
+   |         ^ help: if this is intentional, prefix it with an underscore: `_b`
+
+warning: unused variable: `c2`
+  --> hardway/src/copy_move/mod.rs:15:9
+   |
+15 |     let c2 = c; // copy
+   |         ^^ help: if this is intentional, prefix it with an underscore: `_c2`
+
+warning: unused variable: `t2`
+  --> hardway/src/copy_move/mod.rs:19:9
+   |
+19 |     let t2 = t; // copy
+   |         ^^ help: if this is intentional, prefix it with an underscore: `_t2`
+
+warning: unused variable: `b2`
+  --> hardway/src/copy_move/mod.rs:24:9
+   |
+24 |     let b2 = b; // copy 语义
+   |         ^^ help: if this is intentional, prefix it with an underscore: `_b2`
+
+warning: unused variable: `a2`
+  --> hardway/src/copy_move/mod.rs:33:9
+   |
+33 |     let a2 = a; // move
+   |         ^^ help: if this is intentional, prefix it with an underscore: `_a2`
+
+warning: unused variable: `c2`
+  --> hardway/src/copy_move/mod.rs:37:9
+   |
+37 |     let c2 = c; // move
+   |         ^^ help: if this is intentional, prefix it with an underscore: `_c2`
+
+warning: unused variable: `t2`
+  --> hardway/src/copy_move/mod.rs:41:9
+   |
+41 |     let t2 = t; // move
+   |         ^^ help: if this is intentional, prefix it with an underscore: `_t2`
+
+warning: unused variable: `b2`
+  --> hardway/src/copy_move/mod.rs:46:9
+   |
+46 |     let b2 = b; // move 语义
+   |         ^^ help: if this is intentional, prefix it with an underscore: `_b2`
+
+warning: unused variable: `a2`
+  --> hardway/src/copy_move/mod.rs:71:17
+   |
+71 |             let a2 = a; // move
+   |                 ^^ help: if this is intentional, prefix it with an underscore: `_a2`
+
+warning: unused variable: `a2`
+  --> hardway/src/copy_move/mod.rs:77:17
+   |
+77 |             let a2 = a;
+   |                 ^^ help: if this is intentional, prefix it with an underscore: `_a2`
+
+warning: unused variable: `a2`
+  --> hardway/src/copy_move/mod.rs:94:17
+   |
+94 |             let a2 = a ; // 这里发生了copy 隐式调用编译器版本的clone方法 而不是自己实现的那个
+   |                 ^^ help: if this is intentional, prefix it with an underscore: `_a2`
+
+warning: unused variable: `a3`
+  --> hardway/src/copy_move/mod.rs:97:17
+   |
+97 |             let a3 = a.clone() ;
+   |                 ^^ help: if this is intentional, prefix it with an underscore: `_a3`
+
+warning: unused variable: `arr`
+  --> hardway/src/drops/mod.rs:27:9
+   |
+27 |     let arr = MyVec(vec![
+   |         ^^^ help: if this is intentional, prefix it with an underscore: `_arr`
+
+warning: unused variable: `f`
+  --> hardway/src/funcs/fn_types.rs:16:9
+   |
+16 | fn call(f: impl Fn()->()){
+   |         ^ help: if this is intentional, prefix it with an underscore: `_f`
+
+warning: unused variable: `f`
+  --> hardway/src/funcs/fn_types.rs:19:10
+   |
+19 | fn call0(f: &dyn Fn()->()){
+   |          ^ help: if this is intentional, prefix it with an underscore: `_f`
+
+warning: variable `f` is assigned to, but never used
+   --> hardway/src/funcs/mod.rs:130:17
+    |
+130 |         let mut f: fn();
+    |                 ^
+    |
+    = note: consider using `_f` instead
+
+warning: value assigned to `f` is never read
+   --> hardway/src/funcs/mod.rs:131:9
+    |
+131 |         f = f1;
+    |         ^
+    |
+    = help: maybe it is overwritten before being read?
+    = note: `#[warn(unused_assignments)]` on by default
+
+warning: value assigned to `f` is never read
+   --> hardway/src/funcs/mod.rs:132:9
+    |
+132 |         f = f2;
+    |         ^
+    |
+    = help: maybe it is overwritten before being read?
+
+warning: unused variable: `a`
+   --> hardway/src/funcs/mod.rs:200:13
+    |
+200 |         let a = 8;
+    |             ^ help: if this is intentional, prefix it with an underscore: `_a`
+
+warning: unused variable: `b`
+   --> hardway/src/funcs/mod.rs:201:13
+    |
+201 |         let b: Vec<f64> = Vec::new();
+    |             ^ help: if this is intentional, prefix it with an underscore: `_b`
+
+warning: unused variable: `a`
+   --> hardway/src/funcs/mod.rs:202:14
+    |
+202 |         let (a, c) = ("hi", false);
+    |              ^ help: if this is intentional, prefix it with an underscore: `_a`
+
+warning: unused variable: `c`
+   --> hardway/src/funcs/mod.rs:202:17
+    |
+202 |         let (a, c) = ("hi", false);
+    |                 ^ help: if this is intentional, prefix it with an underscore: `_c`
+
+warning: unused variable: `arg`
+  --> hardway/src/generics/impls.rs:34:22
+   |
+34 |     fn foo<T: Trait>(arg: T) {}
+   |                      ^^^ help: if this is intentional, prefix it with an underscore: `_arg`
+
+warning: unused variable: `arg`
+  --> hardway/src/generics/impls.rs:36:13
+   |
+36 |     fn foo2(arg: impl Trait) {}
+   |             ^^^ help: if this is intentional, prefix it with an underscore: `_arg`
+
+warning: unused variable: `t`
+  --> hardway/src/impl_traits/mod.rs:42:18
+   |
+42 |     fn use_trait(t: impl Trait) {}
+   |                  ^ help: if this is intentional, prefix it with an underscore: `_t`
+
+warning: unused variable: `x`
+  --> hardway/src/impl_traits/mod.rs:88:19
+   |
+88 |     fn found_type(x:impl Iterator<Item = i32>){
+   |                   ^ help: if this is intentional, prefix it with an underscore: `_x`
+
+warning: unused variable: `x`
+  --> hardway/src/pattern_matches/patterns.rs:11:10
+   |
+11 |     let (x, y) = tup;
+   |          ^ help: if this is intentional, prefix it with an underscore: `_x`
+
+warning: unused variable: `y`
+  --> hardway/src/pattern_matches/patterns.rs:11:13
+   |
+11 |     let (x, y) = tup;
+   |             ^ help: if this is intentional, prefix it with an underscore: `_y`
+
+warning: unused variable: `x`
+  --> hardway/src/pattern_matches/patterns.rs:55:10
+   |
+55 |     let (x, s) = tuple;
+   |          ^ help: if this is intentional, prefix it with an underscore: `_x`
+
+warning: unused variable: `s`
+  --> hardway/src/pattern_matches/patterns.rs:55:13
+   |
+55 |     let (x, s) = tuple;
+   |             ^ help: if this is intentional, prefix it with an underscore: `_s`
+
+warning: unused variable: `x`
+  --> hardway/src/pattern_matches/patterns.rs:62:10
+   |
+62 |     let (x, _) = tuple;
+   |          ^ help: if this is intentional, prefix it with an underscore: `_x`
+
+warning: unused variable: `a`
+  --> hardway/src/slices/mod.rs:23:10
+   |
+23 |         [a, b, c] => "starts with something else",
+   |          ^ help: if this is intentional, prefix it with an underscore: `_a`
+
+warning: unused variable: `b`
+  --> hardway/src/slices/mod.rs:23:13
+   |
+23 |         [a, b, c] => "starts with something else",
+   |             ^ help: if this is intentional, prefix it with an underscore: `_b`
+
+warning: unused variable: `c`
+  --> hardway/src/slices/mod.rs:23:16
+   |
+23 |         [a, b, c] => "starts with something else",
+   |                ^ help: if this is intentional, prefix it with an underscore: `_c`
+
+warning: unused variable: `rslt`
+  --> hardway/src/threads/mod.rs:90:16
+   |
+90 |             Ok(rslt) => {}
+   |                ^^^^ help: if this is intentional, prefix it with an underscore: `_rslt`
+
+warning: unused variable: `nums`
+   --> hardway/src/threads/mod.rs:201:13
+    |
+201 |         let nums = vec![1, 2, 3];
+    |             ^^^^ help: if this is intentional, prefix it with an underscore: `_nums`
+
+warning: unused variable: `my_vec1`
+ --> hardway/src/vectors/mod.rs:4:9
+  |
+4 |     let my_vec1: Vec<i32> = Vec::new();
+  |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_my_vec1`
+
+warning: unused variable: `number`
+  --> hardway/src/control_flows/if_else.rs:31:9
+   |
+31 |     let number = if n == 1 {"one"} else {"not one"} ;
+   |         ^^^^^^ help: if this is intentional, prefix it with an underscore: `_number`
+
+warning: variable `i` is assigned to, but never used
+ --> hardway/src/control_flows/repetitions.rs:2:13
+  |
+2 |     let mut i = 0;
+  |             ^
+  |
+  = note: consider using `_i` instead
+
+warning: variable `i` is assigned to, but never used
+  --> hardway/src/control_flows/repetitions.rs:20:13
+   |
+20 |     let mut i = 0;
+   |             ^
+   |
+   = note: consider using `_i` instead
+
+warning: variable `i` is assigned to, but never used
+  --> hardway/src/control_flows/repetitions.rs:29:13
+   |
+29 |     let mut i = 0;
+   |             ^
+   |
+   = note: consider using `_i` instead
+
+warning: value assigned to `i` is never read
+  --> hardway/src/control_flows/repetitions.rs:32:13
+   |
+32 |             i += 1;
+   |             ^
+   |
+   = help: maybe it is overwritten before being read?
+
+warning: unused variable: `i`
+  --> hardway/src/control_flows/repetitions.rs:56:9
+   |
+56 |     for i in 0..10 {}
+   |         ^ help: if this is intentional, prefix it with an underscore: `_i`
+
+warning: unused variable: `i`
+  --> hardway/src/control_flows/repetitions.rs:57:9
+   |
+57 |     for i in 0..=10 {}
+   |         ^ help: if this is intentional, prefix it with an underscore: `_i`
+
+warning: unused variable: `e`
+  --> hardway/src/control_flows/repetitions.rs:59:9
+   |
+59 |     for e in &[6, 7, 8, 0, 5, 3, 1, 2, 9] {}
+   |         ^ help: if this is intentional, prefix it with an underscore: `_e`
+
+warning: variable `swaps` is assigned to, but never used
+  --> hardway/src/control_flows/repetitions.rs:66:17
+   |
+66 |         let mut swaps = 0;
+   |                 ^^^^^
+   |
+   = note: consider using `_swaps` instead
+
+warning: unused variable: `needle`
+ --> hardway/src/control_flows/while_loops.rs:9:9
+  |
+9 |     let needle: i32 = 3;
+  |         ^^^^^^ help: if this is intentional, prefix it with an underscore: `_needle`
+
+warning: unused variable: `duration`
+  --> hardway/src/date_times/times.rs:18:13
+   |
+18 |         let duration: Duration = b - a;
+   |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_duration`
+
+warning: unused variable: `i`
+  --> hardway/src/date_times/times.rs:37:9
+   |
+37 |     for i in 0..12 {
+   |         ^ help: if this is intentional, prefix it with an underscore: `_i`
+
+warning: unused variable: `scheduler`
+  --> hardway/src/date_times/mod.rs:13:13
+   |
+13 |     let mut scheduler = Scheduler::new();
+   |             ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_scheduler`
+
+warning: unused variable: `thread_handle`
+  --> hardway/src/date_times/mod.rs:38:9
+   |
+38 |     let thread_handle = scheduler.watch_thread(Duration::from_millis(100));
+   |         ^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_thread_handle`
+
+warning: unused variable: `w`
+  --> hardway/src/combinators/for_iters.rs:18:9
+   |
+18 |     let w: Vec<String> = v.map(String::from).collect();
+   |         ^ help: if this is intentional, prefix it with an underscore: `_w`
+
+warning: unused variable: `debit_data`
+  --> hardway/src/enums/mod.rs:23:28
+   |
+23 |         Payment::DebitCard(debit_data) => println!("Paying with......debit card"),
+   |                            ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_debit_data`
+
+warning: unused variable: `i`
+ --> hardway/src/arcs/mod.rs:8:9
+  |
+8 |     for i in 0..10{
+  |         ^ help: if this is intentional, prefix it with an underscore: `_i`
+
+warning: unused variable: `i`
+  --> hardway/src/arcs/mod.rs:24:9
+   |
+24 |     for i in 0..10{
+   |         ^ help: if this is intentional, prefix it with an underscore: `_i`
+
+warning: unused variable: `payload`
+   --> hardway/src/jsons/mod.rs:100:13
+    |
+100 |         let payload: Value = read_payload_from_file("./config/payload.json").unwrap();
+    |             ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_payload`
+
+warning: unused variable: `c`
+   --> hardway/src/main.rs:202:26
+    |
+202 |                 .action(|c: &Context| {
+    |                          ^ help: if this is intentional, prefix it with an underscore: `_c`
+
+warning: unused variable: `c`
+   --> hardway/src/main.rs:216:26
+    |
+216 |                 .action(|c: &Context| {
+    |                          ^ help: if this is intentional, prefix it with an underscore: `_c`
+
+warning: variable does not need to be mutable
+ --> hardway/src/asyncs/using_tokio.rs:2:9
+  |
+2 |     let mut rt = tokio::runtime::Runtime::new().unwrap();
+  |         ----^^
+  |         |
+  |         help: remove this `mut`
+  |
+  = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+  --> hardway/src/funcs/fn_types.rs:48:13
+   |
+48 |         let mut f2 = || { 
+   |             ----^^
+   |             |
+   |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+  --> hardway/src/threads/mod.rs:48:9
+   |
+48 |     let mut rwlock = RwLock::new(list);
+   |         ----^^^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+  --> hardway/src/threads/mod.rs:49:9
+   |
+49 |     let mut arc = Arc::new(rwlock);
+   |         ----^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> hardway/src/threads/mod.rs:253:13
+    |
+253 |         let mut v2 = v.take();
+    |             ----^^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+  --> hardway/src/date_times/mod.rs:13:9
+   |
+13 |     let mut scheduler = Scheduler::new();
+   |         ----^^^^^^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: private type `results::MyError` in public interface (error E0446)
+  --> hardway/src/results/mod.rs:16:1
+   |
+16 | pub type MyResult<T> = core::result::Result<T, MyError>;
+   | ^^^^^^^^^^^^^^^^^^^^
+   |
+   = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+   = note: for more information, see issue #34537 <https://github.com/rust-lang/rust/issues/34537>
+   = note: `#[warn(private_in_public)]` on by default
+
+warning: struct `Callbacks` is never constructed
+   --> hardway/src/main.rs:404:8
+    |
+404 | struct Callbacks {
+    |        ^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: associated function `new` is never used
+   --> hardway/src/main.rs:409:12
+    |
+409 |     pub fn new() -> Self {
+    |            ^^^
+
+warning: method `register` is never used
+   --> hardway/src/main.rs:415:12
+    |
+415 |     pub fn register(&mut self, k: &str, callback: Box<dyn Fn()>) {
+    |            ^^^^^^^^
+
+warning: method `call` is never used
+   --> hardway/src/main.rs:419:12
+    |
+419 |     pub fn call(&mut self, k: &str) {
+    |            ^^^^
+
+warning: method `register0` is never used
+   --> hardway/src/main.rs:440:12
+    |
+440 |     pub fn register0<F: FnMut() + 'static>(&mut self, k: String, callback: F) {
+    |            ^^^^^^^^^
+
+warning: type alias `HandlerFn` is never used
+ --> hardway/src/router.rs:6:10
+  |
+6 | pub type HandlerFn = fn();
+  |          ^^^^^^^^^
+
+warning: struct `Router` is never constructed
+ --> hardway/src/router.rs:9:12
+  |
+9 | pub struct Router {
+  |            ^^^^^^
+
+warning: function `configure` is never used
+  --> hardway/src/router.rs:33:8
+   |
+33 | pub fn configure(r: &mut Router) {
+   |        ^^^^^^^^^
+
+warning: associated function `new` is never used
+  --> hardway/src/router.rs:14:12
+   |
+14 |     pub fn new() -> Self {
+   |            ^^^
+
+warning: method `insert` is never used
+  --> hardway/src/router.rs:20:12
+   |
+20 |     pub fn insert(&mut self, path: &str, f: HandlerFn) {
+   |            ^^^^^^
+
+warning: method `handle` is never used
+  --> hardway/src/router.rs:24:12
+   |
+24 |     pub fn handle(&self, path: &str) {
+   |            ^^^^^^
+
+warning: struct `Node` is never constructed
+  --> hardway/src/router.rs:42:16
+   |
+42 |     pub struct Node {
+   |                ^^^^
+
+warning: associated function `new` is never used
+  --> hardway/src/router.rs:49:16
+   |
+49 |         pub fn new(key: &str) -> Self {
+   |                ^^^
+
+warning: method `insert` is never used
+  --> hardway/src/router.rs:56:16
+   |
+56 |         pub fn insert(&mut self, path: &str, f: HandlerFn) {
+   |                ^^^^^^
+
+warning: function `hashmap` is never used
+ --> hardway/src/iterators/borrowed_iterators.rs:3:4
+  |
+3 | fn hashmap() {
+  |    ^^^^^^^
+
+warning: function `array` is never used
+  --> hardway/src/iterators/borrowed_iterators.rs:13:4
+   |
+13 | fn array() {
+   |    ^^^^^
+
+warning: function `vector` is never used
+ --> hardway/src/iterators/owned_iterators.rs:1:4
+  |
+1 | fn vector() {
+  |    ^^^^^^
+
+warning: function `repeat` is never used
+   --> hardway/src/iterators/mod.rs:109:8
+    |
+109 |     fn repeat<T: Clone>(t: T) -> impl Iterator<Item = T> {
+    |        ^^^^^^
+
+warning: associated function `new` is never used
+  --> hardway/src/iterators/mod.rs:91:12
+   |
+91 |         fn new(vec: Vec<T>) -> Self {
+   |            ^^^
+
+warning: function `main` is never used
+ --> hardway/src/basic_data_types/bool.rs:2:8
+  |
+2 | pub fn main() {
+  |        ^^^^
+
+warning: function `get_int_ref1` is never used
+  --> hardway/src/lifetimes/mod.rs:25:4
+   |
+25 | fn get_int_ref1<'a>(param1: &'a i32) ->&i32{
+   |    ^^^^^^^^^^^^
+
+warning: function `get_int_ref0` is never used
+  --> hardway/src/lifetimes/mod.rs:29:4
+   |
+29 | fn get_int_ref0(param1: &i32) ->&i32{
+   |    ^^^^^^^^^^^^
+
+warning: function `get_max0` is never used
+  --> hardway/src/lifetimes/mod.rs:33:4
+   |
+33 | fn get_max0<'a,'b>(p1: &'a i32, p2: &'b i32) ->&'a i32{
+   |    ^^^^^^^^
+
+warning: function `get_max1` is never used
+  --> hardway/src/lifetimes/mod.rs:38:4
+   |
+38 | fn get_max1<'a,'b:'a>(p1: &'a i32, p2: &'b i32) ->&'a i32{
+   |    ^^^^^^^^
+
+warning: function `get_max` is never used
+  --> hardway/src/lifetimes/mod.rs:47:4
+   |
+47 | fn get_max<'a >(p1: &'a i32, p2: &'a i32) ->&'a i32{
+   |    ^^^^^^^
+
+warning: function `get_ref_static` is never used
+  --> hardway/src/lifetimes/mod.rs:71:4
+   |
+71 | fn get_ref_static()-> &'static i32{
+   |    ^^^^^^^^^^^^^^
+
+warning: function `get_vec_slice2` is never used
+  --> hardway/src/lifetimes/mod.rs:89:8
+   |
+89 |     fn get_vec_slice2<'a>(p1: &'a [i32],p2: &'a [i32]) -> &'a [i32]{
+   |        ^^^^^^^^^^^^^^
+
+warning: function `run` is never used
+   --> hardway/src/lifetimes/mod.rs:101:12
+    |
+101 |     pub fn run(){
+    |            ^^^
+
+warning: constant `SOME_CONST_A` is never used
+   --> hardway/src/lifetimes/mod.rs:109:11
+    |
+109 |     const SOME_CONST_A: &str = "hi i am a const str" ;
+    |           ^^^^^^^^^^^^
+
+warning: constant `SOME_CONST_B` is never used
+   --> hardway/src/lifetimes/mod.rs:110:11
+    |
+110 |     const SOME_CONST_B: &str = "hi i am a const str too!" ;
+    |           ^^^^^^^^^^^^
+
+warning: function `some_func` is never used
+   --> hardway/src/lifetimes/mod.rs:112:8
+    |
+112 |     fn some_func()-> &'static str{
+    |        ^^^^^^^^^
+
+warning: function `longger` is never used
+   --> hardway/src/lifetimes/mod.rs:117:8
+    |
+117 |     fn longger<'a>(p1: &'a str, p2: &'a str)-> &'a str{
+    |        ^^^^^^^
+
+warning: function `longger_v0` is never used
+   --> hardway/src/lifetimes/mod.rs:125:8
+    |
+125 |     fn longger_v0(p1: &'static str, p2: &'static str)-> &'static str{
+    |        ^^^^^^^^^^
+
+warning: struct `SomeStruct` is never constructed
+   --> hardway/src/lifetimes/mod.rs:158:12
+    |
+158 |     struct SomeStruct<'a>{
+    |            ^^^^^^^^^^
+
+warning: struct `SomeStruct2` is never constructed
+   --> hardway/src/lifetimes/mod.rs:165:12
+    |
+165 |     struct SomeStruct2<'a,'b>{
+    |            ^^^^^^^^^^^
+
+warning: struct `SomeStruct2_` is never constructed
+   --> hardway/src/lifetimes/mod.rs:172:12
+    |
+172 |     struct SomeStruct2_<'a,'b:'a>{
+    |            ^^^^^^^^^^^^
+
+warning: function `print_type_name` is never used
+ --> hardway/src/anys/mod.rs:1:8
+  |
+1 | pub fn print_type_name<T>(_val: &T) {
+  |        ^^^^^^^^^^^^^^^
+
+warning: fields `x`, `y`, and `z` are never read
+  --> hardway/src/arrays/mod.rs:37:5
+   |
+36 | struct Location{ 
+   |        -------- fields in this struct
+37 |     x: f32, y: f32 , z: f32,
+   |     ^       ^        ^
+   |
+   = note: `Location` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: enum `Poll` is never used
+  --> hardway/src/asyncs/future_internal.rs:21:10
+   |
+21 |     enum Poll <T>{
+   |          ^^^^
+
+warning: function `run` is never used
+ --> hardway/src/asyncs/using_tokio.rs:1:8
+  |
+1 | pub fn run() {
+  |        ^^^
+
+warning: function `run` is never used
+  --> hardway/src/asyncs/using_tokio.rs:16:18
+   |
+16 |     pub async fn run() {
+   |                  ^^^
+
+warning: function `sleep_then_print` is never used
+  --> hardway/src/asyncs/using_tokio.rs:29:14
+   |
+29 |     async fn sleep_then_print(timer: i32) {
+   |              ^^^^^^^^^^^^^^^^
+
+warning: function `main` is never used
+  --> hardway/src/asyncs/using_tokio.rs:38:18
+   |
+38 |     pub async fn main() {
+   |                  ^^^^
+
+warning: function `sleep_then_print` is never used
+  --> hardway/src/asyncs/using_tokio.rs:52:14
+   |
+52 |     async fn sleep_then_print(timer: i32) {
+   |              ^^^^^^^^^^^^^^^^
+
+warning: function `main` is never used
+  --> hardway/src/asyncs/using_tokio.rs:62:18
+   |
+62 |     pub async fn main() {
+   |                  ^^^^
+
+warning: function `main` is never used
+  --> hardway/src/asyncs/using_tokio.rs:75:18
+   |
+75 |     pub async fn main() {
+   |                  ^^^^
+
+warning: function `parallel_sum` is never used
+  --> hardway/src/asyncs/using_tokio.rs:91:14
+   |
+91 |     async fn parallel_sum(nums: Vec<i32>) -> i32 {
+   |              ^^^^^^^^^^^^
+
+warning: function `main` is never used
+   --> hardway/src/asyncs/using_tokio.rs:110:18
+    |
+110 |     pub async fn main() {
+    |                  ^^^^
+
+warning: function `parallel_sum2` is never used
+   --> hardway/src/asyncs/using_tokio.rs:124:14
+    |
+124 |     async fn parallel_sum2(nums: Vec<i32>) -> i32 {
+    |              ^^^^^^^^^^^^^
+
+warning: struct `MyActor` is never constructed
+ --> hardway/src/asyncs/tokio_actors.rs:8:12
+  |
+8 |     struct MyActor {
+  |            ^^^^^^^
+
+warning: variant `GetUniqueId` is never constructed
+  --> hardway/src/asyncs/tokio_actors.rs:14:9
+   |
+13 |     enum ActorMessage {
+   |          ------------ variant in this enum
+14 |         GetUniqueId { respond_to: oneshot::Sender<u32> },
+   |         ^^^^^^^^^^^
+
+warning: function `run_my_actor` is never used
+  --> hardway/src/asyncs/tokio_actors.rs:35:14
+   |
+35 |     async fn run_my_actor(mut actor: MyActor) {
+   |              ^^^^^^^^^^^^
+
+warning: field `sender` is never read
+  --> hardway/src/asyncs/tokio_actors.rs:48:9
+   |
+47 |     struct MyActorHandle {
+   |            ------------- field in this struct
+48 |         sender: mpsc::Sender<ActorMessage>,
+   |         ^^^^^^
+   |
+   = note: `MyActorHandle` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: associated function `new` is never used
+  --> hardway/src/asyncs/tokio_actors.rs:18:12
+   |
+18 |         fn new(receiver: mpsc::Receiver<ActorMessage>) -> Self {
+   |            ^^^
+
+warning: method `handle_message` is never used
+  --> hardway/src/asyncs/tokio_actors.rs:25:12
+   |
+25 |         fn handle_message(&mut self, message: ActorMessage) {
+   |            ^^^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+  --> hardway/src/asyncs/tokio_actors.rs:52:16
+   |
+52 |         pub fn new() -> Self {
+   |                ^^^
+
+warning: method `get_unique_id` is never used
+  --> hardway/src/asyncs/tokio_actors.rs:61:22
+   |
+61 |         pub async fn get_unique_id(&self) -> u32 {
+   |                      ^^^^^^^^^^^^^
+
+warning: function `foo` is never used
+ --> hardway/src/asyncs/async_futures.rs:4:10
+  |
+4 | async fn foo() -> u8 { 5}
+  |          ^^^
+
+warning: function `bar` is never used
+ --> hardway/src/asyncs/async_futures.rs:6:4
+  |
+6 | fn bar() -> impl Future<Output = u8> {
+  |    ^^^
+
+warning: function `run` is never used
+  --> hardway/src/asyncs/mod.rs:25:12
+   |
+25 |     pub fn run() {
+   |            ^^^
+
+warning: function `do_something` is never used
+  --> hardway/src/asyncs/mod.rs:32:14
+   |
+32 |     async fn do_something() {
+   |              ^^^^^^^^^^^^
+
+warning: function `run` is never used
+  --> hardway/src/asyncs/mod.rs:38:12
+   |
+38 |     pub fn run() {
+   |            ^^^
+
+warning: function `hello_world` is never used
+  --> hardway/src/asyncs/mod.rs:47:14
+   |
+47 |     async fn hello_world() {
+   |              ^^^^^^^^^^^
+
+warning: function `hello_cat` is never used
+  --> hardway/src/asyncs/mod.rs:51:14
+   |
+51 |     async fn hello_cat() {
+   |              ^^^^^^^^^
+
+warning: struct `Song` is never constructed
+  --> hardway/src/asyncs/mod.rs:57:12
+   |
+57 |     struct Song;
+   |            ^^^^
+
+warning: function `learn_song` is never used
+  --> hardway/src/asyncs/mod.rs:59:14
+   |
+59 |     async fn learn_song() -> Song {
+   |              ^^^^^^^^^^
+
+warning: function `sing_song` is never used
+  --> hardway/src/asyncs/mod.rs:63:14
+   |
+63 |     async fn sing_song(song: Song) { /* ... */
+   |              ^^^^^^^^^
+
+warning: function `dance` is never used
+  --> hardway/src/asyncs/mod.rs:65:14
+   |
+65 |     async fn dance() { /* ... */
+   |              ^^^^^
+
+warning: function `main` is never used
+  --> hardway/src/asyncs/mod.rs:69:12
+   |
+69 |     pub fn main() {
+   |            ^^^^
+
+warning: function `run` is never used
+  --> hardway/src/asyncs/mod.rs:78:12
+   |
+78 |     pub fn run() {
+   |            ^^^
+
+warning: struct `Song` is never constructed
+  --> hardway/src/asyncs/mod.rs:81:12
+   |
+81 |     struct Song ;
+   |            ^^^^
+
+warning: function `learn_song` is never used
+  --> hardway/src/asyncs/mod.rs:82:14
+   |
+82 |     async fn learn_song() -> Song {
+   |              ^^^^^^^^^^
+
+warning: function `sing_song` is never used
+  --> hardway/src/asyncs/mod.rs:86:14
+   |
+86 |     async fn sing_song(song: Song) {  /* ... */ }
+   |              ^^^^^^^^^
+
+warning: function `learn_and_sing` is never used
+  --> hardway/src/asyncs/mod.rs:87:10
+   |
+87 | async fn learn_and_sing() {
+   |          ^^^^^^^^^^^^^^
+
+warning: function `dance` is never used
+  --> hardway/src/asyncs/mod.rs:95:10
+   |
+95 | async fn dance(){}
+   |          ^^^^^
+
+warning: function `async_main` is never used
+  --> hardway/src/asyncs/mod.rs:97:10
+   |
+97 | async fn async_main() {
+   |          ^^^^^^^^^^
+
+warning: function `run` is never used
+  --> hardway/src/closures/mod.rs:11:12
+   |
+11 |     pub fn run() {
+   |            ^^^
+
+warning: function `capture_vars` is never used
+  --> hardway/src/closures/mod.rs:35:8
+   |
+35 |     fn capture_vars() {
+   |        ^^^^^^^^^^^^
+
+warning: function `run` is never used
+  --> hardway/src/closures/mod.rs:79:12
+   |
+79 |     pub fn run() {}
+   |            ^^^
+
+warning: function `run` is never used
+  --> hardway/src/collections/mod.rs:12:12
+   |
+12 |     pub fn run() {
+   |            ^^^
+
+warning: function `macro_creating` is never used
+  --> hardway/src/collections/mod.rs:29:8
+   |
+29 |     fn macro_creating() {
+   |        ^^^^^^^^^^^^^^
+
+warning: function `from_iter` is never used
+  --> hardway/src/collections/mod.rs:41:8
+   |
+41 |     fn from_iter() {
+   |        ^^^^^^^^^
+
+warning: function `access` is never used
+  --> hardway/src/collections/mod.rs:48:8
+   |
+48 |     fn access() {
+   |        ^^^^^^
+
+warning: function `iter` is never used
+  --> hardway/src/collections/mod.rs:59:8
+   |
+59 |     fn iter() {
+   |        ^^^^
+
+warning: function `push` is never used
+  --> hardway/src/collections/mod.rs:76:8
+   |
+76 |     fn push() {
+   |        ^^^^
+
+warning: function `move_semantics` is never used
+  --> hardway/src/copy_move/mod.rs:31:4
+   |
+31 | fn move_semantics() {
+   |    ^^^^^^^^^^^^^^
+
+warning: struct `Point` is never constructed
+  --> hardway/src/copy_move/mod.rs:57:12
+   |
+57 |     struct Point(u32) ;
+   |            ^^^^^
+
+warning: struct `Person` is never constructed
+  --> hardway/src/copy_move/mod.rs:58:12
+   |
+58 |     struct Person{
+   |            ^^^^^^
+
+warning: struct `Member` is never constructed
+  --> hardway/src/copy_move/mod.rs:62:12
+   |
+62 |     struct Member{
+   |            ^^^^^^
+
+warning: function `id` is never used
+ --> hardway/src/cps/mod.rs:7:4
+  |
+7 | fn id<T>(x: T) -> T {
+  |    ^^
+
+warning: function `id2` is never used
+  --> hardway/src/cps/mod.rs:12:4
+   |
+12 | fn id2<T>(x: T, cc: fn(T)) {
+   |    ^^^
+
+warning: function `id3` is never used
+  --> hardway/src/cps/mod.rs:17:4
+   |
+17 | fn id3<T>(x: T, ret: fn(T)) {
+   |    ^^^
+
+warning: function `fact` is never used
+  --> hardway/src/cps/mod.rs:22:8
+   |
+22 |     fn fact(n: i32) -> i32 {
+   |        ^^^^
+
+warning: function `fact` is never used
+  --> hardway/src/cps/mod.rs:55:8
+   |
+55 |     fn fact(n: i32) -> i32 {
+   |        ^^^^
+
+warning: function `tail_fact` is never used
+  --> hardway/src/cps/mod.rs:58:8
+   |
+58 |     fn tail_fact(n:i32, a: i32) -> i32 {
+   |        ^^^^^^^^^
+
+warning: type alias `ret_fn` is never used
+  --> hardway/src/cps/mod.rs:67:14
+   |
+67 |         type ret_fn = Box<dyn Fn(i32)-> i32>;
+   |              ^^^^^^
+
+warning: function `fact` is never used
+  --> hardway/src/cps/mod.rs:68:12
+   |
+68 |         fn fact(n: i32, ret: ret_fn) -> i32 {
+   |            ^^^^
+
+warning: function `tail_fact` is never used
+  --> hardway/src/cps/mod.rs:72:12
+   |
+72 |         fn tail_fact(n:i32, a: i32, ret: ret_fn) -> i32 {
+   |            ^^^^^^^^^
+
+warning: type alias `ReturnFn` is never used
+  --> hardway/src/cps/mod.rs:86:10
+   |
+86 |     type ReturnFn = Box<dyn Fn(Result<i32, ()>)>;
+   |          ^^^^^^^^
+
+warning: function `drop_test` is never used
+ --> hardway/src/drops/mod.rs:2:4
+  |
+2 | fn drop_test(){
+  |    ^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> hardway/src/ecs/mod.rs:154:12
+    |
+154 |     pub fn new() -> Self {
+    |            ^^^
+
+warning: method `with_component` is never used
+   --> hardway/src/ecs/mod.rs:158:12
+    |
+158 |     pub fn with_component<T: 'static+Sized+Debug>(mut self)->Self {
+    |            ^^^^^^^^^^^^^^
+
+warning: function `run` is never used
+  --> hardway/src/ecs/mod.rs:56:12
+   |
+56 |     pub fn run() {}
+   |            ^^^
+
+warning: struct `World` is never constructed
+  --> hardway/src/ecs/mod.rs:58:12
+   |
+58 |     struct World {
+   |            ^^^^^
+
+warning: associated function `new` is never used
+  --> hardway/src/ecs/mod.rs:64:12
+   |
+64 |         fn new() -> Self {
+   |            ^^^
+
+warning: method `new_entity` is never used
+  --> hardway/src/ecs/mod.rs:71:12
+   |
+71 |         fn new_entity(&mut self) -> usize {
+   |            ^^^^^^^^^^
+
+warning: method `add_component_to_entity` is never used
+  --> hardway/src/ecs/mod.rs:80:12
+   |
+80 |         fn add_component_to_entity<ComponentType: 'static>(
+   |            ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `borrow_component_vec` is never used
+   --> hardway/src/ecs/mod.rs:111:12
+    |
+111 |         fn borrow_component_vec<ComponentType: 'static>(
+    |            ^^^^^^^^^^^^^^^^^^^^
+
+warning: variants `Error`, `Cancel`, and `None` are never constructed
+  --> hardway/src/errors/status.rs:16:5
+   |
+13 | pub enum ErrorStatus{
+   |          ----------- variants in this enum
+...
+16 |     Error = 0b000000001,
+   |     ^^^^^
+17 |     /// 用户取消
+18 |     Cancel = 0b000000010,
+   |     ^^^^^^
+19 |     None = 0b000000100,
+   |     ^^^^
+   |
+   = note: `ErrorStatus` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: variants `IoError` and `Inexist` are never constructed
+  --> hardway/src/errors/mod.rs:22:9
+   |
+21 |     pub enum MyError {
+   |              ------- variants in this enum
+22 |         IoError(String),
+   |         ^^^^^^^
+23 |         Inexist(String),
+   |         ^^^^^^^
+   |
+   = note: `MyError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: type alias `Result` is never used
+  --> hardway/src/errors/mod.rs:26:14
+   |
+26 |     pub type Result<T> = std::result::Result<T, MyError>;
+   |              ^^^^^^
+
+warning: type alias `Result` is never used
+  --> hardway/src/errors/mod.rs:43:14
+   |
+43 |     pub type Result<T> = result::Result<T, MyError>;
+   |              ^^^^^^
+
+warning: variants `NotImplemented`, `General`, `Internal`, and `UnknownCommand` are never constructed
+  --> hardway/src/errors/mod.rs:48:9
+   |
+46 |     pub enum MyError {
+   |              ------- variants in this enum
+47 |         #[error("Not Implemented error: {0}")]
+48 |         NotImplemented(String),
+   |         ^^^^^^^^^^^^^^
+49 |         #[error("General error: {0}")]
+50 |         General(String),
+   |         ^^^^^^^
+51 |         #[error("Internal error: {0}")]
+52 |         Internal(String),
+   |         ^^^^^^^^
+53 |         #[error("Unknown command error: {0}")]
+54 |         UnknownCommand(String),
+   |         ^^^^^^^^^^^^^^
+   |
+   = note: `MyError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: function `sqlrite_error` is never used
+  --> hardway/src/errors/mod.rs:60:12
+   |
+60 |     pub fn sqlrite_error(message: &str) -> MyError {
+   |            ^^^^^^^^^^^^^
+
+warning: function `run` is never used
+  --> hardway/src/errors/mod.rs:69:8
+   |
+69 |     fn run() -> color_eyre::Result<()> {
+   |        ^^^
+
+warning: function `get_list` is never used
+  --> hardway/src/files/mod.rs:28:4
+   |
+28 | fn get_list(action_dir_path: &str) -> Vec<String> {
+   |    ^^^^^^^^
+
+warning: function `get_list` is never used
+  --> hardway/src/files/mod.rs:46:8
+   |
+46 |     fn get_list(action_dir_path: impl AsRef<Path>) -> io::Result<Vec<OsString>> {
+   |        ^^^^^^^^
+
+warning: fields `name` and `age` are never read
+ --> hardway/src/fmts/mod.rs:3:5
+  |
+2 | struct Person<'a> {
+  |        ------ fields in this struct
+3 |     name: &'a str,
+  |     ^^^^
+4 |     age: u8,
+  |     ^^^
+  |
+  = note: `Person` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: fields `name`, `description`, and `func` are never read
+   --> hardway/src/funcs/mod.rs:108:5
+    |
+107 | struct KnowledgeNode {
+    |        ------------- fields in this struct
+108 |     name: String,
+    |     ^^^^
+109 |     description: Option<String>,
+    |     ^^^^^^^^^^^
+110 |     func: fn(),
+    |     ^^^^
+    |
+    = note: `KnowledgeNode` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: associated function `new` is never used
+   --> hardway/src/funcs/mod.rs:114:12
+    |
+114 |     pub fn new(name: &str, func: fn()) -> Self {
+    |            ^^^
+
+warning: method `set_description` is never used
+   --> hardway/src/funcs/mod.rs:122:12
+    |
+122 |     pub fn set_description(mut self, desc: Option<String>) -> Self {
+    |            ^^^^^^^^^^^^^^^
+
+warning: function `call` is never used
+  --> hardway/src/funcs/fn_types.rs:16:4
+   |
+16 | fn call(f: impl Fn()->()){
+   |    ^^^^
+
+warning: function `call0` is never used
+  --> hardway/src/funcs/fn_types.rs:19:4
+   |
+19 | fn call0(f: &dyn Fn()->()){
+   |    ^^^^^
+
+warning: function `is_fn` is never used
+  --> hardway/src/funcs/fn_types.rs:25:4
+   |
+25 | fn is_fn <A, R>(_x: fn(A) -> R) {}
+   |    ^^^^^
+
+warning: function `is_Fn` is never used
+  --> hardway/src/funcs/fn_types.rs:26:4
+   |
+26 | fn is_Fn <A, R, F: Fn(A) -> R> (_x: &F) {}
+   |    ^^^^^
+
+warning: function `is_FnMut` is never used
+  --> hardway/src/funcs/fn_types.rs:27:4
+   |
+27 | fn is_FnMut <A, R, F: FnMut(A) -> R> (_x: &F) {}
+   |    ^^^^^^^^
+
+warning: function `is_FnOnce` is never used
+  --> hardway/src/funcs/fn_types.rs:28:4
+   |
+28 | fn is_FnOnce <A, R, F: FnOnce(A) -> R> (_x: &F) {}
+   |    ^^^^^^^^^
+
+warning: function `call_FnMut` is never used
+  --> hardway/src/funcs/fn_types.rs:35:8
+   |
+35 |     fn call_FnMut<F: FnMut()>(mut f: F){
+   |        ^^^^^^^^^^
+
+warning: function `call_FnMut2` is never used
+  --> hardway/src/funcs/fn_types.rs:38:8
+   |
+38 |     fn call_FnMut2<F>(mut f: F)
+   |        ^^^^^^^^^^^
+
+warning: function `main` is never used
+  --> hardway/src/funcs/fn_types.rs:43:12
+   |
+43 |     pub fn main(){
+   |            ^^^^
+
+warning: struct `Color` is never constructed
+ --> hardway/src/funcs/pass_by_ref.rs:2:8
+  |
+2 | struct Color {
+  |        ^^^^^
+
+warning: function `print_color` is never used
+ --> hardway/src/funcs/pass_by_ref.rs:9:4
+  |
+9 | fn print_color(color: &Color) {
+  |    ^^^^^^^^^^^
+
+warning: function `higer_order_fn_return` is never used
+ --> hardway/src/funcs/returns.rs:5:4
+  |
+5 | fn higer_order_fn_return<'a>(step_value:& 'a i32) -> 
+  |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `run` is never used
+  --> hardway/src/funcs/mod.rs:36:12
+   |
+36 |     pub fn run() {
+   |            ^^^
+
+warning: function `hi` is never used
+  --> hardway/src/funcs/mod.rs:78:8
+   |
+78 |     fn hi(name: &str) {
+   |        ^^
+
+warning: function `hello` is never used
+  --> hardway/src/funcs/mod.rs:81:8
+   |
+81 |     fn hello(name: &str) {
+   |        ^^^^^
+
+warning: function `say_what` is never used
+  --> hardway/src/funcs/mod.rs:85:8
+   |
+85 |     fn say_what(name: &str, func: fn(&str)) {
+   |        ^^^^^^^^
+
+warning: function `pattern_match` is never used
+  --> hardway/src/funcs/mod.rs:89:8
+   |
+89 |     fn pattern_match() {
+   |        ^^^^^^^^^^^^^
+
+warning: function `run` is never used
+   --> hardway/src/funcs/mod.rs:129:12
+    |
+129 |     pub fn run() {
+    |            ^^^
+
+warning: function `f1` is never used
+   --> hardway/src/funcs/mod.rs:143:8
+    |
+143 |     fn f1() {}
+    |        ^^
+
+warning: function `f2` is never used
+   --> hardway/src/funcs/mod.rs:144:8
+    |
+144 |     fn f2() -> () {}
+    |        ^^
+
+warning: function `inc` is never used
+   --> hardway/src/funcs/mod.rs:146:8
+    |
+146 |     fn inc(n: i32) -> i32 {
+    |        ^^^
+
+warning: function `return_keyword` is never used
+   --> hardway/src/funcs/mod.rs:150:8
+    |
+150 |     fn return_keyword() {
+    |        ^^^^^^^^^^^^^^
+
+warning: function `return_multiple_values` is never used
+   --> hardway/src/funcs/mod.rs:168:8
+    |
+168 |     fn return_multiple_values() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `divergin_func` is never used
+   --> hardway/src/funcs/mod.rs:179:8
+    |
+179 |     fn divergin_func() {
+    |        ^^^^^^^^^^^^^
+
+warning: function `run` is never used
+   --> hardway/src/funcs/mod.rs:197:12
+    |
+197 |     pub fn run() {}
+    |            ^^^
+
+warning: function `declare_stmt` is never used
+   --> hardway/src/funcs/mod.rs:199:8
+    |
+199 |     fn declare_stmt() {
+    |        ^^^^^^^^^^^^
+
+warning: function `run` is never used
+   --> hardway/src/funcs/mod.rs:207:12
+    |
+207 |     pub fn run() {
+    |            ^^^
+
+warning: function `func_as_param` is never used
+   --> hardway/src/funcs/mod.rs:228:8
+    |
+228 |     fn func_as_param() {
+    |        ^^^^^^^^^^^^^
+
+warning: function `func_as_return_value` is never used
+   --> hardway/src/funcs/mod.rs:255:8
+    |
+255 |     fn func_as_return_value() {
+    |        ^^^^^^^^^^^^^^^^^^^^
+
+warning: fields `x` and `y` are never read
+  --> hardway/src/generics/mod.rs:18:5
+   |
+17 | struct Point<T> {
+   |        ----- fields in this struct
+18 |     x: T,
+   |     ^
+19 |     y: T,
+   |     ^
+   |
+   = note: `Point` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: fields `x` and `y` are never read
+  --> hardway/src/generics/mod.rs:23:5
+   |
+22 | struct Point2<T, U> {
+   |        ------ fields in this struct
+23 |     x: T,
+   |     ^
+24 |     y: U,
+   |     ^
+   |
+   = note: `Point2` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: function `add` is never used
+  --> hardway/src/generics/mod.rs:27:4
+   |
+27 | fn add<T: std::ops::Add<Output = T>>(x: T, y: T) -> T {
+   |    ^^^
+
+warning: function `generic_display` is never used
+  --> hardway/src/generics/mod.rs:32:4
+   |
+32 | fn generic_display<T: std::fmt::Display>(item: T) {
+   |    ^^^^^^^^^^^^^^^
+
+warning: function `foo` is never used
+  --> hardway/src/generics/impls.rs:34:8
+   |
+34 |     fn foo<T: Trait>(arg: T) {}
+   |        ^^^
+
+warning: function `foo2` is never used
+  --> hardway/src/generics/impls.rs:36:8
+   |
+36 |     fn foo2(arg: impl Trait) {}
+   |        ^^^^
+
+warning: function `foo_return` is never used
+  --> hardway/src/generics/impls.rs:39:8
+   |
+39 |     fn foo_return<T: Trait>() -> T {
+   |        ^^^^^^^^^^
+
+warning: function `foo3` is never used
+  --> hardway/src/generics/impls.rs:43:8
+   |
+43 |     fn foo3() -> impl Trait {
+   |        ^^^^
+
+warning: function `f1` is never used
+  --> hardway/src/generics/impls.rs:47:8
+   |
+47 |     fn f1(flag: bool) -> impl FnOnce()->usize{
+   |        ^^
+
+warning: function `f2` is never used
+  --> hardway/src/generics/impls.rs:56:8
+   |
+56 |     fn f2()-> Box< dyn FnOnce()-> usize> {
+   |        ^^
+
+warning: fields `mobile_number`, `name`, and `email` are never read
+  --> hardway/src/generics/mod.rs:49:9
+   |
+48 |     struct Person{
+   |            ------ fields in this struct
+49 |         mobile_number: String,
+   |         ^^^^^^^^^^^^^
+50 |         name: String,
+   |         ^^^^
+51 |         email: String,
+   |         ^^^^^
+   |
+   = note: `Person` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: function `run` is never used
+  --> hardway/src/generics/mod.rs:53:12
+   |
+53 |     pub fn run(){
+   |            ^^^
+
+warning: function `main` is never used
+ --> hardway/src/hashmap/tutorials.rs:5:8
+  |
+5 | pub fn main() {
+  |        ^^^^
+
+warning: function `all_instructions` is never used
+ --> hardway/src/hashmap/maplits.rs:6:4
+  |
+6 | fn all_instructions() -> HashMap<&'static str,u64>{
+  |    ^^^^^^^^^^^^^^^^
+
+warning: function `foo` is never used
+  --> hardway/src/impl_traits/mod.rs:10:4
+   |
+10 | fn foo() -> impl SomeTrait {
+   |    ^^^
+
+warning: function `foo2` is never used
+  --> hardway/src/impl_traits/mod.rs:15:4
+   |
+15 | fn foo2() -> Box<SomeTrait> {
+   |    ^^^^
+
+warning: function `func_impl` is never used
+   --> hardway/src/impl_traits/mod.rs:119:4
+    |
+119 | fn func_impl(arg: impl HiTrait){
+    |    ^^^^^^^^^
+
+warning: function `func_dyn` is never used
+   --> hardway/src/impl_traits/mod.rs:123:4
+    |
+123 | fn func_dyn(arg: &dyn HiTrait) {
+    |    ^^^^^^^^
+
+warning: function `get_hi` is never used
+   --> hardway/src/impl_traits/mod.rs:128:4
+    |
+128 | fn get_hi() -> impl HiTrait {
+    |    ^^^^^^
+
+warning: function `get_hi2` is never used
+   --> hardway/src/impl_traits/mod.rs:133:4
+    |
+133 | fn get_hi2()-> Box<dyn HiTrait>{
+    |    ^^^^^^^
+
+warning: function `main` is never used
+ --> hardway/src/impl_traits/basics.rs:1:8
+  |
+1 | pub fn main() {
+  |        ^^^^
+
+warning: function `foo` is never used
+  --> hardway/src/impl_traits/mod.rs:37:8
+   |
+37 |     fn foo() -> Box<Trait> {
+   |        ^^^
+
+warning: function `use_trait` is never used
+  --> hardway/src/impl_traits/mod.rs:42:8
+   |
+42 |     fn use_trait(t: impl Trait) {}
+   |        ^^^^^^^^^
+
+warning: function `foo0` is never used
+  --> hardway/src/impl_traits/mod.rs:64:8
+   |
+64 |     fn foo0() -> Box<Fn(i32) -> i32> {
+   |        ^^^^
+
+warning: function `foo` is never used
+  --> hardway/src/impl_traits/mod.rs:69:8
+   |
+69 |     fn foo() -> impl Fn(i32) -> i32 {
+   |        ^^^
+
+warning: function `foo` is never used
+  --> hardway/src/impl_traits/mod.rs:79:8
+   |
+79 |     fn foo() -> impl Iterator<Item = i32> {
+   |        ^^^
+
+warning: function `found_type` is never used
+  --> hardway/src/impl_traits/mod.rs:88:8
+   |
+88 |     fn found_type(x:impl Iterator<Item = i32>){
+   |        ^^^^^^^^^^
+
+warning: method `area` is never used
+  --> hardway/src/impls/mod.rs:24:8
+   |
+24 |     fn area(&self) -> u32 {
+   |        ^^^^
+
+warning: function `init` is never used
+  --> hardway/src/macros/pub_macros.rs:11:4
+   |
+11 | fn init(){
+   |    ^^^^
+
+warning: function `is_leap_year` is never used
+  --> hardway/src/pattern_matches/mod.rs:14:8
+   |
+14 | pub fn is_leap_year(year: i64) -> bool {
+   |        ^^^^^^^^^^^^
+
+warning: function `main` is never used
+ --> hardway/src/pattern_matches/basics.rs:1:4
+  |
+1 | fn main() {
+  |    ^^^^
+
+warning: function `run` is never used
+ --> hardway/src/pattern_matches/matches.rs:1:8
+  |
+1 | pub fn run() {
+  |        ^^^
+
+warning: enum `Direction` is never used
+  --> hardway/src/pattern_matches/matches.rs:17:6
+   |
+17 | enum Direction {
+   |      ^^^^^^^^^
+
+warning: function `as_expression` is never used
+  --> hardway/src/pattern_matches/matches.rs:24:4
+   |
+24 | fn as_expression() {
+   |    ^^^^^^^^^^^^^
+
+warning: function `de_construct` is never used
+  --> hardway/src/pattern_matches/matches.rs:37:4
+   |
+37 | fn de_construct() {
+   |    ^^^^^^^^^^^^
+
+warning: function `run` is never used
+ --> hardway/src/pattern_matches/patterns.rs:1:8
+  |
+1 | pub fn run() {
+  |        ^^^
+
+warning: function `basic` is never used
+ --> hardway/src/pattern_matches/patterns.rs:8:8
+  |
+8 | pub fn basic() {
+  |        ^^^^^
+
+warning: function `more_powerful_destruct` is never used
+  --> hardway/src/pattern_matches/patterns.rs:26:4
+   |
+26 | fn more_powerful_destruct() {
+   |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `ignore_memry_mgr` is never used
+  --> hardway/src/pattern_matches/patterns.rs:52:4
+   |
+52 | fn ignore_memry_mgr() {
+   |    ^^^^^^^^^^^^^^^^
+
+warning: function `range_multiple_match` is never used
+  --> hardway/src/pattern_matches/patterns.rs:66:4
+   |
+66 | fn range_multiple_match() {
+   |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `range_match2` is never used
+  --> hardway/src/pattern_matches/patterns.rs:93:4
+   |
+93 | fn range_match2(){
+   |    ^^^^^^^^^^^^
+
+warning: function `ref_ref_mut` is never used
+   --> hardway/src/pattern_matches/patterns.rs:107:4
+    |
+107 | fn ref_ref_mut() {
+    |    ^^^^^^^^^^^
+
+warning: field `name` is never read
+   --> hardway/src/pattern_matches/patterns.rs:131:9
+    |
+130 |     struct Person {
+    |            ------ field in this struct
+131 |         name: String,
+    |         ^^^^
+    |
+    = note: `Person` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: struct `Foo` is never constructed
+ --> hardway/src/sized/mod.rs:6:8
+  |
+6 | struct Foo<T> {
+  |        ^^^
+
+warning: struct `Foo2` is never constructed
+  --> hardway/src/sized/mod.rs:12:8
+   |
+12 | struct Foo2<T: ?Sized> {
+   |        ^^^^
+
+warning: struct `Bar` is never constructed
+  --> hardway/src/sized/mod.rs:17:8
+   |
+17 | struct Bar {
+   |        ^^^
+
+warning: struct `DstStruct` is never constructed
+  --> hardway/src/sized/mod.rs:23:8
+   |
+23 | struct DstStruct {
+   |        ^^^^^^^^^
+
+warning: struct `GenericDstStruct` is never constructed
+  --> hardway/src/sized/mod.rs:27:8
+   |
+27 | struct GenericDstStruct<T: ?Sized> {
+   |        ^^^^^^^^^^^^^^^^
+
+warning: function `analyzi_slice` is never used
+  --> hardway/src/slices/mod.rs:51:4
+   |
+51 | fn analyzi_slice<T>(slice: &[T]) {
+   |    ^^^^^^^^^^^^^
+
+warning: function `slice_size` is never used
+  --> hardway/src/slices/mod.rs:54:4
+   |
+54 | fn slice_size<T>(slice: &[T]) -> usize {
+   |    ^^^^^^^^^^
+
+warning: function `print_me` is never used
+  --> hardway/src/strings/mod.rs:24:4
+   |
+24 | fn print_me(msg: String) {
+   |    ^^^^^^^^
+
+warning: struct `Person` is never constructed
+  --> hardway/src/strings/mod.rs:71:16
+   |
+71 |         struct Person {
+   |                ^^^^^^
+
+warning: method `greet` is never used
+  --> hardway/src/strings/mod.rs:77:16
+   |
+77 |             fn greet(&self) {
+   |                ^^^^^
+
+warning: struct `Door` is never constructed
+  --> hardway/src/structs/mod.rs:43:8
+   |
+43 | struct Door {
+   |        ^^^^
+
+warning: associated function `new` is never used
+  --> hardway/src/structs/mod.rs:50:12
+   |
+50 |     pub fn new(width: u32, height: u32, is_open: bool) -> Door {
+   |            ^^^
+
+warning: method `open` is never used
+  --> hardway/src/structs/mod.rs:58:12
+   |
+58 |     pub fn open(&mut self) {
+   |            ^^^^
+
+warning: method `close` is never used
+  --> hardway/src/structs/mod.rs:62:12
+   |
+62 |     pub fn close(&mut self) {
+   |            ^^^^^
+
+warning: variant `Unspecified` is never constructed
+ --> hardway/src/structs/chat.rs:3:5
+  |
+2 | enum Gender {
+  |      ------ variant in this enum
+3 |     Unspecified = 0,
+  |     ^^^^^^^^^^^
+  |
+  = note: `Gender` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: fields `name` and `gender` are never read
+  --> hardway/src/structs/chat.rs:16:5
+   |
+14 | struct User {
+   |        ---- fields in this struct
+15 |     id: UserId,
+16 |     name: String,
+   |     ^^^^
+17 |     gender: Gender,
+   |     ^^^^^^
+   |
+   = note: `User` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: fields `name` and `owner` are never read
+  --> hardway/src/structs/chat.rs:23:5
+   |
+21 | struct Topic {
+   |        ----- fields in this struct
+22 |     id: TopicId,
+23 |     name: String,
+   |     ^^^^
+24 |     owner: UserId,
+   |     ^^^^^
+   |
+   = note: `Topic` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: variant `Leave` is never constructed
+  --> hardway/src/structs/chat.rs:31:5
+   |
+29 | enum Event {
+   |      ----- variant in this enum
+30 |     Join((UserId, TopicId)),
+31 |     Leave((UserId, TopicId)),
+   |     ^^^^^
+   |
+   = note: `Event` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: fields `width`, `height`, `is_open`, and `name` are never read
+ --> hardway/src/structs/sizes.rs:3:5
+  |
+2 | struct Door {
+  |        ---- fields in this struct
+3 |     width: u32,
+  |     ^^^^^
+4 |     height: u32,
+  |     ^^^^^^
+5 |     is_open: bool,
+  |     ^^^^^^^
+...
+8 |     name: String,
+  |     ^^^^
+
+warning: field `sub_door` is never read
+  --> hardway/src/structs/sizes.rs:12:5
+   |
+11 | struct DoorDoor{
+   |        -------- field in this struct
+12 |     sub_door: Door,
+   |     ^^^^^^^^
+
+warning: function `print_if_is_valid` is never used
+  --> hardway/src/structs/impls.rs:31:8
+   |
+31 | pub fn print_if_is_valid(check_me: & dyn SomeTrait){
+   |        ^^^^^^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+ --> hardway/src/structs/impls.rs:9:12
+  |
+9 |     pub fn new(some_bool: bool) -> Self {
+  |            ^^^
+
+warning: method `is_smaller` is never used
+  --> hardway/src/structs/impls.rs:16:12
+   |
+16 |     pub fn is_smaller(&self, other: &Self) -> bool {
+   |            ^^^^^^^^^^
+
+warning: struct `SomeStructAsNameSpace` is never constructed
+ --> hardway/src/structs/no_fields.rs:1:12
+  |
+1 | pub struct SomeStructAsNameSpace{}
+  |            ^^^^^^^^^^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+ --> hardway/src/structs/no_fields.rs:5:12
+  |
+5 |     pub fn new() -> Self {
+  |            ^^^
+
+warning: associated function `some_fnc` is never used
+ --> hardway/src/structs/no_fields.rs:9:12
+  |
+9 |     pub fn some_fnc(){
+  |            ^^^^^^^^
+
+warning: function `main` is never used
+  --> hardway/src/threads/copy_types.rs:63:12
+   |
+63 |     pub fn main() {
+   |            ^^^^
+
+warning: function `leaking` is never used
+   --> hardway/src/threads/mod.rs:156:12
+    |
+156 |     pub fn leaking() {
+    |            ^^^^^^^
+
+warning: function `scoped` is never used
+   --> hardway/src/threads/mod.rs:200:12
+    |
+200 |     pub fn scoped() {
+    |            ^^^^^^
+
+warning: function `f` is never used
+   --> hardway/src/threads/mod.rs:217:8
+    |
+217 |     fn f(a: &i32, b: &mut i32) {
+    |        ^
+
+warning: function `f` is never used
+   --> hardway/src/threads/mod.rs:236:8
+    |
+236 |     fn f(a: &Cell<i32>, b: &Cell<i32>) {
+    |        ^
+
+warning: function `f2` is never used
+   --> hardway/src/threads/mod.rs:252:8
+    |
+252 |     fn f2(v: &Cell<Vec<i32>>) {
+    |        ^^
+
+warning: function `f3` is never used
+   --> hardway/src/threads/mod.rs:261:8
+    |
+261 |     fn f3(v: &RefCell<Vec<i32>>) {
+    |        ^^
+
+warning: static `N` is never used
+ --> hardway/src/statics/mod.rs:7:8
+  |
+7 | static N: i32 = 5; 
+  |        ^
+
+warning: static `NAME` is never used
+ --> hardway/src/statics/mod.rs:8:8
+  |
+8 | static NAME: &'static str = "Steve"; //静态量贯穿于整个程序的生命周期，因此任何存储在常量中的引用有一个'static生命周期 //因为这是可变的，一                                          ...
+  |        ^^^^
+
+warning: static `V` is never used
+  --> hardway/src/statics/mod.rs:16:8
+   |
+16 | static V: Vec<u8> = Vec::new();
+   |        ^
+
+warning: struct `MyStruct` is never constructed
+  --> hardway/src/control_flows/mod.rs:61:8
+   |
+61 | struct MyStruct ;
+   |        ^^^^^^^^
+
+warning: function `main` is never used
+ --> hardway/src/control_flows/if_else.rs:1:8
+  |
+1 | pub fn main() {
+  |        ^^^^
+
+warning: function `short_circuit` is never used
+  --> hardway/src/control_flows/if_else.rs:23:4
+   |
+23 | fn short_circuit(){
+   |    ^^^^^^^^^^^^^
+
+warning: function `assign` is never used
+  --> hardway/src/control_flows/if_else.rs:29:4
+   |
+29 | fn assign(){
+   |    ^^^^^^
+
+warning: function `expression1` is never used
+  --> hardway/src/control_flows/if_else.rs:34:4
+   |
+34 | fn expression1(){
+   |    ^^^^^^^^^^^
+
+warning: function `basic_loop` is never used
+ --> hardway/src/control_flows/repetitions.rs:1:4
+  |
+1 | fn basic_loop() {
+  |    ^^^^^^^^^^
+
+warning: function `breaking` is never used
+ --> hardway/src/control_flows/repetitions.rs:8:4
+  |
+8 | fn breaking() {
+  |    ^^^^^^^^
+
+warning: function `continues` is never used
+  --> hardway/src/control_flows/repetitions.rs:19:4
+   |
+19 | fn continues() {
+   |    ^^^^^^^^^
+
+warning: function `loop_labels` is never used
+  --> hardway/src/control_flows/repetitions.rs:28:4
+   |
+28 | fn loop_labels() {
+   |    ^^^^^^^^^^^
+
+warning: function `break_or_return` is never used
+  --> hardway/src/control_flows/repetitions.rs:39:4
+   |
+39 | fn break_or_return() {
+   |    ^^^^^^^^^^^^^^^
+
+warning: function `fors` is never used
+  --> hardway/src/control_flows/repetitions.rs:55:4
+   |
+55 | fn fors() {
+   |    ^^^^
+
+warning: function `bubble_sort` is never used
+  --> hardway/src/control_flows/repetitions.rs:62:4
+   |
+62 | fn bubble_sort() {
+   |    ^^^^^^^^^^^
+
+warning: function `main` is never used
+ --> hardway/src/control_flows/while_loops.rs:1:8
+  |
+1 | pub fn main() {
+  |        ^^^^
+
+warning: function `insert_to_sorted` is never used
+ --> hardway/src/control_flows/while_loops.rs:8:4
+  |
+8 | fn insert_to_sorted() {
+  |    ^^^^^^^^^^^^^^^^
+
+warning: function `run` is never used
+ --> hardway/src/control_flows/loops/mod.rs:1:4
+  |
+1 | fn run() {
+  |    ^^^
+
+warning: function `match_expr` is never used
+  --> hardway/src/control_flows/loops/mod.rs:29:4
+   |
+29 | fn match_expr() {
+   |    ^^^^^^^^^^
+
+warning: function `while_let` is never used
+  --> hardway/src/control_flows/loops/mod.rs:45:4
+   |
+45 | fn while_let() {
+   |    ^^^^^^^^^
+
+warning: function `run` is never used
+ --> hardway/src/date_times/times.rs:4:8
+  |
+4 | pub fn run() {
+  |        ^^^
+
+warning: function `run2` is never used
+  --> hardway/src/date_times/times.rs:30:4
+   |
+30 | fn run2() {
+   |    ^^^^
+
+warning: fields `text` and `created_at` are never read
+  --> hardway/src/date_times/times.rs:57:9
+   |
+56 |     struct Message {
+   |            ------- fields in this struct
+57 |         text: String,
+   |         ^^^^
+...
+61 |         created_at: DateTime<Utc>,
+   |         ^^^^^^^^^^
+   |
+   = note: `Message` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: function `main` is never used
+   --> hardway/src/date_times/times.rs:130:8
+    |
+130 |     fn main() {
+    |        ^^^^
+
+warning: function `main` is never used
+  --> hardway/src/serdes/mod.rs:11:4
+   |
+11 | fn main() {
+   |    ^^^^
+
+warning: function `filter` is never used
+ --> hardway/src/combinators/for_iters.rs:1:4
+  |
+1 | fn filter() {
+  |    ^^^^^^
+
+warning: function `inspect` is never used
+ --> hardway/src/combinators/for_iters.rs:7:4
+  |
+7 | fn inspect() {
+  |    ^^^^^^^
+
+warning: function `map` is never used
+  --> hardway/src/combinators/for_iters.rs:16:4
+   |
+16 | fn map() {
+   |    ^^^
+
+warning: function `filter_map` is never used
+  --> hardway/src/combinators/for_iters.rs:22:4
+   |
+22 | fn filter_map() {
+   |    ^^^^^^^^^^
+
+warning: function `chain` is never used
+  --> hardway/src/combinators/for_iters.rs:38:4
+   |
+38 | fn chain() {
+   |    ^^^^^
+
+warning: function `flatten` is never used
+  --> hardway/src/combinators/for_iters.rs:46:4
+   |
+46 | fn flatten() {
+   |    ^^^^^^^
+
+warning: function `option_unwrap_or` is never used
+ --> hardway/src/combinators/for_options.rs:1:4
+  |
+1 | fn option_unwrap_or() {
+  |    ^^^^^^^^^^^^^^^^
+
+warning: function `use_case` is never used
+ --> hardway/src/combinators/for_options.rs:6:4
+  |
+6 | fn use_case(){
+  |    ^^^^^^^^
+
+warning: function `result_ok` is never used
+ --> hardway/src/combinators/for_result.rs:1:4
+  |
+1 | fn result_ok(){
+  |    ^^^^^^^^^
+
+warning: function `result_or` is never used
+ --> hardway/src/combinators/for_result.rs:6:4
+  |
+6 | fn result_or() {
+  |    ^^^^^^^^^
+
+warning: struct `Large` is never constructed
+  --> hardway/src/boxes/mod.rs:28:8
+   |
+28 | struct Large ;
+   |        ^^^^^
+
+warning: function `build` is never used
+  --> hardway/src/boxes/mod.rs:30:4
+   |
+30 | fn build() -> Box<Large> {
+   |    ^^^^^
+
+warning: variants `Small`, `Med`, `Large`, and `Other` are never constructed
+  --> hardway/src/boxes/mod.rs:54:5
+   |
+53 | enum Selection{
+   |      --------- variants in this enum
+54 |     Small,
+   |     ^^^^^
+55 |     Med ,
+   |     ^^^
+56 |     Large,
+   |     ^^^^^
+57 |     // Other([u8; 1024]) ,
+58 |     Other(Box<[u8; 1024]>) ,
+   |     ^^^^^
+
+warning: variants `Small`, `Med`, `Large`, and `Other` are never constructed
+  --> hardway/src/boxes/mod.rs:61:5
+   |
+60 | enum Selection0{
+   |      ---------- variants in this enum
+61 |     Small,
+   |     ^^^^^
+62 |     Med ,
+   |     ^^^
+63 |     Large,
+   |     ^^^^^
+64 |     Other([u8; 1024]) ,
+   |     ^^^^^
+
+warning: enum `Payment` is never used
+ --> hardway/src/enums/mod.rs:2:6
+  |
+2 | enum Payment{
+  |      ^^^^^^^
+
+warning: struct `DebitData` is never constructed
+  --> hardway/src/enums/mod.rs:12:8
+   |
+12 | struct DebitData{
+   |        ^^^^^^^^^
+
+warning: function `run` is never used
+  --> hardway/src/enums/mod.rs:17:8
+   |
+17 | pub fn run(){
+   |        ^^^
+
+warning: function `process_payment` is never used
+  --> hardway/src/enums/mod.rs:28:4
+   |
+28 | fn process_payment(payment: Payment){
+   |    ^^^^^^^^^^^^^^^
+
+warning: struct `Node` is never constructed
+  --> hardway/src/refs/mod.rs:29:12
+   |
+29 |     struct Node {
+   |            ^^^^
+
+warning: function `print_usb_module` is never used
+  --> hardway/src/traits/traits_objects.rs:37:4
+   |
+37 | fn print_usb_module(module: &dyn UsbModule){
+   |    ^^^^^^^^^^^^^^^^
+
+warning: function `print_usb_module0` is never used
+  --> hardway/src/traits/traits_objects.rs:42:4
+   |
+42 | fn print_usb_module0<M: UsbModule>(module: &M){
+   |    ^^^^^^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+  --> hardway/src/traits/traits_objects.rs:13:12
+   |
+13 |     pub fn new() -> Self{
+   |            ^^^
+
+warning: associated function `new` is never used
+  --> hardway/src/traits/traits_objects.rs:21:12
+   |
+21 |     pub fn new() -> Self{
+   |            ^^^
+
+warning: associated function `new` is never used
+  --> hardway/src/traits/traits_objects.rs:29:12
+   |
+29 |     pub fn new() -> Self{
+   |            ^^^
+
+warning: function `run` is never used
+  --> hardway/src/jsons/mod.rs:31:8
+   |
+31 | pub fn run() {
+   |        ^^^
+
+warning: function `json_macro` is never used
+  --> hardway/src/jsons/mod.rs:58:4
+   |
+58 | fn json_macro() {
+   |    ^^^^^^^^^^
+
+warning: function `pretty_json` is never used
+  --> hardway/src/jsons/mod.rs:81:4
+   |
+81 | fn pretty_json() {}
+   |    ^^^^^^^^^^^
+
+warning: function `optional_types` is never used
+   --> hardway/src/jsons/mod.rs:104:4
+    |
+104 | fn optional_types() {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `read_payload_from_file` is never used
+  --> hardway/src/jsons/mod.rs:88:8
+   |
+88 |     fn read_payload_from_file<P: AsRef<Path>>(path: P) -> Result<Value, Box<dyn Error>> {
+   |        ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `main` is never used
+  --> hardway/src/jsons/mod.rs:99:8
+   |
+99 |     fn main() {
+   |        ^^^^
+
+warning: function `to_option` is never used
+ --> hardway/src/results/mod.rs:4:4
+  |
+4 | fn to_option(){
+  |    ^^^^^^^^^
+
+warning: function `use_default_if_err` is never used
+ --> hardway/src/results/mod.rs:8:4
+  |
+8 | fn use_default_if_err(){
+  |    ^^^^^^^^^^^^^^^^^^
+
+warning: type alias `MyResult` is never used
+  --> hardway/src/results/mod.rs:16:10
+   |
+16 | pub type MyResult<T> = core::result::Result<T, MyError>;
+   |          ^^^^^^^^
+
+warning: enum `MyError` is never used
+  --> hardway/src/results/mod.rs:17:6
+   |
+17 | enum MyError {
+   |      ^^^^^^^
+
+warning: function `f` is never used
+  --> hardway/src/results/mod.rs:23:4
+   |
+23 | fn f()-> MyResult<()> /*std::io::Result<()> */{
+   |    ^
+
+warning: function `main` is never used
+ --> hardway/src/syncs/mod.rs:5:4
+  |
+5 | fn main() {
+  |    ^^^^
+
+warning: function `modify_string` is never used
+  --> hardway/src/ownerships/mod.rs:16:4
+   |
+16 | fn modify_string(mut string: String) -> String {
+   |    ^^^^^^^^^^^^^
+
+warning: function `modify_string2` is never used
+  --> hardway/src/ownerships/mod.rs:22:4
+   |
+22 | fn modify_string2( string: &mut String)  {
+   |    ^^^^^^^^^^^^^^
+
+warning: function `configure` is never used
+   --> hardway/src/main.rs:100:12
+    |
+100 |     pub fn configure(router: &mut Router) {
+    |            ^^^^^^^^^
+
+warning: unused `std::result::Result` that must be used
+   --> hardway/src/main.rs:207:21
+    |
+207 |                     io::stdin().read_line(&mut name);
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: this `Result` may be an `Err` variant, which should be handled
+    = note: `#[warn(unused_must_use)]` on by default
+
+warning: unused `std::result::Result` that must be used
+ --> hardway/src/tokios/mod.rs:4:4
+  |
+4 |    _main() ;
+  |    ^^^^^^^
+  |
+  = note: this `Result` may be an `Err` variant, which should be handled
+
+warning: function `is_Fn` should have a snake case name
+  --> hardway/src/funcs/fn_types.rs:26:4
+   |
+26 | fn is_Fn <A, R, F: Fn(A) -> R> (_x: &F) {}
+   |    ^^^^^ help: convert the identifier to snake case (notice the capitalization): `is_fn`
+   |
+   = note: `#[warn(non_snake_case)]` on by default
+
+warning: function `is_FnMut` should have a snake case name
+  --> hardway/src/funcs/fn_types.rs:27:4
+   |
+27 | fn is_FnMut <A, R, F: FnMut(A) -> R> (_x: &F) {}
+   |    ^^^^^^^^ help: convert the identifier to snake case: `is_fn_mut`
+
+warning: function `is_FnOnce` should have a snake case name
+  --> hardway/src/funcs/fn_types.rs:28:4
+   |
+28 | fn is_FnOnce <A, R, F: FnOnce(A) -> R> (_x: &F) {}
+   |    ^^^^^^^^^ help: convert the identifier to snake case: `is_fn_once`
+
+warning: function `is_Action` should have a snake case name
+  --> hardway/src/funcs/fn_types.rs:31:8
+   |
+31 | pub fn is_Action(_f: Action) {}
+   |        ^^^^^^^^^ help: convert the identifier to snake case: `is_action`
+
+warning: function `call_FnMut` should have a snake case name
+  --> hardway/src/funcs/fn_types.rs:35:8
+   |
+35 |     fn call_FnMut<F: FnMut()>(mut f: F){
+   |        ^^^^^^^^^^ help: convert the identifier to snake case: `call_fn_mut`
+
+warning: function `call_FnMut2` should have a snake case name
+  --> hardway/src/funcs/fn_types.rs:38:8
+   |
+38 |     fn call_FnMut2<F>(mut f: F)
+   |        ^^^^^^^^^^^ help: convert the identifier to snake case: `call_fn_mut2`
+
+warning: the `name:` in this pattern is redundant
+   --> hardway/src/pattern_matches/patterns.rs:137:18
+    |
+137 |         Person { name: ref mut name } => {
+    |                  ^^^^^^^^^^^^^^^^^^ help: use shorthand field pattern: `ref mut name`
+    |
+    = note: `#[warn(non_shorthand_field_patterns)]` on by default
+
+warning: function `list_Xxx` should have a snake case name
+  --> hardway/src/boxes/mod.rs:46:4
+   |
+46 | fn list_Xxx() -> Vec<Box<dyn Display>> {
+   |    ^^^^^^^^ help: convert the identifier to snake case (notice the capitalization): `list_xxx`
+
+warning: unused arithmetic operation that must be used
+  --> hardway/src/expressions/mod.rs:15:9
+   |
+15 |         1+2 ;
+   |         ^^^ the arithmetic operation produces a value
+   |
+help: use `let _ = ...` to ignore the resulting value
+   |
+15 |         let _ = 1+2 ;
+   |         +++++++
+
+warning: `hardway` (bin "hardway") generated 455 warnings (run `cargo fix --bin "hardway"` to apply 124 suggestions)
+    Finished dev [unoptimized + debuginfo] target(s) in 3.98s
+     Running `/Volumes/macintosh hd - 数据/workspace/rust_space/rust_climb/target/debug/hardway logs`
+log4rs: error deserializing appender stdout: Unknown field file. Expected one of target, encoder, tty_only
+log4rs: Reference to nonexistent appender: `stdout`
+log4rs: Reference to nonexistent appender: `file`

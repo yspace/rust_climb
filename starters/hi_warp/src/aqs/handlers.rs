@@ -14,6 +14,7 @@ impl Reject for InvalidId {}
 enum Error {
     ParseError(std::num::ParseIntError),
     MissingParameters,
+    QuestionNotFound,
 }
 impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -22,6 +23,7 @@ impl std::fmt::Display for Error {
                 write!(f, "Cannot parse parameter: {}", err)
             }
             Error::MissingParameters => write!(f, "Missing parameter"),
+            Error::QuestionNotFound => write!(f, "Question not found"),
         }
     }
 }
@@ -31,23 +33,40 @@ pub async fn get_questions(
     params: HashMap<String, String>,
     store: Store,
 ) -> Result<impl warp::Reply, warp::Rejection> {
-    println!("{:?}", params);
-
-    match params.get("start") {
-        Some(start) => println!("{}", start),
-        None => println!("No start value"),
+    if !params.is_empty() {
+        let pagination = extract_pagination(params)?;
+        let res: Vec<Question> = store.questions.read().await.values().cloned().collect();
+        let res = &res[pagination.start..pagination.end];
+        Ok(warp::reply::json(&res))
+    } else {
+        let res: Vec<Question> = store.questions.read().await.values().cloned().collect();
+        Ok(warp::reply::json(&res))
     }
-    let mut start = 0;
-    // 短版本用法
-    if let Some(n) = params.get("start") {
-        // println!("{}", n);
-        // println!("{:?}", n.parse::<usize>());
-        start = n.parse::<usize>().expect("Could not parse start");
-    }
-
-    let res: Vec<Question> = store.questions.values().cloned().collect();
-    Ok(warp::reply::json(&res))
 }
+
+pub async fn add_question(
+    store: Store,
+    question: Question,
+) -> Result<impl warp::Reply, warp::Rejection> {
+    store
+        .questions
+        .write()
+        .await
+        .insert(question.id.clone(), question);
+    Ok(warp::reply::with_status("Question added", StatusCode::OK))
+}
+
+async fn update_question(
+    id: String,
+    store: Store,
+    question: Question,
+) -> Result<impl warp::Reply, warp::Rejection> {
+    //     Some(q) => *q = question,
+    //     None => return Err(warp::reject::custom(Error::QuestionNotFound)),
+    // }
+    Ok(warp::reply::with_status("Question updated", StatusCode::OK))
+}
+
 pub async fn get_questions0() -> Result<impl warp::Reply, warp::Rejection> {
     let question = Question::new(
         QuestionId::from_str("1").expect("No id provided"),
@@ -63,7 +82,12 @@ pub async fn get_questions0() -> Result<impl warp::Reply, warp::Rejection> {
 
 pub async fn return_error(r: Rejection) -> Result<impl Reply, Rejection> {
     println!("{:?}", r);
-    if let Some(error) = r.find::<CorsForbidden>() {
+    if let Some(error) = r.find::<Error>() {
+        Ok(warp::reply::with_status(
+            error.to_string(),
+            StatusCode::RANGE_NOT_SATISFIABLE,
+        ))
+    } else if let Some(error) = r.find::<CorsForbidden>() {
         Ok(warp::reply::with_status(
             error.to_string(),
             StatusCode::FORBIDDEN,

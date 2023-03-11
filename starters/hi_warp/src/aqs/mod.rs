@@ -3,6 +3,12 @@ use serde::{Serialize, Deserialize};
 
 pub mod handlers;
 pub mod stores;
+pub mod errors;
+// 领域类型 或者也可以选择名称：domains｜models ；可以直接重导出到根领域下 一层层引用太邋遢
+// 实际上 有的目录规划时 根领域对象是被本领域其他层共同引用的 所以直接出现在根名空间下比较方便
+pub mod types; 
+// pub use   types::* ;
+
 
 // #[derive(Debug)]
 #[derive(Deserialize, Serialize, Debug,Clone)]

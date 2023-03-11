@@ -59,6 +59,8 @@ members = [
     "learnings/hi_rop",
 
     # 准备自己实现一个验证库 以便后期隔离出去
+    # rust 支持本地crate依赖 指定path为本地库路径即可；如同第三方crate一样的用
+    # 本地依赖不需要指定版本
     # "crates/validation"
     "libs/*",
     # "libs/mylib" 
