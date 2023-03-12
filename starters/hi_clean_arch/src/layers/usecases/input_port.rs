@@ -8,5 +8,5 @@ pub trait UserInput {
 
 
 pub trait UserRepository {
-   fn get_by_id(id: i64) -> Result<User,Box<dyn std::error::Error>> ;
+   fn get_by_id(&self,id: i64) -> Result<User,Box<dyn std::error::Error>> ;
 }
