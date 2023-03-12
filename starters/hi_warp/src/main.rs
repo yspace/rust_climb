@@ -27,10 +27,23 @@ async fn main() {
             info.request_headers()
         );
     });
+    let log = warp::log::custom(|info| {
+        log::info!(
+            "{} {} {} {:?} from {} with {:?}",
+            info.method(),
+            info.path(),
+            info.status(),
+            info.elapsed(),
+            info.remote_addr().unwrap(),
+            info.request_headers()
+        );
+    });
 
     let store = Store::new();
 
     let store_filter = warp::any().map(move || store.clone());
+
+    let id_filter = warp::any().map(|| uuid::Uuid::new_v4().to_string());
 
     let cors = warp::cors()
         //如两国通商
@@ -45,6 +58,7 @@ async fn main() {
         .and(warp::path::end())
         .and(warp::query())
         .and(store_filter.clone())
+        .and(id_filter)
         .and_then(aqs::handlers::get_questions);
     // .recover(aqs::handlers::return_error);
 

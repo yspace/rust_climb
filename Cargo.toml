@@ -80,6 +80,8 @@ members = [
     "starters/hi_mongo",
     "starters/hi_redis",
     "starters/hi_warp",
+    # clean arch
+    "starters/hi_clean_arch",
 
     # 
     "projects/*",

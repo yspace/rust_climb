@@ -1,3 +1,3 @@
-mod pagination;
-mod anwser;
-mod question;
+pub mod pagination;
+pub mod anwser;
+pub mod question;

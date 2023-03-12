@@ -5,7 +5,9 @@ use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use tokio::sync::RwLock;
 
-#[derive(Clone)]
+mod pg ;
+
+#[derive(Debug, Clone)]
 pub struct Store {
    pub   questions: Arc<RwLock<HashMap<QuestionId, Question>>>,
 }
