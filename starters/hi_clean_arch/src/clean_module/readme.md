@@ -1,0 +1,1 @@
+https://github.com/zhashkevych/go-clean-architecture

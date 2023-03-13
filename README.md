@@ -132,6 +132,8 @@ cargo run -p favorites 3rd-log
 - [rust-cookbook](https://rust-lang-nursery.github.io/rust-cookbook/intro.html)
 - [Rust RFCs - RFC Book - Active RFC List](https://rust-lang.github.io/rfcs/introduction.html)
 
+- [design-patterns-rust](https://github.com/fadeevab/design-patterns-rust)
+
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)
 - [cargo]()

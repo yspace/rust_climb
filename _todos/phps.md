@@ -24,3 +24,7 @@ https://www.hacking8.com/MiscSecNotes/php/audio.html
 
     [nginx如何调用php](https://www.cnblogs.com/donghui521/p/10334776.html)
     整理的很好
+
+## 优秀项目
+- [laravel admin](https://github.com/z-song/laravel-admin)
+- [fast admin](https://www.fastadmin.net/demo.html)

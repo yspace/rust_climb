@@ -1,7 +1,7 @@
 use super::usecases::output_port::UserOutput;
 
 // 表示层 可以有很多 比如 json ，xml yaml html ...
-struct User{
+pub struct User{
     // ctx: Context,
 }
 

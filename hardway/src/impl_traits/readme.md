@@ -62,3 +62,25 @@ impl<T> ToString for T where
     T: Display + ?Sized,
 { ... }
 ~~~
+
+## impl dyn trait
+
+https://radicle.community/t/rust-s-impl-dyn-trait-syntax/102
+
+~~~rust
+trait AsBool {
+  fn as_bool(&self) -> bool;
+
+    // 这个方法可能被复写 导致不正确的实现 解决方法是提取出去作为独立逻辑 或者impl dyn trait
+  fn is_false(&self) -> bool {
+    !self.as_bool()
+  }
+}
+
+impl dyn AsBool {
+    // 这种方法 is_false 不可以被复写掉 。仅在类型转换为dyn AsBool 时才可以使用该方法
+  fn is_false(&self) -> bool {
+    !self.as_bool()
+  }
+}
+~~~
