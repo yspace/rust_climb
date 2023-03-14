@@ -12,7 +12,8 @@ impl User {
         let unix_time = now.duration_since(UNIX_EPOCH).expect("back to future");
         Self {
             name,
-            created_at: unix_time,
+            // 这个时间戳可以转化成不同类型
+            created_at: unix_time.as_secs(),
         }
     }
 }

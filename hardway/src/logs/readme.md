@@ -1,5 +1,6 @@
 
 RUST 的日志系统 使用了Facade 设计模式
+还有单体设计模式 可以参考这个雏形：https://github.com/fadeevab/design-patterns-rust/tree/main/creational/singleton/logger
 
 除了导入log 门面crate 还需要导入一个实现库
 
