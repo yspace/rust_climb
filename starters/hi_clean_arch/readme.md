@@ -25,8 +25,8 @@ https://www.codingblocks.net/podcast/clean-architecture-make-your-architecture-s
 - infra 基础结构层 Repository的实现常常出现在此层
   有个adapter 适配器层 也是用来实现接口的 包括仓储接口
 
-## 图示
-据说是所有应用都遵从的结构
+## 引用自上面的资料中的图示
+据说是所有应用都遵从的结构 
 ![1](./assets/clean-arch.png)
 bob 大叔书中的结构：
 ![2](./assets/clean-arch0.png)

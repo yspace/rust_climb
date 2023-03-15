@@ -2,6 +2,7 @@
 mod for_iters;
 mod for_options;
 mod for_result;
+pub mod map_error;
 
 #[test]
 fn test_or_and(){
