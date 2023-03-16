@@ -105,6 +105,9 @@ cargo run -p favorites 3rd-log
 >  cargo doc -p mylib  --no-deps --open
 为package mylib 生成文档 且不需要为其所依赖的crates生doc 然后在默认浏览器中打开所生文档
 
+## 帮助工具
+- [代码生成](https://transform.tools/json-to-rust-serde)
+通过json 转化为其他语言中的结构 神器！
 
 ## 参考
 - [菜鸟教程](https://www.runoob.com/rust/rust-object.html)

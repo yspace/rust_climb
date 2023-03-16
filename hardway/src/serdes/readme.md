@@ -13,3 +13,4 @@ serde_json = "1"
 
 ## todos
 - 读完 https://serde.rs/
+https://serde.rs/data-model.html
