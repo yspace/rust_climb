@@ -30,3 +30,5 @@ https://www.codingblocks.net/podcast/clean-architecture-make-your-architecture-s
 ![1](./assets/clean-arch.png)
 bob 大叔书中的结构：
 ![2](./assets/clean-arch0.png)
+linux 发行版的区别在最外围的应用搭配偏重不同；有偏桌面的 有偏服务器的 (引用自尚硅谷 b站linux课程)
+![2](./assets/linux-arch.png)

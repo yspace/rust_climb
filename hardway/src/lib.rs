@@ -1,3 +1,5 @@
+pub mod copies;
+
 use futures::Future;
 
 pub fn some_api() {
