@@ -36,7 +36,8 @@ maplit = "1.0"
 radix_trie = "0.2.1"
 
 # configure
-config = "0.13.2"
+# config = "0.13.2"
+config = { version = "0.13.3", features = ["toml"] }
 
 once_cell = "1.16.0"
 

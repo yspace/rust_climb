@@ -164,6 +164,7 @@ fn _seahorse_main() {
                         module_entries.register("traits".to_string(), traits::run    );
                         module_entries.register("logs".to_string(), logs::run    );
                         module_entries.register("tracings".to_string(), tracings::run    );
+                        module_entries.register("configs".to_string(), configs::run    );
 
                         let act_key = c.args[0].as_str();
                         if module_entries.is_key_exists(act_key) {
