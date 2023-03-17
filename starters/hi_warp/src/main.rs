@@ -1,3 +1,5 @@
+use std::env;
+
 use aqs::handlers::{add_question, get_questions, return_error};
 use aqs::stores::Store;
 use warp;
@@ -5,9 +7,19 @@ use warp::http::Method;
 use warp::Filter;
 
 mod aqs;
+mod config ;
+
+use dotenv;
 
 #[tokio::main]
 async fn main() {
+    dotenv::dotenv().ok();
+    if let Err(_) = env::var("BAD_WORDS_API_KEY") {
+        panic!("BadWords API key not set");
+    }
+    if let Err(_) = env::var("PASETO_KEY") {
+        panic!("PASETO key not set");
+    }
     // let _ = aqs::async_http_request::main().await;
     // return ;
 
