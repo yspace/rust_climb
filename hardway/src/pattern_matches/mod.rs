@@ -2,6 +2,7 @@ mod basics;
 mod matches;
 mod patterns;
 mod advanced_matching;
+pub mod destructures;
 
 pub fn main() {
     println!("hi  matches!");

@@ -1,4 +1,5 @@
 mod status;
+pub mod classics;
 
 pub fn main() {
     println!("hi this is demo for handling error in rust");
