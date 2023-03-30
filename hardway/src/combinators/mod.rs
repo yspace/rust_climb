@@ -3,6 +3,8 @@ mod for_iters;
 mod for_options;
 mod for_result;
 pub mod map_error;
+pub mod option2result;
+pub mod result_convertings;
 
 #[test]
 fn test_or_and(){

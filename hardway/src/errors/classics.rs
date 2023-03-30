@@ -6,6 +6,7 @@ pub enum AppError {
     Custom(String),
 }
 
+// 错误转换在rust中经常用到的
 impl  From<std::io::Error> for AppError {
     fn from(value: std::io::Error) -> Self {
        // todo!()
