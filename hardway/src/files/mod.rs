@@ -2,9 +2,8 @@ use std::path::PathBuf;
 
 mod path;
 
-pub fn run(){
-
-    path::run() ;
+pub fn run() {
+    path::run();
 }
 
 #[test]
@@ -48,4 +47,25 @@ mod v_2 {
             .map(|entry| entry.map(|e| e.file_name()))
             .collect()
     }
+}
+
+#[derive(Debug)]
+struct Error {
+    message: String,
+}
+impl From<std::io::Error> for Error {
+    fn from(other: std::io::Error) -> Self {
+        Self {
+            message: other.to_string(),
+        }
+    }
+}
+
+fn read_file(name: &str) -> Result<String, Error> {
+    use std::fs::File;
+    use std::io::prelude::*;
+    let mut file = File::open(name)?;
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)?;
+    Ok(contents)
 }

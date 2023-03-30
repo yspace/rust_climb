@@ -4,6 +4,8 @@ mod fn_types ;
 mod pass_by_ref ;
 mod as_params ;
 mod returns;
+pub mod defers;
+pub mod borrowings;
 
 
 pub fn main() {

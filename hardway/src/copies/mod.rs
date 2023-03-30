@@ -21,8 +21,13 @@ pub fn run(){
     // debug_my_struct(s1); // 此处亦发生move 但由于前面 = 已经move了所以注释打开会报错 
     debug_my_struct(s2); // s2实现了copy 所以默认都是copy了
     debug_my_struct(s2); // s2实现了copy 所以默认都是copy了
+
+    debug_my_struct2(&s2) ;
 }
 
 fn debug_my_struct(s: impl std::fmt::Debug){
+    println!("{:?}", s)
+}
+fn debug_my_struct2(s: &impl std::fmt::Debug){
     println!("{:?}", s)
 }

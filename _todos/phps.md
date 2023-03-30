@@ -29,3 +29,24 @@ https://www.hacking8.com/MiscSecNotes/php/audio.html
 ## 优秀项目
 - [laravel admin](https://github.com/z-song/laravel-admin)
 - [fast admin](https://www.fastadmin.net/demo.html)
+
+
+## php 框架
+
+### webman
+https://www.workerman.net/webman
+
+### swoole 安装
+默认的php扩展目录 被系统保护了 swoole.so 拷贝不进去 
+只能在php.ini 文件的 添加一个扩展目录：
+
+~~~php.ini
+
+extension_dir = "/usr/local/lib/php/pecl/20220829"
+extension_dir = "/Volumes/macintosh-hd/workspace/php_space/swoole_hello/swoole-src/modules"
+~~~
+
+## 优秀库
+
+- [php-pkg](https://github.com/phppkg)
+- [php-toolkit](https://github.com/php-toolkit)

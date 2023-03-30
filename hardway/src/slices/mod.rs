@@ -1,3 +1,5 @@
+pub mod basic;
+
 pub fn main() {
     println!("learn the slice");
 

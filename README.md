@@ -81,6 +81,26 @@ cargo run -p favorites 3rd-log
  cargo run -p my_macro  --example sql
 ~~~
 
+## toolchain 切换
+toolchain 是平台 架构 通道的组合。
+
+~~~sh
+# Runs tests with stable channel: 
+$ cargo +stable test
+...
+# Runs tests with nightly channel: 
+$ cargo +nightly test
+~~~
+所有的cargo 命令都支持 +stable|+nightly 选项
+发布项目前 可以在这两个通道上都测试下 有的项目可能只使用其中一个
+
+想对某个项目临时切换通道的话可以使用override选项
+~~~sh
+ # 只针对当前目录及其子目录
+$ rustup override set nightly
+~~~
+这样你全局仍默认仍可以使用stable通道 
+
 ## rust 测试
 - [a snapshot testing library for Rust](https://github.com/mitsuhiko/insta)
 

@@ -25,6 +25,7 @@ members = [
     "books/cookbook",
     "books/learn_rust_ab",
     "books/black_hat_rust",
+    "books/code_like_a_pro",
    
 
     "whale",

@@ -1,4 +1,10 @@
 pub mod copies;
+pub mod polymorphisms;
+pub mod types;
+pub mod visibilities;
+pub mod aliases;
+pub mod from_intos;
+pub mod rcs;
 
 use futures::Future;
 

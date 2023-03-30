@@ -1,6 +1,7 @@
 mod compositions;
 mod derives;
 mod traits_objects;
+pub mod down_castings;
 
 pub fn run(){
     let str_thing = StringThing{};

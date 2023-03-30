@@ -1,5 +1,6 @@
 // 创建包含不同类型的集合
 
+
 trait UsbModule{
     fn name(&self) -> String{
         String::from("usb module")
