@@ -15,6 +15,7 @@ fn test_converting() {
     let result2 = result.map_err(|x|{
         // anyhow::Error::new(x)
         // anyhow::Error::from(x)
+        // anyhow::Error::
         format!("error code: {x}") // 字符串也可以作为Result 枚举中的E类型！
     });
 

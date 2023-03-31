@@ -5,6 +5,7 @@ pub mod visibilities;
 pub mod aliases;
 pub mod from_intos;
 pub mod rcs;
+pub mod functionals;
 
 use futures::Future;
 
