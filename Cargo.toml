@@ -84,6 +84,9 @@ members = [
     # clean arch
     "starters/hi_clean_arch",
 
+    "starters/hi_poem",
+    "starters/hi_clap",
+
     # 
     "projects/*",
     # 

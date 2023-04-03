@@ -6,6 +6,7 @@ mod async_futures ;
 mod async_raw_sample;
 
 mod async_std_book;
+pub mod timer;
 
 pub fn main() {
     println!("in mod ayncs");

@@ -75,3 +75,25 @@ enum EnumTypes {
     StructLike { name: String },
     TupleLike(String, i32),
 }
+
+
+enum HttpResultCode {
+    Ok = 200,
+    NotFound = 404,
+    Teapot = 418,
+}
+
+#[test]
+fn test_http_result_code() {
+    let code = HttpResultCode::NotFound;
+    // assert_eq!(code as i32, 404);
+
+    let msg = match &code {
+        HttpResultCode::Ok => "Ok",
+        HttpResultCode::NotFound => "Not found",
+        // forgot to deal with the all-important "I'm a teapot" code
+        _ => "others!"
+    };
+    println!("{}", msg);
+    assert_eq!(code as i32, 404);
+}
