@@ -1,6 +1,7 @@
 use std::fs::read_to_string;
 
 mod basics ;
+pub mod to_static;
 
 pub fn main() {
     basics::main();
