@@ -1,65 +1,34 @@
-use clap::Parser;
+pub mod module;
 
-/// Simple program to greet a person
-#[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
-struct Args {
-    /// Name of the person to greet
-    #[arg(short, long)]
-    name: String,
+use std::ffi::OsString;
+use std::path::PathBuf;
 
-    /// Number of times to greet
-    #[arg(short, long, default_value_t = 1)]
-    count: u8,
-}
+use clap::{arg, Command};
+
+
+use module::{App, Module, my_module::MyModule};
+
 
 fn main() {
-    let cmd = clap::Command::new("cargo")
-        .bin_name("cargo")
-        .subcommand_required(true)
-        .subcommand(
-            clap::command!("example").arg(
-                clap::arg!(--"manifest-path" <PATH>)
-                    .value_parser(clap::value_parser!(std::path::PathBuf)),
-            ),
-        );
-    let matches = cmd.get_matches();
-    let matches = match matches.subcommand() {
-        Some(("example", matches)) => matches,
-        _ => unreachable!("clap should ensure we don't get here"),
-    };
-    let manifest_path = matches.get_one::<std::path::PathBuf>("manifest-path");
-    println!("{:?}", manifest_path);
-}
+    let mut  app = App::new();
+    // 为了保证main不经常改动 比如添加了新模块 新功能 可以把变动的代码逻辑写到做了变动的代码附近 做到高内聚
+    app.add(MyModule::new()) ;
 
-struct App {
-    name: String,
-    cmd: clap::Command,
-}
+    let mut commands = app.get_commands();
 
-impl App {
-    pub fn new(name: String) {
+    // let matches = cli().get_matches();
 
-        //   let cloned_name = name.clone();
-        // let cmd = clap::Command::new(name.as_str())
-        //     // .bin_name(cloned_name)
-        //     .subcommand_required(true);
-        //     // .subcommand(
-        //     //     clap::command!("example").arg(
-        //     //         clap::arg!(--"manifest-path" <PATH>)
-        //     //             .value_parser(clap::value_parser!(std::path::PathBuf)),
-        //     //     ),
-        //     // );
-        //     Self { name: cloned_name.into(), cmd: cmd }
+    let matches = commands.pop().unwrap().get_matches();
+    
+
+    match matches.subcommand() {
+        
+        Some(cmd) => {
+            println!("{:?}",cmd)
+        }
+        
+        _ => unreachable!(), // If all subcommands are defined above, anything else is unreachable!()
     }
-}
 
-impl Module for App {
-    fn get_name(&self) -> String {
-        self.name.clone()
-    }
-}
-
-pub trait Module {
-    fn get_name(&self) -> String;
+    // Continued program logic goes here...
 }
