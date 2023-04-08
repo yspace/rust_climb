@@ -1,5 +1,6 @@
 mod borrowed_iterators;
 mod owned_iterators;
+pub mod once;
 
 pub fn main() {
     println!("hi iterators");

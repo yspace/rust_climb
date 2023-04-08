@@ -4,6 +4,11 @@ use std::{
 };
 
 mod copy_types;
+pub mod basics;
+pub mod scoped;
+pub mod arcs;
+pub mod send_and_sync;
+pub mod mutex;
 
 pub fn main() {
     _threads::main();

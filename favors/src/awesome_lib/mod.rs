@@ -7,3 +7,4 @@ pub mod schemars;
 pub mod url ;
 pub mod serde_urlencoded ;
 pub mod cron ;
+pub mod async_traits;

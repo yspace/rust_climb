@@ -38,6 +38,13 @@ thiserror
 ## 数据
 comfy_table
 
+## 集合-容器-数据结构
+- [dashmap](https://github.com/xacrimon/dashmap)
+Blazingly fast concurrent map in Rust.
+DashMap is an implementation of a concurrent associative array/hashmap in Rust.
+DashMap tries to be very simple to use and to be a direct replacement for RwLock<HashMap<K, V>>. To accomplish these goals, all methods take &self instead of modifying methods taking &mut self. This allows you to put a DashMap in an Arc<T> and share it between threads while still being able to modify it.
+
+
 ## 测试
 - criterion
 benchmark

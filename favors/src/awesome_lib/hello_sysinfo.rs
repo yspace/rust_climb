@@ -46,7 +46,7 @@ pub fn basic() {
     println!("System host name:        {:?}", sys.host_name());
 
     // Number of processors:
-    println!("NB processors: {}", sys.processors().len());
+    // println!("NB processors: {}", sys.processors().len());
 
     // Display processes ID, name na disk usage:
     for (pid, process) in sys.processes() {

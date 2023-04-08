@@ -4,9 +4,14 @@ struct CommandLoader{
 
 }
 
+// @see https://users.rust-lang.org/t/does-not-live-long-enough-for-borrow/27889/4
+// @see https://hirrolot.github.io/posts/rust-is-hard-or-the-misery-of-mainstream-programming.html
 // use super::router::HandlerFn;
 // pub type HandlerFn = Pin<Box<dyn Fn(TcpClient) -> LocalBoxedFuture<'static, Result<()>>>>;
 pub type HandlerFn = std::pin::Pin<Box<dyn Fn()>> ;
+// pub type HandlerFn = std::pin::Pin<Box<dyn FnMut()>> ;
+// pub type HandlerFn = std::pin::Pin<Box<fn()>> ;
+// fn(&ArgMatches<'a>) -> Result<Vec<String>, String>
 
 // #[derive(Debug)]
 pub struct Node {
@@ -85,11 +90,14 @@ fn test_insert_routes() {
     let mut root = Node::new("");
     // root.insert("/", Box::pin(|| Ok(())));
     root.insert("/", Box::pin(|| ()));
-    root.insert("/foo", Box::pin(|| println!("foo")));
+
+    let str1 = String::from("hi");
+    // root.insert("/foo", Box::pin(move|| println!("{str1}")));
+    // root.insert("/foo", Box::pin(||println!("{:?}",&str1)));
     // root.insert("/foo", |_| Ok(()));
     // root.insert("/foo/bar", |_| Ok(()));
     // println!("{:?}", root);
-    let my_fn  = root.get("/foo");
+    let  my_fn  = root.get("/foo");
     assert!(my_fn.is_some());
     let result = my_fn.unwrap()(); 
     assert_eq!(result, ());

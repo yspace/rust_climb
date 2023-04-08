@@ -27,3 +27,9 @@ Arc:
 对Cell和RefCell有个限制，只能用于单线程应用
 
 穿越多线程场景时 可以使用Mutex或者RwLock 他们也提供了相同的内部可变性 但是可以跨线程 经常搭配Arc而不是Rc来使用。
+
+
+## 一些资料：
+["Does not live long enough” for borrow()](https://users.rust-lang.org/t/does-not-live-long-enough-for-borrow/27889/4) 
+
+For OOP-like design, you'll usually need to use Rc<RefCell<Client>> or Arc<Mutex<Client>> pretty much everywhere.

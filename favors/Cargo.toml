@@ -39,12 +39,16 @@ schemars = { version = "0.8.8", features = ["chrono"] }
 chrono = "0.4.19"
 # cron = { git = "https://github.com/mehcode/cron", branch = "error-chain" }
 # cron = { git = "https://github.com/zslayton/cron"  }
+cron = "0.12.0"
 tokio-cron-scheduler = "*"
 
 # async
 tokio = { version = "1.18.2", features = ["full"] }
 
 itertools = "0.10.3"
+
+async-trait = "0.1.68"
+futures = "0.3.28"
 
 [dev-dependencies]
 serde_derive = "1"

@@ -92,3 +92,10 @@ dbg!(a); });
 ~~~
 
 The thread::spawn function requires its argument to be Send, and a closure is only Send if all of its captures are. If we try to capture something that’s not Send our mistake is caught, protecting us from undefined behavior.
+
+
+## 其他观点：
+
+from [](https://itsallaboutthebit.com/async-simple/)
+
+Arc should be the first thing you try when you need to share stuff between threads, not the last. 
