@@ -1,3 +1,5 @@
+pub mod as_return;
+
 pub fn print_type_name<T>(_val: &T) {
     println!("{}", std::any::type_name::<T>());
 }

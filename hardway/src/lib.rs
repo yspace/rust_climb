@@ -6,6 +6,7 @@ pub mod aliases;
 pub mod from_intos;
 pub mod rcs;
 pub mod functionals;
+pub mod design_patterns;
 
 use futures::Future;
 

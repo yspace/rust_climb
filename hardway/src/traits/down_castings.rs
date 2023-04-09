@@ -48,7 +48,8 @@ impl Component for MyDb {
         //   "mysql-instance".into()
         "mysql-instance".to_owned()
     }
-
+    
+    // 无法在Component上做默认实现！？？
     fn as_any(&self) -> &dyn Any {
         self
     }

@@ -6,6 +6,9 @@ mod as_params ;
 mod returns;
 pub mod defers;
 pub mod borrowings;
+pub mod debug;
+pub mod fn_once;
+pub mod actix_web_handler;
 
 
 pub fn main() {

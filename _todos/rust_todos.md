@@ -1,4 +1,12 @@
 
+## 杂项
+
+https://github.com/marcianx/downcast-rs 转型
+
+[Building a runtime reflection system for Rust](https://www.osohq.com/post/runtime-reflection-pt-3)
+运行时反射系统
+[ Rust DC on the runtime reflection system:](https://www.youtube.com/watch?v=J7Aosp1Uauo)
+
 ## 多线程
 
 线程池怎么实现？

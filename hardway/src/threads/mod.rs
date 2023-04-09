@@ -9,6 +9,7 @@ pub mod scoped;
 pub mod arcs;
 pub mod send_and_sync;
 pub mod mutex;
+pub mod thread_pool;
 
 pub fn main() {
     _threads::main();

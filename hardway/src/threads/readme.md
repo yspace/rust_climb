@@ -5,6 +5,9 @@ https://www.youtube.com/watch?v=_1TXKRYR1nA&list=PLDL9Y2U6Tu4YeCC4kpp2FslLYqgxJN
 
 [guards pattern](https://willcrichton.net/rust-api-type-patterns/guards.html)
 
+## 哎 不是一般的难
+- [The Problem With Single-threaded Shared Mutability](https://manishearth.github.io/blog/2015/05/17/the-problem-with-shared-mutability/)
+
 ## JoinHandle
 
 The function `spawn<F, T>(f: F) -> JoinHandle<T>` returns a JoinHandle.

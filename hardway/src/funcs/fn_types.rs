@@ -1,3 +1,25 @@
+// @see https://stackoverflow.com/questions/48017290/what-does-boxfn-send-static-mean-in-rust
+/*
+Let's decompose it one-by-one.
+
+Box
+Box<T> is a pointer to heap-allocated T. We use it here because trait objects can only exist behind pointers.
+
+Trait objects
+In Box<Fn() + Send + 'static>, Fn() + Send + 'static is a trait object type. In future, it will be written Box<dyn (Fn() + Send + 'static)> to avoid confusion.
+
+Inside dyn are restrictions to the original type. Box<T> can be coerced into Box<Fn() + Send + 'static> only when T: Fn() + Send + 'static. Therefore, although we don't know the original type, we can assume it was Fn() and Send and had 'static lifetime.
+
+Fn()
+This is a trait, just like Clone or Default. However, it uses a special syntax sugar.
+
+Fn(A1, ..., An) is a syntax sugar for Fn<(A1, ..., An), Output=()>.
+Fn(A1, ..., An) -> R is a syntax sugar for Fn<(A1, ..., An), Output=R>.
+This syntax sugar also applies to the following traits: Fn, FnMut, FnOnce, and FnBox.
+So what does Fn mean? T: Fn(A1, ..., An) -> R means x: T is a callable object with arguments A1, ..., An and return type R. Examples include function pointers and closures.
+
+ */
+
 // pub type Action = fn(&str);
 // fn 是函数指针 不捕获环境变量
 pub type Action = fn();
@@ -106,4 +128,23 @@ fn test_fn_creation() {
     assert_eq!(mem::size_of_val(&bar_ptr), mem::size_of::<usize>());
 
     let footgun = &bar; // this is a shared reference to the zero-sized type identifying `bar`
+}
+
+
+mod fn_vec{
+    #[test]
+    fn test_fn_vec() {
+        let mut vec: Vec<Box<dyn Fn(i32) -> i32>> = Vec::new();
+
+        vec.push(Box::new(|i| i+1));
+        vec.push(Box::new(|i| i-1));
+        vec.push(Box::new(|i| i*1));
+        vec.push(Box::new(|i| i/1));
+
+        for f in vec  {
+            println!("result: {}", f(2_i32));
+        }
+
+        
+    }
 }

@@ -1,3 +1,5 @@
+pub mod impl_fn_vs_dyn_fn;
+
 pub fn main() {
     // 闭包是引用了自由变量的函数
     // 在rust中，函数和闭包都是实现了Fn、FnMut或FnOnce特质（trait）的类型。任何实现了这三种特质其中一种的类型的对象，都是 可调用对象

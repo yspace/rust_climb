@@ -3,6 +3,7 @@ mod derives;
 mod traits_objects;
 pub mod down_castings;
 pub mod blanket_traits;
+pub mod static_vs_dynamic_dispatch;
 
 pub fn run(){
     let str_thing = StringThing{};

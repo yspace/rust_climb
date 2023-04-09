@@ -42,3 +42,4 @@ FnOnce，函数消费自己的状态
 ## 参考
 - https://zhuanlan.zhihu.com/p/341815515
 - https://blog.linyinfeng.com/posts/how-do-rust-closures-work/ 很优秀
+- [rust 如何调用动态fn](https://stackoverflow.com/questions/73563278/how-does-rust-call-a-dyn-fn)
