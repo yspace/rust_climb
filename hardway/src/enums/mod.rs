@@ -1,3 +1,5 @@
+pub mod matches;
+
 enum Payment {
     Cash(f32),
     CreditCard,

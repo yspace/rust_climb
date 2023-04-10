@@ -1,5 +1,7 @@
 // @see https://github.com/actix/actix-web/blob/master/actix-web/src/handler.rs
 
+// @see https://docs.rs/runestick/0.6.16/src/runestick/module.rs.html#667-684
+
 
 pub trait Handler<Args>: Clone + 'static {
     // type Output;
@@ -15,7 +17,8 @@ pub trait MyFnTrait<Args>: Clone + 'static {
 
 #[test]
 fn test_impl_my_fn_trait() {
-
+    // 也可以不引入T 直接替换到for Fn(P1,P2) ;就是直接为函数trait实现其他trait！ 这个地方用到的是覆盖实现 generic blanket impls
+    // https://github.com/pretzelhammer/rust-blog/blob/master/posts/tour-of-rusts-standard-library-traits.md#generic-blanket-impls
     impl<T, P1,P2> MyFnTrait<(P1,P2)> for T
         where
         T: Fn(P1,P2) -> ()+ Clone + 'static,
@@ -24,8 +27,9 @@ fn test_impl_my_fn_trait() {
             #[inline]
             #[allow(non_snake_case)]
             fn call(&self, (P1,P2): (P1,P2)) /*-> Self::Future*/ {
+                println!("<< 基于trait 可以为函数 实现额外的方法 比如中间件之类？!");
                let _result =  (self)(P1,P2);
-                println!("hahahha");
+                println!("hahahha />>");
                 // println!("{:?}", P1);
                 // println!("{:?}", P2);
             }

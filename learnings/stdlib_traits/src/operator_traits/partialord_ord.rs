@@ -6,9 +6,9 @@ enum Ordering {
     Greater,
 }
 
-trait PartialOrd<Rhs = Self>: PartialEq<Rhs> 
+trait PartialOrd<Rhs = Self>: PartialEq<Rhs>
 where
-    Rhs: ?Sized, 
+    Rhs: ?Sized,
 {
     fn partial_cmp(&self, other: &Rhs) -> Option<Ordering>;
 
@@ -29,7 +29,7 @@ All PartialOrd impls must ensure that comparisons are asymmetric and transitive.
 
 use std::cmp::Ordering;
 
- fn must_always_agree<T: PartialOrd + PartialEq>(t1: T, t2: T) {
+fn must_always_agree<T: PartialOrd + PartialEq>(t1: T, t2: T) {
     assert_eq!(t1.partial_cmp(&t2) == Some(Ordering::Equal), t1 == t2);
 }
 
@@ -39,7 +39,7 @@ use std::cmp::Ordering;
 #[derive(PartialEq)]
 struct Point {
     x: i32,
-    y: i32
+    y: i32,
 }
 
 // Rhs == Self == Point
@@ -58,16 +58,15 @@ If all the members of a type impl PartialOrd then it can be derived:
 
  */
 
- #[derive(PartialEq, PartialOrd)]
- enum Stoplight {
-     Red,
-     Yellow,
-     Green,
- }
+#[derive(PartialEq, PartialOrd)]
+enum Stoplight {
+    Red,
+    Yellow,
+    Green,
+}
 
+/*
 
- /*
- 
  Ord is a subtrait of Eq and PartialOrd<Self>:
 
 trait Ord: Eq + PartialOrd<Self> {
@@ -79,3 +78,35 @@ trait Ord: Eq + PartialOrd<Self> {
     fn clamp(self, min: Self, max: Self) -> Self;
 }
   */
+
+/*
+  The PartialOrd derive macro orders types based on the lexicographical order of their members:
+
+        // generates PartialOrd impl which orders
+        // Points based on x member first and
+        // y member second because that's the order
+        // they appear in the source code
+        #[derive(PartialOrd, PartialEq)]
+        struct Point {
+            x: i32,
+            y: i32,
+        }
+
+        // generates DIFFERENT PartialOrd impl
+        // which orders Points based on y member
+        // first and x member second
+        #[derive(PartialOrd, PartialEq)]
+        struct Point {
+            y: i32,
+            x: i32,
+        }
+
+        trait Ord: Eq + PartialOrd<Self> {
+            fn cmp(&self, other: &Self) -> Ordering;
+
+            // provided default impls
+            fn max(self, other: Self) -> Self;
+            fn min(self, other: Self) -> Self;
+            fn clamp(self, min: Self, max: Self) -> Self;
+        }
+   */

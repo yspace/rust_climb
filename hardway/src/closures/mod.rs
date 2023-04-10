@@ -1,4 +1,5 @@
 pub mod impl_fn_vs_dyn_fn;
+pub mod as_struct_members;
 
 pub fn main() {
     // 闭包是引用了自由变量的函数

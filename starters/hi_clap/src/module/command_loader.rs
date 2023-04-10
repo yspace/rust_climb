@@ -55,6 +55,10 @@ impl Node {
         }
     }
 
+    pub fn is_leaf(&self) -> bool {
+        self.nodes.len() == 0
+    }
+
     pub fn get(&self, path: &str) -> Option<&HandlerFn> {
         match path.split_once('/') {
             Some((root, "")) => {

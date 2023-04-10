@@ -157,6 +157,13 @@ $ rustup override set nightly
 
 - [design-patterns-rust](https://github.com/fadeevab/design-patterns-rust)
 
+- [From JavaScript to Rust ebook](https://github.com/wasmflow/node-to-rust)
+
+- [inside-rust-std-library](https://github.com/Warrenren/inside-rust-std-library)
+
+- [rust 标准库指南](https://rustmagazine.github.io/rust_magazine_2021/chapter_7/rusts-standard-library-traits.html)
+[原文](https://github.com/pretzelhammer/rust-blog/blob/master/posts/tour-of-rusts-standard-library-traits.md)
+
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)
 - [cargo]()

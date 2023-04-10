@@ -1,3 +1,6 @@
+pub mod ref_cycles;
+pub mod ref_cells;
+
 // https://rauljordan.com/rust-concepts-i-wish-i-learned-earlier/
 pub fn run() {
     let mut foo = Foo { x: 10 };

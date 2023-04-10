@@ -4,6 +4,7 @@ mod sizes;
 mod impls;
 mod no_fields;
 pub mod consumes;
+pub mod basics;
 
 pub fn run() {
 

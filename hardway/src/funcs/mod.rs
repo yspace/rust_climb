@@ -9,6 +9,7 @@ pub mod borrowings;
 pub mod debug;
 pub mod fn_once;
 pub mod actix_web_handler;
+pub mod compose;
 
 
 pub fn main() {
