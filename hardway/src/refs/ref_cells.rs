@@ -153,6 +153,33 @@ mod extensions_interior_mutability {
             }
         }
     }
+
+    #[test]
+    fn test_app() {
+        #[derive(Default)]
+        struct App {
+            extensions: Extensions,
+        }
+
+        impl App {
+            pub fn extensions(&self) -> &Extensions {
+                &self.extensions
+            }
+        }
+        #[derive(Debug,Default)]
+        struct Config {
+            port: u16,
+        }
+
+        let app = App::default();
+        // place in extension map
+        app.extensions().insert(Config { port: 8080 });
+        // app.extensions().insert(Database { ... });
+
+        // retrieve from extension map
+        let config = app.extensions().get::<Config>();
+        println!("config : {:?}", config);
+    }
 }
 
 mod extensions_going_sync {

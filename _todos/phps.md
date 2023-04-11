@@ -33,6 +33,11 @@ https://www.hacking8.com/MiscSecNotes/php/audio.html
 
 ## php 框架
 
+
+## 工具
+- 压测 ab工具  webbench
+- macos下 可以试用siege
+
 ### webman
 https://www.workerman.net/webman
 

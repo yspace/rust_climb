@@ -1,3 +1,5 @@
+pub mod thread_local;
+
 use once_cell::sync::Lazy;
 
 use config::Config;

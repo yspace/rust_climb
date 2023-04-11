@@ -10,6 +10,7 @@ pub mod arcs;
 pub mod send_and_sync;
 pub mod mutex;
 pub mod thread_pool;
+pub mod thread_locals;
 
 pub fn main() {
     _threads::main();
