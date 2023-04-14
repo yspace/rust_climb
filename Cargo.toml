@@ -89,6 +89,7 @@ members = [
 
     "starters/hi_poem",
     "starters/hi_clap",
+    "starters/async_tutorial",
 
     # 
     "projects/*",

@@ -1,6 +1,7 @@
 pub mod command_loader;
 pub mod my_module;
 pub mod extensions;
+pub mod command;
 
 use clap::Command;
 

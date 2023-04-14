@@ -1,0 +1,24 @@
+
+it simply out- puts the contents of one or more files or another source of input.
+
+语法：
+
+> cat file1 file2 ...
+
+### stdio 
+
+Unix 进程使用IO流来读写数据
+输入流可以是一个 文件，设备，终端窗口，甚至是来自另一个进程的输出流
+
+cat 读取当前标准输入 不指定文件 并回车后就进入了读取当前流的情况 随便输入一些东西后，回车就会看到你的输入
+
+ctr+d 退出读取过程
+注意 跟Ctrl + C 不同的是 前者会插入EOF 并退出 后者不管输入输出直接终结程序
+
+标准输出类似 kernel会为每个进程分配一个标准输出的 当cat命令运行在terminal时 标准输出就链接到terminal了 所以我们才得以看到输出。
+
+标准输入输出简称： stdin stdout 
+
+很多其他的命令也类似cat 如果你没有指定文件为输入参数 那么命令会读取标准输入，输出有点不同，有些程序仅仅输出到标准输出，另一些程序有选项可以直接输出到文件。
+
+还有一个标准的io流 是标准错误

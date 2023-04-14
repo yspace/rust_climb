@@ -10,6 +10,7 @@ pub mod arithmetic_traits;
 pub mod closure_traits;
 pub mod other_traits;
 pub mod conversion_traits;
+pub mod conversion_traits2;
 pub mod error_handling;
 
 fn main() {
