@@ -1,4 +1,11 @@
+pub mod error;
+pub mod web;
+
+pub use self::error::{Error,Result};
+
 use axum::handler::HandlerWithoutStateExt;
+use axum::middleware;
+use axum::response::Response;
 use axum::{
     extract::{Path, Query},
     http::StatusCode,
@@ -31,6 +38,8 @@ async fn main() {
 
     let app = Router::new()
         .merge(hello_router())
+        .merge(web::routes_login::routes())
+        .layer(middleware::map_response(main_response_mapper))
         // .fallback_service(routes_static());
         .nest_service("/assets", serve_dir.clone())
         .fallback_service(serve_dir)
@@ -44,6 +53,16 @@ async fn main() {
         .await
         .unwrap();
 }
+
+
+async fn main_response_mapper(res: Response) -> Response{
+    println!("-->> {:<12} - main_response_mapper","RES_MAPPER");
+   
+    println!();
+   res
+}
+
+
 
 fn routes_static() -> Router {
     Router::new().nest_service("/", get_service(ServeDir::new(".")))
