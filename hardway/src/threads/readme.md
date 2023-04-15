@@ -100,13 +100,13 @@ The thread::spawn function requires its argument to be Send, and a closure is on
 
 ## 其他观点：
 
-from [](https://itsallaboutthebit.com/async-simple/)
+from [async-simple](https://itsallaboutthebit.com/async-simple/)
 
 Arc should be the first thing you try when you need to share stuff between threads, not the last.
 
 ## 有意思的库
 
-https://github.com/mitsuhiko/fragile
+- https://github.com/mitsuhiko/fragile
 
 ```rust
 
@@ -131,3 +131,11 @@ https://github.com/mitsuhiko/fragile
     dbg!(rx.recv().unwrap());
 
 ```
+
+- [Parking_lot]
+
+This library provides implementations of low-level concurrent data structures such as Mutex, RwLock, and Condvar. It also provides some additional features such as recursive Mutexes, improved fairness, starvation resistance compared to the standard library, and platform-independent implementation of a fast and efficient lock-free concurrent queue. This library has more than 2k stars on GitHub.
+
+~~~rust
+
+~~~
