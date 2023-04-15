@@ -13,6 +13,7 @@ use axum::{
     routing::{get, get_service},
     Router,
 };
+use tower_cookies::CookieManagerLayer;
 use std::net::SocketAddr;
 use tower_http::{services::ServeDir, trace::TraceLayer};
 
@@ -40,6 +41,7 @@ async fn main() {
         .merge(hello_router())
         .merge(web::routes_login::routes())
         .layer(middleware::map_response(main_response_mapper))
+        .layer(CookieManagerLayer::new())
         // .fallback_service(routes_static());
         .nest_service("/assets", serve_dir.clone())
         .fallback_service(serve_dir)
