@@ -1,17 +1,26 @@
+use axum::handler::HandlerWithoutStateExt;
 use axum::{
     extract::{Path, Query},
+    http::StatusCode,
     response::{Html, IntoResponse},
     routing::{get, get_service},
-    Router, http::StatusCode,
+    Router,
 };
-use axum::handler::HandlerWithoutStateExt;
-use tower_http::services::ServeDir;
 use std::net::SocketAddr;
+use tower_http::{services::ServeDir, trace::TraceLayer};
 
 use serde::Deserialize;
 
 #[tokio::main]
 async fn main() {
+    // Set the RUST_LOG, if it hasn't been explicitly defined
+    if std::env::var_os("RUST_LOG").is_none() {
+        std::env::set_var(
+            "RUST_LOG",
+            "example_static_file_server=debug,tower_http=debug",
+        )
+    }
+    tracing_subscriber::fmt::init();
 
     async fn handle_404() -> (StatusCode, &'static str) {
         (StatusCode::NOT_FOUND, "Not found")
@@ -21,10 +30,11 @@ async fn main() {
     // build our application with a route
 
     let app = Router::new()
-    .merge(hello_router())
-    // .fallback_service(routes_static());
-    .nest_service("/assets", serve_dir.clone())
-    .fallback_service(serve_dir);
+        .merge(hello_router())
+        // .fallback_service(routes_static());
+        .nest_service("/assets", serve_dir.clone())
+        .fallback_service(serve_dir)
+        .layer(TraceLayer::new_for_http());
 
     // run it
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
@@ -35,15 +45,11 @@ async fn main() {
         .unwrap();
 }
 
-fn routes_static()-> Router{
-    Router::new().nest_service(
-        "/",
-        get_service(
-            ServeDir::new(".")
-    ))
+fn routes_static() -> Router {
+    Router::new().nest_service("/", get_service(ServeDir::new(".")))
 }
 
-fn  hello_router() -> Router {
+fn hello_router() -> Router {
     let app = Router::new()
         .route("/hello", get(handler))
         .route("/hello2/:name", get(handler2));
