@@ -1,18 +1,30 @@
 use axum::{
     extract::{Path, Query},
     response::{Html, IntoResponse},
-    routing::get,
-    Router,
+    routing::{get, get_service},
+    Router, http::StatusCode,
 };
+use axum::handler::HandlerWithoutStateExt;
+use tower_http::services::ServeDir;
 use std::net::SocketAddr;
 
 use serde::Deserialize;
 
 #[tokio::main]
 async fn main() {
+
+    async fn handle_404() -> (StatusCode, &'static str) {
+        (StatusCode::NOT_FOUND, "Not found")
+    }
+
+    let serve_dir = ServeDir::new("assets").not_found_service(handle_404.into_service());
     // build our application with a route
 
-    let app = Router::new().merge(build_router());
+    let app = Router::new()
+    .merge(hello_router())
+    // .fallback_service(routes_static());
+    .nest_service("/assets", serve_dir.clone())
+    .fallback_service(serve_dir);
 
     // run it
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
@@ -23,7 +35,15 @@ async fn main() {
         .unwrap();
 }
 
-fn build_router() -> Router {
+fn routes_static()-> Router{
+    Router::new().nest_service(
+        "/",
+        get_service(
+            ServeDir::new(".")
+    ))
+}
+
+fn  hello_router() -> Router {
     let app = Router::new()
         .route("/hello", get(handler))
         .route("/hello2/:name", get(handler2));
