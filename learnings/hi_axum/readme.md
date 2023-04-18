@@ -1,3 +1,9 @@
+
+
+## 压测
+
+> ab -c 20 -n 1000 -k http://127.0.0.1:3000/hello
+
 ## 静态文件服务
 参考： [An Identity Management template for microservices ](https://github.com/opeolluwa/raccoon)
 ```rust

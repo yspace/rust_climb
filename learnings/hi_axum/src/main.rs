@@ -1,5 +1,6 @@
 pub mod error;
 pub mod web;
+pub mod model;
 
 pub use self::error::{Error,Result};
 
@@ -25,7 +26,8 @@ async fn main() {
     if std::env::var_os("RUST_LOG").is_none() {
         std::env::set_var(
             "RUST_LOG",
-            "example_static_file_server=debug,tower_http=debug",
+            // "example_static_file_server=debug,tower_http=debug",
+            "example_static_file_server=error,tower_http=error",
         )
     }
     tracing_subscriber::fmt::init();

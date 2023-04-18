@@ -12,6 +12,8 @@ pub mod other_traits;
 pub mod conversion_traits;
 pub mod conversion_traits2;
 pub mod error_handling;
+pub mod iteration_traits;
+pub mod io_traits;
 
 fn main() {
     println!("Hello, world!");
