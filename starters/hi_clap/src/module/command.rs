@@ -33,6 +33,7 @@ impl Command {
 
         // self.handler.unwrap()(&matches);
         if let Some(handlerFn) = self.handler{
+            println!("run cmd: {}",self.command.get_name());
             // 有处理函数 就交给处理函数 
             handlerFn(&matches);
         }else{
@@ -49,7 +50,7 @@ impl Command {
 
             }else{
                 // 找不到么？
-                println!("yiii  弄啥来！{}",self.command.get_name());
+                println!("yiii  弄啥来！{} ;no command handler！",self.command.get_name());
             }
 
         }
@@ -124,7 +125,7 @@ struct Tree {
  fn test_command_child(){
 
     fn handle_user_create(matches: &ArgMatches){
-        println!("{:?}", matches);
+        println!("user-create: {:?}", matches);
     }
 
     let mut cmd = Command::new(
@@ -144,7 +145,7 @@ struct Tree {
     let matches = cmd.command
     .clone()
     // .try_get_matches_from(["user", "--mammal", "dog"])
-    .try_get_matches_from(["user", "create" ])
+    .try_get_matches_from(["user", "create","others-params" ])
     .unwrap();
 
     cmd.run(&matches);

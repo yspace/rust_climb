@@ -251,7 +251,188 @@ shell 在运行command之前会做展开 至于不做任何展开的情况 后�
 	
 	有些包导出其文档到 /usr/share/doc
 	
-	 
+## shell input and output
+
+> command > file
+发送命令的输出到一个文件 而不是默认的终端 `>`这是重定向字符
+这用来收集一系列相关命令的输出到一个地方是很方便的
+
+- pipe
+	管道操作 可以把一个命令的输出作为另一个命令的输入
+	
+	> $ head /proc/cpuinfo
+	> $ head /proc/cpuinfo | tr a-z A-Z
+	
+	打印cpu信息前十行 并翻译成大写
+	
+### 标准错误
+另一个输出流 用来诊断和调试的
+
+> ls /fffffffff > f 2> e
+重定向标准错误 `2> some-error-files` 2 指定shell修改的流id ，1 是标准输出（默认） ，2 是标准错误
+
+也可以都发送到一个文件
+> $ ls /fffffffff > f 2>&1
+
+### 标准输入重定向
+> head < /proc/cpuinfo
+
+但是很多unix命令接受一个文件名作为参数 上面的写法不常见，比如上面的可以重写为
+> head /proc/cpuinfo
+
+
+## 理解错误消息
+
+> $ ls /dsafsda
+ls: cannot access /dsafsda: No such file or directory
+
+此消息有三个组件
+* 程序名 ls 
+* 文件名 /dsafsda 这个有更多的特定信息 就是这个路径有点问题
+* 错误 如 `无此文件或者目录` 指示文件名的问题所在
+
+NOTE 不要把错误消息跟警告混淆 警告经常看起来很像错误，警告无论如果会持续运行的
+
+### 通用错误
+- No such file or directory
+unix 文件io系统不区分文件和目录 所以在文件和目录不存在时会得到这个错误 覆盖两种情况
+
+This error is also known as ENOENT, short for “Error NO ENTity.”
+
+- File exists
+创建一个已经存在的文件
+
+- Not a directory, Is a directory
+把文件当 文件夹 或者把文件夹当文件用
+> touch a
+> touch a/b	
+
+- No space left on device
+磁盘空间满了
+
+- Permission denied
+不具有足够的权限访问文件或者目录 也可能是执行一个没有执行位设置的文件
+
+- Operation not permitted
+经常发生在杀死一个不属于你自己的进程
+
+- Segmentation fault, Bus error
+
+
+## 列举并管理进程
+> ps
+每个进程都有个数字型的pid
+
+PID The process ID. 会被重用
+TTY The terminal device where the process is running. More about this later.
+STAT The process status—that is, what the process is doing and where its memory resides. For example, S means sleeping and R means run- ning. (See the ps(1) manual page for a description of all the symbols.)
+TIME The amount of CPU time in minutes and seconds that the pro- cess has used so far. In other words, the total amount of time that the process has spent running instructions on the processor. Remember that because processes don’t run constantly, this is different from the time since the process started (or “wall-clock time”).
+COMMAND This one might seem obvious as the command used to run
+the program, but be aware that a process can change this field from its original value. Furthermore, the shell can perform glob expansion, and this field will reflect the expanded command instead of what you enter at the prompt.
+
+### options
+
+ps x
+ps ax
+ps u
+ps w
+分别对应的功能：
+Show all of your running processes.
+Show all processes on the system, not just the ones you own.
+Include more detailed information on processes.
+Show full command names, not just what fits on one line.
+
+同其他程序一样，可以组合使用 如 ps aux
+为了查询特定进程 可以把进程id作为参数传递给ps  
+> ps u $$
+$$ 是shell变量 可以算出当前shell 的pid
+
+### 进程终结
+通过从kernel发送kill 命令 我们可以发送一个信号（kernel给进程的消息）
+> kill pid
+有很多类型的信号，默认的就是 TERM | terminate .
+我们可以通过附加额外的选项给kill来发送不同的信号 比如通过STOP信号来冻结进程而不是终止他。
+> kill -STOP pid
+被停止的进程仍旧在内存中，通过CONT 继续信号 可以继续进程的运行
+> kill -CONT pid
+
+ctrl+C 终止当前终端的运行的进程 等效使用kill发送INT信号（中断interrupt）来结束进程。
+
+kernel通过signal handler机制 来给大部分进程在其收到信号后一个收拾残局的机会 。然而有些进程可能不理会这些信号
+如果你发现在你终结他们后还在运行，那就真的需要杀死一个进程了。KILL信号不同其他信号不可以被忽略；
+实际上，os甚至不会给进程机会。kernel只是中介进程并强制将其移出内存。这个只能作为最后的招术。
+> kill -9
+kernel使用数字来表示不同的信号 kill -l 可以获取信号数字到名称的映射
+
+### 任务控制
+> CTRL-Z
+fg          bg
+
+任务控制容易迷惑新手并非必须掌握的。
+
+我们经常用CTRL-Z（TSTP 信号 类似STOP） 而不是CTRL-c
+
+>jobs 
+用来查看你是否意外的挂起了某些进程
+
+### 后台进程
+
+通过`&` 
+> gunzip file.gz &
+shell 应该据此响应一个后台运行的进程的PID
+
+后台任务如果在你登出前完成shell经常会依据你所做的配置通知你的
+
+NOTE 远程访问一个机器 想在登出后继续运行 可以使用nohup命令
+
+如果后台运行的进程需要读取标准输入才能继续运行 它可能会被冻住（尝试 fg 把他们从幕后带到前台来）或者终止。
+不想让后台进程干扰你 最好使用输入输出重定向
+> CTRL-L
+可以重绘整个屏幕 可以排除后台进程偶发的输出干扰
+
+## 文件模式和权限
+> ls -l
+文件mode 表示文件的权限及其额外信息。有四个部分
+>> <type><USRE-PERMISSIONS><group-permissions><other-permissions>
+第一个字符是文件的类型 - 普通文件 d代表目录
+
+- r 意味文件是只读的
+- w 可写
+- x 可运行
+- - `nothing` 啥都不是 此槽的设置未被授权
+
+> groups 
+命令可以用来查看你所属的组
+
+第三组是other设置 有时候也被称为 world permissions
+
+NOTE 读写执行权限槽有时也被称为权限位 底层操作系统会表示为一系列位
+
+有些可执行文件在用户权限位会显示s 表示setuid 当你执行这种程序时 是通过文件所属的主人而不是你。
+
+### 修改权限
+chmod
+先确定要设置的权限集 之后在选择位 比如为文件添加group 和 world 的读权限 可以运行下面的两个命令
+> chmod g+r file
+> chmod o+r file
+
+或者一次搞定
+> chmod go+r file
+
+移除权限
+> chmod go-r file
+
+有时候也见到用数字的
+> chmod 644 file
+成为absolute change 这会一次性设置所有的权限位的 对应的八进制表示 110 010 010  三位一组 分别对应读/写/执行 比如111 表示可读可写可执行 0 就是没有这个权限
+
+644 user: read/write; group, other: read       				 用于files
+600 user: read/write; group, other: none       				 files
+755 user: read/write/execute; group, other: read/execute     用于directories ，programs
+700 user: read/write/execute; group, other: none             用于directories ，programs
+711 user: read/write/execute; group, other: execute          用于目录
+
+目录亦有权限 如果是只读的你只能列出其内容 如果想访问文件那要求目录是可执行的！经常需要同时是可读可执行
 	
 
 
