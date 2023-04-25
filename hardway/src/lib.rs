@@ -7,6 +7,7 @@ pub mod from_intos;
 pub mod rcs;
 pub mod functionals;
 pub mod design_patterns;
+mod plugins;
 
 use futures::Future;
 

@@ -61,3 +61,6 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 # sync 额外功能
 parking_lot = "0.12.1"
+
+# Typed distributed plugin registration 插件注册
+inventory = "0.3.5"
