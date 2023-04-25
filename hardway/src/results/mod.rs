@@ -14,7 +14,7 @@ fn use_default_if_err(){
 
 // 
 pub type MyResult<T> = core::result::Result<T, MyError>;
-enum MyError {
+pub enum MyError {
    ValidateError,
    IoError,
    DbError,

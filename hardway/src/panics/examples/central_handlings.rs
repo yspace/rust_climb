@@ -18,7 +18,8 @@ fn main() {
     let r = panic::catch_unwind(|| {
         let dur_millis = time::Duration::from_millis(500);
         thread::sleep(dur_millis);
-        panic!(String::from("boom again!"));
+        // panic!(String::from("boom again!"));
+        panic!( "boom again!");
     });
 
     handle(r);
