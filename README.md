@@ -1,8 +1,8 @@
 # rust_climb
 learn rust the hard way
 
-路虽远行则将至
-事虽难做则必成
+路虽远 行则将至
+事虽难 做则必成
 
 ## rust 
 
@@ -163,6 +163,11 @@ $ rustup override set nightly
 
 - [rust 标准库指南](https://rustmagazine.github.io/rust_magazine_2021/chapter_7/rusts-standard-library-traits.html)
 [原文](https://github.com/pretzelhammer/rust-blog/blob/master/posts/tour-of-rusts-standard-library-traits.md)
+
+
+- [rust learn](https://github.com/yujinliang/rust_learn)
+
+来自：Rust Programmer，Rust Fans, C++老兵
 
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)

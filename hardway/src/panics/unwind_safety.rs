@@ -14,8 +14,8 @@ fn main() {
     implements::<&Mutex<i32>>();
 
     //below all is not UnwindSafe.
-    implements::<&mut i32>();
-    implements::<&RefCell<i32>>();
+    // implements::<&mut i32>();
+    // implements::<&RefCell<i32>>();
 }
 
 mod _poisoning {

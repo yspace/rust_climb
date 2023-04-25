@@ -1,4 +1,6 @@
 
+mod drop_orders;
+
 fn drop_test(){
     struct MyString(String);
     struct MyBox<T>(Box<T>);
@@ -28,6 +30,14 @@ fn drop_test(){
         MyBox(Box::new(s1)),
         MyBox(Box::new(s2)),
         ]);
+
+    // 手动drop
+    std::mem::drop(MyString("drop by hand!".into()));
+    // 用括号缩短生存scope  
+    {
+        let shot_living = MyString("短命呀！".to_owned());
+    }
+
 }
 
 #[test]
