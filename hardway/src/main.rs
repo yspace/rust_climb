@@ -93,6 +93,7 @@ mod ownerships;
 
 mod logs;
 mod tracings;
+mod panics;
 
 fn init() {
     println!("init fn of crate hardway");

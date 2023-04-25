@@ -39,3 +39,6 @@ trait Future {
 ![future 理解](./future.png)
 上面图就是类似借条组合 一个Future内部 有其他异步操作时 整体状态就会多出一个来 整体poll时会挨个poll子future的 每个子future执行完了 会在尾部把整体状态置为下个要催收的状态。 直到Ready 结束返回。
 
+
+## 不错的资料
+- [rust inside](https://github.com/Warrenren/inside-rust-std-library/blob/main/21-RUST%E7%9A%84%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B.md)

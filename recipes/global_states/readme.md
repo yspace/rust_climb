@@ -26,3 +26,17 @@ fn main() {
 // @see https://github.com/paulkernfeld/global-data-in-rust
 
 https://www.sitepoint.com/rust-global-variables/
+
+### once_cell
+
+ ~~~rust
+
+    use once_cell::sync::OnceCell;
+    static POOL : OnceCell<Pool<MySql>>  = OnceCell::new();
+
+    #[tokio::main]
+    async fn main() -> Result<()>{
+        POOL.set(MySqlPoolOptions::new().some_setting(some_value)
+        .connect(mysql_connection_str).await?).unwrap();
+    }
+ ~~~

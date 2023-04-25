@@ -6,3 +6,6 @@ https://github.com/paulkernfeld/global-data-in-rust
 
 
 [How to Idiomatically Use Global Variables in Rust](https://www.sitepoint.com/rust-global-variables/)
+
+
+https://github.com/yujinliang/rust_learn/blob/master/global_data_usage/Readme.md

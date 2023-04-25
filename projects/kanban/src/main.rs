@@ -1,6 +1,8 @@
 // src/main.rs
 
 mod logger;
+pub mod models;
+mod schema;
 
 type StdErr = Box<dyn std::error::Error>;
 
