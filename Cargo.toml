@@ -97,6 +97,7 @@ members = [
     "recipes/*",
     # "recipes/db_orm/migration",
     # "recipes/db_orm/entity",
+    # "crates/*",
 ]
 #  多个sqlite 库会干扰 运行时候排除下 
 # @see https://doc.rust-lang.org/cargo/reference/workspaces.html

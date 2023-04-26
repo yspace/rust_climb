@@ -8,6 +8,7 @@ pub mod rcs;
 pub mod functionals;
 pub mod design_patterns;
 mod plugins;
+mod global_datas;
 
 use futures::Future;
 
