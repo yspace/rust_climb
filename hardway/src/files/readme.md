@@ -9,6 +9,9 @@ https://www.includehelp.com/rust/programs.aspx#File-IO
 
 https://mkaz.blog/working-with-rust/files-and-dirs/
 
+https://github.com/fasterthanlime 
+[Reading files the hard way](https://fasterthanli.me/series/reading-files-the-hard-way)
+
 ### 存在性
 
 ~~~rust

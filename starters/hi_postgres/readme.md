@@ -107,3 +107,8 @@ https://mockaroo.com/
 
 下载生成的数据 
 在psql 下 \i 导入sql文件
+
+
+## rust中使用pg
+
+不错的例子: https://github.com/mvniekerk/tokio-cron-scheduler/blob/main/src/postgres/mod.rs

@@ -433,6 +433,18 @@ chmod
 711 user: read/write/execute; group, other: execute          用于目录
 
 目录亦有权限 如果是只读的你只能列出其内容 如果想访问文件那要求目录是可执行的！经常需要同时是可读可执行
+
+
+### symbolic links
+
+指向另一个文件或者目录的文件 ，别名 （如win下的 快捷方式) 经常提供对复杂路径的快速访问
+所指目录不必必须存在
+
+可能形成链
+
+> ln -s target linkname
+
+请复认命令 防止犯错 
 	
 
 

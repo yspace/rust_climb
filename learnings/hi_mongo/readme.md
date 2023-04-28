@@ -80,3 +80,23 @@ docker build
 > docker build -t <my-app-name>:1.0 .
 
 if you want rebuild the image , just delete that image first then build it again . (using the docker rmi <img-id> , may be you should stop the container and delete it firstly)
+
+
+
+## mongo 场景
+rust后花园 群佬分享：
+
+- 可以做聊天室 聊天消息是 高写入 低读取 时序库也不合适 先存入文档db 后期再做清洗
+ 聊天分
+ 1. 私聊
+ 2. 聊天室
+ 3. 群聊
+ 访问特征不同 私聊 读写持平  聊天室读多写少        群聊 高写低读 （注意 话痨情况 容易占空间很多）
+
+ 私聊简单点，群聊有读写上线导致群聊有人数上限，聊天室无人数上限但做不到消息完整
+
+ 三类消息需要做不同处理
+
+
+ 写放大 或者说扩散是不是 要把消息 推送给所有群成员的各自队列
+ 谁在线给谁推。不在线的不需要推。

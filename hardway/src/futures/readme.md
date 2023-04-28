@@ -22,3 +22,9 @@ rust 只提供了语法和类型 至于实现留给了社区
 异步实现有两类：
 - kernel 层目前是mio
 - runtime 层   两种最常用的是tokio 和 async-std
+
+
+## 参考
+- https://github.com/mvniekerk/tokio-cron-scheduler/tree/main/src/store
+
+trait 方法返回一个future  估计是等价于async trait
