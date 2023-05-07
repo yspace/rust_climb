@@ -11,3 +11,7 @@
 
 git stash 暂存区的记录也不会被删除
 可通过 git stash show 查看。
+
+## 远程库
+
+https://developer.aliyun.com/article/919354

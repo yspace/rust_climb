@@ -1,3 +1,7 @@
+## 版本切换
+
+安装多个php时 需要切换不同的版本
+
 
 ## psr
 - [psr](php-fig.org/psr)
@@ -68,3 +72,7 @@ extension_dir = "/Volumes/macintosh-hd/workspace/php_space/swoole_hello/swoole-s
 
 - [php-pkg](https://github.com/phppkg)
 - [php-toolkit](https://github.com/php-toolkit)
+
+
+## 学习资源
+- [w3school php 基础知识](https://www.w3school.com.cn/php/php_ref_array.asp)

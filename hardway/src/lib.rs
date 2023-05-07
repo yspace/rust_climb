@@ -9,6 +9,7 @@ pub mod functionals;
 pub mod design_patterns;
 mod plugins;
 mod global_datas;
+mod regexs;
 
 use futures::Future;
 

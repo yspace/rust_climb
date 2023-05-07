@@ -1,3 +1,11 @@
+## 重要的类
+ 
+ use std::path::{Path, PathBuf};
+ 
+ 此二结构 类似 str 跟String 一个用于静态路径 一个经常用来动态构造 二者可以互相转化
+ 
+ 目录遍历 `walkdir` crate 可以协助
+
 ## 读书
 https://rust-lang-nursery.github.io/rust-cookbook/file/dir.html
 
