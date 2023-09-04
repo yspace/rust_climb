@@ -1,10 +1,13 @@
 [package]
-name = "hi_sixtyfps"
+name = "my_crawler"
 version = "0.1.0"
 edition = "2021"
-# resolver = "2"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-sixtyfps = "0.1.5"
+wena = "0.2.0"
+config = "0.13.3"
+
+serde = {version = "1.0", features = ["derive"] }
+lazy_static = "1.4"

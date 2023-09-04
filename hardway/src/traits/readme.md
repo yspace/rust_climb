@@ -27,6 +27,50 @@ fn some_action<T: SomeTrait>(a: T){
 trait 命名可以参考标准库或者知名crate做法
 有用动词的 有用ext结尾的 有用like结尾的 有用er｜or able等 
 
+
+## 两种用法
+
+Once behaviour has been encapsulated into Rust's type system as a trait, there are two ways it can be used:
+
+    as a trait bound, which constrains what types are acceptable for a generic data type or method at compile-time, or
+
+    as a trait object. which constrains what types can be stored or passed to a method at run-time.
+
+A trait bound indicates that generic code which is parameterized by some type T can only be used when that type T implements some specific trait. The presence of the trait bound means that the implementation of the generic can use the methods from that trait, secure in the knowledge that the compiler will ensure that any T that compiles does indeed have those methods. This check happens at compile-time, when the generic is monomorphized (Rust's term for what C++ would call "template instantiation").
+
+This restriction on the target type T is explicit, encoded in the trait bounds: the trait can only be implemented by types that satisfy the trait bounds. This is in contrast to the equivalent situation in C++, where the constraints on the type T used in a template<typename T> are implicit 3: C++ template code still only compiles if all of the referenced methods are available at compile-time, but the checks are purely based on method and signature. (This "duck typing" leads to the chance of confusion; a C++ template that uses t.pop() might compile for a T type parameter of either Stack or Balloon – which is unlikely to be desired behaviour.)
+
+The need for explicit trait bounds also means that a large fraction of generics use trait bounds. To see why this is, turn the observation around and consider what can be done with a struct Thing<T> where there no trait bounds on T. Without a trait bound, the Thing can only perform operations that apply to any type T; this allows for containers, collections and smart pointers, but not much else. Anything that uses the type T is going to need a trait bound.
+
+~~~rust
+pub fn dump_sorted<T>(mut collection: T)
+where
+    T: Sort + IntoIterator,
+    T::Item: Debug,
+{
+    // Next line requires `T: Sort` trait bound.
+    collection.sort();
+    // Next line requires `T: IntoIterator` trait bound.
+    for item in collection {
+        // Next line requires `T::Item : Debug` trait bound
+        println!("{:?}", item);
+    }
+}
+~~~
+
+So the advice here is to use trait bounds to express requirements on the types used in generics, but it's easy advice to follow – the compiler will force you to comply with it regardless.
+
+A trait object is the other way of making use of the encapsulation defined by a trait, but here different possible implementations of the trait are chosen at run-time rather than compile-time. This dynamic dispatch is analogous to the use of virtual functions in C++, and under the covers Rust has 'vtable' objects that are roughly analogous to those in C++.
+
+This dynamic aspect of trait objects also means that they always have to be handled indirectly, via a reference (&dyn Trait) or a pointer (Box<dyn Trait>). This is because the size of the object implementing the trait isn't known at compile time – it could be a giant struct or a tiny enum – so there's no way to allocate the right amount of space for a bare trait object.
+
+A similar concern means that traits used as trait objects cannot have methods that return the Self type, because the compiled-in-advance code that uses the trait object would have no idea how big that Self might be.
+
+A trait that has a generic method fn method<T>(t:T) allows for the possibility of an infinite number of implemented methods, for all the different types T that might exist. This is fine for a trait used as a trait bound, because the infinite set of possibly invoked generic methods becomes a finite set of actually invoked generic methods at compile time. The same is not true for a trait object: the code available at compile time has to cope with all possible Ts that might arrive at run-time.
+
+These two restrictions – no returning Self and no generic methods – are combined into the concept of object safety. Only object safe traits can be used as trait objects.
+
+
 ## trait 问题
 
 - 污染：太多的trait
@@ -36,3 +80,7 @@ trait 命名可以参考标准库或者知名crate做法
 
 如果可能尽量建立在已有的trait之上
 如果使用了第三方库 他们中的trait也可能重复 需要我们花大量时间写胶水代码做bridge到我们自己的代码。 对于公有的编程模式 发明trait前 尽量使用已有的（往往可能存在了 比如std库里找一找）对于公共的trait往往可以使用派生宏搞定
+
+
+## 参考
+- [Don't use boxed trait objects](https://bennett.dev/dont-use-boxed-trait-objects-for-struct-internals/)

@@ -8,5 +8,6 @@ async fn main() -> Result<(), WebDriverError> {
     // return examples::foo1().await;
     // return examples::scrape_wikipedia().await ;
     // return examples::scrape2().await ;
+    let a = &"123";
     return save2sqlite::run().await ;
 }
