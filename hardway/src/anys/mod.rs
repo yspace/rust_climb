@@ -1,4 +1,6 @@
 pub mod as_return;
+pub mod ay_any_hack;
+pub mod extension_map;
 
 pub fn print_type_name<T>(_val: &T) {
     println!("{}", std::any::type_name::<T>());

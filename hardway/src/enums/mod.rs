@@ -1,4 +1,8 @@
 pub mod matches;
+pub mod options;
+pub mod results;
+pub mod behaviours;
+pub mod effective_rust;
 
 enum Payment {
     Cash(f32),

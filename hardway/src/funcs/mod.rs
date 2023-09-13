@@ -10,6 +10,9 @@ pub mod debug;
 pub mod fn_once;
 pub mod actix_web_handler;
 pub mod compose;
+pub mod function_pointers;
+pub mod closures;
+pub mod return_closures;
 
 
 pub fn main() {

@@ -28,3 +28,7 @@ rust 只提供了语法和类型 至于实现留给了社区
 - https://github.com/mvniekerk/tokio-cron-scheduler/tree/main/src/store
 
 trait 方法返回一个future  估计是等价于async trait
+
+
+- [200行代码讲透Rust Futures ](https://stevenbai.top/rust/futures_explained_in_200_lines_of_rust/)
+ [原文地址 Futures Explained in 200 Lines of Rust](https://cfsamson.github.io/books-futures-explained/introduction.html)

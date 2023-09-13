@@ -22,6 +22,10 @@ https://blog.csdn.net/bu2_int/article/details/79758847
 
     注意走代理是要全局配置的，在单个项目里的 cargo.toml 文件里配代理是没用的
 
+## cargo 相关
+- cargo 书： [指定依赖的路径 或者仓库](https://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/cargo/reference/specifying-dependencies.html)
+[官方书](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html)
+
 ## rustup 走 代理
 
 rustup 管理rust的安装 关心的是rust工具链 可以使我们在不同的编译器版本间移动
@@ -130,11 +134,15 @@ $ rustup override set nightly
 通过json 转化为其他语言中的结构 神器！
 
 ## 参考
+- [rust 标准库内幕](https://github.com/Warrenren/inside-rust-std-library/)
+- [rust rfc book](https://rust-lang.github.io/rfcs/2057-refcell-replace.html)
+
 - [菜鸟教程](https://www.runoob.com/rust/rust-object.html)
 - [rust 环境配置](https://www.bilibili.com/video/BV1DV41167xs?p=19)
 - [ Exercism practice in Rust trace ](https://github.com/Binlogo/Exercism-Rust-Track) 类似leetcode？
 - [  Writing an OS in Rust series](https://github.com/phil-opp/blog_os)
     用rust 写操作系统 https://os.phil-opp.com/
+    [async await](https://os.phil-opp.com/async-await/)
 
 - [rust-learning](https://github.com/ctjhoa/rust-learning)    
 - [The Embedded Rust Book](https://rust-embedded.github.io/book/intro/index.html)
@@ -153,6 +161,7 @@ $ rustup override set nightly
 - [The "24 days of Rust" article series.](https://zsiciarz.github.io/24daysofrust/book/vol2/day6.html)
 
 - [rust-cookbook](https://rust-lang-nursery.github.io/rust-cookbook/intro.html)
+    例子不错 
 - [Rust RFCs - RFC Book - Active RFC List](https://rust-lang.github.io/rfcs/introduction.html)
 
 - [design-patterns-rust](https://github.com/fadeevab/design-patterns-rust)
@@ -169,6 +178,11 @@ $ rustup override set nightly
 
 来自：Rust Programmer，Rust Fans, C++老兵
 
+- [微软rust培训教程](https://learn.microsoft.com/zh-cn/training/modules/rust-create-program/0-introduction)
+
+
+- [effective-rust](https://www.lurklurk.org/effective-rust/use-types.html)
+- [std标准库 stdio 阅读](https://rustwiki.org/zh-CN/src/std/io/stdio.rs.html)
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)
 - [cargo]()
@@ -220,12 +234,17 @@ https://stackoverflow.com/questions/74045131/error-linking-with-cc-failed-exit-s
 macos 独有现象 
 做： （`xcode-select reset` Reset your Xcode Install on macOS)[https://gist.github.com/Justintime50/2349ff5e62555aa097acbf519bbc27af] 后正常
 
+
+### 查看库features
+cargo tree --edges features
+
 ### 不错的cargo 工具
 [cargo-edit](https://github.com/killercup/cargo-edit)
 > $ cargo install cargo-edit
 
 添加依赖的crate
 > cargo add num
+
 
 ### git 冲突
 `Your local changes to the following files would be overwritten by merge` 出现这个错误
@@ -274,5 +293,8 @@ ProxyCommand nc -X connect -x <ip>:<port> %h %p
 
 - clean the cache dir:
 > rm ~/.cargo/.package-cache
+
+- 可以手动 删掉~/.cargo 下的一些源码 有的太占空间了
+> open ~/.cargo/registry/src
 
 - 使用代理

@@ -1,5 +1,8 @@
 pub mod ref_cycles;
 pub mod ref_cells;
+pub mod context_manager;
+pub mod deref;
+pub mod temporary_variable;
 
 // https://rauljordan.com/rust-concepts-i-wish-i-learned-earlier/
 pub fn run() {

@@ -1,5 +1,8 @@
 mod status;
 pub mod classics;
+pub mod trait_bounds;
+pub mod minimal_erros;
+pub mod nested_errors;
 
 pub fn main() {
     println!("hi this is demo for handling error in rust");

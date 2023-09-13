@@ -4,6 +4,11 @@ mod traits_objects;
 pub mod down_castings;
 pub mod blanket_traits;
 pub mod static_vs_dynamic_dispatch;
+pub mod boxed_traits;
+pub mod scenarios;
+pub mod getter_setters;
+pub mod impl_and_dyn;
+mod upcasting;
 
 pub fn run(){
     let str_thing = StringThing{};

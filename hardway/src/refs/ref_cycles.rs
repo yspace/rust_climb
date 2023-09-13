@@ -27,3 +27,12 @@ impl From<Node> for Option<NodePtr> {
         Some(Rc::new(RefCell::new(node)))
     }
 }
+
+mod  _2{
+    use std::{rc::{Weak, Rc}, cell::RefCell}; 
+    struct Node{
+        value: i32,
+        parent: RefCell<Weak<Node>>,
+        children: RefCell<Vec<Rc<Node>>>,
+    }
+}

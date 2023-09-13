@@ -95,6 +95,7 @@ mod ownerships;
 mod logs;
 mod tracings;
 mod panics;
+mod conversions;
 
 fn init() {
     println!("init fn of crate hardway");
@@ -444,10 +445,7 @@ impl CallbacksMut {
         }
     }
 
-    pub fn register0<F: FnMut() + 'static>(&mut self, k: String, callback: F) {
-        let cell = Rc::new(RefCell::new(callback));
-        self.callbacks.insert(k, cell);
-    }
+   
     pub fn register<F: FnMut() + 'static>(&mut self, k: String, callback: F) {
         let cell = Rc::new(RefCell::new(callback));
         self.callbacks.insert(k, cell);

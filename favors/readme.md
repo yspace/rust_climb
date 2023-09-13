@@ -9,6 +9,22 @@ once_cell lazy_static
 代码可以看看（大致浏览下）哦！
 
 
+## db
+
+- https://github.com/vinted/elasticsearch-dsl-rs
+
+## 搜索
+- [tantivy](https://github.com/quickwit-oss/tantivy/tree/main)
+Tantivy is a full-text search engine library inspired by Apache Lucene and written in Rust
+
+官方推荐说适合写cli工具？还提供了官方例子：https://github.com/quickwit-oss/tantivy-cli/tree/main
+
+flutter的一个国人例子：https://github.com/yiv/full_search/tree/master
+
+## 网络
+
+- [MQTT Client/Server framework ](https://github.com/ntex-rs/ntex-mqtt)
+
 ### 连接池
 - [deadpool](https://crates.io/crates/deadpool)
 
@@ -37,6 +53,9 @@ thiserror
 
 ## 数据
 comfy_table
+
+[indexmap](https://docs.rs/indexmap/latest/indexmap/)
+有序哈希表
 
 ## 集合-容器-数据结构
 - [dashmap](https://github.com/xacrimon/dashmap)

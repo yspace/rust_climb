@@ -6,8 +6,31 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-wena = "0.2.0"
+# wena = "0.2.0"
+# wena = { git= "https://github.com/yiqing-95/wena.git" }
+# seahorse = "2.1.0"
+seahorse = { git= "https://github.com/yiqing-95/seahorse.git" }
+
+
 config = "0.13.3"
+# 👇这个库作为配置库也是可以的 
+# figment = { version = "0.10", features = ["toml", "env"] }
+
 
 serde = {version = "1.0", features = ["derive"] }
 lazy_static = "1.4"
+
+tokio = { version = "1", features = ["full"] }
+reqwest = { version = "0.11", default-features = false, features = ["json", "rustls-tls"] }
+anyhow = "1.0"
+thiserror = "1.0"
+async-trait = "0.1"
+log = "0.4"
+env_logger = "0.10.0"
+select = "0.6.0-alpha.1"
+url = "2.2"
+futures = "0.3"
+tokio-stream = "0.1"
+fantoccini = { version = "0.19", default-features = false, features = ["rustls-tls"] }
+serde_json = "1.0"
+regex = "1"

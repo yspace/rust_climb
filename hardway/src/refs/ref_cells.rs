@@ -319,3 +319,56 @@ mod retaining_type_name {
         }
     }
 }
+
+
+mod default_impls{
+    trait StringValue {
+        fn get_state(&self) -> &State;
+        fn get_state_mut(&mut self) -> &mut State;
+        fn set_value(&mut self, value: String) {
+            self.get_state_mut().value = value
+        }
+        fn get_value(&self) -> &str {
+            self.get_state().value.as_str()
+        }
+        fn set_value2(&mut self, value: String) {
+            self.get_state_mut().value2 = value
+        }
+        fn get_value2(&self) -> &str {
+            self.get_state().value2.as_str()
+        }
+    }
+    
+    struct State {
+        value: String,
+        value2: String,
+    }
+    struct OtherStruct {
+        state: State,
+    }
+    impl StringValue for OtherStruct {
+        fn get_state_mut(&mut self) -> &mut State {
+            &mut self.state
+        }
+    
+        fn get_state(&self) -> &State {
+            &self.state
+        }
+    }
+    
+    #[test]
+    fn main() {
+        // https://stackoverflow.com/questions/56612823/how-to-implement-trait-default-implementation-with-parameter?rq=3
+        let mut s = OtherStruct {
+            state: State {
+                value: String::from(""),
+                value2: String::from(""),
+            },
+        };
+        s.set_value(String::from("test"));
+        dbg!(s.get_value());
+        s.set_value2(String::from("test2"));
+        dbg!(s.get_value2());
+    }
+    
+}

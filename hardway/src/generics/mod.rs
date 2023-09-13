@@ -1,4 +1,5 @@
 mod impls;
+pub mod closure_in_struct;
 
 pub fn main() {
     impls::main();

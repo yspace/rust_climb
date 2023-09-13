@@ -1,4 +1,9 @@
-use std::{any::Any, cell::{RefCell, Ref, RefMut}, rc::Rc, collections::HashMap};
+use std::{
+    any::Any,
+    cell::{Ref, RefCell, RefMut},
+    collections::HashMap,
+    rc::Rc,
+};
 
 // [Rust 反射，反射库 bevy_reflect，实现运行时检测是否实现了 trait](https://zhuanlan.zhihu.com/p/615577638)
 // 看起来Bevey库的反射功能有点强 闲了看看
@@ -48,7 +53,7 @@ impl Component for MyDb {
         //   "mysql-instance".into()
         "mysql-instance".to_owned()
     }
-    
+
     // 无法在Component上做默认实现！？？
     fn as_any(&self) -> &dyn Any {
         self
@@ -116,15 +121,80 @@ fn test_refcell() {
     println!("{}", total);
 }
 
-
-// @see https://www.coder.work/article/7509333 将Ref<Box<dyn Any>> 向下转换为 Ref<Box<T>> 时处理向下转换错误 
+// @see https://www.coder.work/article/7509333 将Ref<Box<dyn Any>> 向下转换为 Ref<Box<T>> 时处理向下转换错误
 // https://stackoverflow.com/questions/64310019/handle-downcast-error-when-downcasting-refboxdyn-any-into-refboxt
 pub fn foo<T: 'static>(cell: &RefCell<Box<dyn Any>>) -> Option<Ref<T>> {
     let borrowed = cell.borrow();
-    
+
     if borrowed.is::<T>() {
         Some(Ref::map(borrowed, |x| x.downcast_ref::<T>().unwrap()))
     } else {
         None
+    }
+}
+
+mod simple_usecase {
+    mod v0 {
+        trait Print {
+            fn start_printing(&self);
+        }
+
+        struct TrustyPrinter;
+
+        impl Print for TrustyPrinter {
+            fn start_printing(&self) {
+                println!("Starting!");
+            }
+        }
+
+        fn main() {
+            // Create your struct that implements your trait
+            let t = TrustyPrinter;
+
+            // Use the trait to abstract away everything that is not needed
+            let x: &dyn Print = &t;
+
+            // Now there's an edge case that uses the original type..
+            // How do you change it back?
+            // let printer: &TrustyPrinter = x;
+        }
+    }
+
+    mod v1 {
+        use std::any::Any;
+
+        trait Print {
+            fn start_printing(&self);
+            fn as_any(&self) -> &dyn Any;
+        }
+
+        struct TrustyPrinter;
+
+        impl Print for TrustyPrinter {
+            fn start_printing(&self) {
+                println!("Starting!");
+            }
+            fn as_any(&self) -> &dyn Any {
+                self
+            }
+        }
+
+        #[test]
+        fn main() {
+            // Create your struct that implements your trait
+            let t = TrustyPrinter;
+          
+            // Use the trait to abstract away everything that is not needed
+            let x: &dyn Print = &t;
+          
+            // Now you can use the `downcast_ref` method to convert it back
+            // into `TrustyPrinter`
+            let printer: &TrustyPrinter =
+                  x.as_any()
+                   .downcast_ref::<TrustyPrinter>()
+                   .expect("Wasn't a trusty printer!");
+          
+             printer.start_printing();
+          }
     }
 }

@@ -256,3 +256,10 @@ https://github.com/stevepryde/thirtyfour/blob/main/thirtyfour/examples/tokio_bas
 - [tokio 调度器](https://tokio.rs/blog/2019-10-scheduler)
 
 工作窃取
+
+- [深入了解 Rust 异步开发模式](https://xie.infoq.cn/article/0b2cf4ce21a9ff65a833e7116)
+
+- [Async Rust Is A Bad Language](https://bitbashing.io/async-rust.html)
+https://www.kernel.org/doc/html/next/RCU/whatisRCU.html
+
+https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/

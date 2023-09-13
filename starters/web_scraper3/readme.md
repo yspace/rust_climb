@@ -313,6 +313,22 @@ https://www.w3school.com.cn/xpath/xpath_functions.asp
 
 - [幽灵蛛](https://github.com/andeya/pholcus)
 
+- [scraping hacker news with rust](https://github.com/kxzk/scraping-with-rust)
+  这个例子用到了 [PrettyTable](https://github.com/phsym/prettytable-rs) 打印表格看起来不错
+- [Web Scraping with Rust (A Beginner-Friendly Tutorial)](https://www.scrapingdog.com/blog/web-scraping-with-rust/)
+
+- https://domenicoluciani.com/2021/04/30/save-5-minutes-web-scraping-with-rust.html
+- https://www.zenrows.com/blog/rust-web-scraping#extract-html-data
+- [Rust Web Scraping in 2023](https://www.zenrows.com/blog/rust-web-scraping#is-rust-good-for-web-scraping)
+
+- [web scraping without getting blocked.](https://www.zenrows.com/blog/web-scraping-without-getting-blocked)
+- https://iproyal.com/blog/web-scraping-with-rust-the-ultimate-2022-guide/
+- https://dev.to/michaelin007/multiple-page-web-scrapper-in-rust-3hnl
+- https://scrapingrobot.com/blog/rust-web-scraping/
+- https://www.webscrapingapi.com/learn-web-scraping-with-rust
+
+- [a dummy bookstore for learning web scraping]( https://books.toscrape.com/,)
+https://oxylabs.io/blog/rust-web-scraping
 ## 程序结构
 app
 config

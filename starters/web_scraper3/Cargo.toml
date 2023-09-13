@@ -65,3 +65,7 @@ seahorse = "2.1.0"
 # 正则
 regex = "1"
 lazy_static = "1.4.0"
+
+# 配置
+config = "0.13.3"
+dotenv = "0.15.0"

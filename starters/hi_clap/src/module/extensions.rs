@@ -1,5 +1,6 @@
 use std::{
     any::{Any, TypeId},
+    cell::{Ref, RefMut},
     collections::HashMap,
     fmt,
     hash::{BuildHasherDefault, Hasher},
@@ -155,6 +156,53 @@ impl fmt::Debug for Extensions {
 
 fn downcast_owned<T: 'static>(boxed: Box<dyn Any>) -> Option<T> {
     boxed.downcast().ok().map(|boxed| *boxed)
+}
+
+// @see https://stackoverflow.com/questions/65380698/trait-with-default-implementation-and-required-struct-member
+// @see https://www.reddit.com/r/rust/comments/13j5aya/traits_requiring_a_struct_to_have_a_field/
+// @see https://rust-lang.github.io/rfcs/2532-associated-type-defaults.html
+trait HasExtensions {
+    // TODO：等关联类型可以指定默认类型时再说 提供setter｜getter方法！
+    // type ExtensionsType = Extensions ;
+    // fn get_extensions(&self) -> &Self::ExtensionsType;
+    // 🤔 maybe the Into<&RefCell<Extensions>>
+    // fn get_extensions(&self) -> &RefCell<Extensions>; // specify the most common used type 😔
+    // fn set_extensions(mut self, extensions: &Extensions) -> Self;
+
+    #[inline]
+    pub fn extensions(&self) -> Ref<'_, Extensions>;
+    #[inline]
+    pub fn extensions_mut(&self) -> RefMut<'_, Extensions>;
+}
+
+trait AppData {
+    pub fn app_data<U: 'static>(mut self, ext: U) -> Self;
+}
+
+impl<T: HasExtensions> Jobs for T {
+    fn app_data<U: 'static>(mut self, ext: U) -> Self {
+        self.extensions_mut().insert(ext);
+        self
+    }
+}
+
+// need the struct has the `extensions` attribute!
+macro_rules! impl_has_extensions {
+    ($($t:ty),+ $(,)?) => ($(
+        impl HasExtensions for $t {
+
+            #[inline]
+            pub fn extensions(&self) -> Ref<'_, Extensions> {
+                self.extensions.borrow()
+            }
+
+            #[inline]
+            pub fn extensions_mut(&self) -> RefMut<'_, Extensions> {
+                self.extensions.borrow_mut()
+            }
+
+        }
+    )+)
 }
 
 #[cfg(test)]

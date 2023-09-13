@@ -5,6 +5,11 @@ mod impls;
 mod no_fields;
 pub mod consumes;
 pub mod basics;
+pub mod swap_filed;
+pub mod valide_self;
+pub mod func_members;
+pub mod filed_impl_traits;
+pub mod self_ref_passing;
 
 pub fn run() {
 

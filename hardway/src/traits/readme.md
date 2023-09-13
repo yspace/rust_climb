@@ -82,5 +82,85 @@ These two restrictions – no returning Self and no generic methods – are comb
 如果使用了第三方库 他们中的trait也可能重复 需要我们花大量时间写胶水代码做bridge到我们自己的代码。 对于公有的编程模式 发明trait前 尽量使用已有的（往往可能存在了 比如std库里找一找）对于公共的trait往往可以使用派生宏搞定
 
 
+## 又一种观点：
+[不同形式](https://www.ncameron.org/blog/dyn-trait-and-impl-trait-in-rust/)
+
+trait 不是类型 ，可以绑定到类型上 `T: SomeTrait`
+有点像衣服 穿上什么衣服就有什么使能 官服｜环卫工｜护士...   
+
+fn f(b1: impl Bar, b2: impl Bar) -> usize
+is equivalent to
+
+fn f<B1: Bar, B2: Bar>(b1: B1, b2: B2) -> usize
+not
+
+fn f<B: Bar>(b1: B, b2: B) -> usize
+
+The impl Trait shorthand can only be used for function arguments, it cannot be used for the types of fields or local variables, etc.
+
+imple Trati 简写形式只能用在函数参数上 不能用在字段类型或者本地变量类型等地方。
+
+
+
+Generic functions and impl Trait in argument position are implemented using monomorphisation. This means that the compiler makes a copy of the function for each concrete type (or combination of types) that are used to call the function. For example, if our function fn f(b: impl Bar) is called with both Foo and Baz values, then the compiler will make two copies of the function, one which takes b: Foo and one which takes b: Baz.
+
+Consequently, a call to a generic function does not require any indirection, it is a simple function call. However, the function code is duplicated, potentially many times.
+
+impl Trait in return position does not need monomorphisation, the abstract type can simply be replaced with the concrete type in the calling code.
+
+Using trait objects does not require monomorphisation because a function taking a trait object is not a generic function, it only takes a single type. Trait objects themselves are implemented as fat pointers. That means that a type like &dyn Bar is not just a pointer to a value, but is two pointers passed around together (or in a trench coat, if you like): one pointer to the value and one pointer to a vtable which is used to map the methods declared in the trait into methods on the concrete type.
+
+This means that calling a function on a trait object involves an indirection via the vtable, i.e., a dynamic dispatch rather than a simple function call.
+
+Choosing impl Trait or dyn Trait
+We have two different types with some similar properties, so how do you choose which to use?
+
+Like most things in software engineering, there is a trade-off:
+
+Advantages of impl Trait or generics:
+
+fine-grained control of properties of types using where clauses,
+can have multiple trait bounds (e.g., impl (Foo + Qux) is allowed, but dyn (Foo + Qux) is not),
+Disadvantages of impl Trait or generics:
+
+monomorphisation causes increased code size.
+Advantages of dyn Trait:
+
+a single variable, argument, or return value can take values of multiple different types.
+Disadvantages of dyn Trait:
+
+virtual dispatch means slower method calls,
+objects must always be passed by pointer,
+requires object safety.
+Some more details
+Object safety
+Not all traits can be made into trait objects, only those which are object safe. Object safety exists so that trait objects can satisfy trait bounds, in other words so that you can pass an object of type &dyn Foo to a function expecting &impl Foo. This might seem trivial, but it isn't. Effectively, there is an implicit impl impl<T: Trait> T for dyn T {...} for all traits; note that the ellipsis here is doing a lot of work, every method must be implemented for every type to delegate to the trait object.
+
+If you were to write out this impl you'd find that it could not be written without errors for some traits. Roughly, object safety is a conservative measure of the traits for which the impl could be written without errors.
+
+A trait is object safe if it is not bound by Sized (e.g, trait Foo: Sized) and for all methods in the trait which do not have Self: Sized in their where clause:
+
+the method is not static (i.e., it has a self argument of some kind),
+the method does not use Self in an argument or return type,
+the method has no type parameters.
+
+
+### dyn Trait
+
+
+类似java的object 或者c++中的 virtrul object 
+总是传指针形式（& , Box, ... 其他智能指针） 并随有一个vtable以便于做动态分发
+
+The type of trait objects uses dyn Trait, e.g., &dyn Bar or Box<dyn Bar>. Unlike impl Trait, you cannot use dyn Trait as a type without a wrapping pointer.
+
+At compile time, only the trait bound is known; at runtime any concrete type which implements the trait can be used as a trait object via an implicit coercion, e.g., let obj: &dyn Bar = &Foo { ... };.
+
+
+
+
+
+
+
+
 ## 参考
 - [Don't use boxed trait objects](https://bennett.dev/dont-use-boxed-trait-objects-for-struct-internals/)

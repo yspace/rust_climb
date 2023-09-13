@@ -57,6 +57,7 @@ enum ComponentName{
     DB
 }
 
+// NOTE: 关于AppContext的概念 可以参考vue对象 getCurrentInstance 获取当前实例后的属性列表进行查看
 #[derive(Debug,Default)]
 pub struct AppContext{
     /*

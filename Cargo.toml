@@ -109,5 +109,7 @@ exclude = [
 
 default-members = ["hardway"]
 
+resolver = "2"
+
 
 

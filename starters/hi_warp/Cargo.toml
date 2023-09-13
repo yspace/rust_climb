@@ -23,4 +23,4 @@ sqlx = {version = "0.6.2",features= ["runtime-tokio-rustls", "migrate", "postgre
 # for configuration
 dotenv = "0.15.0"
 clap = { version = "4.1.8", features = ["derive"] } 
-proc-macro2 = "1.0.52"
+proc-macro2 = "1.0.66"

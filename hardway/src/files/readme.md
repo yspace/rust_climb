@@ -91,3 +91,23 @@ fn main(){
 }
 
 ```
+~~~rust
+// 递归地删除目录及其内容
+fn delete_directory(dir: PathBuf) -> io::Result<()> {
+    if let Ok(entries) = fs::read_dir(dir.clone()) {
+        for entry in entries {
+            if let Ok(entry) = entry {
+                let path = entry.path();
+                if path.is_file() {
+                    fs::remove_file(path)?;
+                } else if path.is_dir() {
+                    delete_directory(path)?;
+                }
+            }
+        }
+    }
+
+    fs::remove_dir(&dir)?;
+    Ok(())
+}
+~~~

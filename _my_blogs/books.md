@@ -2,3 +2,12 @@
 
 
 [深入理解计算机原理](https://zhuanlan.zhihu.com/p/84596993)
+
+
+https://github.com/amethyst/bracket-lib
+
+https://github.com/thebracket/rustyroguelike
+
+https://bfnightly.bracketproductions.com/rustbook/chapter_0.html
+
+https://rustycab.github.io/LearnRustEasy/chapter_1.html
