@@ -7,6 +7,8 @@ To give a sense of scale of how much time is too much, a good rule of thumb is n
 [Async Rust: What is a runtime? Here is how tokio works under the hood](https://kerkour.com/rust-async-await-what-is-a-runtime)
 [Using Rustlang’s Async Tokio Runtime for CPU-Bound Tasks](https://thenewstack.io/using-rustlangs-async-tokio-runtime-for-cpu-bound-tasks/)
 
+[异步书](https://rust-lang.github.io/async-book/02_execution/02_future.html)
+
 ### 揭秘
 
 ```rust
@@ -263,3 +265,68 @@ https://github.com/stevepryde/thirtyfour/blob/main/thirtyfour/examples/tokio_bas
 https://www.kernel.org/doc/html/next/RCU/whatisRCU.html
 
 https://journal.stuffwithstuff.com/2015/02/01/what-color-is-your-function/
+
+> once you add async code to your project it’s a little like a virus. Async code can freely call sync functions but sync code can’t call async functions. Thus the tendency is to make more and more functions async so that it’s all compatible. This issue was explored, well, colourfully in a fairly popular post from 2015 called “What Color is Your Function?”.
+
+
+## 同步 vs 异步 互操作
+The good news is that the Rust ecosystem has simple tools to create an interface between these worlds. With a little indirection we can call async code from a sync context. And if async code has to call a function that will block for a long time, there are ways to do that which avoid gumming up the executor.
+
+Awaiting from synchronous code
+The solution is pretty straightforward: use a channel.
+
+Obtain a shared reference or Handle to the async executor – something that you can use to spawn a new task.
+Create a synchronous spsc or mpsc channel.
+Spawn the async request, moving in the channel Sender.
+Perform a blocking recv() on the Receiver until the value arrives.
+Edit 25 Mar 2022: In newer versions of tokio Handle has a block_on method (as does the Runtime) which achieves the same result more efficiently, without having to create your own channel. In real code I would use that. I’ll leave the following example as originally written to demonstrate that this kind of bridging isn’t magic and you can use basic tools if you want to.
+
+use std::error::Error;
+use tokio::net::TcpStream;
+use tokio::runtime::Handle;
+use tokio::io::AsyncReadExt;
+use crossbeam::channel;
+
+async fn get_score_async() -> Result<u32, Box<dyn Error + Send + Sync>> {
+    let mut conn = TcpStream::connect("172.17.66.179:4444").await?;
+    let mut score_str = String::new();
+    let _ = conn.read_to_string(&mut score_str).await?;
+    Ok(score_str.parse()?)
+}
+
+fn get_score_sync(handle: Handle) -> Result<u32, Box<dyn Error + Send + Sync>> {
+    let (tx, rx) = channel::bounded(1);
+    handle.spawn(async move {
+        let score_res = get_score_async().await;
+        let _ = tx.send(score_res);
+    });
+    Ok(rx.recv()??)
+}
+Here we have a very async function using tokio’s networking functionality to read a value from a remote TCP server. Then there is an ordinary non-async function that wants to call it.
+
+It might look a little strange using a sync channel inside an async block. While in principle send() could block, we know in this simple case that it’s going to complete immediately. Meanwhile the thread that made the request can go to sleep until the channel receives a value (or the Sender is dropped, indicating that the task terminated without sending a value).
+
+Where the handle comes from is very application-dependent; maybe when you created the Runtime you saved a handle in an Arc somewhere, or it’s a lazy_static global. In this example I’ve just shown it as a parameter.
+
+Blocking calls from async code
+Async tasks are not really supposed to execute for a long time before they yield, which they do either by finishing their work or by awaiting on something else. If all the executor’s worker threads are busy with long-running tasks your application will become unresponsive. In practice on a multi-threaded system you have a bit of wiggle room to do CPU-intensive work and so on provided you don’t go overboard. In particular, tokio recommends that std (blocking) Mutexes continue to be used unless you especially need an async one.
+
+But what if you’re writing async code and you know for sure that some function could take a long time to run? Can we somehow push that work onto its own dedicated thread for a while? Well, yes. In fact we can do the exact inverse of the code above, where we call std::thread::spawn() to do the work and use an async channel to receive the result. This is computationally expensive however. Allocating and spawning a new async task is a cheap operation. Creating a new thread requires setting up a new stack and it’s rather a lot of overhead for the sake of one function call.
+
+The tokio runtime has a special feature to help in this situation: blocking threads. This is a pool of threads separate from the main executor, which automatically scales in size depending on the amount of blocking work. If you use this feature, long-running calls stay off the main worker threads and we can use the same blocking threads over and over, amortising the cost of creating them in the first place.
+
+use std::thread;
+use std::time::Duration;
+
+fn long_running_task() -> u32 {
+    thread::sleep(Duration::from_secs(5));
+    5
+}
+
+async fn my_task() {
+    let res = tokio::task::spawn_blocking(|| {
+        long_running_task()
+    }).await.unwrap();
+    println!("The answer was: {}", res);
+}
+Here we have a function that will block for a long time. We can call it from async-land with no ill effects provided we use spawn_blocking.

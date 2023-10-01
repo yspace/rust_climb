@@ -5,6 +5,10 @@
 
 
 ## 参考
+
+- [Clean and Scalable Architecture for Web Applications in Rust](https://kerkour.com/rust-web-application-clean-architecture)
+https://github.com/skerkour/bloom-legacy
+
 https://manakuro.medium.com/clean-architecture-with-go-bce409427d31
 
 https://github.com/amitshekhariitbhu/go-backend-clean-architecture

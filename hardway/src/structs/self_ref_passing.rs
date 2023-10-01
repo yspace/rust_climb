@@ -92,55 +92,104 @@ mod use_needed_field {
         }
     }
 
-    mod _1{
+    mod _1 {
         struct Ball {
             size: u8,
         }
-        
+
         impl Ball {
             fn update(&mut self, field: BallUpdateInfo) {}
         }
-        
+
         struct BallUpdateInfo<'a> {
             players: &'a u8,
         }
-        
+
         struct Field {
             players: u8,
             ball: Ball,
         }
-        
+
         impl Field {
             fn update(&mut self) {
-                let info = BallUpdateInfo { players: &self.players };
+                let info = BallUpdateInfo {
+                    players: &self.players,
+                };
                 self.ball.update(info)
             }
         }
     }
 
-    mod _2{
+    mod _2 {
         struct Ball {
             size: u8,
         }
-        
+
         impl Ball {
             fn update(&mut self, field: &UpdateInfo) {}
         }
-        
+
         struct UpdateInfo {
             players: u8,
         }
-        
+
         struct Field {
             update_info: UpdateInfo,
             ball: Ball,
         }
-        
+
         impl Field {
             fn update(&mut self) {
                 self.ball.update(&self.update_info)
             }
         }
-        
+    }
+}
+
+mod pass_self_ref2contained_obj {
+    // @see https://stackoverflow.com/questions/36936221/pass-self-reference-to-contained-objects-function?noredirect=1&lq=1
+
+    pub struct Player {}
+
+    impl Player {
+        pub fn receive(&self, app: &App) {
+            println!("[Player::receive]: read app:  {}",app.name);
+        }
+    }
+    pub struct App {
+        // 不重要的变量
+        name: String,
+
+        // pub player: Player,
+        // RefCell.  也是一个可以考虑的选择
+        pub player: Option<Player>,
+    }
+
+    impl App {
+        pub fn sender0(self) {
+            // how to call player.test() and pass self as a reference?
+            // self.player.receive(&self);
+
+        }
+
+        pub fn sender1(&self) {
+        }
+       
+
+        pub fn sender(&mut self) {
+            // 有点资产转移的感觉 临时踢出去 搞个合作 然后再合并回来
+            let mut player = self.player.take().unwrap();
+            player.receive( self);
+            self.player = Some(player);
+        }
+    }
+
+    #[test]
+    fn test_send(){
+        let mut app = App{
+            name: "my-great-app".to_string(),
+            player: Some(Player{}),
+        };
+        app.sender() ;
     }
 }

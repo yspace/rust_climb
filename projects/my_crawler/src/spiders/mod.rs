@@ -1,9 +1,11 @@
 use crate::error::Error;
 use async_trait::async_trait;
 
-pub mod cvedetails;
+// pub mod cvedetails;
 pub mod github;
 pub mod quotes;
+pub mod cvedetails;
+pub mod shanghai_mus;
 
 #[async_trait]
 pub trait Spider: Send + Sync {

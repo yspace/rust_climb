@@ -13,6 +13,8 @@ pub mod compose;
 pub mod function_pointers;
 pub mod closures;
 pub mod return_closures;
+pub mod return_async_func;
+pub mod add_asnyc_fn2map;
 
 
 pub fn main() {

@@ -13,6 +13,7 @@ pub struct QuotesSpider {
 
 impl QuotesSpider {
     pub async fn new() -> Result<Self, Error> {
+        println!("[QuotesSpider::new]");
         let mut caps = serde_json::map::Map::new();
         let chrome_opts = serde_json::json!({ "args": ["--headless", "--disable-gpu"] });
         caps.insert("goog:chromeOptions".to_string(), chrome_opts);
@@ -20,7 +21,7 @@ impl QuotesSpider {
             .capabilities(caps)
             .connect("http://localhost:4444")
             .await?;
-
+        println!("[QuotesSpider::new ok!]");
         Ok(QuotesSpider {
             webdriver_client: Mutex::new(webdriver_client),
         })
@@ -46,6 +47,7 @@ impl super::Spider for QuotesSpider {
     }
 
     async fn scrape(&self, url: String) -> Result<(Vec<Self::Item>, Vec<String>), Error> {
+        println!("[begin scrape:] {url:?}");
         let mut items = Vec::new();
         let html = {
             let webdriver = self.webdriver_client.lock().await;
@@ -55,16 +57,16 @@ impl super::Spider for QuotesSpider {
 
         let document = Document::from(html.as_str());
 
-        let quotes = document.select(Class("quote"));
+        let quotes = document.find(Class("quote"));
         for quote in quotes {
-            let mut spans = quote.select(Name("span"));
+            let mut spans = quote.find(Name("span"));
             let quote_span = spans.next().unwrap();
             let quote_str = quote_span.text().trim().to_string();
 
             let author = spans
                 .next()
                 .unwrap()
-                .select(Class("author"))
+                .find(Class("author"))
                 .next()
                 .unwrap()
                 .text()
@@ -78,7 +80,7 @@ impl super::Spider for QuotesSpider {
         }
 
         let next_pages_link = document
-            .select(
+            .find(
                 Class("pager")
                     .descendant(Class("next"))
                     .descendant(Name("a")),
@@ -87,6 +89,7 @@ impl super::Spider for QuotesSpider {
             .map(|url| self.normalize_url(url))
             .collect::<Vec<String>>();
 
+            println!("[items:] {items:?}");
         Ok((items, next_pages_link))
     }
 

@@ -1,0 +1,9 @@
+
+
+// const db = {
+//     url: 'http://my.couchdbserver.local:5984',
+//     admin_username: 'admin',
+//     admin_password: 'admin password'
+//   };
+
+pub const URL: &str = "http://my.couchdbserver.local:";

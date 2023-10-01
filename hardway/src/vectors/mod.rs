@@ -2,6 +2,8 @@ pub mod as_slices;
 pub mod wrapping_vectors;
 pub mod removes;
 
+pub mod concat ;
+
 pub fn main() {
     println!("run vectors::main()");
 

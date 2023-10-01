@@ -10,6 +10,9 @@ pub mod design_patterns;
 mod plugins;
 mod global_datas;
 mod regexs;
+pub mod gats;
+pub mod ractors;
+pub mod async_traits;
 
 use futures::Future;
 

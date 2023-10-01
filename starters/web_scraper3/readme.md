@@ -158,6 +158,46 @@ create table project2 as select * from projects where id>999 and id < 2000
 
 xpath 感觉其定位查找功能比jquery 应该更丰富 
 
+绝对路径： /html/body/div[2]/div/div/div/div/form/span/input
+绝对路径是从根节点/html开始往下，一层层的表示出来直到需要的节点为止。
+
+除了绝对路径，Xpath 中更常用的方式是相对路径定位方法，以“//”开头
+
+~~~xpath
+
+# 选取 form 元素内部的所有 span：
+# 第二个双斜杠，表示选取内部所有的 span，不管层级关系
+//form[@id="form"]//span
+
+# 使用星号找不特定的元素
+# 选取 id 属性为 form 的任意属性内部，并且 type 属性为 text 的任意元素。这里会找到 input。
+//*[@id="form"]//*[@type="text"]
+
+# 使用..从下往上找，根据 input 查找其父节点 span：
+# 注意最后的两个点，找到 input 节点的上级节点，如果还要再往上再加 /..
+//input[@name="key"]/..
+
+# 找同级节点：
+//span[@class="bg"]/../div
+~~~
+
+### 属性定位
+
+
+- 根据元素是否具备某个属性查找元素
+//*[@data-recordid]
+- 根据属性是否等于某值查找元素
+//span[@role='img']
+
+//form[@id="form"]
+
+
+使用星号找不特定的元素
+//*[@id="form"]//*[@type="text"]
+
+
+
+
 ### 通过父子兄弟 爷爷关系来查找 
 
 
@@ -169,6 +209,8 @@ xpath 感觉其定位查找功能比jquery 应该更丰富
 ### 使用谓语定位
 
 谓语是 Xpath 中用于描述元素位置。主要有数字下标、最后一个子元素last()、元素下标函数position()。
+
+Xpath 中的下标从 1 开始
 
 ~~~xpath
 # 查找最后一个子元素，选取 form 下的最后一个 span
@@ -191,6 +233,10 @@ xpath 感觉其定位查找功能比jquery 应该更丰富
 
 # 使用|，同时查找多个路径，取或
 //form[@id="form"]//span | //form[@id="form"]//input 
+
+
+
+
 ~~~
 
 ### 使用文本定位

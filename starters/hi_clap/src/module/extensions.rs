@@ -161,6 +161,7 @@ fn downcast_owned<T: 'static>(boxed: Box<dyn Any>) -> Option<T> {
 // @see https://stackoverflow.com/questions/65380698/trait-with-default-implementation-and-required-struct-member
 // @see https://www.reddit.com/r/rust/comments/13j5aya/traits_requiring_a_struct_to_have_a_field/
 // @see https://rust-lang.github.io/rfcs/2532-associated-type-defaults.html
+// @see [Generic Associated Types: A Practical Introduction](https://www.youtube.com/watch?v=irNon3Ed4Bk&ab_channel=chrisbiscardi)
 trait HasExtensions {
     // TODO：等关联类型可以指定默认类型时再说 提供setter｜getter方法！
     // type ExtensionsType = Extensions ;

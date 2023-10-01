@@ -7,6 +7,8 @@ mod async_raw_sample;
 
 mod async_std_book;
 pub mod timer;
+pub mod store_async_callbacks;
+pub mod bridging_sync;
 
 pub fn main() {
     println!("in mod ayncs");

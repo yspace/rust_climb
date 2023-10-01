@@ -144,6 +144,33 @@ the method is not static (i.e., it has a self argument of some kind),
 the method does not use Self in an argument or return type,
 the method has no type parameters.
 
+### Implicit bounds
+Auto traits (previously called OIBITs) are traits like Send and Sync which do not need to be explicitly implemented, but are implemented by default if all components of a type implement that trait.
+
+When impl Trait is used in return position (but not argument position) auto traits will be implicitly inferred for the return value from the function body. That means you never need to write + Send + Sync on impl Trait in return position. This is not the case with trait objects, where you must include the auto traits.
+
+Lifetime bounds are even more subtle. dyn Trait includes a default lifetime bound of 'static (unless you specify a lifetime). Type parameters and impl Trait in argument position have no implicit lifetime bound. The concrete type behind impl Trait can depend on any type parameters in scope. Therefore, any bound on any type-parameter in scope becomes a bound on the impl Trait type (as well as any explicit lifetime bounds, e.g., 'a in impl (Foo + 'a)). If there are no lifetimes in scope via explicit bounds or type parameters, then impl Trait has a 'static bound (c.f., generic types which would have no bounds).
+
+Is that clear? Honestly it is not completely clear to me, so I may have made a mistake here. I doubt this will cause you much trouble in your Rust programming career, however.
+
+### impl Trait in traits
+
+```rust
+trait Qux {
+    type T;
+    
+    fn qux(&self) -> Self::T;
+}
+
+impl Qux for Foo {
+    type T = impl Bar;
+
+    fn qux(&self) -> Self::T {
+        ...
+    }
+}
+
+```
 
 ### dyn Trait
 

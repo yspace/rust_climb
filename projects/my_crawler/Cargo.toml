@@ -16,6 +16,7 @@ config = "0.13.3"
 # 👇这个库作为配置库也是可以的 
 # figment = { version = "0.10", features = ["toml", "env"] }
 
+visdom = "1.0.0"
 
 serde = {version = "1.0", features = ["derive"] }
 lazy_static = "1.4"
@@ -27,7 +28,7 @@ thiserror = "1.0"
 async-trait = "0.1"
 log = "0.4"
 env_logger = "0.10.0"
-select = "0.6.0-alpha.1"
+select = "0.6.0"
 url = "2.2"
 futures = "0.3"
 tokio-stream = "0.1"
