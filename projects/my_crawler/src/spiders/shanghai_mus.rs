@@ -1,4 +1,4 @@
-use crate::error::Error;
+use crate::{error::Error, utils};
 use async_trait::async_trait;
 use fantoccini::{Client, ClientBuilder, Locator};
 use select::{
@@ -14,6 +14,10 @@ use tokio::{
     sync::Mutex,
     time::{sleep, Duration},
 };
+
+use chrono::prelude::*;
+
+const LOAD_MORE :&str = "__LOAD_MORE__";
 
 pub struct ShanghaiMusSpider {
     webdriver_client: Mutex<Client>,
@@ -57,10 +61,39 @@ impl super::Spider for ShanghaiMusSpider {
 
     async fn scrape(&self, url: String) -> Result<(Vec<Self::Item>, Vec<String>), Error> {
         println!("[begin scrape:] {url:?}");
+
         let mut items = Vec::new();
+
         let html = {
             let webdriver = self.webdriver_client.lock().await;
-            webdriver.goto(&url).await?;
+
+            // if(url == LOAD_MORE.to_string()){
+            if(url.starts_with( LOAD_MORE) ){
+                println!("load more  !");
+
+                const JS: &'static str = r#"
+                // const [date, callback] = arguments;
+                // consle.log("clear the li list!");
+                 var $li_list = $('ul#list1 li');
+                 console.log($li_list.size());
+                 $li_list.empty().remove();
+
+                console.log('load more!!');
+                var $loadMoreLink = $('ul#list1 .layui-flow-more a');
+                console.log('[load more]',$loadMoreLink.size());
+                if($loadMoreLink.size()>0){
+                    $loadMoreLink.click();
+                }
+
+                "#;
+              
+                let r = webdriver.execute(JS, vec![]).await?;
+                println!("sleep");
+                sleep(Duration::from_millis(15000)).await;  
+            }else{
+
+                webdriver.goto(&url).await?;
+            }
 
             //
             println!("sleep 5s");
@@ -68,6 +101,7 @@ impl super::Spider for ShanghaiMusSpider {
             // const [date, callback] = arguments;
             alert("hi");
             "#;
+            // TODO: 可以找个好的jquery的cdn
             // let r =  webdriver.execute(JS, vec![]).await?;
             // webdriver.execute_async(JS, vec![serde_json::to_value(elem)?]);
             // let r = webdriver.execute_async(JS, vec![json!("from rust")]).await?;
@@ -83,12 +117,12 @@ impl super::Spider for ShanghaiMusSpider {
                }
                if (typeof jQuery != 'undefined') {
                //    if($){
-                    alert("jquery is already in use!");
+                    console.log("jquery is already in use!");
                }else{
 
                    loadScript('https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js');
                 //    loadScript('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js');
-                alert(" loaded jquery!");
+                console.log(" loaded jquery!");
                }
             "#;
             // .Replace("\r\n", ""); // 看stackoverflow上面的评论 说是有的驱动只能执行行代码 多行有问题？🤨
@@ -98,24 +132,47 @@ impl super::Spider for ShanghaiMusSpider {
             webdriver.source().await?
         };
 
+        let mut load_more_suffix = String::new();
 
-        let mut index = 0;
-        let document = Document::from(html.as_str());
-        for node in document.find(
-            Class("shmu-tuwen-list").descendant(
-                Name("li")
-                    .descendant(Class("show"))
-                    .descendant(Class("shmu-box"))
-                    .descendant(Name("a")),
-            ),
-        ) {
-            index += 1;
+        // TODO  针对翻页情形， 翻页之后再次计算下内容区域是否跟上次相同
+        let count = {
+            let mut index = 0;
+            let document = Document::from(html.as_str());
+           
+            let mut target_content  = document.find(
+                Class("shmu-tuwen-list") 
+            );
+            let target_content = target_content.next().unwrap();
+            let target_content = target_content.html() ;
+            // println!("[content:] {}", utils::md5(target_content));
+            load_more_suffix = utils::md5(target_content) ;
 
-            // for node in document.find(Class("shmu-tuwen-list").descendant(Name("a"))) {
-            // println!("{} ({:?})", node.text(), node.attr("href").unwrap());
-            println!("link ({:?})", node.attr("href").unwrap());
-            println!("--");
-            // println!("title:{} ", node.text());
+            if url.ends_with(&load_more_suffix) {
+               return Ok((items, vec![])) ;
+            }
+
+
+            for node in document.find(
+                Class("shmu-tuwen-list").descendant(
+                    Name("li")
+                        .descendant(Class("show"))
+                        .descendant(Class("shmu-box"))
+                        .descendant(Name("a")),
+                ),
+            ){
+                index += 1;
+
+                // for node in document.find(Class("shmu-tuwen-list").descendant(Name("a"))) {
+                // println!("{} ({:?})", node.text(), node.attr("href").unwrap());
+                println!("link ({:?})", node.attr("href").unwrap());
+                println!("--");
+                
+            }
+            index
+        };
+
+        let count = 1;
+        for index in 1..count {
             // *[@id="form"]//*[@type="text"]
             // let selector = format!("//ul[@class=\"painting-list\"]/li[{}]/a", index);
             // let selector = format!("//ul[@id=\"list1\" and @class='shmu-tuwen-list']//li[{}]/a", index);
@@ -123,25 +180,31 @@ impl super::Spider for ShanghaiMusSpider {
                 "//ul[@id=\"list1\" and @class='shmu-tuwen-list']/li[{}]/div[@class='show']//a",
                 index
             );
+            // NOTE：⚠️ 注意await 前面出现的变量可能变为async块的依赖 所以要求可 `Send`
+            let client = self.webdriver_client.lock().await;
+            // Click the img.
+            let el_link = client
+                .wait()
+                //r#"a[href="/learn/get-started"]"#,
+                .for_element(Locator::XPath(selector.as_str()))
+                .await?;
+            el_link.click().await?;
+            // 等下 不然一会就退回了
 
-            let _ = {
-                let client = self.webdriver_client.lock().await;
-                // Click the img.
-                // let el_link = client
-                //     .wait()
-                //     //r#"a[href="/learn/get-started"]"#,
-                //     .for_element(Locator::XPath(selector.as_str()))
-                //     .await?;
-                // el_link.click().await?;
-                // // 等下 不然一会就退回了
-    
-                // client.wait().for_element(Locator::Css("body")).await?;
-    
-                // sleep(Duration::from_millis(15000)).await; // time to load jQuery library
-                //    // 看看 跳没
-                // client.back().await?;
-            };
-           
+            client.wait().for_element(Locator::Css("body")).await?;
+
+            // sleep(Duration::from_millis(15000)).await; //  
+
+            let mut windows = client.windows().await?;
+            let new_window = windows.remove(windows.len()-1);
+            client.switch_to_window(new_window).await;
+
+            client.close_window().await;
+            // 看看 跳没
+            client.switch_to_window(windows.remove(windows.len()-1)).await;
+
+            // client.back().await?;
+
         }
 
         // let quotes = document.find(Class("quote"));
@@ -177,7 +240,18 @@ impl super::Spider for ShanghaiMusSpider {
         //     .collect::<Vec<String>>();
 
         //     println!("[items:] {items:?}");
-        Ok((items, Vec::new()))
+        // Ok((items, Vec::new()))
+        println!("[end scrap current page]");
+
+        // TODO： 如何决定是否是最后一页？ 可以用上一页翻页表格区的内容做特征对比 把ts时间戳部分替换为内容区域文本hash-code即可
+
+        let now = Utc::now();
+        // let ts: i64 = now.timestamp();
+        // let load_more_ = format!("{}_{}",LOAD_MORE,ts);
+        let load_more_ = format!("{}_{}",LOAD_MORE,load_more_suffix);
+
+        Ok((items, vec![load_more_]))
+        // Ok((items, vec![LOAD_MORE.to_string()]))
     }
 
     async fn process(&self, item: Self::Item) -> Result<(), Error> {
@@ -198,22 +272,22 @@ impl ShanghaiMusSpider {
         return url.to_string();
     }
 
-   async fn _tmp(&self){
-         let client = self.webdriver_client.lock().await;
-                // Click the img.
-                // let el_link = client
-                //     .wait()
-                //     //r#"a[href="/learn/get-started"]"#,
-                //     .for_element(Locator::XPath(selector.as_str()))
-                //     .await?;
-                // el_link.click().await?;
-                // // 等下 不然一会就退回了
-    
-                // client.wait().for_element(Locator::Css("body")).await?;
-    
-                // sleep(Duration::from_millis(15000)).await; // time to load jQuery library
-                //    // 看看 跳没
-                // client.back().await?;
+    async fn _tmp(&self) {
+        let client = self.webdriver_client.lock().await;
+        // Click the img.
+        // let el_link = client
+        //     .wait()
+        //     //r#"a[href="/learn/get-started"]"#,
+        //     .for_element(Locator::XPath(selector.as_str()))
+        //     .await?;
+        // el_link.click().await?;
+        // // 等下 不然一会就退回了
+
+        // client.wait().for_element(Locator::Css("body")).await?;
+
+        // sleep(Duration::from_millis(15000)).await; // time to load jQuery library
+        //    // 看看 跳没
+        // client.back().await?;
     }
 }
 

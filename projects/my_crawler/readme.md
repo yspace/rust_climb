@@ -19,6 +19,7 @@ generic 可以这样用！
     // f.call(Product{1,Product{2,3}})
 ~~~
 
+
 ## 有趣的库：
 
 - https://github.com/plausiblelabs/hlist-rs
@@ -42,3 +43,13 @@ generic 可以这样用！
 
 - 运行程序
 >  cargo run -p my_crawler -- run --spider=quotes
+
+
+## 参考：
+- [jquery中文手册](https://www.w3school.com.cn/jquery/prop_length.asp)
+- [jquery 手册](https://www.runoob.com/manual/jquery/)
+- [Xpath 详解](https://www.jianshu.com/p/6a0dbb4e246a)
+
+- [Improving async-await's "Future is not Send" diagnostic](https://blog.rust-lang.org/inside-rust/2019/10/11/AsyncAwait-Not-Send-Error-Improvements.html)
+
+- [ Getting in and out of trouble with Rust futures ](https://fasterthanli.me/articles/getting-in-and-out-of-trouble-with-rust-futures)

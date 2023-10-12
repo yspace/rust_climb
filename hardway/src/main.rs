@@ -96,6 +96,7 @@ mod logs;
 mod tracings;
 mod panics;
 mod conversions;
+pub mod crypto;
 
 fn init() {
     println!("init fn of crate hardway");

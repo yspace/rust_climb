@@ -330,3 +330,31 @@ async fn my_task() {
     println!("The answer was: {}", res);
 }
 Here we have a function that will block for a long time. We can call it from async-land with no ill effects provided we use spawn_blocking.
+
+
+## async-trait  的问题
+@see https://blog.csdn.net/DAOSHUXINDAN/article/details/108311793
+
+!Send 的值跨越 await 导致生成的匿名 Future 也是 !Send 继而无法在线程之间传递
+
+如果某结构体内部存在 !Sync 的字段，那么跨越 await 依然有问题，如下所示
+
+~~~rust
+struct C(Mutex<RefCell<i32>>);
+impl C {
+    async fn bar(&self) {
+        println!("bar C");
+    }
+}
+#[async_trait]
+impl Foo for C {
+    async fn foo(&self) {
+        let mut mg = self.0.lock().expect("lock");
+        let c = mg.get_mut();
+        // 跨越 await 则无法编译通过 
+        // 
+        // self.bar().await;
+        *c = 10;
+    }
+}
+~~~

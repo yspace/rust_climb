@@ -1,7 +1,11 @@
 #[macro_use]
 extern crate lazy_static;
 
-use generic::{one, Func, Product};
+use std::env::set_var;
+use log::{debug, error, log_enabled, info, Level};
+
+// 没有用到👇
+// use generic::{one, Func, Product};
 // use wena::*;
 
 use seahorse::App;
@@ -16,6 +20,7 @@ pub mod crawler;
 pub mod spiders;
 pub mod error;
 pub mod constants;
+pub mod utils;
 // use self::reject::{reject, Rejection};
 use generic::Tuple;
 
@@ -27,6 +32,12 @@ lazy_static! {
 
 // async fn main() {
 fn main() {
+
+    set_var("RUST_LOG", "error");
+    env_logger::init();
+    //env_logger::builder().format_timestamp(None).init();
+    // debug!("this is a debug {}", "message");
+    // error!("this is printed by default");
 
     let args: Vec<String> = env::args().collect();
     let app = App::new(env!("CARGO_PKG_NAME"))
