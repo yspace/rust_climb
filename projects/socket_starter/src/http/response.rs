@@ -7,6 +7,7 @@ pub struct HttpResponse<'a> {
     status_text: &'a str,
     headers: Option<HashMap<&'a str, &'a str>>,
     body: Option<String>,
+    // r#use : Option<String>, // 测试关键字做字段名😄
 }
 
 impl<'a> Default for HttpResponse<'a> {
