@@ -7,8 +7,8 @@ edition = "2021"
 
 [dependencies]
 thirtyfour = "0.31.0"
-tokio = "1.21.1"
+tokio = "1.33"
 
 
-rusqlite = { version = "0.28.0", features = ["bundled"] }
-tokio-rusqlite = "0.3.0"
+rusqlite = { version = "0.29", features = ["bundled"] }
+tokio-rusqlite = "0.4"

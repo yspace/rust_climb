@@ -76,7 +76,7 @@ members = [
     "starters/web_scraper3",
     "starters/console_app2",
     "starters/console_simple",
-    "starters/api_axum0",
+    # "starters/api_axum0",
     "starters/repl1",
     "starters/hi_es",
     "starters/hi_search",
