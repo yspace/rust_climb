@@ -5,6 +5,7 @@ mod pass_by_ref ;
 mod as_params ;
 mod returns;
 pub mod defers;
+pub mod basics;
 pub mod borrowings;
 pub mod debug;
 pub mod fn_once;

@@ -39,10 +39,65 @@ inventory::submit! {
 
 ~~~
 
+- [How to Build a Custom Integration Test Harness in Rust](https://devpress.csdn.net/cicd/62ec442b19c509286f4169ff.html) 使用了inventory 构建测试系统
+
+~~~rust
+
+// tests/mod.rs
+
+#[derive(Debug)]
+pub struct IntegrationTest {
+   pub name: &'static str,
+   pub test_fn: fn(),
+}
+
+inventory::collect!(IntegrationTest);
+
+// tests/basic.rs
+
+use super::IntegrationTest;
+
+fn basic_test() {
+   println!("Running basic test")
+}
+
+inventory::submit!(IntegrationTest {
+   name: "basic",
+   test_fn: basic_test
+});
+
+// 可以只运行特定的测试
+impl IntegrationTest {
+   pub fn all_test_names() -> Vec<&'static str> {
+       inventory::iter::<IntegrationTest>
+           .into_iter()
+           .map(|x| x.name)
+           .collect::<Vec<&str>>()
+   }
+
+   pub fn from_name<S: AsRef<str>>(test_name: S) -> Option<&'static IntegrationTest> {
+       inventory::iter::<IntegrationTest>
+           .into_iter()
+           .find(|t| t.name == test_name.as_ref())
+   }
+}
+
+
+~~~
+
 - https://github.com/dtolnay/linkme
 
 这个库看起来也不错哦  跟inventory 一个作者
 
-[Register a Rust Function for Use in Rhai Scripts](https://rhai.rs/book/rust/functions.html)
+也可参考：
+https://github.com/elinorbgr/dlib
 
+[👀这里](https://github.com/neon-bindings/neon/blob/2277e943a619579c144c1da543874f4a7ec39879/src/lib.rs#L42)
+
+[Register a Rust Function for Use in Rhai Scripts](https://rhai.rs/book/rust/functions.html)
 [ plugin system ](https://rhai.rs/book/plugins/index.html)
+
+
+- [https://nullderef.com/blog/plugin-tech/](https://nullderef.com/blog/plugin-tech/)
+[rust插件系统](https://github.com/marioortizmanero/nullderef.com)
+[开始阅读:](https://nullderef.com/series/rust-plugins/)

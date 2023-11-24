@@ -192,6 +192,8 @@ $ rustup override set nightly
 
 - [Railway Oriented Programming](https://fsharpforfunandprofit.com/rop/)
 深刻理解Result
+https://swlaschin.gitbooks.io/fsharpforfunandprofit/content/posts/recipe-part2.html
+
 - [Against Railway-Oriented Programming](https://fsharpforfunandprofit.com/posts/against-railway-oriented-programming/)
 跟这个或许有关： Rust组合器 [Combinators](https://learning-rust.github.io/docs/combinators/)
 
