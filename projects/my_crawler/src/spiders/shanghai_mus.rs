@@ -194,21 +194,93 @@ impl super::Spider for ShanghaiMusSpider {
 
             // TODO 睡随机数
             sleep(Duration::from_millis(5000)).await; //
-            // TODO： 处理fancybox
 
+
+            let mut windows = client.windows().await?;
+            let new_window = windows.remove(windows.len() - 1);
+            // 切换到新tab窗口去
+            client.switch_to_window(new_window).await;
+
+            // TODO： 处理fancybox
             let sub_items = {
                 // let webdriver = self.webdriver_client.lock().await;
                 const JS: &'static str = r#"
+
+
             // const [date, callback] = arguments;
            // var callback = arguments[arguments.length - 1];
            var callback = arguments[0];
            // ----------------------------------------------------------
 
+           function waitForElement(selector, callback) {
+              var intervalId = setInterval(function () {
+                if ($(selector).length > 0) {
+                  clearInterval(intervalId);
+                  callback();
+                }
+              }, 100);
+            }
+
+            function waitForCondition(fn, callback) {
+              var intervalId = setInterval(function () {
+                if (fn() == true) {
+                  clearInterval(intervalId);
+                  callback();
+                }
+              }, 1000);
+            }
+
+           var $sliderItems =   $(".slick-list a.shmu-thumbnail");
+
+            var result = [];
+            $("body").append("<div id='rust_result'>");
+            var $resultHelper = $("\#rust_result");
+            $resultHelper.data("state", { total: $sliderItems.length, current: 0 });
+
+
+            $sliderItems.each(function(index, $item){
+                    $item.click();
+                    $slideCurrentActive =  $(".slick-current" ,"\#slider2");
+
+                    var $slickCurrentLarger =  $(".slick-current" ,"\#slider1");
+
+
+                    $slickCurrentLarger.click(function(){
+
+                         setTimeout(function(){
+                            var $fancyBoxViewPort = $(".fancybox__container");
+                            var $largeImage = $fancyBoxViewPort.find("img");
+                            result.push($largeImage.attr("src"));
+                            // result.push($largeImage.length);
+                            // 更新当前进度
+                            var state = $resultHelper.data("state");
+                            state.current = state.current + 1;
+                             $resultHelper.data("state", state);
+
+                        }          , 1000);
+
+                    });
+                    $slickCurrentLarger.click();
+
+             });
+
+            waitForCondition(function(){
+             // 查看当前进度
+                var state = $resultHelper.data("state");
+
+                console.log(state.total, '|' , state.current);
+
+                return state.current >= state.total ;
+            },function(){
+              callback(result);
+            });
+
 
            // ----------------------------------------------------------
-           setTimeout(function(){
-                callback("test_async_exec");
-}          , 2000);
+//            setTimeout(function(){
+//                 // callback($sliderItems.length);
+//                 callback(result);
+// }          , 12000);
             "#;
                 // https://api.flutter.dev/flutter/package-webdriver_async_io/WebDriver/executeAsync.html
 
@@ -222,13 +294,8 @@ impl super::Spider for ShanghaiMusSpider {
                 //     .expect("should be integer variant");
                 //
                 // assert_eq!(2, count);
-                println!("js callback result is : {}",js_result);
-
+                println!("js callback result is : {}", js_result);
             };
-
-            let mut windows = client.windows().await?;
-            let new_window = windows.remove(windows.len() - 1);
-            client.switch_to_window(new_window).await;
 
             client.close_window().await;
             // 看看 跳没
@@ -299,7 +366,14 @@ impl ShanghaiMusSpider {
             return format!("https://quotes.toscrape.com{}", url);
         }
 
+
         return url.to_string();
+    }
+    fn normalize_image_url(&self, url: &str) -> String {
+        let url = url.trim();
+
+
+        return format!("https://www.shanghaimuseum.net/mu/{}", url);
     }
 
     async fn _tmp(&self) {
