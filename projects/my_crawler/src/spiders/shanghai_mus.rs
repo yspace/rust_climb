@@ -17,7 +17,7 @@ use tokio::{
 
 use chrono::prelude::*;
 
-const LOAD_MORE :&str = "__LOAD_MORE__";
+const LOAD_MORE: &str = "__LOAD_MORE__";
 
 pub struct ShanghaiMusSpider {
     webdriver_client: Mutex<Client>,
@@ -45,6 +45,7 @@ pub struct QuotesItem {
     quote: String,
     author: String,
 }
+
 const MORE_ITEMS: &str = "more_items";
 
 #[async_trait]
@@ -68,7 +69,7 @@ impl super::Spider for ShanghaiMusSpider {
             let webdriver = self.webdriver_client.lock().await;
 
             // if(url == LOAD_MORE.to_string()){
-            if(url.starts_with( LOAD_MORE) ){
+            if (url.starts_with(LOAD_MORE)) {
                 println!("load more  !");
 
                 const JS: &'static str = r#"
@@ -86,12 +87,11 @@ impl super::Spider for ShanghaiMusSpider {
                 }
 
                 "#;
-              
+
                 let r = webdriver.execute(JS, vec![]).await?;
                 println!("sleep");
-                sleep(Duration::from_millis(15000)).await;  
-            }else{
-
+                sleep(Duration::from_millis(15000)).await;
+            } else {
                 webdriver.goto(&url).await?;
             }
 
@@ -138,17 +138,17 @@ impl super::Spider for ShanghaiMusSpider {
         let count = {
             let mut index = 0;
             let document = Document::from(html.as_str());
-           
-            let mut target_content  = document.find(
-                Class("shmu-tuwen-list") 
+
+            let mut target_content = document.find(
+                Class("shmu-tuwen-list")
             );
             let target_content = target_content.next().unwrap();
-            let target_content = target_content.html() ;
+            let target_content = target_content.html();
             // println!("[content:] {}", utils::md5(target_content));
-            load_more_suffix = utils::md5(target_content) ;
+            load_more_suffix = utils::md5(target_content);
 
             if url.ends_with(&load_more_suffix) {
-               return Ok((items, vec![])) ;
+                return Ok((items, vec![]));
             }
 
 
@@ -159,19 +159,18 @@ impl super::Spider for ShanghaiMusSpider {
                         .descendant(Class("shmu-box"))
                         .descendant(Name("a")),
                 ),
-            ){
+            ) {
                 index += 1;
 
                 // for node in document.find(Class("shmu-tuwen-list").descendant(Name("a"))) {
                 // println!("{} ({:?})", node.text(), node.attr("href").unwrap());
                 println!("link ({:?})", node.attr("href").unwrap());
                 println!("--");
-                
             }
             index
         };
 
-        let count = 1;
+        // let count = 1; // FIXME:  手动更改测试用
         for index in 1..count {
             // *[@id="form"]//*[@type="text"]
             // let selector = format!("//ul[@class=\"painting-list\"]/li[{}]/a", index);
@@ -193,18 +192,49 @@ impl super::Spider for ShanghaiMusSpider {
 
             client.wait().for_element(Locator::Css("body")).await?;
 
-            // sleep(Duration::from_millis(15000)).await; //  
+            // TODO 睡随机数
+            sleep(Duration::from_millis(5000)).await; //
+            // TODO： 处理fancybox
+
+            let sub_items = {
+                // let webdriver = self.webdriver_client.lock().await;
+                const JS: &'static str = r#"
+            // const [date, callback] = arguments;
+           // var callback = arguments[arguments.length - 1];
+           var callback = arguments[0];
+           // ----------------------------------------------------------
+
+
+           // ----------------------------------------------------------
+           setTimeout(function(){
+                callback("test_async_exec");
+}          , 2000);
+            "#;
+                // https://api.flutter.dev/flutter/package-webdriver_async_io/WebDriver/executeAsync.html
+
+                let js_result = client
+                    .execute_async(
+                        JS,
+                        vec![],
+                    )
+                    .await?;
+                //     .as
+                //     .expect("should be integer variant");
+                //
+                // assert_eq!(2, count);
+                println!("js callback result is : {}",js_result);
+
+            };
 
             let mut windows = client.windows().await?;
-            let new_window = windows.remove(windows.len()-1);
+            let new_window = windows.remove(windows.len() - 1);
             client.switch_to_window(new_window).await;
 
             client.close_window().await;
             // 看看 跳没
-            client.switch_to_window(windows.remove(windows.len()-1)).await;
+            client.switch_to_window(windows.remove(windows.len() - 1)).await;
 
             // client.back().await?;
-
         }
 
         // let quotes = document.find(Class("quote"));
@@ -248,7 +278,7 @@ impl super::Spider for ShanghaiMusSpider {
         let now = Utc::now();
         // let ts: i64 = now.timestamp();
         // let load_more_ = format!("{}_{}",LOAD_MORE,ts);
-        let load_more_ = format!("{}_{}",LOAD_MORE,load_more_suffix);
+        let load_more_ = format!("{}_{}", LOAD_MORE, load_more_suffix);
 
         Ok((items, vec![load_more_]))
         // Ok((items, vec![LOAD_MORE.to_string()]))
