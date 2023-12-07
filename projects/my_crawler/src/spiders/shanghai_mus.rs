@@ -230,22 +230,16 @@ impl super::Spider for ShanghaiMusSpider {
               }, 1000);
             }
 
-           var $sliderItems =   $(".slick-list a.shmu-thumbnail");
+           // var $sliderItems =   $(".slick-list a.shmu-thumbnail","\#slider1");
+           var $sliderItems =   $(".slick-list .shmu-slider-item","\#slider2");
 
             var result = [];
             $("body").append("<div id='rust_result'>");
             var $resultHelper = $("\#rust_result");
             $resultHelper.data("state", { total: $sliderItems.length, current: 0 });
 
-
-            $sliderItems.each(function(index, $item){
-                    $item.click();
-                    $slideCurrentActive =  $(".slick-current" ,"\#slider2");
-
-                    var $slickCurrentLarger =  $(".slick-current" ,"\#slider1");
-
-
-                    $slickCurrentLarger.click(function(){
+            // 大图点击事件处理
+            $(".slick-current" ,"\#slider1").click(function(){
 
                          setTimeout(function(){
                             var $fancyBoxViewPort = $(".fancybox__container");
@@ -255,14 +249,29 @@ impl super::Spider for ShanghaiMusSpider {
                             // 更新当前进度
                             var state = $resultHelper.data("state");
                             state.current = state.current + 1;
-                             $resultHelper.data("state", state);
+                             // $resultHelper.data("state", state); // TODO:
 
-                        }          , 1000);
+                            var $currentSliderItem = $(".slick-current",$sliderItems);
+                            $currentSliderItem.remove().empty();
 
-                    });
-                    $slickCurrentLarger.click();
+                            $("a.shmu-thumbnail",$sliderItems).eq(0).click();
 
-             });
+                        }          , 2000);
+
+              });
+
+              // click the bigImage
+              $("a.shmu-thumbnail",$sliderItems).click(function(){
+                    setTimeout(function(){
+                         $(".slick-current" ,"\#slider1").click();
+                    }, 1000);
+              });
+
+            $(".slick-list a.shmu-thumbnail").eq(0).click();
+            $(".slick-current" ,"\#slider1").click();
+            // $(".slick-current a" ,"\#slider2").click();
+            // $(".slick-current.slick-active a" ,"\#slider1").click();
+
 
             waitForCondition(function(){
              // 查看当前进度
@@ -270,7 +279,8 @@ impl super::Spider for ShanghaiMusSpider {
 
                 console.log(state.total, '|' , state.current);
 
-                return state.current >= state.total ;
+                // return state.current >= state.total ;
+                return false ;
             },function(){
               callback(result);
             });
@@ -278,9 +288,10 @@ impl super::Spider for ShanghaiMusSpider {
 
            // ----------------------------------------------------------
 //            setTimeout(function(){
-//                 // callback($sliderItems.length);
-//                 callback(result);
-// }          , 12000);
+//                 callback($sliderItems.length);
+//                 // callback(result);
+// }          , 2000);
+
             "#;
                 // https://api.flutter.dev/flutter/package-webdriver_async_io/WebDriver/executeAsync.html
 
