@@ -70,6 +70,7 @@ Arguments may be any JSON-able object. WebElements will be converted to the corr
 - [jquery中文手册](https://www.w3school.com.cn/jquery/prop_length.asp)
 - [jquery 手册](https://www.runoob.com/manual/jquery/)
 - [Xpath 详解](https://www.jianshu.com/p/6a0dbb4e246a)
+- [xpath 语法](https://www.w3school.com.cn/xpath/xpath_syntax.asp)
 
 - [Improving async-await's "Future is not Send" diagnostic](https://blog.rust-lang.org/inside-rust/2019/10/11/AsyncAwait-Not-Send-Error-Improvements.html)
 

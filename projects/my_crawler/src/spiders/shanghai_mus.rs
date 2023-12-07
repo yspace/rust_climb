@@ -1,6 +1,12 @@
 use crate::{error::Error, utils};
 use async_trait::async_trait;
 use fantoccini::{Client, ClientBuilder, Locator};
+use fantoccini::actions::{
+    Actions, InputSource, KeyAction, KeyActions,  NullActions,
+
+};
+use fantoccini::actions::{MOUSE_BUTTON_LEFT, MouseActions, PointerAction};
+
 use select::{
     document::Document,
     predicate::{Class, Name, Predicate},
@@ -227,74 +233,77 @@ impl super::Spider for ShanghaiMusSpider {
                   clearInterval(intervalId);
                   callback();
                 }
-              }, 1000);
+              }, 3000);
             }
 
-           // var $sliderItems =   $(".slick-list a.shmu-thumbnail","\#slider1");
-           var $sliderItems =   $(".slick-list .shmu-slider-item","\#slider2");
 
+           var $sliderItems =   $(".slick-list .shmu-slider-item","\#slider2");
             var result = [];
             $("body").append("<div id='rust_result'>");
             var $resultHelper = $("\#rust_result");
             $resultHelper.data("state", { total: $sliderItems.length, current: 0 });
 
-            // 大图点击事件处理
-            $(".slick-current" ,"\#slider1").click(function(){
-
-                         setTimeout(function(){
-                            var $fancyBoxViewPort = $(".fancybox__container");
-                            var $largeImage = $fancyBoxViewPort.find("img");
-                            result.push($largeImage.attr("src"));
-                            // result.push($largeImage.length);
-                            // 更新当前进度
-                            var state = $resultHelper.data("state");
-                            state.current = state.current + 1;
-                             // $resultHelper.data("state", state); // TODO:
-
-                            var $currentSliderItem = $(".slick-current",$sliderItems);
-                            $currentSliderItem.remove().empty();
-
-                            $("a.shmu-thumbnail",$sliderItems).eq(0).click();
-
-                        }          , 2000);
-
-              });
-
-              // click the bigImage
-              $("a.shmu-thumbnail",$sliderItems).click(function(){
-                    setTimeout(function(){
-                         $(".slick-current" ,"\#slider1").click();
-                    }, 1000);
-              });
-
-            $(".slick-list a.shmu-thumbnail").eq(0).click();
-            $(".slick-current" ,"\#slider1").click();
-            // $(".slick-current a" ,"\#slider2").click();
-            // $(".slick-current.slick-active a" ,"\#slider1").click();
+            // FIXME: 这里直接返回小列表的数目
+             callback($sliderItems.length);
 
 
-            waitForCondition(function(){
-             // 查看当前进度
-                var state = $resultHelper.data("state");
-
-                console.log(state.total, '|' , state.current);
-
-                // return state.current >= state.total ;
-                return false ;
-            },function(){
-              callback(result);
-            });
+            // waitForCondition(function(){
+            //
+            // var $sliderItemLinks =   $(".slick-list a.shmu-thumbnail");
+            //
+            // $sliderItemLinks.each(function(index, $item){
+            //         if(index>0) return ;
+            //
+            //         $item.click();
+            //         $slideCurrentActive =  $(".slick-current" ,"\#slider2");
+            //
+            //         var $slickCurrentLarger =  $(".slick-current" ,"\#slider1");
+            //
+            //         $slickCurrentLarger.click(function(){
+            //
+            //              setTimeout(function(){
+            //              // 会由多个实例 如果不点击关闭按钮！
+            //                 var $fancyBoxViewPort = $(".fancybox__container:last");
+            //                 var $largeImage = $fancyBoxViewPort.find("img");
+            //                 result.push($largeImage.attr("src"));
+            //                 // result.push($largeImage.length);
+            //                 // 更新当前进度
+            //                 var state = $resultHelper.data("state");
+            //                 state.current = state.current + 1;
+            //                  $resultHelper.data("state", state);
+            //
+            //             }          , 2000);
+            //
+            //         });
+            //         $slickCurrentLarger.click();
+            //
+            //          setTimeout(function(){
+            //                 $item.remove();
+            //             }          , 4000);
+            //
+            //  });
+            //
+            //  // 查看当前进度
+            //     var state = $resultHelper.data("state");
+            //
+            //     console.log(state.total, '|' , state.current);
+            //
+            //     // return false ;
+            //     return state.current >= state.total ;
+            // },function(){
+            //   callback(result);
+            // });
 
 
            // ----------------------------------------------------------
 //            setTimeout(function(){
-//                 callback($sliderItems.length);
-//                 // callback(result);
-// }          , 2000);
-
+//                 // callback($sliderItems.length);
+//                 callback(result);
+// }          , 12000);
             "#;
-                // https://api.flutter.dev/flutter/package-webdriver_async_io/WebDriver/executeAsync.html
 
+
+                // https://api.flutter.dev/flutter/package-webdriver_async_io/WebDriver/executeAsync.html
                 let js_result = client
                     .execute_async(
                         JS,
@@ -305,7 +314,121 @@ impl super::Spider for ShanghaiMusSpider {
                 //     .expect("should be integer variant");
                 //
                 // assert_eq!(2, count);
-                println!("js callback result is : {}", js_result);
+                let slider_items_count = js_result.as_u64().unwrap();
+                println!("js callback result is : {}", slider_items_count);
+
+                for idx in 0..slider_items_count{
+
+                    // By.xpath("img[title='到百度首页']:nth-child(1)")
+                    // let selector = format!(r#"//div[@id="slider2"]//div[@class="slick-track"]/div[{}]"# ,idx);
+                    let selector = format!(r#"//div[@id="slider2"]//div[@class="slick-track"]/div[position()={}]"# ,idx+1);
+                    println!("xpath: {selector}");
+                    let elem = client.wait().for_element(Locator::XPath(selector.as_str())).await?;
+
+                    // client.execute(
+                    //     "arguments[0].scrollIntoView(true);",
+                    //     vec![serde_json::to_value(elem).unwrap()],
+                    // )
+                    //     .await?;
+                    const JS: &'static str = r#"
+
+
+           var callback = arguments[1];
+           // ----------------------------------------------------------
+
+           function waitForElement(selector, callback) {
+              var intervalId = setInterval(function () {
+                if ($(selector).length > 0) {
+                  clearInterval(intervalId);
+                  callback();
+                }
+              }, 100);
+            }
+
+            function waitForCondition(fn, callback) {
+              var intervalId = setInterval(function () {
+                if (fn() == true) {
+                  clearInterval(intervalId);
+                  callback();
+                }
+              }, 3000);
+            }
+
+            var result = [];
+            $("body").append("<div id='rust_result'>");
+            var $resultHelper = $("\#rust_result");
+            $resultHelper.data("state", { total: 1, current: 0 });
+
+             waitForCondition(function(){
+                         // 查看当前进度
+                            var state = $resultHelper.data("state");
+                            console.log(state.total, '|' , state.current);
+                             return false ;
+                            return state.current >= state.total ;
+                        },function(){
+                          callback(result);
+                        });
+
+                    var $item = $(arguments[0]);
+                       $item.click();
+
+                    $slideCurrentActive =  $(".slick-current" ,"\#slider2");
+                    var $slickCurrentLarger =  $(".slick-current" ,"\#slider1");
+                    $slickCurrentLarger.click(function(){
+                         setTimeout(function(){
+                         // 会由多个实例 如果不点击关闭按钮！
+                            var $fancyBoxViewPort = $(".fancybox__container:last");
+                            var $largeImage = $fancyBoxViewPort.find("img");
+                            result.push($largeImage.attr("src"));
+                            // result.push($largeImage.length);
+                            // 更新当前进度
+                            var state = $resultHelper.data("state");
+                            state.current = state.current + 1;
+                             $resultHelper.data("state", state);
+
+                        }          , 2000);
+
+                    });
+                    $slickCurrentLarger.click();
+
+           // ----------------------------------------------------------
+//            setTimeout(function(){
+//                 // callback($sliderItems.length);
+//                 callback(result);
+// }          , 12000);
+            "#;
+                    let js_result = client
+                        .execute_async(
+                            JS,
+                            vec![serde_json::to_value(elem).unwrap()],
+                        )
+                        .await?;
+                    println!("js callback result is : {}", js_result);
+
+                    // Test mouse down/up.
+                    // let mouse_actions = MouseActions::new("mouse".to_string())
+                    //     .then(PointerAction::MoveToElement {
+                    //         element: elem,
+                    //         duration: None,
+                    //         x: 0,
+                    //         y: 0,
+                    //     })
+                    //     .then(PointerAction::Down {
+                    //         button: MOUSE_BUTTON_LEFT,
+                    //     })
+                    //     .then(PointerAction::Up {
+                    //         button: MOUSE_BUTTON_LEFT,
+                    //     });
+                    //
+                    // client.perform_actions(mouse_actions).await?;
+
+                    // elem.click().await?;
+
+                    // sleep(Duration::from_millis(5000)).await;
+                    println!("index: {idx}");
+                }
+
+
             };
 
             client.close_window().await;
