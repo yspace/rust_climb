@@ -209,6 +209,29 @@ impl super::Spider for ShanghaiMusSpider {
 
             // TODO： 处理fancybox
             let sub_items = {
+                const injectjQuery2: &'static str = r#"
+               function loadScript(scriptUrl)
+               {
+                   var head =  document.getElementsByTagName('head')[0];
+                   var script = document.createElement('script');
+                   script.type = 'text/javascript';
+                   script.src = scriptUrl;
+                   head.appendChild(script);
+               }
+               if (typeof jQuery != 'undefined') {
+               //    if($){
+                    console.log("jquery is already in use!");
+               }else{
+
+                // loadScript('https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js');
+                //    loadScript('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js');
+                   loadScript('https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js');
+                console.log(" loaded jquery!");
+               }
+            "#;
+                // .Replace("\r\n", ""); // 看stackoverflow上面的评论 说是有的驱动只能执行行代码 多行有问题？🤨
+                let r = client.execute(injectjQuery2, vec![]).await?;
+
                 // let webdriver = self.webdriver_client.lock().await;
                 const JS: &'static str = r#"
 
@@ -331,71 +354,17 @@ impl super::Spider for ShanghaiMusSpider {
                     // )
                     //     .await?;
                     const JS: &'static str = r#"
-
-
            var callback = arguments[1];
            // ----------------------------------------------------------
-
-           function waitForElement(selector, callback) {
-              var intervalId = setInterval(function () {
-                if ($(selector).length > 0) {
-                  clearInterval(intervalId);
-                  callback();
-                }
-              }, 100);
-            }
-
-            function waitForCondition(fn, callback) {
-              var intervalId = setInterval(function () {
-                if (fn() == true) {
-                  clearInterval(intervalId);
-                  callback();
-                }
-              }, 3000);
-            }
-
-            var result = [];
-            $("body").append("<div id='rust_result'>");
-            var $resultHelper = $("\#rust_result");
-            $resultHelper.data("state", { total: 1, current: 0 });
-
-             waitForCondition(function(){
-                         // 查看当前进度
-                            var state = $resultHelper.data("state");
-                            console.log(state.total, '|' , state.current);
-                             return false ;
-                            return state.current >= state.total ;
-                        },function(){
-                          callback(result);
-                        });
-
-                    var $item = $(arguments[0]);
-                       $item.click();
-
-                    $slideCurrentActive =  $(".slick-current" ,"\#slider2");
-                    var $slickCurrentLarger =  $(".slick-current" ,"\#slider1");
-                    $slickCurrentLarger.click(function(){
-                         setTimeout(function(){
-                         // 会由多个实例 如果不点击关闭按钮！
-                            var $fancyBoxViewPort = $(".fancybox__container:last");
-                            var $largeImage = $fancyBoxViewPort.find("img");
-                            result.push($largeImage.attr("src"));
-                            // result.push($largeImage.length);
-                            // 更新当前进度
-                            var state = $resultHelper.data("state");
-                            state.current = state.current + 1;
-                             $resultHelper.data("state", state);
-
-                        }          , 2000);
-
-                    });
-                    $slickCurrentLarger.click();
+           var result = 'any-thing';
+            var $item = $(arguments[0]);
+            $item.click();
 
            // ----------------------------------------------------------
-//            setTimeout(function(){
-//                 // callback($sliderItems.length);
-//                 callback(result);
-// }          , 12000);
+           setTimeout(function(){
+                // callback($sliderItems.length);
+                callback(result);
+}          , 2000);
             "#;
                     let js_result = client
                         .execute_async(
@@ -404,6 +373,94 @@ impl super::Spider for ShanghaiMusSpider {
                         )
                         .await?;
                     println!("js callback result is : {}", js_result);
+
+                    const JS2: &'static str = r#"
+          var callback = arguments[arguments.length - 1];
+           // ----------------------------------------------------------
+           var result = 'step2';
+
+           result = $(".slick-current" ,"\#slider1").length;
+
+           // $(".slick-active a","\#slider1").click();
+          $(".slick-current" ,"\#slider1").find("a").click();
+
+           // ----------------------------------------------------------
+           setTimeout(function(){
+                callback(result);
+}          , 2000);
+            "#;
+                    let js_result = client
+                        .execute_async(
+                            JS2,
+                            vec![ ],
+                        )
+                        .await?;
+                    println!("js callback result is : {}", js_result);
+
+                    let elem = client.find(Locator::Id("slider1")).await?;
+                    let rect = elem.rectangle().await?;
+                    println!("{:?}", rect);
+                    let elem_center_x = rect.0 + (rect.2 / 2.0);
+                    let elem_center_y = rect.1 + (rect.3 / 2.0);
+
+                    // Test mouse MoveBy.
+                    let mouse_actions = MouseActions::new("mouse".to_string())
+                        // Move to a position at a known offset from the button.
+                        .then(PointerAction::MoveTo {
+                            duration: None,
+                            // x: 0,
+                            x: elem_center_x as i64,
+                            y: elem_center_y as i64 - 100,
+                        })
+                        // Now move by relative offset so that the cursor is now over the button.
+                        // .then(PointerAction::MoveBy {
+                        //     duration: None,
+                        //     x: elem_center_x as i64,
+                        //     y: 100,
+                        // })
+                        // Press left mouse button down.
+                        .then(PointerAction::Down {
+                            button: MOUSE_BUTTON_LEFT,
+                        })
+                        // Release left mouse button.
+                        .then(PointerAction::Up {
+                            button: MOUSE_BUTTON_LEFT,
+                        });
+                    let actions = Actions::from(mouse_actions);
+                    client.perform_actions(actions).await?;
+                    sleep(Duration::from_millis(5000)).await;
+
+                    const JS3: &'static str = r#"
+          var callback = arguments[arguments.length - 1];
+           // ----------------------------------------------------------
+           var result = 'step3';
+
+           var $fancyBox = $(".fancybox__container:last");
+
+            $fancyBox.find("button.fancybox__button--close").click();
+
+           // ----------------------------------------------------------
+           setTimeout(function(){
+                callback(result);
+}          , 2000);
+            "#;
+                    let js_result = client
+                        .execute_async(
+                            JS3,
+                            vec![ ],
+                        )
+                        .await?;
+
+
+                    // Click the "Get Started" button.
+                    // let element = client
+                    //     .wait()
+                    //     .for_element(Locator::Css(
+                    //         r#"\#slider1"#,
+                    //     ))
+                    //     .await?;
+                    // element.click().await?;
+
 
                     // Test mouse down/up.
                     // let mouse_actions = MouseActions::new("mouse".to_string())
@@ -426,6 +483,7 @@ impl super::Spider for ShanghaiMusSpider {
 
                     // sleep(Duration::from_millis(5000)).await;
                     println!("index: {idx}");
+                    sleep(Duration::from_millis(6000)).await;
                 }
 
 

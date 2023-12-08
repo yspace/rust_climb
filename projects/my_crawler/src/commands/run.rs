@@ -55,6 +55,15 @@ pub fn build_command(config: Settings) -> Command {
         })
 }
 
+use rbatis::RBatis;
+// use rbdc_sqlite::driver::SqliteDriver;
+pub const PG_URL: &'static str = "postgresql://postgres:123456@abyssii:35432/ac";
+pub const MYSQL_URL: &'static str = "mysql://yiqing:yiqing@127.0.0.1:3306/test";
+struct RBatisConnection {
+    // postgres: RBatis,
+    mysql: RBatis,
+}
+
 async fn _run(spider_name: &str) -> Result<(), anyhow::Error> {
     let crawler = Crawler::new(Duration::from_millis(200), 1, 500);
     match spider_name {
@@ -74,6 +83,8 @@ async fn _run(spider_name: &str) -> Result<(), anyhow::Error> {
         }
         "shanghai" => {
             print!("--- shanghaimuseum ---");
+
+
             let spider = spiders::shanghai_mus::ShanghaiMusSpider::new().await?;
             let spider = Arc::new(spider);
             crawler.run(spider).await;
