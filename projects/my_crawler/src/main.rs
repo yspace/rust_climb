@@ -1,6 +1,9 @@
 #[macro_use]
 extern crate lazy_static;
 
+#[macro_use]
+extern crate rbatis;
+
 use std::env::set_var;
 use log::{debug, error, log_enabled, info, Level};
 
@@ -26,6 +29,7 @@ mod app;
 // FIXME：有机会跟settings合并  config ，service 两个模块拷贝自rbatis样例项目
 mod config;
 mod service;
+mod domain;
 
 // use self::reject::{reject, Rejection};
 use generic::Tuple;
