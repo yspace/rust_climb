@@ -40,13 +40,14 @@ regex = "1"
 
 # crypto 密码学
 rust-crypto = "^0.2"
+base64 = "0.21.7"
 
 # rbatis @see https://github.com/rbatis/rbatis
 #rbatis deps
 rbs = { version = "4.5"}
 rbatis = { version = "4.5"}
 #rbdc-sqlite = { version = "4.5" }
-#rbdc-mysql={version="4.5"}
+rbdc-mysql={version="4.5"}
 #rbdc-pg={version="4.5"}
 #rbdc-mssql={version="4.5"}
 once_cell = "1.9"

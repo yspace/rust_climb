@@ -37,12 +37,12 @@ members = [
     "learnings/my-redis",
     "learnings/line_editor",
     "learnings/numbers",
-    "learnings/hi_regex",
+#    "learnings/hi_regex",
     # "learnings/hi_mongo", # 下面有个同名的 可以换着看看
     "learnings/hi_radix",
     "learnings/hi_fltk",
     "learnings/hi_tauri",
-    "learnings/hi_tauri/src-tauri",
+#    "learnings/hi_tauri/src-tauri", # 编译好像有问题 😫
     "learnings/hi_gtk4",
     "learnings/hi_sixtyfps",
     "learnings/hi_iced",

@@ -39,3 +39,30 @@ unsafe { slice::from_raw_parts_mut(self.as_mut_ptr(), self.len) } }
 ```
 就是Vec 拥有切片的所有方法！    
 值得注意的是 这种操作是暂时的 slice不能是可变size的 提供的长度len也只是在解引用的那个时刻。
+
+## 底层实现：
+@see https://nullderef.com/blog/plugin-abi-stable/#_type_conversions
+去噪后的代码逻辑：
+~~~rust
+// A non-null pointer to `T` that indicates ownership.
+pub struct Unique<T: ?Sized> {
+    pointer: *const T, // The data itself
+    _marker: PhantomData<T>, // Indicating that we own a `T`
+}
+
+// Low level type related to allocation
+pub struct RawVec<T> {
+    ptr: Unique<T>,
+    cap: usize,
+}
+
+pub struct Vec<T> {
+    buf: RawVec<T>,
+    len: usize,
+}
+~~~
+
+It’s mostly self-explanatory; a Vec<T> is a pointer to T with a set capacity and length.
+
+[防走失](https://github.com/marioortizmanero/nullderef.com)
+[Rust ABI safe code generator](https://github.com/h33p/cglue/tree/main)

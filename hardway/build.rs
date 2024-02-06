@@ -16,6 +16,14 @@ fn main() {
     //     }
     // }
 
+    // @see https://fasterthanli.me/articles/so-you-want-to-live-reload-rust
+    // let manifest_dir =
+    //     std::path::PathBuf::from(std::env::var_os("CARGO_MANIFEST_DIR").expect("manifest dir should be set"));
+    // let lib_dir = manifest_dir
+    //     .parent()
+    //     .expect("manifest dir should have a parent");
+    // println!("cargo:rustc-link-search={}", lib_dir.display());
+
     env::set_var("MY_TEMP_VAR", "env_value");
 
 }

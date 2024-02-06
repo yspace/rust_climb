@@ -1,11 +1,8 @@
 use crate::{error::Error, utils};
 use async_trait::async_trait;
+use fantoccini::actions::{Actions, InputSource, KeyAction, KeyActions, NullActions};
+use fantoccini::actions::{MouseActions, PointerAction, MOUSE_BUTTON_LEFT};
 use fantoccini::{Client, ClientBuilder, Locator};
-use fantoccini::actions::{
-    Actions, InputSource, KeyAction, KeyActions,  NullActions,
-
-};
-use fantoccini::actions::{MOUSE_BUTTON_LEFT, MouseActions, PointerAction};
 
 use select::{
     document::Document,
@@ -47,6 +44,7 @@ impl ShanghaiMusSpider {
     }
 }
 
+// todo: 这里是跟领域相关的东西了
 #[derive(Debug, Clone)]
 pub struct QuotesItem {
     quote: String,
@@ -64,7 +62,10 @@ impl super::Spider for ShanghaiMusSpider {
     }
 
     fn start_urls(&self) -> Vec<String> {
-        vec!["https://www.shanghaimuseum.net/mu/frontend/pg/collection/antique?antiqueType1Code=CP_HIGH_CLASS_TYPE_3".to_string()]
+        vec![
+            // "https://www.shanghaimuseum.net/mu/frontend/pg/collection/antique?antiqueType1Code=CP_HIGH_CLASS_TYPE_3".to_string(),
+            "https://www.shanghaimuseum.net/mu/frontend/pg/lib1/antique?page=1&viewType=cover&libTypeSort=&libAgeSort=&libTypes=LIB_TYPE_0010&libAges=&searchText=".to_string(),
+            ]
     }
 
     async fn scrape(&self, url: String) -> Result<(Vec<Self::Item>, Vec<String>), Error> {
@@ -82,23 +83,44 @@ impl super::Spider for ShanghaiMusSpider {
 
                 const JS: &'static str = r#"
                 // const [date, callback] = arguments;
-                // consle.log("clear the li list!");
-                 var $li_list = $('ul#list1 li');
-                 console.log($li_list.size());
-                 $li_list.empty().remove();
 
                 console.log('load more!!');
-                var $loadMoreLink = $('ul#list1 .layui-flow-more a');
-                console.log('[load more]',$loadMoreLink.size());
-                if($loadMoreLink.size()>0){
-                    $loadMoreLink.click();
-                }
+                var $nextPageLink = $('a.layui-laypage-next');
+                console.log('[load more]',$nextPageLink.size());
+                // 链接用js点击无用！只能借用引擎了
+                if($nextPageLink.size()>0){
+                    $nextPageLink.click();
+                    // $nextPageLink.is('.layui-disabled');
+                    if($nextPageLink.hasClass('layui-disabled')){
+                        callback('last-page');  
+                    }
+
+                } 
+                 setTimeout(function(){
+                        
+                        callback('ok');
+                 }          , 5000);
 
                 "#;
 
-                let r = webdriver.execute(JS, vec![]).await?;
+                // let r = webdriver.execute(JS, vec![]).await?;
+               // let js_result = webdriver.execute_async(JS, vec![]).await?;
+
+                // println!("[pagination:] js callback result is : {}", js_result);
+
+                // https://github.com/jonhoo/fantoccini/blob/main/tests/elements.rs
+                let next_page_link = webdriver.find(Locator::Css(".layui-laypage-next.layui-disabled")).await;
+               
+               if next_page_link.is_none() {
+
+               }
+                 
+                // let is_ =  next_page_link.css_value("layui-disabled").await?;
+
+
                 println!("sleep");
                 sleep(Duration::from_millis(15000)).await;
+
             } else {
                 webdriver.goto(&url).await?;
             }
@@ -147,24 +169,26 @@ impl super::Spider for ShanghaiMusSpider {
             let mut index = 0;
             let document = Document::from(html.as_str());
 
+            // find 返回了一个迭代器
             let mut target_content = document.find(
-                Class("shmu-tuwen-list")
+                // Class("shmu-tuwen-list")
+                Class("shmu-columns"),
             );
             let target_content = target_content.next().unwrap();
             let target_content = target_content.html();
-            // println!("[content:] {}", utils::md5(target_content));
+            //  println!("[content:] {}", target_content);
             load_more_suffix = utils::md5(target_content);
 
             if url.ends_with(&load_more_suffix) {
+                println!("[load more end!] ");
                 return Ok((items, vec![]));
             }
 
-
             for node in document.find(
-                Class("shmu-tuwen-list").descendant(
-                    Name("li")
-                        .descendant(Class("show"))
-                        .descendant(Class("shmu-box"))
+                Class("lib1-grid").descendant(
+                    Name("div")
+                        .descendant(Class("lib1-grid-item"))
+                        // .descendant(Class("shmu-box"))
                         .descendant(Name("a")),
                 ),
             ) {
@@ -178,13 +202,16 @@ impl super::Spider for ShanghaiMusSpider {
             index
         };
 
+        println!("count: {}", count);
         // let count = 1; // FIXME:  手动更改测试用
         for index in 1..count {
             // *[@id="form"]//*[@type="text"]
             // let selector = format!("//ul[@class=\"painting-list\"]/li[{}]/a", index);
             // let selector = format!("//ul[@id=\"list1\" and @class='shmu-tuwen-list']//li[{}]/a", index);
             let selector = format!(
-                "//ul[@id=\"list1\" and @class='shmu-tuwen-list']/li[{}]/div[@class='show']//a",
+                // "//ul[@id=\"list1\" and @class='shmu-tuwen-list']/li[{}]/div[@class='show']//a",
+                // "//div[@id=\"list1\" and @class='shmu-tuwen-list']/li[{}]/div[@class='show']//a",
+                "//div[@class='lib1-grid-item'][{}]//a",
                 index
             );
             // NOTE：⚠️ 注意await 前面出现的变量可能变为async块的依赖 所以要求可 `Send`
@@ -203,7 +230,6 @@ impl super::Spider for ShanghaiMusSpider {
             // TODO 睡随机数
             sleep(Duration::from_millis(5000)).await; //
 
-
             let mut windows = client.windows().await?;
             let new_window = windows.remove(windows.len() - 1);
             // 切换到新tab窗口去
@@ -220,8 +246,8 @@ impl super::Spider for ShanghaiMusSpider {
                    script.src = scriptUrl;
                    head.appendChild(script);
                }
-               if (typeof jQuery != 'undefined') {
-               //    if($){
+            //    if (typeof jQuery != 'undefined') {
+                  if($){
                     console.log("jquery is already in use!");
                }else{
 
@@ -327,28 +353,98 @@ impl super::Spider for ShanghaiMusSpider {
 // }          , 12000);
             "#;
 
-
                 // https://api.flutter.dev/flutter/package-webdriver_async_io/WebDriver/executeAsync.html
-                let js_result = client
-                    .execute_async(
-                        JS,
-                        vec![],
-                    )
-                    .await?;
+                let js_result = client.execute_async(JS, vec![]).await?;
                 //     .as
                 //     .expect("should be integer variant");
                 //
                 // assert_eq!(2, count);
                 let slider_items_count = js_result.as_u64().unwrap();
-                println!("js callback result is : {}", slider_items_count);
+                println!(
+                    "[slider_items_count:] js callback result is : {}",
+                    slider_items_count
+                );
+                // <<</    ⚠️⚠️⚠️  改版后的逻辑 
+                if slider_items_count == 0 {
+                    println!("new ! slider_items_count is 0");
 
-                for idx in 0..slider_items_count{
+                    
+                    let elem = client.find(Locator::Css(".lib2-main")).await?;
+                    let rect = elem.rectangle().await?;
+                    println!("{:?}", rect);
+                    let elem_center_x = rect.0 + (rect.2 / 2.0);
+                    let elem_center_y = rect.1 + (rect.3 / 2.0);
 
+                    // Test mouse MoveBy.
+                    let mouse_actions = MouseActions::new("mouse".to_string())
+                        // Move to a position at a known offset from the button.
+                        .then(PointerAction::MoveTo {
+                            duration: None,
+                            // x: 0,
+                            x: elem_center_x as i64,
+                            y: elem_center_y as i64 - 100,
+                        })
+                        // Now move by relative offset so that the cursor is now over the button.
+                        // .then(PointerAction::MoveBy {
+                        //     duration: None,
+                        //     x: elem_center_x as i64,
+                        //     y: 100,
+                        // })
+                        // Press left mouse button down.
+                        .then(PointerAction::Down {
+                            button: MOUSE_BUTTON_LEFT,
+                        })
+                        // Release left mouse button.
+                        .then(PointerAction::Up {
+                            button: MOUSE_BUTTON_LEFT,
+                        });
+                    let actions = Actions::from(mouse_actions);
+                    client.perform_actions(actions).await?;
+
+                    // ## 抓取图片地址
+
+                    const JS3: &'static str = r#"
+          var callback = arguments[arguments.length - 1];
+           // ----------------------------------------------------------
+           var result = 'step3';
+
+           var $fancyBox = $(".fancybox__container:last");
+
+            var src = $fancyBox.find(".fancybox__content").find("img").attr("src");
+            callback(src);
+
+           // ----------------------------------------------------------
+//            setTimeout(function(){
+//                 callback(result);
+// }          , 2000);
+            "#;
+                    let js_result = client.execute_async(JS3, vec![]).await?;
+
+                    
+                    // println!("img src: {:?}",js_result.as_str());
+                    let img_url = self.normalize_image_url(js_result.as_str().unwrap());
+                    println!("img src: {:?}",img_url);
+
+                    // todo： 下载图片啦：😄
+
+                    sleep(Duration::from_millis(5000)).await;
+                }
+
+                // end  // ⚠️⚠️⚠️  改版后的逻辑 />>>
+
+                // 这个是针对有多个小图的情形
+                for idx in 0..slider_items_count {
                     // By.xpath("img[title='到百度首页']:nth-child(1)")
                     // let selector = format!(r#"//div[@id="slider2"]//div[@class="slick-track"]/div[{}]"# ,idx);
-                    let selector = format!(r#"//div[@id="slider2"]//div[@class="slick-track"]/div[position()={}]"# ,idx+1);
+                    let selector = format!(
+                        r#"//div[@id="slider2"]//div[@class="slick-track"]/div[position()={}]"#,
+                        idx + 1
+                    );
                     println!("xpath: {selector}");
-                    let elem = client.wait().for_element(Locator::XPath(selector.as_str())).await?;
+                    let elem = client
+                        .wait()
+                        .for_element(Locator::XPath(selector.as_str()))
+                        .await?;
 
                     // client.execute(
                     //     "arguments[0].scrollIntoView(true);",
@@ -369,10 +465,7 @@ impl super::Spider for ShanghaiMusSpider {
 }          , 2000);
             "#;
                     let js_result = client
-                        .execute_async(
-                            JS,
-                            vec![serde_json::to_value(elem).unwrap()],
-                        )
+                        .execute_async(JS, vec![serde_json::to_value(elem).unwrap()])
                         .await?;
                     println!("js callback result is : {}", js_result);
 
@@ -391,12 +484,7 @@ impl super::Spider for ShanghaiMusSpider {
                 callback(result);
 }          , 2000);
             "#;
-                    let js_result = client
-                        .execute_async(
-                            JS2,
-                            vec![ ],
-                        )
-                        .await?;
+                    let js_result = client.execute_async(JS2, vec![]).await?;
                     println!("js callback result is : {}", js_result);
 
                     let elem = client.find(Locator::Id("slider1")).await?;
@@ -446,13 +534,7 @@ impl super::Spider for ShanghaiMusSpider {
                 callback(result);
 }          , 2000);
             "#;
-                    let js_result = client
-                        .execute_async(
-                            JS3,
-                            vec![ ],
-                        )
-                        .await?;
-
+                    let js_result = client.execute_async(JS3, vec![]).await?;
 
                     // Click the "Get Started" button.
                     // let element = client
@@ -462,7 +544,6 @@ impl super::Spider for ShanghaiMusSpider {
                     //     ))
                     //     .await?;
                     // element.click().await?;
-
 
                     // Test mouse down/up.
                     // let mouse_actions = MouseActions::new("mouse".to_string())
@@ -487,13 +568,13 @@ impl super::Spider for ShanghaiMusSpider {
                     println!("index: {idx}");
                     sleep(Duration::from_millis(6000)).await;
                 }
-
-
             };
 
             client.close_window().await;
             // 看看 跳没
-            client.switch_to_window(windows.remove(windows.len() - 1)).await;
+            client
+                .switch_to_window(windows.remove(windows.len() - 1))
+                .await;
 
             // client.back().await?;
         }
@@ -560,12 +641,10 @@ impl ShanghaiMusSpider {
             return format!("https://quotes.toscrape.com{}", url);
         }
 
-
         return url.to_string();
     }
     fn normalize_image_url(&self, url: &str) -> String {
         let url = url.trim();
-
 
         return format!("https://www.shanghaimuseum.net/mu/{}", url);
     }

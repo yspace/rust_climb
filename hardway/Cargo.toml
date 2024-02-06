@@ -73,3 +73,5 @@ regex = "1.8.1"
 
 # crypto 密码学
 rust-crypto = "^0.2"
+
+# 并发 crossbeam

@@ -84,8 +84,32 @@ async fn _run(spider_name: &str) -> Result<(), anyhow::Error> {
         "shanghai" => {
             print!("--- shanghaimuseum ---");
 
+            use crate::service::CONTEXT;
+            use crate::domain::table;
+
+            //database
+            CONTEXT.init_database().await;
+            table::sync_tables(&CONTEXT.rb).await;
+            table::sync_tables_data(&CONTEXT.rb).await;
+
 
             let spider = spiders::shanghai_mus::ShanghaiMusSpider::new().await?;
+            let spider = Arc::new(spider);
+            crawler.run(spider).await;
+        },
+        "shanghai2" => {
+            print!("--- shanghaimuseum2 ---");
+
+            use crate::service::CONTEXT;
+            use crate::domain::table;
+
+            //database
+            CONTEXT.init_database().await;
+            table::sync_tables(&CONTEXT.rb).await;
+            table::sync_tables_data(&CONTEXT.rb).await;
+
+
+            let spider = spiders::shanghai_mus2::ShanghaiMusSpider::new().await?;
             let spider = Arc::new(spider);
             crawler.run(spider).await;
         }

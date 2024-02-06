@@ -6,6 +6,7 @@ pub mod github;
 pub mod quotes;
 pub mod cvedetails;
 pub mod shanghai_mus;
+pub mod shanghai_mus2;
 
 #[async_trait]
 pub trait Spider: Send + Sync {

@@ -1,5 +1,4 @@
-
-
+mod scrape_service;
 
 use std::sync::Arc;
 pub use crate::config::config::ApplicationConfig;
@@ -7,7 +6,8 @@ pub use crate::config::config::ApplicationConfig;
 // pub use mem_service::*;
 use once_cell::sync::Lazy;
 use rbatis::rbatis::RBatis;
-
+// use crate::service::scrape_service::ScrapeService;
+use scrape_service::ScrapeService;
 
 
 /// CONTEXT is all of the service struct
@@ -33,6 +33,7 @@ pub struct ServiceContext {
     // pub sys_dict_service: SysDictService,
     // pub sys_auth_service: SysAuthService,
     // pub sys_trash_service: SysTrashService,
+    pub scrape_service: ScrapeService ,
 }
 
 impl ServiceContext {
@@ -42,9 +43,9 @@ impl ServiceContext {
         //     "[abs_admin] rbatis pool init ({})...",
         //     self.config.database_url
         // );
-        // self.rb
-        //     .link(include!("../../target/driver.rs"), &self.config.database_url).await
-        //     .expect("[abs_admin] rbatis pool init fail!");
+        self.rb
+            .link(include!("../../target/driver.rs"), &self.config.database_url).await
+            .expect("[abs_admin] rbatis pool init fail!");
         // self.rb.intercepts.push(Arc::new(SysTrashService::new()));
         // log::info!(
         //     "[abs_admin] rbatis pool init success! pool state = {}",
@@ -63,11 +64,11 @@ impl Default for ServiceContext {
         ServiceContext {
             rb: {
                 let rb = RBatis::new();
-                // if rb.is_debug_mode() == false && config.debug.eq(&true) {
-                //     panic!(
-                //         r#"please edit application.json5   “debug: false” "#
-                //     );
-                // }
+                if rb.is_debug_mode() == false && config.debug.eq(&true) {
+                    panic!(
+                        r#"please edit application.json5   “debug: false” "#
+                    );
+                }
                 rb
             },
             // cache_service: CacheService::new(&config).unwrap(),
@@ -79,6 +80,7 @@ impl Default for ServiceContext {
             // sys_dict_service: SysDictService {},
             // sys_auth_service: SysAuthService {},
             // sys_trash_service: SysTrashService::new(),
+            scrape_service: ScrapeService::new(&config) ,
             config,
         }
     }

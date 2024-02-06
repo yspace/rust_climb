@@ -183,6 +183,26 @@ $ rustup override set nightly
 
 - [effective-rust](https://www.lurklurk.org/effective-rust/use-types.html)
 - [std标准库 stdio 阅读](https://rustwiki.org/zh-CN/src/std/io/stdio.rs.html)
+### 插件系统
+- [A Plugin System in Rust](https://nullderef.com/series/rust-plugins/)
+
+- [Implementing plugins with dynamically loaded libraries and Rust](https://github.com/Michael-F-Bryan/plugins_in_rust)
+- [This example is the simplest plugin I could think of that is both written and loaded with Rust under the C ABI.](https://github.com/marioortizmanero/pdk-experiments/tree/master/dynamic-simple)
+  https://github.com/marioortizmanero/pdk-experiments
+  来自[tremor](https://github.com/tremor-rs)
+- https://github.com/nagisa/rust_libloading
+- https://docs.rs/dlopen/0.1.8/dlopen/
+- https://github.com/emoon/dynamic_reload
+- https://github.com/rodrimati1992/abi_stable_crates
+
+- [So you want to live-reload Rust](https://fasterthanli.me/articles/so-you-want-to-live-reload-rust)
+- [Plugins in Rust](https://adventures.michaelfbryan.com/posts/plugins-in-rust/)
+
+- [Dynamic Loading & Plugins](https://michael-f-bryan.github.io/rust-ffi-guide/dynamic_loading.html)
+- [](https://zicklag.github.io/rust-tutorials/rust-plugins.html)
+- [bevy-dynamic-plugin](https://github.com/bevyengine/bevy/blob/v0.5.0/crates/bevy_dynamic_plugin/src/loader.rs)
+
+
 ## 项目布局
 - [dtool](https://github.com/guoxbin/dtool)
 - [cargo]()

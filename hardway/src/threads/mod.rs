@@ -147,6 +147,8 @@ mod _threads {
         // This might happen if the operating system runs out of memory, or if resource limits have been applied to your program.
         let rslt = tb.spawn(|| {
             println!("thread name: {}", thread::current().name().unwrap());
+            println!("main thread id = {:?}", std::thread::current().id());
+
         });
 
         rslt.unwrap().join().unwrap();

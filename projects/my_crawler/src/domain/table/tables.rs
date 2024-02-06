@@ -7,6 +7,8 @@ use rbatis::rbdc::DateTime;
 use rbatis::table_sync::{ColumMapper, MssqlTableMapper, MysqlTableMapper, PGTableMapper, SqliteTableMapper};
 use crate::domain::table::LoginCheck::PasswordCheck;
 
+use crate::domain::scrape ;
+
 ///Permission Resource Table
 #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 pub struct SysPermission {
@@ -163,6 +165,8 @@ pub async fn sync_tables(rb: &RBatis) {
         create_date: Some(DateTime::now()),
     };
     let _ = RBatis::sync(&conn, mapper, &table, "sys_trash").await;
+
+    scrape::tables::sync(rb,mapper).await ;
 }
 
 pub async fn sync_tables_data(rb: &RBatis) {

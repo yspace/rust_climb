@@ -2,6 +2,8 @@
 mod mutable_globals;
 mod once_cells;
 mod lazy_statics;
+mod rbatis;
+mod once_lock;
 
 #[test]
 fn it_works(){

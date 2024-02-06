@@ -56,6 +56,7 @@ Arguments may be any JSON-able object. WebElements will be converted to the corr
 
 ## 运行
 - 先要运行webdriver
+  cargo 安装 > cargo install geckodriver
   》 geckodriver --port 4444
   或者
   》  chromedriver --port=4444
@@ -65,6 +66,58 @@ Arguments may be any JSON-able object. WebElements will be converted to the corr
 - 运行程序
 >  cargo run -p my_crawler -- run --spider=quotes
 
+
+## rbatis 
+类似 ``mybatis``
+dynamic SQL 动态sql是其亮点 关键要明白sql是根据所传参数情况来动态拼接的概念 比如不为空 则对应的sql where部分就会多出 and xx=xxx
+~~~rust
+#[py_sql(
+    "`select * from biz_activity where delete_flag = 0`
+                  if arg.name != '':
+                    ` and name=#{arg.name}`"
+)]
+async fn py_select_page_by_json(
+    rb: &mut dyn Executor,
+    arg: &mut Value,
+) -> Result<Vec<BizActivity>, Error> {
+    impled!()
+}
+
+async fn some_f() {
+let mut value_map = ValueMap::new();
+    value_map.insert("name".into(), "test".into());
+    let mut arg = to_value(value_map).unwrap();
+    let a = py_select_page_by_json(&mut rb.clone(), &mut arg)
+        .await
+        .unwrap();
+    println!(">>>>>>>>>>>> {:?}", a);
+  
+  
+}
+
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct User {
+  pub id: Option<String>,
+  pub username: Option<String>,
+  pub password: Option<String>,
+  pub email: Option<String>,
+  pub created_at: Option<FastDateTime>,
+}
+
+rbatis::crud!(User{});
+
+impl_select!(User{select_by_id(id:String) -> Option => "`where id = #{id} limit 1`"});
+impl_select!(User{select_by_username(username:String) -> Option => "`where username = #{username} limit 1`"});
+impl_select!(User{select_by_email(email:String) -> Option => "`where email = #{email} limit 1`"});
+impl_update!(User{update_by_name(name:&str, id: String) => "`where id = #{id}`"});
+
+~~~
+最后一个参数就是一个json值对象 或者其他结构体
+
+参考： [超全MyBatis动态SQL详解！( 看完SQL爽多了)](https://zhuanlan.zhihu.com/p/604723029)
+
+[例子](https://github.com/rbatis/example/tree/main/src)
 
 ## 参考：
 - [jquery中文手册](https://www.w3school.com.cn/jquery/prop_length.asp)
