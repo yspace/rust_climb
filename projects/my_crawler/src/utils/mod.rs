@@ -1,7 +1,7 @@
 use crypto::digest::Digest;
 use crypto::md5::Md5;
 
-mod file_ops;
+pub mod file_ops;
  
 pub fn md5<S:Into<String>>(input: S) -> String {
     let mut md5 = Md5::new();

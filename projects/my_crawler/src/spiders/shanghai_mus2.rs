@@ -53,6 +53,45 @@ pub struct QuotesItem {
 
 const MORE_ITEMS: &str = "more_items";
 
+
+ // ## typed struct data
+ use serde::{Deserialize, Serialize};
+ // use serde_json::Result;
+
+ #[derive(Serialize, Deserialize,Debug,Default)]
+struct ProcessState{
+    page: usize,
+    offset: usize,
+}
+
+#[test]
+fn test_process_state_init()  {
+    use crate::utils ;
+    let _ = utils::file_ops::write_struct_to_file(ProcessState{
+        page: 1,
+        offset:0,
+    });
+
+    let init_state = utils::file_ops::read_struct_from_file::<ProcessState>() ;
+    println!("init state: {:?}", init_state); 
+}
+use crate::utils::file_ops ;
+fn read_state()->ProcessState{
+    utils::file_ops::read_struct_from_file::<ProcessState>().unwrap() 
+}
+fn write_state(p: ProcessState){
+    let _ =  file_ops::write_struct_to_file(p); 
+}
+#[test]
+fn test_write_read_state() {
+    let s = ProcessState{page: 1, offset:0} ;
+
+    write_state(s) ;
+
+    let s2 = read_state() ;
+    println!("process-state: {:?}", s2);
+}
+
 #[async_trait]
 impl super::Spider for ShanghaiMusSpider {
     type Item = QuotesItem;

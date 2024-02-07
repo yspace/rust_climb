@@ -1,7 +1,4 @@
 {
-  "name": "John",
-  "age": 28,
-  "phones": [
-    "John"
-  ]
+  "page": 1,
+  "offset": 0
 }
