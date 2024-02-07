@@ -1,6 +1,7 @@
 use std::path::PathBuf;
 
 mod path;
+mod ops;
 
 pub fn run() {
     path::run();

@@ -183,6 +183,8 @@ $ rustup override set nightly
 
 - [effective-rust](https://www.lurklurk.org/effective-rust/use-types.html)
 - [std标准库 stdio 阅读](https://rustwiki.org/zh-CN/src/std/io/stdio.rs.html)
+
+- [fantoccini 源码阅读](https://github.com/jonhoo/fantoccini/)
 ### 插件系统
 - [A Plugin System in Rust](https://nullderef.com/series/rust-plugins/)
 

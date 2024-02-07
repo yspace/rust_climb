@@ -111,15 +111,17 @@ impl super::Spider for ShanghaiMusSpider {
                 // https://github.com/jonhoo/fantoccini/blob/main/tests/elements.rs
                 let next_page_link = webdriver.find(Locator::Css(".layui-laypage-next.layui-disabled")).await;
                
-               if next_page_link.is_none() {
-
+               if next_page_link.is_ok() {
+                    // 最后一页
+               }else{
+                 let next_page_link = webdriver.find(Locator::Css(".layui-laypage-next")).await?;
+                 next_page_link.click().await?;
                }
                  
                 // let is_ =  next_page_link.css_value("layui-disabled").await?;
 
-
                 println!("sleep");
-                sleep(Duration::from_millis(15000)).await;
+                sleep(Duration::from_millis(5000)).await;
 
             } else {
                 webdriver.goto(&url).await?;
@@ -217,6 +219,22 @@ impl super::Spider for ShanghaiMusSpider {
             // NOTE：⚠️ 注意await 前面出现的变量可能变为async块的依赖 所以要求可 `Send`
             let client = self.webdriver_client.lock().await;
             // Click the img.
+            let el_link = client
+                .wait()
+                //r#"a[href="/learn/get-started"]"#,
+                .for_element(Locator::XPath(selector.as_str()))
+                .await?;
+            // @see https://www.javascripttutorial.net/javascript-dom/javascript-scrollintoview/
+            // @see https://stackoverflow.com/questions/4884839/how-do-i-get-an-element-to-scroll-into-view-using-jquery
+            // FIXME: scroll_into_view  { element.scrollIntoView(true);|element.scrollIntoView(false); }
+            // scrollXxxx 相关的方法和属性：scrollIntoView()｜scrollTo()｜scroll()｜scrollBy()｜scrollTop｜scrollLeft:｜location.href[to an anchor URL that matches the element’s id.]
+            
+            client.execute(
+                "arguments[0].scrollIntoView(true);",
+                vec![serde_json::to_value(el_link).unwrap()]
+            )
+            .await?;
+
             let el_link = client
                 .wait()
                 //r#"a[href="/learn/get-started"]"#,
