@@ -22,6 +22,8 @@ use std::fs::OpenOptions;
 use std::io::prelude::*;
 use std::path::Path;
 
+use serde::de::DeserializeOwned;
+
 fn main2() -> std::io::Result<()> {
     let mut file = OpenOptions::new()
         .append(true)
@@ -151,7 +153,7 @@ fn test_file_ops() {
 
 static MY_STATE_FILE: &'static str = "_runtime/state.json";
 
-pub fn read_struct() {
+pub fn read_struc0() {
     let file = File::open(MY_STATE_FILE);
 
     if file.is_err() {
@@ -159,12 +161,55 @@ pub fn read_struct() {
     }
 }
 
+// use serde::de::{self /* , Expected, Unexpected*/};
+// pub fn read_struct<'_, T>() -> serde_json::Result<T>
+// where
+//     T: de::Deserialize<'_>,
+// {
+//     let data = fs::read_to_string(MY_STATE_FILE).expect("LogRocket: error reading file");
+//             serde_json::from_str(&data) 
+// }
+
+// @see https://stackoverflow.com/questions/73889074/how-to-implement-a-generic-serde-jsonfrom-str
+// @see reqwest::blocking::get  .json::<XXX>();
+// @see https://serde.rs/lifetimes.html 太复杂好像
+fn read_struct_from_file <T> ( ) -> Result<T, Box<dyn std::error::Error>>
+where T: DeserializeOwned
+{
+    // Open the file in read-only mode with buffer.
+    let file = File::open(MY_STATE_FILE)?;
+    let reader = BufReader::new(file);
+
+    // Read the JSON contents of the file as an instance of `User`.
+    let u = serde_json::from_reader(reader)?;
+
+    // Return the `User`.
+    Ok(u)
+}
+
+#[test]
+fn test_read_struct_from_json() {
+    // ## typed struct data
+    use serde::{Deserialize, Serialize};
+    // use serde_json::Result;
+
+    #[derive(Serialize, Deserialize,Debug,Default)]
+    struct Person {
+        name: String,
+        age: u8,
+        phones: Vec<String>,
+    }
+
+    let p : Result<Person,Box<dyn std::error::Error>> = read_struct_from_file();
+    println!("{:?}", p);
+}
+
 #[test]
 fn test_metadata() {
     use std::fs::{File, Metadata};
 
     fn run() -> std::io::Result<()> {
-        let file: File = File::create(MY_STATE_FILE)?;
+        let file: File = File::create(MY_STATE_FILE)?; // open?
         let metadata: Metadata = file.metadata()?;
         println!("metadata {:?}", metadata);
 
