@@ -242,5 +242,47 @@ fn test_json() {
 
     let p: Person = serde_json::from_str(data).unwrap();
     println!("person: {:?}", p);
+    println!("{:?}", serde_json::to_string_pretty(&p).expect("my-error-category: error parsing to JSON"));
+
+
+    // ## 3 
+    fn _run() -> std::io::Result<() /* , std::io::Error */> {
+        let mut p: Person = {
+            let data = fs::read_to_string(MY_STATE_FILE).expect("LogRocket: error reading file");
+            serde_json::from_str(&data).unwrap()
+        };
+        p.age  += 10;
+        fs::write( MY_STATE_FILE, serde_json::to_string_pretty(&p).unwrap())?;
+    
+        Ok(())
+    }
+    let _rslt = _run();
+}
+
+
+
+fn file_error() -> std::io::Result<()> {
+    let mut file = match File::open("info.txt") {
+        Ok(file) => file,
+        Err(error) => {
+            match error.kind() {
+                std::io::ErrorKind::NotFound => {
+                    println!("File not found");
+                    return Ok(());
+                }
+                _ => return Err(error),
+            }
+        }
+    };
+    let mut contents = Vec::new();
+    file.read_to_end(&mut contents)?;
+
+    println!("File contents: {:?}", contents);
+
+    Ok(())
+}
+#[test]
+fn test_file_error(){
+    let _rslt = file_error() ;
 
 }
