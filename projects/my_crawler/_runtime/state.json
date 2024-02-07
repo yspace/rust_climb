@@ -1,8 +1,7 @@
 {
-  "name": "John Doe",
-  "age": 53,
+  "name": "John",
+  "age": 28,
   "phones": [
-    "+44 1234567",
-    "+44 2345678"
+    "John"
   ]
 }

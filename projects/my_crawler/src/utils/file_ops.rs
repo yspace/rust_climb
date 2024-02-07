@@ -153,6 +153,24 @@ fn test_file_ops() {
 
 static MY_STATE_FILE: &'static str = "_runtime/state.json";
 
+pub fn write_struct_to_file<T>(t: T) -> std::io::Result<() /* , std::io::Error */>
+where T:Sized + Serialize, {
+    
+    fs::write( MY_STATE_FILE, serde_json::to_string_pretty(&t).unwrap())?;
+
+    Ok(())
+}
+
+#[test]
+fn test_write_struct_to_file(){
+    let p = Person{
+        name: "John".to_string(),
+        age: 28,
+        phones: vec!["John".to_string()],
+    };
+   let _rslt = write_struct_to_file(p) ;
+}
+
 pub fn read_struc0() {
     let file = File::open(MY_STATE_FILE);
 
@@ -172,9 +190,9 @@ pub fn read_struc0() {
 
 // @see https://stackoverflow.com/questions/73889074/how-to-implement-a-generic-serde-jsonfrom-str
 // @see reqwest::blocking::get  .json::<XXX>();
-// @see https://serde.rs/lifetimes.html 太复杂好像
-fn read_struct_from_file <T> ( ) -> Result<T, Box<dyn std::error::Error>>
-where T: DeserializeOwned
+// @see https://serde.rs/lifetimes.html trait 带生命周期 太复杂 有空再说！
+pub fn read_struct_from_file <T> ( ) -> Result<T, Box<dyn std::error::Error>>
+where T: DeserializeOwned  /* + Default */
 {
     // Open the file in read-only mode with buffer.
     let file = File::open(MY_STATE_FILE)?;
@@ -187,18 +205,20 @@ where T: DeserializeOwned
     Ok(u)
 }
 
+ // ## typed struct data
+ use serde::{Deserialize, Serialize};
+ // use serde_json::Result;
+
+ #[derive(Serialize, Deserialize,Debug,Default)]
+ struct Person {
+     name: String,
+     age: u8,
+     phones: Vec<String>,
+ }
+
 #[test]
 fn test_read_struct_from_json() {
-    // ## typed struct data
-    use serde::{Deserialize, Serialize};
-    // use serde_json::Result;
-
-    #[derive(Serialize, Deserialize,Debug,Default)]
-    struct Person {
-        name: String,
-        age: u8,
-        phones: Vec<String>,
-    }
+   
 
     let p : Result<Person,Box<dyn std::error::Error>> = read_struct_from_file();
     println!("{:?}", p);
