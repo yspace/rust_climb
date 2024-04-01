@@ -157,6 +157,7 @@ $ rustup override set nightly
 
 - [rust-tutorial](https://www.tutorialspoint.com/rust/index.htm)
 - [Rust Lifetimes](https://www.youtube.com/watch?v=1QoT9fmPYr8&ab_channel=DougMilford) 据说是生命周期解说最好的视频
+- [带生命周期的trait ｜ trait bound](https://serde.rs/lifetimes.html)
 
 - [The "24 days of Rust" article series.](https://zsiciarz.github.io/24daysofrust/book/vol2/day6.html)
 
@@ -258,6 +259,9 @@ https://stackoverflow.com/questions/74045131/error-linking-with-cc-failed-exit-s
 macos 独有现象 
 做： （`xcode-select reset` Reset your Xcode Install on macOS)[https://gist.github.com/Justintime50/2349ff5e62555aa097acbf519bbc27af] 后正常
 
+先确保安装了 c 编译器
+> xcode-select --install
+
 
 ### 查看库features
 cargo tree --edges features
@@ -319,6 +323,7 @@ ProxyCommand nc -X connect -x <ip>:<port> %h %p
 > rm ~/.cargo/.package-cache
 
 - 可以手动 删掉~/.cargo 下的一些源码 有的太占空间了
+> rm -R ~/.cargo/registry
 > open ~/.cargo/registry/src
 
 - 使用代理

@@ -1,3 +1,4 @@
+use crate::utils::download::fetch_url;
 use crate::{error::Error, utils};
 use async_trait::async_trait;
 use fantoccini::actions::{Actions, InputSource, KeyAction, KeyActions, NullActions};
@@ -53,45 +54,44 @@ pub struct QuotesItem {
 
 const MORE_ITEMS: &str = "more_items";
 
+// ## typed struct data
+use serde::{Deserialize, Serialize};
+// use serde_json::Result;
 
- // ## typed struct data
- use serde::{Deserialize, Serialize};
- // use serde_json::Result;
-
- #[derive(Serialize, Deserialize,Debug,Default)]
-struct ProcessState{
+#[derive(Serialize, Deserialize, Debug, Default)]
+struct ProcessState {
     page: usize,
     offset: usize,
 }
 
 #[test]
-fn test_process_state_init()  {
-    use crate::utils ;
-    let _ = utils::file_ops::write_struct_to_file(ProcessState{
-        page: 1,
-        offset:0,
-    });
+fn test_process_state_init() {
+    use crate::utils;
+    let _ = utils::file_ops::write_struct_to_file(ProcessState { page: 1, offset: 0 });
 
-    let init_state = utils::file_ops::read_struct_from_file::<ProcessState>() ;
-    println!("init state: {:?}", init_state); 
+    let init_state = utils::file_ops::read_struct_from_file::<ProcessState>();
+    println!("init state: {:?}", init_state);
 }
-use crate::utils::file_ops ;
-fn read_state()->ProcessState{
-    utils::file_ops::read_struct_from_file::<ProcessState>().unwrap() 
+use crate::utils::file_ops;
+fn read_state() -> ProcessState {
+    utils::file_ops::read_struct_from_file::<ProcessState>().unwrap()
 }
-fn write_state(p: ProcessState){
-    let _ =  file_ops::write_struct_to_file(p); 
+fn write_state(p: ProcessState) {
+    let _ = file_ops::write_struct_to_file(p);
 }
 #[test]
 fn test_write_read_state() {
-    let s = ProcessState{page: 1, offset:0} ;
+    let s = ProcessState { page: 1, offset: 0 };
 
-    write_state(s) ;
+    write_state(s);
 
-    let s2 = read_state() ;
+    let s2 = read_state();
     println!("process-state: {:?}", s2);
 }
-
+fn normalize_page_url(page: usize) -> String {
+    // format!( "https://www.shanghaimuseum.net/mu/frontend/pg/lib1/antique?page={}&viewType=cover&libTypeSort=&libAgeSort=&libTypes=LIB_TYPE_0010&libAges=&searchText=",page)
+    format!( "https://www.shanghaimuseum.net/mu/frontend/pg/lib1/antique?page={}&viewType=cover&libTypeSort=&libAgeSort=&libTypes=LIB_TYPE_0009&libAges=&searchText=",page)
+}
 #[async_trait]
 impl super::Spider for ShanghaiMusSpider {
     type Item = QuotesItem;
@@ -101,10 +101,14 @@ impl super::Spider for ShanghaiMusSpider {
     }
 
     fn start_urls(&self) -> Vec<String> {
+        let state = read_state();
+
+        let page_url = normalize_page_url(state.page);
         vec![
+            page_url,
             // "https://www.shanghaimuseum.net/mu/frontend/pg/collection/antique?antiqueType1Code=CP_HIGH_CLASS_TYPE_3".to_string(),
-            "https://www.shanghaimuseum.net/mu/frontend/pg/lib1/antique?page=1&viewType=cover&libTypeSort=&libAgeSort=&libTypes=LIB_TYPE_0010&libAges=&searchText=".to_string(),
-            ]
+            //"https://www.shanghaimuseum.net/mu/frontend/pg/lib1/antique?page=1&viewType=cover&libTypeSort=&libAgeSort=&libTypes=LIB_TYPE_0010&libAges=&searchText=".to_string(),
+        ]
     }
 
     async fn scrape(&self, url: String) -> Result<(Vec<Self::Item>, Vec<String>), Error> {
@@ -143,25 +147,27 @@ impl super::Spider for ShanghaiMusSpider {
                 "#;
 
                 // let r = webdriver.execute(JS, vec![]).await?;
-               // let js_result = webdriver.execute_async(JS, vec![]).await?;
+                // let js_result = webdriver.execute_async(JS, vec![]).await?;
 
                 // println!("[pagination:] js callback result is : {}", js_result);
 
                 // https://github.com/jonhoo/fantoccini/blob/main/tests/elements.rs
-                let next_page_link = webdriver.find(Locator::Css(".layui-laypage-next.layui-disabled")).await;
-               
-               if next_page_link.is_ok() {
+                let next_page_link = webdriver
+                    .find(Locator::Css(".layui-laypage-next.layui-disabled"))
+                    .await;
+
+                if next_page_link.is_ok() {
                     // 最后一页
-               }else{
-                 let next_page_link = webdriver.find(Locator::Css(".layui-laypage-next")).await?;
-                 next_page_link.click().await?;
-               }
-                 
+                } else {
+                    let next_page_link =
+                        webdriver.find(Locator::Css(".layui-laypage-next")).await?;
+                    next_page_link.click().await?;
+                }
+
                 // let is_ =  next_page_link.css_value("layui-disabled").await?;
 
                 println!("sleep");
                 sleep(Duration::from_millis(5000)).await;
-
             } else {
                 webdriver.goto(&url).await?;
             }
@@ -246,6 +252,12 @@ impl super::Spider for ShanghaiMusSpider {
         println!("count: {}", count);
         // let count = 1; // FIXME:  手动更改测试用
         for index in 1..count {
+            // 读取状态对象 看看上次进度 👀
+            let state = read_state();
+            if index <= state.offset {
+                continue;
+            }
+
             // *[@id="form"]//*[@type="text"]
             // let selector = format!("//ul[@class=\"painting-list\"]/li[{}]/a", index);
             // let selector = format!("//ul[@id=\"list1\" and @class='shmu-tuwen-list']//li[{}]/a", index);
@@ -267,19 +279,43 @@ impl super::Spider for ShanghaiMusSpider {
             // @see https://stackoverflow.com/questions/4884839/how-do-i-get-an-element-to-scroll-into-view-using-jquery
             // FIXME: scroll_into_view  { element.scrollIntoView(true);|element.scrollIntoView(false); }
             // scrollXxxx 相关的方法和属性：scrollIntoView()｜scrollTo()｜scroll()｜scrollBy()｜scrollTop｜scrollLeft:｜location.href[to an anchor URL that matches the element’s id.]
-            
-            client.execute(
-                "arguments[0].scrollIntoView(true);",
-                vec![serde_json::to_value(el_link).unwrap()]
-            )
-            .await?;
+
+            // 好像还有问题 可尝试的其他方案：
+            // sleep 等待元素都加载完毕
+            // - PointerAction::MoveToElement
+            sleep(Duration::from_millis(3000)).await; //
+
+            client
+                .execute(
+                    "arguments[0].scrollIntoView(true);",
+                    vec![serde_json::to_value(el_link).unwrap()],
+                )
+                .await?;
 
             let el_link = client
                 .wait()
                 //r#"a[href="/learn/get-started"]"#,
                 .for_element(Locator::XPath(selector.as_str()))
                 .await?;
-            el_link.click().await?;
+
+            // Test mouse down/up.
+            let mouse_actions = MouseActions::new("mouse".to_string())
+                .then(PointerAction::MoveToElement {
+                    element: el_link,
+                    duration: None,
+                    x: 0,
+                    y: 0,
+                })
+                .then(PointerAction::Down {
+                    button: MOUSE_BUTTON_LEFT,
+                })
+                .then(PointerAction::Up {
+                    button: MOUSE_BUTTON_LEFT,
+                });
+
+            client.perform_actions(mouse_actions).await?;
+
+            // el_link.click().await?;
             // 等下 不然一会就退回了
 
             client.wait().for_element(Locator::Css("body")).await?;
@@ -421,12 +457,12 @@ impl super::Spider for ShanghaiMusSpider {
                     "[slider_items_count:] js callback result is : {}",
                     slider_items_count
                 );
-                // <<</    ⚠️⚠️⚠️  改版后的逻辑 
+                // <<</    ⚠️⚠️⚠️  改版后的逻辑
                 if slider_items_count == 0 {
                     println!("new ! slider_items_count is 0");
 
-                    
-                    let elem = client.find(Locator::Css(".lib2-main")).await?;
+                    // let elem = client.find(Locator::Css(".lib2-main")).await?;
+                    let elem = client.wait().for_element(Locator::Css(".lib2-main")).await?;
                     let rect = elem.rectangle().await?;
                     println!("{:?}", rect);
                     let elem_center_x = rect.0 + (rect.2 / 2.0);
@@ -468,7 +504,16 @@ impl super::Spider for ShanghaiMusSpider {
            var $fancyBox = $(".fancybox__container:last");
 
             var src = $fancyBox.find(".fancybox__content").find("img").attr("src");
-            callback(src);
+            // callback(src);
+
+            var $detail = $(".lib1-detail");
+
+            $detail.find(".age").find("span").remove();
+            callback({
+                url: src,
+                title:$detail.find(".name").text(),
+                age: $detail.find(".age").text(), 
+            });
 
            // ----------------------------------------------------------
 //            setTimeout(function(){
@@ -476,13 +521,55 @@ impl super::Spider for ShanghaiMusSpider {
 // }          , 2000);
             "#;
                     let js_result = client.execute_async(JS3, vec![]).await?;
+                    let js_obj = js_result.as_object().unwrap();
 
-                    
-                    // println!("img src: {:?}",js_result.as_str());
-                    let img_url = self.normalize_image_url(js_result.as_str().unwrap());
-                    println!("img src: {:?}",img_url);
+                    println!("js result: {:?}", js_result);
 
-                    // todo： 下载图片啦：😄
+                    let img_src = js_obj.get("url").unwrap();
+                    println!("relative img src: {:?}", img_src.as_str());
+                    let img_url = self.normalize_image_url(img_src.as_str().unwrap());
+                    println!("img src: {:?}", &img_url);
+
+                    let file_name = {
+                        let title = js_obj.get("title").unwrap();
+                        let age = js_obj.get("age").unwrap();
+
+                        format!(
+                            "{}-{}",
+                            age.as_str().unwrap().trim(),
+                            title.as_str().unwrap().trim()
+                        )
+                    };
+
+                    println!("file name: {:?}", file_name);
+
+                    // // todo： 下载图片啦：😄
+                    let ext = {
+                        let parts: Vec<&str> = img_url.split(".").collect();
+                        let ext = *(parts.get(parts.len() - 1).unwrap());
+                        ext
+                    };
+
+                    println!("file ext: {}", ext);
+                    let file_path = format!("_runtime/downloads/0009/{}.{}", file_name, ext);
+
+                    // 检查是否存在
+                    //  let path = Path::new(file_path);
+                    // if path.exists() { }
+                    // if Path::new("empty.txt").exists() {}else{}
+
+                    match std::fs::metadata(file_path.clone()) {
+                        Ok(_) => println!("File exists! : {}", &file_path),
+                        Err(_) => {
+                            fetch_url(img_url.to_string(), file_path.clone()).await;
+                            println!("File downlowded! : {}", &file_path);
+
+                            // 文件下载完毕 更新进度状态
+                            let mut state = read_state();
+                            state.offset = index;
+                            write_state(state);
+                        }
+                    }
 
                     sleep(Duration::from_millis(5000)).await;
                 }
@@ -678,6 +765,12 @@ impl super::Spider for ShanghaiMusSpider {
         // let ts: i64 = now.timestamp();
         // let load_more_ = format!("{}_{}",LOAD_MORE,ts);
         let load_more_ = format!("{}_{}", LOAD_MORE, load_more_suffix);
+
+        // 保存本页状态
+        let mut state = read_state();
+        state.page += 1;
+        state.offset = 0;
+        write_state(state);
 
         Ok((items, vec![load_more_]))
         // Ok((items, vec![LOAD_MORE.to_string()]))

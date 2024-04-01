@@ -119,6 +119,15 @@ impl_update!(User{update_by_name(name:&str, id: String) => "`where id = #{id}`"}
 
 [例子](https://github.com/rbatis/example/tree/main/src)
 
+## 绘画 
+- [绘画必看！6个高清国画在线浏览网站](https://weibo.com/ttarticle/p/show?id=2309404774084281237909)
++ 中华珍宝馆 http://g2.ltfc.net/home
++ 三点轩 http://gaoqing.3zitie.cn/
++ 书格 https://new.shuge.org/
++ 光明之门 http://www.gmzm.org/
++ 浮世绘搜索 https://ja.ukiyo-e.org/
++ 故宫名画记 https://minghuaji.dpm.org.cn/
+
 ## 参考：
 - [jquery中文手册](https://www.w3school.com.cn/jquery/prop_length.asp)
 - [jquery 手册](https://www.runoob.com/manual/jquery/)

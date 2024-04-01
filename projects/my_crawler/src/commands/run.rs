@@ -104,9 +104,9 @@ async fn _run(spider_name: &str) -> Result<(), anyhow::Error> {
             use crate::domain::table;
 
             //database
-            CONTEXT.init_database().await;
-            table::sync_tables(&CONTEXT.rb).await;
-            table::sync_tables_data(&CONTEXT.rb).await;
+            // CONTEXT.init_database().await;
+            // table::sync_tables(&CONTEXT.rb).await;
+            // table::sync_tables_data(&CONTEXT.rb).await;
 
 
             let spider = spiders::shanghai_mus2::ShanghaiMusSpider::new().await?;

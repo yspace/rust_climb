@@ -191,6 +191,7 @@ pub fn read_struc0() {
 // @see https://stackoverflow.com/questions/73889074/how-to-implement-a-generic-serde-jsonfrom-str
 // @see reqwest::blocking::get  .json::<XXX>();
 // @see https://serde.rs/lifetimes.html trait 带生命周期 太复杂 有空再说！
+// @see https://stackoverflow.com/questions/70298699/rust-generic-struct-reader-and-writer
 pub fn read_struct_from_file <T> ( ) -> Result<T, Box<dyn std::error::Error>>
 where T: DeserializeOwned  /* + Default */
 {

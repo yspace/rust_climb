@@ -20,6 +20,7 @@
 **/.DS_Store
 /starters/web_scraper3/my_data.db
 /starters/web_scraper3/downloads/*
+/projects/my_crawler/_runtime/downloads/*
 /my_data.db
 starters/web_scraper3/my_data.db
 /starters/hi_postgres/docker-compose-pg/postgres/data

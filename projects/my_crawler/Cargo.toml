@@ -23,7 +23,11 @@ serde = {version = "1.0", features = ["derive"] }
 lazy_static = "1.4"
 
 tokio = { version = "1", features = ["full"] }
-reqwest = { version = "0.11", default-features = false, features = ["json", "rustls-tls"] }
+reqwest = { version = "0.11", default-features = false, features = ["json", "rustls-tls","stream","blocking"] }
+# 下载
+# reqwest = { version = "0.11.12", features = ["stream","blocking"] }
+# futures-util = "0.3.24"
+
 anyhow = "1.0"
 thiserror = "1.0"
 async-trait = "0.1"
@@ -60,6 +64,8 @@ json5 = "0.4"
 #log = "0.4"
 #fast_log = "1.6"
 fast_log = { version = "1.6", features = ["mmap"] }
+
+
 
 [build-dependencies]
 json5 = "0.4"
