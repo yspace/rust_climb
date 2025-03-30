@@ -73,7 +73,7 @@ members = [
     "starters/cli_app1",
     "starters/multi_bin",
     "starters/web_scraper",
-    "starters/web_scraper2",
+#    "starters/web_scraper2",
     "starters/web_scraper3",
     "starters/console_app2",
     "starters/console_simple",
@@ -106,8 +106,9 @@ members = [
 #  多个sqlite 库会干扰 运行时候排除下 
 # @see https://doc.rust-lang.org/cargo/reference/workspaces.html
 exclude = [
-    # "recipes/db_sqlite", 
+     "recipes/db_sqlite",
     "recipes/db_orm", 
+    "projects/tutor-db",
 ]
 
 

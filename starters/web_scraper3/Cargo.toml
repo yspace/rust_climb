@@ -15,8 +15,10 @@ tokio = { version = "1", features = ["full"] }
 
 visdom = "1"
 
-rusqlite = { version = "0.29", features = ["bundled"] }
-tokio-rusqlite = "0.4"
+#rusqlite = { version = "^0.30.0", features = ["bundled"] }
+# 这两个鬼 👻
+rusqlite = { version = "0.32", features = [] }
+tokio-rusqlite = "0.6.0"
 
 # 下载
 reqwest = { version = "0.11.12", features = ["stream","blocking"] }

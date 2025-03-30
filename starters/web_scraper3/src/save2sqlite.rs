@@ -1,8 +1,12 @@
 #![allow(dead_code)]
 
-use rusqlite::{params, Result , NO_PARAMS};
+// use rusqlite::{params, Result , NO_PARAMS};
+// 到底用的哪个Result
+// use rusqlite::{params};
 use tokio::task::JoinHandle;
-use tokio_rusqlite::Connection;
+
+// use tokio_rusqlite::Connection;
+use tokio_rusqlite::{Connection,params, Result};
 
 #[derive(Debug)]
 struct Person {
@@ -41,6 +45,11 @@ async fn main() -> Result<()> {
             )",
             [],
         )
+            .map_err(|e|
+                // e.into()
+                <tokio_rusqlite::Error>::from(e)
+
+            )
     })
     .await?;
 
@@ -69,7 +78,8 @@ pub async fn init_db(conn: Connection) -> Result<()> {
                 );
                 "#,
                 [],
-            )?;
+            )
+                .map_err(|e|<tokio_rusqlite::Error>::from(e))?;
             conn.execute(
                 r#"
                 
@@ -83,7 +93,8 @@ pub async fn init_db(conn: Connection) -> Result<()> {
                     );
                 "#,
                 [],
-            )?;
+            )
+                .map_err(|e|<tokio_rusqlite::Error>::from(e))?;
 
             // conn.execute(
             //     "INSERT INTO person (name, data) VALUES (?1, ?2)",
@@ -102,7 +113,8 @@ pub async fn init_db(conn: Connection) -> Result<()> {
             //     .collect::<Result<Vec<Person>, rusqlite::Error>>()?;
 
             // Ok::<_, rusqlite::Error>(people)
-            Ok::<_, rusqlite::Error>(())
+            // Ok::<_, rusqlite::Error>(())
+            Ok(())
         })
         .await?;
 
@@ -127,7 +139,8 @@ pub async  fn get_latest_work_position(conn: Connection)-> Result<WorkPosition>{
             
 
         // Ok::<_, rusqlite::Error>(people)
-        Ok::<_, rusqlite::Error>(item)
+        // Ok::<_, rusqlite::Error>(item)
+        Ok(item)
 
     })
     .await?;
@@ -142,6 +155,7 @@ pub fn add_work_position_task(conn: Connection, item: WorkPosition) -> JoinHandl
                 "INSERT INTO work_position (page_url,item_index,item_xpath) VALUES (?1, ?2,?3)",
                 params![item.page_url, item.item_index, item.item_xpath],
             )
+                .map_err(|e|<tokio_rusqlite::Error>::from(e))
         })
         .await
         .unwrap();
@@ -163,6 +177,7 @@ pub fn add_project_task(conn: Connection, item: Project) -> JoinHandle<()> {
                 "INSERT INTO projects (title,detail,download_url) VALUES (?1, ?2,?3)",
                 params![item.title, item.detail, item.download_url],
             )
+                .map_err(|e|<tokio_rusqlite::Error>::from(e))
         })
         .await
         .unwrap();
@@ -192,7 +207,8 @@ pub async  fn get_latest_project(conn: Connection)-> Result<(i32,Project)>{
 
         // Ok::<_, rusqlite::Error>(people)
         // Err(QueryReturnedNoRows)
-        Ok::<_, rusqlite::Error>(item)
+        // Ok::<_, rusqlite::Error>(item)
+        Ok(item)
 
     })
     .await?;
@@ -223,7 +239,9 @@ pub async  fn get_project_by_id(conn: Connection,id: i32)-> Result<(i32,Project)
 
         // Ok::<_, rusqlite::Error>(people)
         // Err(QueryReturnedNoRows)
-        Ok::<_, rusqlite::Error>(item)
+        // Ok::<_, rusqlite::Error>(item)
+        Ok(item)
+
 
     })
     .await?;
@@ -255,7 +273,9 @@ pub async  fn get_latest_project_rev(conn: Connection)-> Result<(i32,Project)>{
 
         // Ok::<_, rusqlite::Error>(people)
         // Err(QueryReturnedNoRows)
-        Ok::<_, rusqlite::Error>(item)
+        // Ok::<_, rusqlite::Error>(item)
+
+        Ok(item)
 
     })
     .await?;
@@ -281,10 +301,12 @@ pub async fn  project_mark_as_downloaded(conn: Connection, id : i32, project: Pr
         id = ?
         OR download_url = ?
         ")?;
-        stmt.execute(params![1,id, project.download_url])?;
+        stmt.execute(params![1,id, project.download_url])
+            .map_err(|e|<tokio_rusqlite::Error>::from(e))?;
 
         
-        Ok::<_, rusqlite::Error>(())
+        // Ok::<_, rusqlite::Error>(())
+        Ok(())
 
     })
     .await?;
@@ -311,7 +333,8 @@ pub async fn  project_mark_as_downloaded(conn: Connection, id : i32, project: Pr
         stmt.execute(params![status,id])?;
 
         
-        Ok::<_, rusqlite::Error>(())
+        // Ok::<_, rusqlite::Error>(())
+        Ok(())
 
     })
     .await?;

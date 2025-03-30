@@ -10,5 +10,5 @@ thirtyfour = "0.31.0"
 tokio = "1.33"
 
 
-rusqlite = { version = "0.29", features = ["bundled"] }
-tokio-rusqlite = "0.4"
+rusqlite = { version = "0.34.0", features = ["bundled"] }
+tokio-rusqlite = "0.6.0"

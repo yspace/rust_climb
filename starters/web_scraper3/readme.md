@@ -20,6 +20,10 @@ chromdriver 版本的选择需要跟本机所装的chrome浏览器版本对应 �
 > chromedriver --port=4444
 
 
+下载某个版本：https://storage.googleapis.com/chrome-for-testing-public/136.0.7098.0/mac-x64/chromedriver-mac-x64.zip
+替换掉里面版本 跟平台相应于本级的情况
+
+
 更多依赖看examplers：
 https://github.com/jonhoo/fantoccini/tree/main/examples
 
