@@ -89,19 +89,37 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
 
             // var text = document.querySelector("wujie-app").shadowRoot.querySelector("html").outerHtml;
             // var text = document.querySelector("wujie-app").shadowRoot.querySelectorAll("img.cgImage").outerHTML;
-            var ele_images = document.querySelector("wujie-app").shadowRoot.querySelectorAll("img.cgImage");
+            // var ele_images = document.querySelector("wujie-app").shadowRoot.querySelectorAll("img.cgImage");
             // var text = document.querySelector("wujie-app").shadowRoot.querySelector(".itemList").innerHTML;
             // document.querySelector("wujie-app").shadowRoot.querySelectorAll("img.cgImage");
             // console.log(text);
             console.log("---->>>----");
 
-            var js_ruslts = [] ;
-            for (let element of ele_images) {
-              console.log(element);
+            // var my_f = function(){}
+            function getCurrentPageImages()
+            {
+                var ele_images = document.querySelector("wujie-app").shadowRoot.querySelectorAll("img.cgImage");
+                var js_ruslts = [] ;
+                for (let element of ele_images) {
+                  console.log(element);
 
-              js_ruslts.push(element.src);
+                  let s_img_src = element.src;
+                  let l_img_src = s_img_src.replace("/s.jpg", "/l.jpg");
 
+                  js_ruslts.push(l_img_src);
+                }
+                return js_ruslts;
             }
+
+            var js_ruslts = getCurrentPageImages() ;
+            // for (let element of ele_images) {
+            //   console.log(element);
+            //
+            //   let s_img_src = element.src;
+            //   let l_img_src = s_img_src.replace("/s.jpg", "/l.jpg");
+            //
+            //   js_ruslts.push(l_img_src);
+            // }
 
                  // callback( "hi heree" )
                 // callback( text );
@@ -127,17 +145,17 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
         }
 
         // let source = c.source().await?;
-        let source = js_result.as_str().unwrap();
-        println!("js result here :{:?}", source);
+        // let source = js_result.as_str().unwrap();
+        // println!("js result here :{:?}", source);
 
         // 在rust端处理元素 析取数据
         // 文档： https://github.com/fefit/visdom/wiki/%E4%B8%AD%E6%96%87API%E6%96%87%E6%A1%A3
         // load html
-        let root = Vis::load(source).unwrap();
-        let my_img = root.find("img");
-        // let lis = root.find("#header li");
-        // let my_text = my_img.text();
-        println!("how many image 😄 :{}", my_img.length());
+        // let root = Vis::load(source).unwrap();
+        // let my_img = root.find("img");
+        // // let lis = root.find("#header li");
+        // // let my_text = my_img.text();
+        // println!("how many image 😄 :{}", my_img.length());
         // let href = links.attr("href").unwrap().to_string();
         //
         // let dom_detail = root.find("div.project-detail");
@@ -148,9 +166,9 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
 
         // let el_items_html = el_items.html(false).await?;
         // let el_items_html = el_items.text().await?;
-        let el_items_html = el_items.html(false).await?;
-
-         println!("html: {}", el_items_html);
+        // let el_items_html = el_items.html(false).await?;
+        //
+        //  println!("html: {}", el_items_html);
 
         println!("ele_imgs >>");
         // 找到目标img
@@ -160,9 +178,7 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
         // let mut ele_imgs = c.find_all(Locator::XPath(r#"//div[@class="itemList"]//img"#)).await?;
         let mut ele_imgs = c.find_all(Locator::XPath(r#"//img[contains(@class, 'cgImage')]"#)).await?;
         // let mut ele_imgs = c.find_all(Locator::Css(".cgImage")).await?;
-
         // println!("ele_imgs: {:?}", ele_imgs);
-
         for (i, img) in ele_imgs.iter_mut().enumerate() {
             println!("ele_img i: {}", i );
             // Each "place" has a link element.
@@ -176,7 +192,6 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
             // println!("ele_img src: {}", img.attr("src").await );
             let src = img.attr("src").await?.expect("image should have a src");
             println!("ele_img src: {}", src );
-
         }
 
 
