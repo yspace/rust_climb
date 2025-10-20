@@ -1,3 +1,9 @@
+
+先开启webdriver
+> cd starters/web_scraper2/bins
+> ./chromedriver --port=4444
+
+
 ## 快速开始的例子
 
 `boot` 之意？

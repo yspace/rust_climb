@@ -1,0 +1,24 @@
+thread 'rustc' panicked at /rustc/1799887bb281d1ab49287750f1950b8c738c6b77/compiler/rustc_query_system/src/dep_graph/serialized.rs:260:21:
+Error: A dep graph node (def_kind) does not have an unique index. Running a clean build on a nightly compiler with `-Z incremental-verify-ich` can help narrow down the issue for reporting. A clean build may also work around the issue.
+
+                     DepNode: DepKind { variant: 140 }(59bbbb4b32b01c15-25ce4ab18f8ad421)
+stack backtrace:
+   0:        0x109a94c77 - std::backtrace::Backtrace::create::he2e1db89dcf7a371
+   1:        0x109a94bc5 - std::backtrace::Backtrace::force_capture::h7731add917a442e9
+   2:        0x1076885c7 - std[f8c39f13bba9ab06]::panicking::update_hook::<alloc[8eba0e509977e9b4]::boxed::Box<rustc_driver_impl[f161d9fcbd13b3e4]::install_ice_hook::{closure#1}>>::{closure#0}
+   3:        0x109ab0743 - std::panicking::rust_panic_with_hook::h63422c2528634be8
+   4:        0x109ab0318 - std::panicking::begin_panic_handler::{{closure}}::hc6dd46a7ba9f8a2a
+   5:        0x109aad819 - std::sys::backtrace::__rust_end_short_backtrace::h0f2ad7ace93a3b30
+   6:        0x109aaff54 - __rustc[6b2d87e268651ea7]::rust_begin_unwind
+   7:        0x10cdcceaf - core::panicking::panic_fmt::h563a8cf8b8194548
+   8:        0x107f51557 - rustc_incremental[504b763d95c30d75]::persist::load::setup_dep_graph
+   9:        0x10762d027 - rustc_interface[5adaa23822ce3087]::passes::create_and_enter_global_ctxt::<core[c802766c9c852d61]::option::Option<rustc_interface[5adaa23822ce3087]::queries::Linker>, rustc_driver_impl[f161d9fcbd13b3e4]::run_compiler::{closure#0}::{closure#2}>
+  10:        0x107683c79 - rustc_interface[5adaa23822ce3087]::interface::run_compiler::<(), rustc_driver_impl[f161d9fcbd13b3e4]::run_compiler::{closure#0}>::{closure#1}
+  11:        0x10767197d - std[f8c39f13bba9ab06]::sys::backtrace::__rust_begin_short_backtrace::<rustc_interface[5adaa23822ce3087]::util::run_in_thread_with_globals<rustc_interface[5adaa23822ce3087]::util::run_in_thread_pool_with_globals<rustc_interface[5adaa23822ce3087]::interface::run_compiler<(), rustc_driver_impl[f161d9fcbd13b3e4]::run_compiler::{closure#0}>::{closure#1}, ()>::{closure#0}, ()>::{closure#0}::{closure#0}, ()>
+  12:        0x10768d36d - <<std[f8c39f13bba9ab06]::thread::Builder>::spawn_unchecked_<rustc_interface[5adaa23822ce3087]::util::run_in_thread_with_globals<rustc_interface[5adaa23822ce3087]::util::run_in_thread_pool_with_globals<rustc_interface[5adaa23822ce3087]::interface::run_compiler<(), rustc_driver_impl[f161d9fcbd13b3e4]::run_compiler::{closure#0}>::{closure#1}, ()>::{closure#0}, ()>::{closure#0}::{closure#0}, ()>::{closure#1} as core[c802766c9c852d61]::ops::function::FnOnce<()>>::call_once::{shim:vtable#0}
+  13:        0x109ab48ab - std::sys::pal::unix::thread::Thread::new::thread_start::h6572c0695a24ab9d
+  14:     0x7fff6884a109 - __pthread_start
+
+
+rustc version: 1.88.0-nightly (1799887bb 2025-03-29)
+platform: x86_64-apple-darwin

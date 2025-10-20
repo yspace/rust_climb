@@ -94,11 +94,12 @@ members = [
 
     # js runtime
     "starters/hi_js",
+    "starters/hi_rustdb",
 
     # 
     "projects/*",
     # 
-    "recipes/*",
+    "recipes/*", "starters/hi_redb", "starters/hi_sled", "starters/hi_polodb",
     # "recipes/db_orm/migration",
     # "recipes/db_orm/entity",
     # "crates/*",

@@ -53,12 +53,63 @@ pub async fn download_file(
 
 use std::io::Cursor;
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
- 
+
+
+
+// https://blog.csdn.net/weixin_41767230/article/details/147356024 尝试加入超时重试机制
+
 pub async fn fetch_url(url: String, file_name: String) -> Result<()> {
     let response = reqwest::get(url).await?;
-    println!("filepath: {file_name}");
+    println!("[download_file::fetch_url]: filepath: {file_name}");
     let mut file = std::fs::File::create(file_name)?;
     let mut content =  Cursor::new(response.bytes().await?);
     std::io::copy(&mut content, &mut file)?;
+    Ok(())
+}
+
+// https://blog.csdn.net/weixin_41767230/article/details/147356024
+// https://zhuanlan.zhihu.com/p/712743588
+// https://www.yisu.com/ask/84176255.html
+pub async fn fetch_url2(url: String, file_name: String) -> Result<()> {
+    use reqwest;
+    use std::time::Duration;
+
+    /*
+    let response = reqwest::get(url).await?;
+    println!("[download_file::fetch_url]: filepath: {file_name}");
+    let mut file = std::fs::File::create(file_name)?;
+    let mut content =  Cursor::new(response.bytes().await?);
+    std::io::copy(&mut content, &mut file)?;
+
+     */
+
+
+    let client = reqwest::Client::builder()
+        .timeout(Duration::from_secs(120)) // ⚠️ 请求超时时间
+        .build()?;
+
+    let mut retry_count = 0;
+    let max_retries = 3;
+    loop {
+        match client.get(url.clone()).send().await {
+            Ok(response) => {
+                // println!("Status: {}", response.status());
+                // println!("Body: {}", response.text().await?);
+                println!("[download_file::fetch_url2]💪: filepath: {file_name}");
+                let mut file = std::fs::File::create(file_name)?;
+                let mut content =  Cursor::new(response.bytes().await?);
+                std::io::copy(&mut content, &mut file)?;
+                break;
+            }
+            Err(err) => {
+                if retry_count >= max_retries {
+                    return Err(Box::new(err));
+                }
+                retry_count += 1;
+                println!("😢 Request failed, retrying ({}/{})...", retry_count, max_retries);
+            }
+        }
+    }
+
     Ok(())
 }

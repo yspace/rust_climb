@@ -29,6 +29,9 @@ base64 = "0.21"
 #
 urlencoding = "2.1.2"
 
+# 文件名消毒
+sanitize-filename = "0.6.0"
+
 # 初始化浏览器capability
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.85"
@@ -71,3 +74,7 @@ lazy_static = "1.4.0"
 # 配置
 config = "0.13.3"
 dotenv = "0.15.0"
+# toml 文件解析
+toml = "0.5.2"
+#serde = "1.0.136"
+serde_derive = "1.0.136"
