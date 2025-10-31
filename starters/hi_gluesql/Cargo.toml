@@ -1,0 +1,9 @@
+[package]
+name = "hi_gluesql"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+gluesql = {version = "0.17.0", default-features = false, features = ["gluesql_memory_storage", "gluesql-json-storage","gluesql-file-storage"]}
+
+futures = "0.3.31"

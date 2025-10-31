@@ -20,10 +20,26 @@ use sanitize_filename;
 use tokio::time::sleep;
 use webdriver::capabilities::Capabilities;
 
+// use std::collections::HashSet;
+use std::collections::BTreeSet;
+
+use sled::{Db,Config};
+
 lazy_static! {
     static ref PAGE_REGEX: Regex = Regex::new(r"p=(?P<n>\d+)").unwrap();
 }
+
+
 const DL_DIR: &'static str = "__downloads";
+pub(crate) const PROGRAM_PREFIX: &str = "program_";
+pub(crate) const PROGRAM_DB: &str = "__data/sothebys";
+
+lazy_static! {
+    pub static ref ROOT_DB: sled::Db = Config::default()
+        .path(PROGRAM_DB)
+        .open()
+        .expect("Unable to open root database");
+}
 
 // ⚠️ 这个网站用了 shadowDom ：[Web Components详解-Shadow DOM基础](https://developer.aliyun.com/article/1557247)
 
@@ -31,7 +47,15 @@ const DL_DIR: &'static str = "__downloads";
 #[tokio::main]
 async fn main() -> Result<(), fantoccini::error::CmdError> {
 
+    let settings = config::Conf::new();
+
+    // Print out our settings
+    println!("{settings:?}");
+
     println!("😄：just for learning ；scrap images from 苏富比");
+
+    // println!("{:#}",RO);
+    // let tree = ROOT_DB.open_tree("my_tree");
 
     // 无头配置
     let cap: Capabilities = serde_json::from_str(
@@ -40,7 +64,7 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
         .unwrap();
 
     let c = ClientBuilder::native()
-        // .capabilities(cap) // ⚠️ 无头配置如果看不到情况 可以注释掉此行变为有头 看效果
+        .capabilities(cap) // ⚠️ 无头配置如果看不到情况 可以注释掉此行变为有头 看效果
         .connect("http://localhost:4444")
         .await
         .expect("failed to connect to WebDriver");
@@ -50,20 +74,26 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
     // let target_url = "https://www.sothebys.com/zh/search-results.html?query=齐白石";
 
     let search_user = "溥儒";
-    // let search_user = "溥心畬";
+    let search_user = "溥心畬";
     // let search_user = "陈少梅";
     // let search_user = "赵国经";
     // // let search_user = "王美芳";
     // // let search_user = "齐白石";
-    // let search_user = "丰子恺";
+    let search_user = "丰子恺";
     // let search_user = "徐燕孙";
     // let search_user = "黄均";
+    let search_user = "王时敏";
+    let search_user = "陆俨少"; // 没有
+    let search_user = "陈云彰"; // 陈少梅
+    let search_user = "沈周";
+    let search_user = "八大山人";
+    // let search_user = "林风眠";
     // build|make target_url
     // let target_url = format!("https://www.polyauction.com.hk/en/search?q={}&type=lot&p=1", search_user) ;
     // let page = 1;
     let target_url = format!("https://www.sothebys.com/zh/search-results.html?query={}", search_user) ;
     let target_url = format!("https://www.sothebys.com/en/search?query={}&pfilters.dateRange=past", search_user) ;
-    println!("⚠️ search items for user: {}",search_user);
+    println!("👨👩: search items for user: {}",search_user);
     // 陈少梅
 
 
@@ -238,6 +268,170 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
         // for item in js_result_items {
         //     println!("{}", item.as_str().unwrap());
         // }
+
+
+        //
+        const JS_SCROLL_FOR_LOAD_MORE: &'static str = r#"
+         // 😄回调函数就叫 callback 可以给你用来返回任何东东哦！
+
+            // const [date, callback] = arguments;
+            const [ callback] = arguments;
+
+            console.log("😄 开始执行js啦！");
+
+            function getResultsTotal(){
+                // 获取所有符合xpath表达式的元素
+                var result = document.evaluate('//p[@data-testid="results-total"]', document, null,XPathResult.ANY_TYPE, null);
+                // 获取第一个元素
+                var node = result.iterateNext();
+                // console.log(node.innerText);
+                var resultText = node.innerText;
+                return extractAndConvertToNumber(resultText);
+
+            }
+
+            // 😄TODO：这里因页面不同逻辑不通
+            // var my_f = function(){}
+            function getCurrentPageItems()
+            {
+
+               // 获取所有符合xpath表达式的元素
+               //     var result = document.evaluate('//p[@data-testid="results-search-item"]', document, null,XPathResult.ANY_TYPE, null);
+               // 获取所有div元素
+                var xpathResult = document.evaluate('//div[starts-with(@class, "SearchResultsGrid_lotCardWrapper__")]', document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+
+                var allElements = [];
+                for (var i = 0, length = xpathResult.snapshotLength; i < length; ++i) {
+                    allElements.push(xpathResult.snapshotItem(i));
+                }
+                //console.log(allElements);
+                return allElements;
+                // 🤔其实可以返回所有待处理项的url的
+
+
+                // 🐶👇是大致逻辑
+                // var elements = document.querySelectorAll("ul.artworks>li>a");
+                // var js_ruslts = [] ;
+                // for (let element of elements) {
+                //   // console.log(element);
+                //
+                //   let s_item_href = element.href;
+                //
+                //   js_ruslts.push(s_item_href);
+                //   // 🤔 其实可以在这里一并处理 获取相关的信息
+                // }
+                //
+                // return js_ruslts;
+            }
+
+            // 将字符串转换为数字
+            function extractAndConvertToNumber(str) {
+                // 使用正则表达式匹配字符串中的所有数字
+                const numbers = str.match(/\d+/g);
+                // 如果匹配到数字，则将它们连接起来并转换为数字
+                if (numbers) {
+                    return parseInt(numbers.join(''), 10);
+                }
+                // 如果没有匹配到数字，返回0或其他你希望返回的值
+                return 0;
+            }
+
+            // 滚动到底部
+            function smoothScroll(targetY) {
+                  const startY = window.scrollY;
+                  const distance = targetY - startY;
+                  const duration = 1000; // 动画持续时间(ms)
+                  let startTime = null;
+
+                  function scrollStep(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    const elapsed = timestamp - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeInOut = progress < 0.5 ?
+                      2 * progress * progress :
+                      1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+                    window.scrollTo(0, startY + distance * easeInOut);
+
+                    if (progress < 1) {
+                      window.requestAnimationFrame(scrollStep);
+                    }
+                  }
+                  window.requestAnimationFrame(scrollStep);
+            }
+            function getElementTop(element) {
+                const rect = element.getBoundingClientRect();
+                return rect.top + window.scrollY;
+            }
+
+            function scrollToBottom(){
+                // 示例用法
+                const element = document.getElementById('BrightSpotFooter');
+                const topPosition = getElementTop(element);
+                console.log(topPosition);
+                // 使用示例：滚动到页面底部
+                smoothScroll(topPosition - 150);
+
+            }
+
+            console.log("共有："+getResultsTotal());
+
+            function recursiveTimeout(count) {
+
+                console.log(count);
+                console.log(count < getResultsTotal());
+                if (count < getResultsTotal()) {
+                    setTimeout(function() {
+
+                        scrollToBottom();
+                        document.documentElement.scrollIntoView({ behavior: 'smooth' });
+
+                        recursiveTimeout(0); // 😺这里条件不满足会一直滚动的
+                    }, 10000); // 延迟10000毫秒后再次调用
+                }
+            }
+
+            // recursiveTimeout(0);
+
+            // 滚动到底部去
+            scrollToBottom();
+            // ⚠️ 异步执行
+             setTimeout(function(){
+
+
+                     console.log("---->>>----");
+                     console.log("---->>>----");
+
+                    var items = getCurrentPageItems();
+
+                     var js_ruslts =
+                     {
+                       items: []  , // getCurrentPageItems(),
+                       need_page: false ,
+                       // load_more:  items.length < getResultsTotal(),
+                       load_more:  document.querySelector('#loadMore') != null ,
+                       loaded_progress:""+items.length+ "/" +getResultsTotal()
+                     };
+
+                     // callback( "hi heree" )
+                     callback( js_ruslts );
+
+             },7000) ;
+
+        "#;
+
+        loop {
+            // 循环体代码
+            let mut js_result = c.execute_async(JS_SCROLL_FOR_LOAD_MORE, vec![]).await?;
+            println!("js result here :{:?}", js_result);
+
+            let mut js_result_load_more = js_result["load_more"].as_bool().unwrap() ;
+
+            if js_result_load_more == false {
+                break;
+            }
+        }
+
         // ---------------------------------👆是js获取当前页的待处理元素的逻辑 跟👇下面逻辑类似 可以任选一个修改逻辑         -------------------------------------------
 
 
@@ -249,9 +443,14 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
         // elements = root.xpath('//*[@class="my-class"]')
 
         // 获取本页需要处理的图片
-        let selector = r#"//div[@class="swiper-slide"]/a"#;
+        // let selector = r#"//div[@class="swiper-slide"]/a"#;
+        let selector = r#"//div[starts-with(@class, "SearchResultsGrid_lotCardWrapper__")]//a"#;
         let eles = c.find_all(Locator::XPath(selector)).await?;
+        // ⚠️ 注意这里面有重复的a链接 想办法去重
         println!("🤔==== 当前页面有元素 > {:?} ", eles.len());
+        // let mut handeled_items = HashSet::new();
+        let mut handeled_items = BTreeSet::new();
+
         let window_1 = c.window().await?;
         // 遍历元素
         for elem in eles {
@@ -291,8 +490,32 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
             let item_url2 = item_url.clone().unwrap();
             let path_segments =item_url2.path_segments().map(|c| c.collect::<Vec<_>>());
             let mut path_segments = path_segments.unwrap();
-            println!("🐶：{:?}",path_segments);
+            // println!("🐶：{:?}",path_segments);
 
+            let target_item_url = item_url.unwrap().to_string() ;
+
+            if handeled_items.contains(&target_item_url) {
+                // println!("🐼： 已经处理过啦！");
+                continue
+            }else{
+                handeled_items.insert(target_item_url.clone());
+            }
+
+        }
+        let item_count = handeled_items.len() ;
+        println!("🐯元素个数:{}",handeled_items.len());
+
+        // 😄🐲: 存到有序集合或者db中 然后就可以安全跳过某个区域 避免每次都重新运行 根据上次异常断点位置继续开始
+        let mut skip_from_number = 0;
+
+        // 使用 for 循环遍历集合
+        // for item_url in handeled_items {
+        for (idx, item_url) in handeled_items.into_iter().enumerate() {
+            println!("🐢🐰🏃‍♀️: {}/{} => {}",idx,item_count , item_url);
+
+             if idx < skip_from_number {
+                continue ;
+             }
 
             c.new_window(true).await?;
             // let window_2 = c.window().await?;
@@ -307,7 +530,8 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
             // let last_window = all_windows.get(window_size - 1).unwrap();
             let last_window = all_windows.pop().unwrap();
             c.switch_to_window(last_window).await?;
-            c.goto(String::from(item_url.unwrap()).as_str()).await?;
+            // c.goto(String::from(item_url.unwrap()).as_str()).await?;
+            c.goto(item_url.as_str()).await?;
 
 
             // 点击图片
@@ -316,7 +540,8 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
             // TODO: 这里有多余逻辑 懒得改了 用的其他网站逻辑
             // let selector = r#"li.slide.previous"#;
             let selector = r#"div.swiper-slide>button"#;
-            println!("[debug:] for pointer");
+            // println!("[debug:] for pointer");
+
             let ele_result = c.wait().for_element(Locator::Css(selector)).await;
             // let ele = ele_result.unwrap();
             // match ele_result {
@@ -327,10 +552,40 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
             if ele_result.is_ok(){
                 // 点击一下
                 // ele_result.unwrap().click().await?;
-                println!("[debug:]<{:?}", ele_result);
+                // println!("[debug:]<{:?}", ele_result);
                 sleep_random(&c).await ;
 
                 let img_urls = get_image_urls(&c).await;
+
+                let img_info = get_image_info(&c).await;
+
+                let img_url_count = img_urls.len();
+
+                for (idx ,img_url) in img_urls.iter().enumerate() {
+                    // println!("{:?}",img_info);
+                    println!("img_url {:?}",img_url);
+                    // let parts = img_url.rsplit('=');
+                    let splits: Vec<&str> = img_url.rsplitn(2, '=').collect();
+                    let target_url = splits.first().unwrap() ;
+                    // https://www.iamwawa.cn/urldecode.html 在线解码工具
+                    let decoded_url = urlencoding::decode( target_url).unwrap() ;
+                    println!("splits 👍 {:?}",decoded_url);
+                    println!("😷: {:?}",sanitize_filename::sanitize(img_info.clone()));
+
+                    let folder_name = format!("{}_sothebys",search_user);
+                    let mut img_save_to_name =sanitize_filename::sanitize(img_info.clone());
+                    if img_url_count > 1{
+                         img_save_to_name = format!("{}_{}",img_save_to_name,idx);
+                    }else{
+                         // img_save_to_name = format!("{}_{}",img_save_to_name,idx);
+                    }
+
+
+                    download_image(&folder_name,&img_save_to_name,&decoded_url).await ;
+
+                }
+
+
 
                 // let selector = r#"//ul[@class="slider"]/li[@class="slide"]//img"#;
                 // // class="slider-wrapper axis-horizontal"
@@ -346,19 +601,12 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
                 // 注意可能出现gallery的情况 TODO ：
                 // ele.click().await?;
                 //
-                // let img_url =  get_image_url(&c).await ; // ⚠️这里有坑 返回的字符串带双引号 没做json反序列化处理
-                // let folder_name = format!("{}_sothebys",search_user);
-                // let img_save_to_name = path_segments.pop().unwrap();
-                // let img_save_to_name = format!("{}_p{}",img_save_to_name,page_num);
-                // download_image(&folder_name,&img_save_to_name,&img_url).await ;
 
                 sleep_random(&c).await ;
                 println!(" 😄 a single item is done 🤔") ;
             }else{
                 println!("no image! 🤔") ;
             }
-
-
 
 
             // 关闭当前窗口
@@ -560,7 +808,59 @@ pub async  fn get_image_url(c:&fantoccini::Client) -> String {
     println!("[get_image_url->]{:#?}", rslt);
     rslt.to_string()
 }
-pub async  fn get_image_urls(c:&fantoccini::Client) -> String {
+pub async  fn get_image_info(c:&fantoccini::Client) -> String {
+    println!("<< enter: get_image_info");
+
+    const JS: &'static str = r#"
+            // 😄回调函数就叫 callback 可以给你用来返回任何东东哦！
+            // ⚠️多参数时 callback回调函数总是出现在尾部
+
+            // const [date, callback] = arguments;
+            const [ callback] = arguments;
+
+            function getItemInfo(){
+                // 获取所有符合xpath表达式的元素
+                var result = document.evaluate('//div[@id="placebidtombstone"]//h1', document, null,XPathResult.ANY_TYPE, null);
+                // 获取第一个元素
+                var node = result.iterateNext();
+                // console.log(node.innerText);
+                var resultText = node.innerText;
+                return resultText;
+
+            }
+             // var js_ruslts =
+             // {
+             //   items: getCurrentPageImages(),
+             //   need_page: false
+             // };
+             //  callback( js_ruslts );
+
+              setTimeout(function(){
+
+
+                    callback(getItemInfo());
+
+              }
+              , 6000); // 给6秒加载图片 应该差不多了😄
+
+        "#;
+
+    let rslt =  c
+        .execute_async(
+            JS,
+            // " setTimeout(() => alert('😄'),Math.floor(Math.random() * 3000))",
+            // vec![1_u32.into()], // ⚠️ 这里传参与否 或者传的多少都会改变callback的位置
+            vec![],
+        )
+        .await.unwrap(); // 返回值是2 搞测试而已
+    // rslt.as_str() ;// as_xxx 方法是做转型的
+
+    println!("[get_image_info->]{:#?}", rslt);
+    rslt.to_string()
+}
+// pub async  fn get_image_urls(c:&fantoccini::Client) -> String {
+pub async  fn get_image_urls(c:&fantoccini::Client) -> Vec<String> {
+// pub async  fn get_image_urls(c:&fantoccini::Client) -> Vec<&'static str> {
     println!("<< enter: get_image_urls");
 
     const JS: &'static str = r#"
@@ -610,15 +910,24 @@ pub async  fn get_image_urls(c:&fantoccini::Client) -> String {
         .await.unwrap(); // 返回值是2 搞测试而已
     let items = rslt.as_array().unwrap() ;
 
-    println!("[🐯图片总数->]{:#?}", items.len());
+    // println!("[🐯图片总数->]{:#?}", items.len());
+    let mut results = vec![] ;
     for item in items {
-        println!("[🐷get_image_url->]{:#?}", item) ;
+         //println!("[🐷get_image_url->]{:#?}", item) ;
+        // results.push(item.to_string()) ;
+        results.push(item.as_str().unwrap().to_string() ) ;
+        // results.push(item.as_str().unwrap() ) ;
     }
-    // rslt.as_str() ;// as_xxx 方法是做转型的
-    //
-    // println!("[get_image_urls->]{:#?}", rslt);
-    // rslt.to_string()
-    String::from("test")
+    // println!(" 🌹 [get_image_urls->]{:#?}", results);
+    // // rslt.as_str() ;// as_xxx 方法是做转型的
+    // //
+    // // println!("[get_image_urls->]{:#?}", rslt);
+    // // rslt.to_string()
+    // String::from("test")
+
+    return results ;
+
+
 }
 
 pub async fn download_image(folder_name:&str,img_save_to_name:&str,img_url:&str,){
@@ -630,6 +939,8 @@ pub async fn download_image(folder_name:&str,img_save_to_name:&str,img_url:&str,
         println!("💢 没图片么！");
         return () ;
     }
+
+    let img_save_to_name2 = img_save_to_name.clone();
 
     let img_save_to_name = format!("{}.jpg",img_save_to_name);
     println!("[debug 🤔]: {folder_name}_{img_save_to_name} from 【{img_url}】") ;
@@ -677,7 +988,13 @@ pub async fn download_image(folder_name:&str,img_save_to_name:&str,img_url:&str,
         )
             .await;
         if rslt.is_err() {
+            // TODO : 出现下载失败可以保存到某个数据库 然后在重新执行尝试下载
             println!("some error happened :{:?}", rslt.err());
+
+            let tree = db_tree();
+            let key = format!("{}:{}",save_to_folder.display(),img_save_to_name2);
+            tree.insert(key, img_url);
+
         }else{
 
             println!("download ok!") ;
@@ -685,6 +1002,10 @@ pub async fn download_image(folder_name:&str,img_save_to_name:&str,img_url:&str,
     }
 
     // =================================== 下载 >> ======================
+}
+
+fn db_tree()->sled::Tree{
+    ROOT_DB.open_tree("my_tree_space").unwrap()
 }
 
 #[test]

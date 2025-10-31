@@ -78,3 +78,20 @@ dotenv = "0.15.0"
 toml = "0.5.2"
 #serde = "1.0.136"
 serde_derive = "1.0.136"
+
+# 数据库 候选（https://github.com/cberner/redb｜https://github.com/surrealdb/surrealkv）
+sled = "0.34.7"
+
+# 缓存
+cacache = { version="13.1.0",default-features = false, features = ["tokio-runtime", ]}
+
+# 序列化 候选：( postcard | )
+#bincode = { version = "2.0.1", features = ["serde",]}
+bincode = { version = "2.0.1"}
+
+postcard = { version = "1.1.3",features = ["alloc"]}
+
+# 命令行参数解析 (  gumdrop | clap )
+argh = "0.1.13"
+clap = { version = "4.5.50" , features =["derive", "env"]}
+

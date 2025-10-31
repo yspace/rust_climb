@@ -1,0 +1,10 @@
+debug = true
+
+search_user = "齐白石"
+
+[database]
+url = "postgres://postgres@localhost"
+
+[christies]
+# 佳士得 只有两个tab选项
+tab = "sold_lots" # available_lots

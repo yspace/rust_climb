@@ -137,6 +137,8 @@ $ rustup override set nightly
 - [rust 标准库内幕](https://github.com/Warrenren/inside-rust-std-library/)
 - [rust rfc book](https://rust-lang.github.io/rfcs/2057-refcell-replace.html)
 
+- [文档数据库 类mongodb 值得看👀](https://github.com/PoloDB/PoloDB)
+
 - [菜鸟教程](https://www.runoob.com/rust/rust-object.html)
 - [rust 环境配置](https://www.bilibili.com/video/BV1DV41167xs?p=19)
 - [ Exercism practice in Rust trace ](https://github.com/Binlogo/Exercism-Rust-Track) 类似leetcode？

@@ -94,12 +94,18 @@ members = [
 
     # js runtime
     "starters/hi_js",
-    "starters/hi_rustdb",
 
-    # 
+    #
     "projects/*",
     # 
-    "recipes/*", "starters/hi_redb", "starters/hi_sled", "starters/hi_polodb",
+    "recipes/*",
+    # rust 数据库
+    "starters/hi_rustdb",
+    "starters/hi_redb",
+    "starters/hi_sled",
+    #    PoloDB is an embedded document database.
+    "starters/hi_polodb", "starters/hi_slatedb", "starters/hi_gluesql",
+
     # "recipes/db_orm/migration",
     # "recipes/db_orm/entity",
     # "crates/*",

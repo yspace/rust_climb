@@ -5,3 +5,6 @@ edition = "2024"
 
 [dependencies]
 sled = "0.34.7"
+
+#错误处理
+thiserror = "2.0.17"

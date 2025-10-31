@@ -10,6 +10,7 @@
 /.vscode
 /Cargo.lock
 /__downloads
+/__data
 
 /crates/validation
 /crates/validation/*
