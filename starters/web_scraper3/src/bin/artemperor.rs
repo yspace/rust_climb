@@ -51,7 +51,8 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
     // let target_url = "https://auctions.artemperor.tw/search/%E6%BA%A5%E5%BF%83%E7%95%AC";
 
     let search_user = "溥儒";
-    // let search_user = "溥心畬";
+    // let search_user = "黄君璧";
+    let search_user = "溥心畬";
     // let search_user = "陈少梅";
     // let search_user = "赵国经";
     // // let search_user = "王美芳";
@@ -59,10 +60,13 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
     // let search_user = "丰子恺";
     // let search_user = "徐燕孙";
     // let search_user = "黄均";
+    let search_user = "石涛";
+    let search_user = "黃君璧";
     // build|make target_url
     // let target_url = format!("https://www.polyauction.com.hk/en/search?q={}&type=lot&p=1", search_user) ;
     // let page = 1;
     let target_url = format!("https://auctions.artemperor.tw/search/{}", search_user) ;
+    println!("👨👩: search items for user: {}",search_user);
     // 陈少梅
 
 

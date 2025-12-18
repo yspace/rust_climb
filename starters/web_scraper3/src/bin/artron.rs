@@ -1,4 +1,4 @@
-use std::{path::PathBuf, borrow::Borrow};
+use std::{path::PathBuf, borrow::Borrow, usize};
 use std::ops::Deref;
 use fantoccini::{ClientBuilder, Locator};
 use fantoccini::actions::{Actions, InputSource, KeyAction, KeyActions, MouseActions, NullActions, PointerAction, MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT};
@@ -27,6 +27,7 @@ use sled::{Db,Config};
 use cacache;
 
 use argh::FromArgs;
+// 👀： cargo run -p web_scraper3 --bin artron -- --user puru --debug true -h true -c true -s 1431 --resumption
 
 // @see https://docs.rs/argh/latest/argh/
 #[derive(FromArgs, Debug)]
@@ -35,6 +36,18 @@ struct AppArgs {
     // /// whether or not to jump
     // #[argh(switch, short = 'j')]
     // jump: bool,
+
+    /// whether  remove cache
+    #[argh(switch,  short = 'r' )]
+    rm_cache:bool,
+
+    /// 中断进程恢复 (Interrupted Process Resumption) :
+    #[argh(switch,  short = '0' )]
+    resumption:bool,
+
+    /// reverse order 逆向遍历 前提条件是缓存存在:
+    #[argh(switch )]
+    rev_order:bool,
 
     /// how high to go
     #[argh(option)]
@@ -52,6 +65,8 @@ struct AppArgs {
     #[argh(option, short = 'c', default = "false" )]
     cache:bool,
 
+
+
     /// an optional headless flag
     #[argh(option, short = 's', default = "0" )]
     skip :usize,
@@ -68,11 +83,21 @@ lazy_static! {
     static ref PAGE_REGEX: Regex = Regex::new(r"page=(?P<n>\d+)").unwrap();
 }
 
-
+// const vs static : Use const if you don't have a reason to use static.
 const DL_DIR: &'static str = "__downloads";
 pub(crate) const PROGRAM_NAME: &str = "artron";
 pub(crate) const PROGRAM_PREFIX: &str = "program_artron_";
 pub(crate) const PROGRAM_DB: &str = "__data/artron";
+
+/// 获取缓存地址
+fn get_cache_dir()-> String {
+    let cache_dir = format!("{}/cache" ,PROGRAM_DB);
+    return cache_dir ;
+}
+fn build_progress_cache_key(factor: &str)-> String {
+    let key = format!("progress_{}", factor, );
+    return key ;
+}
 
 lazy_static! {
     pub static ref ROOT_DB: sled::Db = Config::default()
@@ -90,6 +115,23 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
     let app_args: AppArgs = argh::from_env();
 
     println!("[debug] 🐞 app args: {:?}", app_args);
+
+    // 清理缓存
+    if app_args.rm_cache {
+        let cache_dir = get_cache_dir() ;
+        println!("🐘 remove cache dir : {:?}", cache_dir);
+
+        // Clean up the data!
+       let result = cacache::clear(&cache_dir).await;
+        if result.is_err() {
+            if let Err(err) = result {
+                println!("remove dir failed! 😭 :{}" ,err);
+            }
+
+        }
+
+        return Ok(()) ;
+    }
 
     let settings = config::Conf::new();
 
@@ -123,7 +165,7 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
 
 
     let search_user = "溥儒";
-    let search_user = "燕文贵";
+    // let search_user = "燕文贵";
     // let search_user = "溥心畬";
     // let search_user = "黄君璧";
     // let search_user = "陈少梅";
@@ -603,7 +645,15 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
 
         if items_from_js.len() > 0 {
             // ⚠️注意into_iter 跟 iter 是不同的 🤔
-            handeled_items = items_from_js.into_iter().collect();
+
+            if app_args.rev_order {
+                // TODO 这里不管用的 从无序变有序 跟rev无关
+                // handeled_items = items_from_js.into_iter().rev().collect();
+                handeled_items = items_from_js.into_iter().collect();
+            }else {
+                handeled_items = items_from_js.into_iter().collect();
+            }
+
         }else{
             // 🐯用rust来收集当前页面元素
             // 页码
@@ -651,14 +701,47 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
         // 😄🐲: 存到有序集合或者db中 然后就可以安全跳过某个区域 避免每次都重新运行 根据上次异常断点位置继续开始
         let mut skip_from_number = app_args.skip;
 
+        // 💾 如果由此选项 则从缓存中加载上一次进度数字
+        if app_args.resumption {
+
+            let tree = db_tree();
+            // let key = format!("progress_{}", search_user, ); // TODO 多次使用应该提取成为函数
+            let key =  if app_args.rev_order{
+                let key_factor = format!("_rev_{}", search_user, );
+                println!(" reverse order! ");
+                build_progress_cache_key(&key_factor)
+
+            }else {
+                build_progress_cache_key(search_user)
+            };
+            match tree.get(key) {
+                Ok(Some(value)) => {
+                    // 将字节序列转换回整数并打印出来
+                    let int_value: usize = usize::from_le_bytes(value.as_ref().try_into().unwrap()); // 使用 little-endian 字节序转换回整数
+                    println!("Retrieved integer: {}", int_value);
+                    // 🤔看看存入的跟取出的一样不？
+                    skip_from_number = int_value -1;
+                },
+                Ok(None) => println!("No value found for key"),
+                Err(e) => println!("Error retrieving integer: {}", e),
+            }
+        }
+
         // 使用 for 循环遍历集合
         // for item_url in handeled_items {
-        for (idx, item_url) in handeled_items.into_iter().enumerate() {
-            println!("🐢🐰🏃‍♀️: {}/{} => {}",idx,item_count , item_url);
+        // let enu = if app_args.rev_order {
+        //     handeled_items.into_iter().rev().enumerate()
+        // } else {
+        //     handeled_items.into_iter().enumerate()
+        // } ;
+
+        for (idx, item_url) in  handeled_items.into_iter().enumerate(){
+            println!("🐢🐰🏃‍♀️进度: {}/{} => {}",idx,item_count , item_url);
 
              if idx < skip_from_number {
                 continue ;
              }
+
 
             c.new_window(true).await?;
             // let window_2 = c.window().await?;
@@ -698,7 +781,7 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
 
                 let img_url_count = img_urls.len();
 
-                for (idx ,img_url) in img_urls.iter().enumerate() {
+                for (idx2 ,img_url) in img_urls.iter().enumerate() {
                     // println!("{:?}",img_info);
                     println!("img_url {:?}",img_url);
                     // let parts = img_url.rsplit('=');
@@ -712,13 +795,22 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
                     let folder_name = format!("{}_{}",search_user,PROGRAM_NAME);
                     let mut img_save_to_name =sanitize_filename::sanitize(img_info.clone());
                     if img_url_count > 1{
-                         img_save_to_name = format!("{}_{}",img_save_to_name,idx);
+                         img_save_to_name = format!("{}_{}",img_save_to_name,idx2);
                     }else{
-                         // img_save_to_name = format!("{}_{}",img_save_to_name,idx);
+                         // img_save_to_name = format!("{}_{}",img_save_to_name,idx2);
                     }
 
 
                     download_image(&folder_name,&img_save_to_name,&decoded_url).await ;
+
+                    // 保存下载进度
+                    let tree = db_tree();
+                    let key = format!("progress_{}", search_user, );
+                    // tree.insert(key, sled::IVec::from(&[idx;1]));
+                    // 将整数转换为字节序列（使用二进制表示），因为 sled 需要字节序列来存储值
+                    // let value_bytes = value.to_le_bytes(); // 使用 little-endian 字节序
+                    tree.insert(key, &idx.to_le_bytes());
+                    println!("💾 将进度保存起来 {}", idx);
 
                 }
 
@@ -851,7 +943,17 @@ pub async  fn sleep_random(c:&fantoccini::Client) {
             // " setTimeout(() => alert('😄'),Math.floor(Math.random() * 3000))",
             vec![1_u32.into()],
         )
-        .await.unwrap().as_u64(); // 返回值是2 搞测试而已
+        .await ; // 返回值是2 搞测试而已
+        // .await.unwrap().as_u64(); // 返回值是2 搞测试而已
+
+    if rslt.is_err() {
+        // TODO : 出现下载失败可以保存到某个数据库 然后在重新执行尝试下载
+        println!("some error happened :{:?}", rslt.err());
+
+    }else{
+
+        println!("sleep_random ok!") ;
+    }
 
     // println!("[sleep_random->]{:#?}", rslt);
 }
@@ -1083,6 +1185,9 @@ pub async  fn get_image_urls(c:&fantoccini::Client) -> Vec<String> {
 
 pub async fn download_image(folder_name:&str,img_save_to_name:&str,img_url:&str,){
 
+    use chrono::{DateTime, Utc, Duration};
+    let start = Utc::now();
+
     // 临时测试下
     // let img_url = "\"https://www.polyauctionhk.com/lib/uploads/165598976462b4660473f07/424/424.jpg\"";
     let img_url = img_url.trim_matches('"');
@@ -1149,10 +1254,42 @@ pub async fn download_image(folder_name:&str,img_save_to_name:&str,img_url:&str,
         }else{
 
             println!("download ok!") ;
+            let duration = Utc::now().signed_duration_since(start);
+            println!("[🕙debug 🥱]Time elapsed: {:?} 秒", duration.as_seconds_f32());
+
+            use std::fs;
+            use std::path::Path;
+            let img_path = &save_to_path.to_str().unwrap().to_string();
+            let path = Path::new(&img_path);
+
+            match fs::metadata(path) {
+                Ok(metadata) => {
+                    let size = metadata.len();
+                    println!(" 🏠: 文件大小: {} 字节", format_file_size(size));
+                },
+                Err(error) => {
+                    println!("无法获取文件信息: {}", error);
+                }
+            }
         }
     }
 
     // =================================== 下载 >> ======================
+}
+
+// 定义一个函数来格式化文件大小
+fn format_file_size(bytes: u64) -> String {
+    if bytes > 1_000_000_000_000 {
+        return format!("{:.2} TB", bytes as f64 / 1_000_000_000_000.0)
+    } else if bytes > 1_000_000_000 {
+        return format!("{:.2} GB", bytes as f64 / 1_000_000_000.0)
+    } else if bytes > 1_000_000 {
+        return format!("{:.2} MB", bytes as f64 / 1_000_000.0)
+    } else if bytes > 1_000 {
+        return format!("{:.2} KB", bytes as f64 / 1_000.0)
+    } else {
+        return format!("{} B", bytes);
+    }
 }
 
 fn db_tree()->sled::Tree{

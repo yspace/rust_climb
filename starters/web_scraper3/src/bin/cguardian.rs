@@ -232,7 +232,8 @@ async fn main() -> Result<(), fantoccini::error::CmdError> {
     let target_url = "https://www.cguardian.com/auctions/search?searname=王子武";
     let target_url = "https://www.cguardian.com/auctions/search?searname=钱瘦铁";
     let target_url = "https://www.cguardian.com/auctions/search?searname=溥伒";
-    let target_url = "https://www.cguardian.com/auctions/search?searname=张大壮"; // todo ...
+    let target_url = "https://www.cguardian.com/auctions/search?searname=吴让之";
+    // let target_url = "https://www.cguardian.com/auctions/search?searname=张大壮"; // todo ...
     // let target_url = "https://www.cguardian.com/auctions/search?searname=吴镜汀";
 
 

@@ -73,5 +73,6 @@ regex = "1.8.1"
 
 # crypto 密码学
 rust-crypto = "^0.2"
+cacache = "13.1.0"
 
 # 并发 crossbeam
